@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import config from './config'
-import routesv1 from './routes'
+import routes from './routes'
 const app = express()
 
 // middlewares
@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // routers
-app.use('/v1', routesv1)
+app.use(routes)
 
 // liste
 

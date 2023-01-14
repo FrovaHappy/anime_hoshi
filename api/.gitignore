@@ -1,11 +1,2 @@
-.vscode
-
-#depencies node
-/node_modules
-package-lock.json
-
-# environment variables
-.env
-
 #build ignored
 /build

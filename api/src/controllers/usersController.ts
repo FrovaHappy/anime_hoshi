@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
-import usersServices from '../services/usersServices'
-import { Iuser } from '../type'
+import { servicesCreateUser } from '../services/usersServices'
+import { Iuser } from '../../type'
 
 const postUser = async (req: Request, res: Response) => {
   const { body } = req
@@ -9,12 +9,10 @@ const postUser = async (req: Request, res: Response) => {
   const user: Iuser = {
     username: body.username,
     passwordHash,
-    roles: ['user']
+    roles: ['user'],
   }
-  await usersServices.createUser(user).then((userNew) => {
-    (userNew == null)
-      ? res.status(400).send({ error: 'User already created' })
-      : res.status(200).send(userNew)
+  await servicesCreateUser(user).then((userNew) => {
+    !userNew ? res.status(400).send({ error: 'User already created' }) : res.status(200).send(userNew)
   })
 }
 
