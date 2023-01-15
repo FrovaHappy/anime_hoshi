@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { AnimeEdited } from '../../types'
+import { AnimeEdited } from '../../module-scrapping/types'
 const { Schema, model } = mongoose
 
 const animeSchema = new Schema<AnimeEdited>(

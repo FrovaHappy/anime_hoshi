@@ -1,5 +1,5 @@
-import { findAndUpdateAnime, findIncidences } from './database/anime.db'
-import { findAnimePublished, updatedAnimesPublished } from './database/animePublished'
+import { findAndUpdateAnime, findIncidences } from '../database/anime.db'
+import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
 import { queryAnilistForTitle } from './queryAnilist'
 import { startScrapping } from './scrapping/main'
 import { AnimeEdited, InfoEpisodeRecovered, QueryAnilist } from './types'

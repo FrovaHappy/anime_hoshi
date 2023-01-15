@@ -1,4 +1,4 @@
-import { AnimeEdited } from '../types'
+import { AnimeEdited } from '../module-scrapping/types'
 import { animeModel } from './models/anime.model'
 
 export async function findIncidences(titleAnimeInPage = '', idInAnilist = NaN) {
