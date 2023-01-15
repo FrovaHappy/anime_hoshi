@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "workspaces": [
-    "packages/api",
-    "packages/frontend"
+    "packages/**"
   ],
   "scripts": {
+    "co": "sui-mono commit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@s-ui/mono": "2.34.0"
+  }
 }
