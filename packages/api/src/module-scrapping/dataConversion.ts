@@ -1,3 +1,4 @@
+import { cache } from '../config'
 import { findAndUpdateAnime, findIncidences } from '../database/anime.db'
 import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
 import { queryAnilistForTitle } from './queryAnilist'
@@ -66,12 +67,30 @@ function agregateAnime(resultScrapedForItem: InfoEpisodeRecovered, animeIncidenc
 
   return { animeEdited, needUpdate }
 }
+async function updateAnimeCached() {
+  const animePublished = cache.get('animePublished') as number[]
+  const animeUpdated = cache.get('animeUpdated') as number[]
+  const animeList = cache.get('animeList') as number[] | undefined
+
+  if (animeUpdated.length != 0 || !animeList) {
+    let animeList: AnimeEdited[] = []
+    for (const id of animePublished) {
+      const anime = await findIncidences(undefined, id)
+      if (anime) {
+        console.log(anime.data.id)
+        animeList.push(anime.toJSON())
+      }
+    }
+    cache.set('animeList', animeList)
+  }
+}
 
 export async function setAnime() {
   console.log('start conversion ...')
   const allResultScraped = await startScrapping()
   let errors = []
   let animespublished: number[] = (await findAnimePublished())?.[0]?.animePublished || []
+  let needUpdateArray: number[] = []
 
   for (const resultScrapedForPage of allResultScraped) {
     const namePage = Object.keys(resultScrapedForPage)[0]
@@ -90,6 +109,7 @@ export async function setAnime() {
       if (needUpdate) {
         updated++
         animespublished = animespublished.filter((id) => !(id === animeEdited.data.id)).concat(animeEdited.data.id)
+        needUpdateArray = needUpdateArray.filter((id) => !(id === animeEdited.data.id)).concat(animeEdited.data.id)
         await updatedAnimesPublished(animespublished)
         console.log('  updated anime: ' + animeEditedSave?.data.title.romaji + ' on page ' + namePage)
       }
@@ -97,6 +117,10 @@ export async function setAnime() {
     console.log('  total: ' + resultPageArray.length)
     console.log('  updated: ' + updated)
   }
-  console.log('anime published: ' + animespublished)
+  cache.mset([
+    { key: 'animePublished', val: animespublished },
+    { key: 'animeUpdated', val: needUpdateArray },
+  ])
+  await updateAnimeCached()
   console.log('\nerrors: ' + JSON.stringify(errors))
 }
