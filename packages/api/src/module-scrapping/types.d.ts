@@ -56,5 +56,5 @@ export interface AnimeEdited extends Anime {
 }
 
 export interface TopList {
-  ids: number[]
+  animePublished: number[]
 }
