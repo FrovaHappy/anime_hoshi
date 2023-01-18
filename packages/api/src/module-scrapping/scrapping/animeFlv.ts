@@ -1,5 +1,5 @@
 import { Browser } from 'playwright'
-import { InfoEpisodeRecovered } from '../types'
+import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedAnimeFlv(browser: Browser) {
   const page = await browser.newPage({ permissions: [] })
   await page.goto('https://www3.animeflv.net/', { waitUntil: 'domcontentloaded' })

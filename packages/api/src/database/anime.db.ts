@@ -1,7 +1,8 @@
-import { AnimeEdited } from '../module-scrapping/types'
+import { IdStatus } from '../Enum'
+import { AnimeEdited } from '../../../types'
 import { animeModel } from './models/anime.model'
 
-export async function findIncidences(titleAnimeInPage = '', idInAnilist = -2) {
+export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStatus.emty) {
   const anime = await animeModel.findOne({
     $or: [
       {

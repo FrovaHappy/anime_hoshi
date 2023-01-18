@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import NodeCache from 'node-cache'
 
-const port = process.env.PORT ?? 3000
+const port = process.env.PORT ?? 3001
 export const cache = new NodeCache()
 
 const configs = {

@@ -1,5 +1,5 @@
 import { Browser } from 'playwright'
-import { InfoEpisodeRecovered } from '../types'
+import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedAnimeblix(browser: Browser) {
   const page = await browser.newPage({ permissions: [] })
   await page.goto('https://animeblix.com/', { waitUntil: 'domcontentloaded' })
@@ -17,6 +17,8 @@ export async function scannedAnimeblix(browser: Browser) {
       let title = elementA.textContent!
       title = title.replace('2da Temporada', '2nd Season')
       title = title.replace('Temporada 2', '2nd Season')
+      title = title.replace('Temporada', 'Season')
+      title = title.replace('Parte', 'Part')
 
       const infoCap = {
         url: elementA.href!,

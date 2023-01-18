@@ -1,9 +1,10 @@
 import { cache } from '../config'
 import { findAndUpdateAnime, findIncidences } from '../database/anime.db'
 import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
+import { CacheKeys, IdStatus } from '../Enum'
 import { queryAnilistForTitle } from './queryAnilist'
 import { startScrapping } from './scrapping/main'
-import { AnimeEdited, InfoEpisodeRecovered, QueryAnilist } from './types'
+import { AnimeEdited, InfoEpisodeRecovered, QueryAnilist } from '../../../types'
 
 async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisodeRecovered) {
   let animeIncidence = await findIncidences(resultScrapedForItem.title)
@@ -31,7 +32,7 @@ function agregateAnime(resultScrapedForItem: InfoEpisodeRecovered, animeIncidenc
   let Media = animeIncidence.data
   let needUpdate = false
   const episodewithoutNaN =
-    (Number.isNaN(resultScrapedForItem.episode) ? Media.episodes : resultScrapedForItem.episode) || -1
+    (Number.isNaN(resultScrapedForItem.episode) ? Media.episodes : resultScrapedForItem.episode) || IdStatus.invalid
   const newPage = {
     nameOfPage: namePage,
     title: resultScrapedForItem.title,
@@ -68,20 +69,17 @@ function agregateAnime(resultScrapedForItem: InfoEpisodeRecovered, animeIncidenc
   return { animeEdited, needUpdate }
 }
 async function updateAnimeCached() {
-  const animePublished = cache.get('animePublished') as number[]
-  const animeUpdated = cache.get('animeUpdated') as number[]
-  const animeList = cache.get('animeList') as number[] | undefined
+  const animePublished = cache.get(CacheKeys.animePublished) as number[]
+  const animeUpdated = cache.get(CacheKeys.animeUpdated) as number[]
+  const animeList = cache.get(CacheKeys.animeList) as number[] | undefined
 
   if (animeUpdated.length != 0 || !animeList) {
     let animeList: AnimeEdited[] = []
     for (const id of animePublished) {
       const anime = await findIncidences(undefined, id)
-      if (anime) {
-        console.log(anime.data.id)
-        animeList.push(anime.toJSON())
-      }
+      if (anime) animeList.push(anime.toJSON())
     }
-    cache.set('animeList', animeList)
+    cache.set(CacheKeys.animeList, animeList)
   }
 }
 
@@ -118,9 +116,9 @@ export async function setAnime() {
     console.log('  updated: ' + updated)
   }
   cache.mset([
-    { key: 'animePublished', val: animespublished },
-    { key: 'animeUpdated', val: needUpdateArray },
+    { key: CacheKeys.animePublished, val: animespublished },
+    { key: CacheKeys.animeUpdated, val: needUpdateArray },
   ])
   await updateAnimeCached()
-  console.log('\nerrors: ' + JSON.stringify(errors))
+  console.log('\nerrors: ' + JSON.stringify(errors.map((err) => err.at.title)))
 }

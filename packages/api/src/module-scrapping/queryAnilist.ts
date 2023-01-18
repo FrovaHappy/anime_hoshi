@@ -1,4 +1,4 @@
-import { QueryAnilist } from './types'
+import { QueryAnilist } from '../../../types'
 
 export async function queryAnilistForTitle(searchForTitle: string): Promise<QueryAnilist> {
   const query = `
