@@ -1,6 +1,8 @@
 export const enum IdStatus {
-  invalid = -1,
   emty = -2,
+}
+export const enum EpisodeNumber {
+  Invalid = 100_000,
 }
 
 export const enum CacheKeys {

@@ -1,7 +1,7 @@
 import { cache } from '../config'
 import { findAndUpdateAnime, findIncidences } from '../database/anime.db'
 import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
-import { CacheKeys, IdStatus } from '../Enum'
+import { CacheKeys, EpisodeNumber } from '../Enum'
 import { queryAnilistForTitle } from './queryAnilist'
 import { startScrapping } from './scrapping/main'
 import { AnimeEdited, InfoEpisodeRecovered, QueryAnilist } from '../../../types'
@@ -32,7 +32,8 @@ function agregateAnime(resultScrapedForItem: InfoEpisodeRecovered, animeIncidenc
   let Media = animeIncidence.data
   let needUpdate = false
   const episodewithoutNaN =
-    (Number.isNaN(resultScrapedForItem.episode) ? Media.episodes : resultScrapedForItem.episode) || IdStatus.invalid
+    (Number.isNaN(resultScrapedForItem.episode) ? Media.episodes : resultScrapedForItem.episode) ||
+    EpisodeNumber.Invalid
   const newPage = {
     nameOfPage: namePage,
     title: resultScrapedForItem.title,
@@ -46,6 +47,10 @@ function agregateAnime(resultScrapedForItem: InfoEpisodeRecovered, animeIncidenc
   animeEdited = {
     data: animeIncidence.data,
     pages: animeIncidence.pages,
+  }
+  if (episodewithoutNaN === EpisodeNumber.Invalid) {
+    console.log('Episode is Null value, status: ' + Media.status)
+    return { animeEdited, needUpdate, episodeisNull: { at: resultScrapedForItem } }
   }
   const page = animeEdited.pages.find((p) => p.nameOfPage === namePage)
   const episode = page?.episodes.find((e) => e.episode === episodewithoutNaN)
@@ -102,9 +107,13 @@ export async function setAnime() {
         errors.push(error)
         continue
       }
-      const { animeEdited, needUpdate } = agregateAnime(resultScrapedForItem, animeIncidence!, namePage)
-      const animeEditedSave = needUpdate ? await findAndUpdateAnime(animeEdited) : undefined
+      const { animeEdited, needUpdate, episodeisNull } = agregateAnime(resultScrapedForItem, animeIncidence!, namePage)
+      if (episodeisNull) {
+        errors.push(episodeisNull)
+        continue
+      }
       if (needUpdate) {
+        const animeEditedSave = await findAndUpdateAnime(animeEdited)
         updated++
         animespublished = animespublished.filter((id) => !(id === animeEdited.data.id)).concat(animeEdited.data.id)
         needUpdateArray = needUpdateArray.filter((id) => !(id === animeEdited.data.id)).concat(animeEdited.data.id)
