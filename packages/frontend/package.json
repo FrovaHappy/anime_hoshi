@@ -24,7 +24,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "node_modules/ts-standard/eslintrc.json",
+      "../../node_modules/ts-standard/eslintrc.json",
       "react-app",
       "react-app/jest"
     ]
@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "sass": "^1.57.1",
     "ts-standard": "12.0.2"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

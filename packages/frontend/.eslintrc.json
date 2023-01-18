@@ -1,0 +1,5 @@
+{
+  "parserOptions": {
+      "project": ["path/to/your/tsconfig/file"]
+  }
+}
