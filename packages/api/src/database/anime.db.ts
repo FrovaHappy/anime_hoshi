@@ -1,36 +1,38 @@
 import { IdStatus } from '../Enum'
-import { AnimeEdited } from '../../../types'
+import { AnimeList } from '../../../types'
 import { animeModel } from './models/anime.model'
 
-export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStatus.emty) {
+export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStatus.emty, namePage = '') {
+  const titleinPageString = `{ "titleinPages.${namePage}":"${titleAnimeInPage}" }`
+  const titleinPage = JSON.parse(titleinPageString)
   const anime = await animeModel.findOne({
     $or: [
       {
-        'data.title': { english: titleAnimeInPage },
+        'dataAnilist.title': { english: titleAnimeInPage },
       },
       {
-        'data.title': { romanji: titleAnimeInPage },
+        'dataAnilist.title': { romanji: titleAnimeInPage },
       },
       {
-        pages: {
-          $elemMatch: {
-            title: titleAnimeInPage,
-          },
-        },
+        'dataAnilist.title': { userPreferred: titleAnimeInPage },
       },
+      titleinPage,
       {
-        'data.id': idInAnilist,
+        'dataAnilist.id': idInAnilist,
       },
     ],
   })
   return anime
 }
 
-export async function findAndUpdateAnime(animeEdited: AnimeEdited) {
+export async function findAndUpdateAnime(animeEdited: AnimeList) {
   const config = { upsert: true, returnDocument: 'after' }
   const filter = {
-    'data.id': animeEdited.data.id,
+    'dataAnilist.id': animeEdited.dataAnilist.id,
   }
+
   const anime = await animeModel.findOneAndReplace(filter, animeEdited, config)
+
   return anime
 }
+

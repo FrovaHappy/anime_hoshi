@@ -2,8 +2,9 @@ import { InfoEpisodeRecovered, QueryAnilist } from '../../../../types'
 import { findIncidences } from '../../database/anime.db'
 import { queryAnilistForTitle } from './queryAnilist'
 
-export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisodeRecovered) {
-  let animeIncidence = await findIncidences(resultScrapedForItem.title)
+export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisodeRecovered, namePage: string) {
+  let animeIncidence = await findIncidences(resultScrapedForItem.title, undefined, namePage)
+
   let queryAnilist: QueryAnilist | undefined
 
   if (!animeIncidence) queryAnilist = await queryAnilistForTitle(resultScrapedForItem.title)
@@ -14,11 +15,17 @@ export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisod
       animeIncidence,
     }
   }
-  if (!animeIncidence) animeIncidence = await findIncidences('', queryAnilist!.data!.Media.id)
+  if (!animeIncidence) animeIncidence = await findIncidences('', queryAnilist!.data!.Media.id, namePage)
+
+  let titleinPages = animeIncidence?.titleinPages || {}
+  titleinPages[namePage] = resultScrapedForItem.title
+
   return {
     animeIncidence: {
-      data: animeIncidence?.data ? animeIncidence.data : queryAnilist!.data!.Media,
-      pages: animeIncidence?.pages ? animeIncidence.pages : [],
+      updateAnilist: animeIncidence?.updateAnilist || Date.now(),
+      titleinPages,
+      dataAnilist: animeIncidence?.dataAnilist || queryAnilist!.data!.Media,
+      episodes: animeIncidence?.episodes || {},
     },
   }
 }

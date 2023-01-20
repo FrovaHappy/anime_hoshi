@@ -20,7 +20,7 @@ export async function setAnime() {
     let updated = 0
 
     for (const resultScrapedForItem of resultPageArray) {
-      let { animeIncidence, error } = await findConcidencesInDatabase(resultScrapedForItem)
+      let { animeIncidence, error } = await findConcidencesInDatabase(resultScrapedForItem, namePage)
       if (error) {
         errors.push(error)
         continue
@@ -37,10 +37,14 @@ export async function setAnime() {
       if (needUpdate) {
         const animeEditedSave = await findAndUpdateAnime(animeEdited)
         updated++
-        animespublished = animespublished.filter((id) => !(id === animeEdited.data.id)).concat(animeEdited.data.id)
-        needUpdateArray = needUpdateArray.filter((id) => !(id === animeEdited.data.id)).concat(animeEdited.data.id)
+        animespublished = animespublished
+          .filter((id) => !(id === animeEdited.dataAnilist.id))
+          .concat(animeEdited.dataAnilist.id)
+        needUpdateArray = needUpdateArray
+          .filter((id) => !(id === animeEdited.dataAnilist.id))
+          .concat(animeEdited.dataAnilist.id)
         await updatedAnimesPublished(animespublished)
-        console.log('  updated anime: ' + animeEditedSave?.data.title.romaji + ' on page ' + namePage)
+        console.log('  updated anime: ' + animeEditedSave?.dataAnilist.title.romaji + ' on page ' + namePage)
       }
     }
     console.log('  total: ' + resultPageArray.length)

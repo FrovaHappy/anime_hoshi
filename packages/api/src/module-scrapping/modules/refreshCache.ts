@@ -1,4 +1,4 @@
-import { AnimeEdited } from '../../../../types'
+import { AnimeList } from '../../../../types'
 import { cache } from '../../config'
 import { findIncidences } from '../../database/anime.db'
 import { CacheKeys } from '../../Enum'
@@ -13,7 +13,7 @@ async function animeList(animespublished: number[], needUpdateArray: number[]) {
 
   if (animeUpdated.length != 0 || !animeList) {
     console.log('  refresh cache: ' + CacheKeys.animeList)
-    let animeList: AnimeEdited[] = []
+    let animeList: AnimeList[] = []
     for (const id of animePublished) {
       const anime = await findIncidences(undefined, id)
       if (anime) animeList.push(anime.toJSON())

@@ -1,53 +1,67 @@
-import { AnimeEdited, InfoEpisodeRecovered } from '../../../../types'
+import { AnimeList, Episodes, InfoEpisodeRecovered } from '../../../../types'
 import { EpisodeNumber } from '../../Enum'
+
+function setEpisode(
+  episodesOfAnimeList: Episodes,
+  episodewithoutNaN: number,
+  resultScrapedForItem: InfoEpisodeRecovered,
+  namePage: string
+) {
+  const numberOfEpisode = episodewithoutNaN.toString()
+  let needUpdate = false
+  let episodes = episodesOfAnimeList
+
+  if (episodes[numberOfEpisode]) {
+    let episode = episodes[numberOfEpisode]!
+
+    const oldPageUrl = episode.pagesUrl[namePage]
+    if (!oldPageUrl) {
+      needUpdate = true
+      ;(episode.pagesUrl[namePage] = resultScrapedForItem.url), (episode.updateEpisode = Date.now())
+      episodes[numberOfEpisode] = episode
+    }
+  } else {
+    needUpdate = true
+    let pageUrl = {
+      [namePage]: resultScrapedForItem.url,
+    }
+
+    let newEpisode = {
+      [numberOfEpisode]: {
+        updateEpisode: Date.now(),
+        pagesUrl: pageUrl,
+      },
+    }
+    episodes = { ...newEpisode }
+  }
+  return { episodes, needUpdate }
+}
 
 export function formattingBeforeSaving(
   resultScrapedForItem: InfoEpisodeRecovered,
-  animeIncidence: AnimeEdited,
+  animeIncidence: AnimeList,
   namePage: string
 ) {
-  let animeEdited: AnimeEdited
-  let Media = animeIncidence.data
+  let animeEdited = animeIncidence
+  let { episodes } = animeIncidence
+  const { dataAnilist } = animeIncidence
   let needUpdate = false
   const episodewithoutNaN =
-    (Number.isNaN(resultScrapedForItem.episode) ? Media.episodes : resultScrapedForItem.episode) ||
+    (Number.isNaN(resultScrapedForItem.episode) ? dataAnilist.episodes : resultScrapedForItem.episode) ||
     EpisodeNumber.Invalid
-  const newPage = {
-    nameOfPage: namePage,
-    title: resultScrapedForItem.title,
-    episodes: [
-      {
-        url: resultScrapedForItem.url,
-        episode: episodewithoutNaN,
-      },
-    ],
-  }
-  animeEdited = {
-    data: animeIncidence.data,
-    pages: animeIncidence.pages,
-  }
+
   if (episodewithoutNaN === EpisodeNumber.Invalid) {
-    console.log('Episode is Null value, status: ' + Media.status)
+    console.log('Episode is Null value, status: ' + dataAnilist.status)
     return { animeEdited, needUpdate, episodeisNull: { at: resultScrapedForItem } }
   }
-  const page = animeEdited.pages.find((p) => p.nameOfPage === namePage)
-  const episode = page?.episodes.find((e) => e.episode === episodewithoutNaN)
-  if (page) {
-    animeEdited.pages = animeEdited.pages.map((p) => {
-      if (p.nameOfPage === namePage && !episode) {
-        needUpdate = true
-        p.episodes.push({
-          url: resultScrapedForItem.url,
-          episode: episodewithoutNaN,
-        })
-      }
-      return p
-    })
+  const fivedaytomiliseconds = 432_000_000
+  if (Date.now() > animeIncidence.updateAnilist + fivedaytomiliseconds) {
+    console.log('Anilist updated for time expired')
   }
-  if (!page) {
-    needUpdate = true
-    animeEdited.pages.push(newPage)
-  }
+
+  const setEpisodesStatus = setEpisode(episodes, episodewithoutNaN, resultScrapedForItem, namePage)
+  needUpdate = setEpisodesStatus.needUpdate
+  animeEdited.episodes = { ...setEpisodesStatus.episodes }
 
   return { animeEdited, needUpdate }
 }

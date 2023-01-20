@@ -1,10 +1,17 @@
 import mongoose from 'mongoose'
-import { AnimeEdited } from '../../../../types'
+import { AnimeList, EpisodesContent } from '../../../../types'
 const { Schema, model } = mongoose
 
-const animeSchema = new Schema<AnimeEdited>(
+const episodesSchema = new Schema<EpisodesContent>(
   {
-    data: {
+    updateEpisode: { type: 'number', required: true },
+    pagesUrl: { type: Object, of: 'string', required: true, default: {} },
+  },
+  { _id: false, id: false }
+)
+const animeSchema = new Schema<AnimeList>(
+  {
+    dataAnilist: {
       id: { type: 'number', required: true },
       episodes: { type: 'number', required: true },
       format: { type: 'string', required: true },
@@ -13,31 +20,19 @@ const animeSchema = new Schema<AnimeEdited>(
         english: { type: 'string', required: true },
         romaji: { type: 'string', required: true },
         native: { type: 'string', required: true },
+        userPreferred: { type: 'string', required: true },
       },
       coverImage: {
         large: { type: 'string', required: true },
         medium: { type: 'string', required: true },
         color: { type: 'string', required: true },
       },
-      nextAiringEpisode: {
-        airingAt: { type: 'number', required: true },
-        episode: { type: 'number', required: true },
-      },
     },
-    pages: [
-      {
-        nameOfPage: { type: 'string', required: true },
-        title: { type: 'string', required: true },
-        episodes: [
-          {
-            url: { type: 'string', required: true },
-            episode: { type: 'number', required: true },
-          },
-        ],
-      },
-    ],
+    titleinPages: { type: Object, of: 'string', required: true },
+    updateAnilist: { type: 'number', required: true },
+    episodes: { type: Object, of: episodesSchema, required: true, default: {} },
   },
-  { _id: false }
+  { _id: false, id: false }
 ).set('toJSON', {
   transform: (_document, returnObject) => {
     delete returnObject._id

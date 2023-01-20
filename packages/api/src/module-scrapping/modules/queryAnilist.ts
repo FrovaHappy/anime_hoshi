@@ -6,21 +6,16 @@ export async function queryAnilistForTitle(searchForTitle: string): Promise<Quer
     Media(search: $search, type: ANIME) {
       id
       episodes
-      format
-      status
       coverImage {
         large
         medium
         color
       }
-      nextAiringEpisode {
-        airingAt
-        episode
-      }
       title {
         romaji
         english
         native
+        userPreferred
       }
     }
   }`
