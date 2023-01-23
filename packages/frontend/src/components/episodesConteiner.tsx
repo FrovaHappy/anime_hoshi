@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { List } from '../../types'
 interface Props {
   list: List
@@ -8,6 +8,10 @@ function switchActive(index: number, mySetActive: (value: number) => void) {
   mySetActive(index)
 }
 export function EpisodesConteiner({ list, color }: Props) {
+  useEffect(() => {
+    setActive(0)
+  }, [color])
+
   const [active, setActive] = useState(0)
   const mySetActive = (value: number) => {
     setActive(value)
@@ -56,7 +60,6 @@ export function EpisodesConteiner({ list, color }: Props) {
               </ul>
             )
           }
-          
         })}
       </div>
     </div>
