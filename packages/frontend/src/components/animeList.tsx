@@ -9,11 +9,12 @@ interface props {
 function getlastEpisode(animeList: AnimeList) {
   const arrayNumEpisodes = Object.keys(animeList.episodes).sort((a, b) => parseInt(a) - parseInt(b))
   const arrayTitleinPages = Object.keys(animeList.titleinPages)
-
+  const updateEpisode = animeList.episodes[arrayNumEpisodes.at(-1) || 0]?.updateEpisode!
   const pagesIsPlural = arrayTitleinPages.length == 1 ? arrayTitleinPages[0] : `${arrayTitleinPages.length} paginas`
   return {
     episode: <>Ep. {arrayNumEpisodes.at(-1)}</>,
     pages: <>En {pagesIsPlural}</>,
+    updateEpisode: updateEpisode,
   }
 }
 
@@ -35,6 +36,7 @@ export function AnimeComponet({ animeList }: props) {
         const styleBackgroundColor =
           i === index ? { backgroundColor: animeEdited.dataAnilist.coverImage.color } : undefined
         const getEpisodeAndPages = getlastEpisode(animeEdited)
+        const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000 ? { opacity: 1 } : undefined
         return (
           <Link
             key={animeEdited.dataAnilist.id}
@@ -48,6 +50,7 @@ export function AnimeComponet({ animeList }: props) {
               <p className="targetAnime__pages">{getEpisodeAndPages.pages}</p>
               <div className="targetAnime__img-conteiner" style={styleBackgroundColor}>
                 <span className="targetAnime__episode">{getEpisodeAndPages.episode}</span>
+                <span className="targetAnime__point" style={renderPoint}></span>
                 <img
                   className="targetAnime__img"
                   src={animeEdited.dataAnilist.coverImage.large}
