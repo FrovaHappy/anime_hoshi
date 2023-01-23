@@ -3,7 +3,7 @@
   --borderRadius:.3125rem;
 }
 .anime-info{
-  width: 25rem;
+  width: 28.125rem;
   box-sizing: border-box;
   background-color: #151515;
   &__title {
@@ -27,8 +27,11 @@
   
 }
 .conteiner{
-  width: 100%;
-  height: auto;
+  width: 90%;
+  height: 25rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   &__list {
     box-sizing: border-box;
@@ -43,9 +46,17 @@
     width: 100%;
     height: auto;
     list-style: none;
-    opacity: 0;
-    transition: transform .2s, opacity .1s;
-    transform: translate(0, 50%);
+    animation-duration: .2s;
+    animation-name: traslateconteiner;
+  }
+  @keyframes traslateconteiner {
+    from {
+      transform: translateX(50%);
+    }
+  
+    to {
+      transform: translateX(0%);
+    }
   }
   &__item {
     z-index: 2;

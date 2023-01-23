@@ -37,24 +37,26 @@ export function EpisodesConteiner({ list, color }: Props) {
       </div>
       <div className="conteiner">
         {listNamePage.map((page, index) => {
-          const isActive = index === active ? { opacity: 1, transform: 'translate(0,0)' } : undefined
-          return (
-            <ul className="conteiner__list" key={page} style={isActive}>
-              {list[page]?.reverse().map((item) => {
-                const renderPoint = Date.now() - item.update < 28_800_000 ? { opacity: 1 } : undefined
-                return (
-                  <li className="conteiner__item" key={item.episode}>
-                    <a href={item.url} target="_blank" rel="noreferrer" className="item">
-                      <p className="item__text">
-                        <span className="item__point" style={renderPoint}></span>
-                        <b>Episodio {item.episode}</b>
-                      </p>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          )
+          if (index === active) {
+            return (
+              <ul className="conteiner__list" key={page}>
+                {list[page]?.reverse().map((item) => {
+                  const renderPoint = Date.now() - item.update < 28_800_000 ? { opacity: 1 } : undefined
+                  return (
+                    <li className="conteiner__item" key={item.episode}>
+                      <a href={item.url} target="_blank" rel="noreferrer" className="item">
+                        <p className="item__text">
+                          <span className="item__point" style={renderPoint}></span>
+                          <b>Episodio {item.episode}</b>
+                        </p>
+                      </a>
+                    </li>
+                  )
+                })}
+              </ul>
+            )
+          }
+          
         })}
       </div>
     </div>

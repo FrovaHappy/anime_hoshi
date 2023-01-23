@@ -32,7 +32,6 @@ function listPageLinks(anime: AnimeList) {
       }
     })
   })
-  console.log(list)
   return list
 }
 export function AnimeInfo({ animeList }: props) {
