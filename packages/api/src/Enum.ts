@@ -1,8 +1,8 @@
 export const enum IdStatus {
-  emty = -2,
+  emty = -1,
 }
 export const enum EpisodeNumber {
-  Invalid = 100_000,
+  lastEpisodeNotFound = -1,
 }
 
 export const enum CacheKeys {

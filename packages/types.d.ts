@@ -23,7 +23,7 @@ export interface Title {
 }
 export interface QueryAnilist {
   data: {
-    Media: DataAnilist
+    Media: DataAnilist | null
   } | null
 }
 export interface TopList {
@@ -44,4 +44,5 @@ export interface AnimeList {
   dataAnilist: DataAnilist
   episodes: Episodes
   titleinPages: KeyDinamicString
+  lastEpisodesOfTempPreview?: number
 }

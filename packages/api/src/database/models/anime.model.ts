@@ -31,6 +31,7 @@ const animeSchema = new Schema<AnimeList>(
     titleinPages: { type: Object, of: 'string', required: true },
     updateAnilist: { type: 'number', required: true },
     episodes: { type: Object, of: episodesSchema, required: true, default: {} },
+    lastEpisodesOfTempPreview: { type: 'number', required: false },
   },
   { _id: false, id: false }
 ).set('toJSON', {

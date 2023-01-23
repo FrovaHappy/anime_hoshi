@@ -25,6 +25,15 @@ export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStat
   return anime
 }
 
+export async function findIncidencesOverflowEpisode(namePage: string, titleAnimeInPage: string) {
+  const titleinPageString = `{ "titleinPages.${namePage}-overflow":"${titleAnimeInPage}" }`
+  const titleinPage = JSON.parse(titleinPageString)
+  const anime = await animeModel.findOne({
+    $or: [titleinPage],
+  })
+  return anime
+}
+
 export async function findAndUpdateAnime(animeEdited: AnimeList) {
   const config = { upsert: true, returnDocument: 'after' }
   const filter = {
