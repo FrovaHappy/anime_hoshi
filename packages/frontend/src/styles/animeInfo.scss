@@ -1,0 +1,65 @@
+:root {
+  --shadowTarget: 0px 0px .4375rem #000000;
+  --borderRadius:.3125rem;
+}
+.anime-info{
+  width: 25rem;
+  box-sizing: border-box;
+  background-color: #151515;
+  &__title {
+    color: white;
+    padding: 1.25rem;
+  }
+}
+.tab {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content:  space-evenly;
+  &__button {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #00000000;
+    color: #c5c5c5;
+    padding-bottom: 1.25rem;
+    border: .0625rem #00000000;
+  }
+  
+}
+.conteiner{
+  width: auto;
+  height: auto;
+  position: relative;
+  
+  &__list {
+    box-sizing: border-box;
+    position: absolute;
+    padding: 1.25rem;
+    margin: 0;
+    display: flex;
+    justify-content:  space-evenly;
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    list-style: none;
+    opacity: 0;
+    &--active {
+      opacity: 1;
+    }
+  }
+  &__item {
+    z-index: 2;
+    width: 100%;
+    border-radius: var(--borderRadius);
+    box-shadow: var(--shadowTarget);
+    & a{
+      padding: 0;
+      
+    }
+  }
+}
+.item__text{
+  color: #c5c5c5;
+  padding: 1.25rem;
+  margin: 0;
+}

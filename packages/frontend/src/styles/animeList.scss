@@ -1,18 +1,26 @@
+:root {
+  --shadowTarget: 0px 0px .4375rem #000000;
+  --borderRadius:.3125rem;
+}
 .animeList {
-
+  box-sizing: border-box;
   display: grid;
   gap: .9375rem;
   grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr));
   align-items: center;
   padding: 1.25rem;
+  flex: auto;
+    height: 100%;
+    overflow: auto;
 }
 
 .targetAnime {
-  position: relative;
   display: flex;
-
+  box-shadow: var(--shadowTarget);
+    flex-direction: column;
+    border-radius: var(--borderRadius);
   &__img {
-    border-radius: .3125rem;
+    border-radius: var(--borderRadius);
     width: 100%;
   }
 
@@ -26,6 +34,27 @@
     align-content: center;
     z-index: 100;
     color: rgb(255, 255, 255);
-    text-shadow: 0px 0px .3125rem #000000;
+    text-shadow: var(--shadowTarget);
+  }
+  &__img-conteiner{
+    position: relative;
+    border-radius: var(--borderRadius);
+    background-color: black;
+  }
+  &__pages {
+    margin: 0;
+    padding: .3125rem;
+    color: rgb(255, 255, 255);
+  }
+    
+  &__episode {
+    background-color: #000000af;
+    color: white;
+    border-radius: var(--borderRadius);
+    top: .3125rem;
+    left: .3125rem;
+    position: absolute;
+    padding: .3125rem;
+    font-size: .875rem;
   }
 }

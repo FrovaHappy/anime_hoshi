@@ -1,32 +1,62 @@
-import { useEffect, useState } from 'react'
-import { AnimeEdited } from '../../../types'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { AnimeList } from '../../../types'
 import '../styles/animeList.scss'
 
-export function AnimeList() {
-  const [animeList, SetAnimelist] = useState<AnimeEdited[]>([])
+interface props {
+  animeList: AnimeList[]
+}
+function getlastEpisode(animeList: AnimeList) {
+  const arrayNumEpisodes = Object.keys(animeList.episodes).sort((a, b) => parseInt(a) - parseInt(b))
+  const arrayTitleinPages = Object.keys(animeList.titleinPages)
 
-  const query = async () => {
-    const data = await fetch('/anime')
-    const animelist = await data.json()
-    SetAnimelist(animelist.reverse())
+  const pagesIsPlural = arrayTitleinPages.length == 1 ? arrayTitleinPages[0] : `${arrayTitleinPages.length} paginas`
+  return {
+    episode: <>Ep. {arrayNumEpisodes.at(-1)}</>,
+    pages: <>En {pagesIsPlural}</>,
   }
+}
 
-  useEffect(() => {
-    query()
-  }, [])
-
+function setColortoElement(index: number, SetIndex: (value: number) => void) {
+  SetIndex(index)
+}
+export function AnimeComponet({ animeList }: props) {
+  const [index, setindex] = useState(NaN)
+  const SetIndex = (index: number) => {
+    setindex(index)
+  }
   return (
     <div className="animeList">
-      {animeList.map((animeEdited) => {
+      {animeList.map((animeEdited, i) => {
+        const styleShadows =
+          i === index
+            ? { boxShadow: `0px 0px 0.625rem ${animeEdited.dataAnilist.coverImage.color}`, borderRadius: '.3125rem' }
+            : undefined
+        const styleBackgroundColor =
+          i === index ? { backgroundColor: animeEdited.dataAnilist.coverImage.color } : undefined
+        const getEpisodeAndPages = getlastEpisode(animeEdited)
         return (
-          <div className="targetAnime" key={animeEdited.data.id}>
-            <img
-              className="targetAnime__img"
-              src={animeEdited.data.coverImage.large}
-              alt={animeEdited.data.title.romaji}
-            />
-            <h5 className="targetAnime__title">{animeEdited.data.title.romaji}</h5>
-          </div>
+          <Link
+            key={animeEdited.dataAnilist.id}
+            to={`/${animeEdited.dataAnilist.id}`}
+            style={styleShadows}
+            onClick={() => {
+              setColortoElement(i, SetIndex)
+            }}
+          >
+            <div className="targetAnime">
+              <p className="targetAnime__pages">{getEpisodeAndPages.pages}</p>
+              <div className="targetAnime__img-conteiner" style={styleBackgroundColor}>
+                <span className="targetAnime__episode">{getEpisodeAndPages.episode}</span>
+                <img
+                  className="targetAnime__img"
+                  src={animeEdited.dataAnilist.coverImage.large}
+                  alt={animeEdited.dataAnilist.title.romaji}
+                />
+                <h5 className="targetAnime__title">{animeEdited.dataAnilist.title.romaji}</h5>
+              </div>
+            </div>
+          </Link>
         )
       })}
     </div>
