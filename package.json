@@ -15,7 +15,7 @@
     "build:api": "npm run build --workspace=packages/api",
     "build:frontend": "npm run build --workspace=packages/frontend",
     "build": "npm run build:api && npm run build:frontend && npx playwright install-deps",
-    "start": "node ./packages/api/dist/index.js --omit=dev"
+    "start": "node ./packages/api/dist/index.js"
   },
   "keywords": [],
   "author": "",
