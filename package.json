@@ -9,7 +9,13 @@
   "scripts": {
     "co": "sui-mono commit",
     "dev:api": "npm run dev --workspace=packages/api",
-    "dev:frontend": "npm run start --workspace=packages/frontend"
+    "dev:frontend": "npm run start --workspace=packages/frontend",
+    "lint:api": "npm run lint --workspace=packages/api ",
+    "lint:frontend": "npm run lint --workspace=packages/frontend",
+    "build:api": "npm run build --workspace=packages/api",
+    "build:frontend": "npm run build --workspace=packages/frontend",
+    "build": "npm run build:api && npm run build:frontend",
+    "start": "node ./packages/api/dist/index.js"
   },
   "keywords": [],
   "author": "",
