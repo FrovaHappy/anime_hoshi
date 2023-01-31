@@ -1,9 +1,9 @@
 import { chromium } from 'playwright'
 
-import { scannedAnimeblix } from './animeblix'
-import { scannedJkanime } from './jkanime'
-import { scannedAnimeFlv } from './animeFlv'
-import { scannedMonoschinos } from './chinosmonos'
+import { scannedAnimeblix } from './scrapping/animeblix'
+import { scannedJkanime } from './scrapping/jkanime'
+import { scannedAnimeFlv } from './scrapping/animeFlv'
+import { scannedMonoschinos } from './scrapping/chinosmonos'
 
 export async function startScrapping() {
   const browser = await chromium.launch({

@@ -1,6 +1,6 @@
 import { findAndUpdateAnime } from '../database/anime.db'
 import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
-import { startScrapping } from './scrapping/main'
+import { startScrapping } from './main'
 import { InfoEpisodeRecovered } from '../../../types'
 import refreshCache from './modules/refreshCache'
 import { formattingBeforeSaving } from './modules/formattingBeforeSaving'
