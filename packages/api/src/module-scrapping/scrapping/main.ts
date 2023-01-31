@@ -8,7 +8,7 @@ import { scannedMonoschinos } from './chinosmonos'
 export async function startScrapping() {
   const browser = await chromium.launch({
     chromiumSandbox: true,
-    channel: 'msedge',
+    channel: 'chrome',
     headless: false,
   })
 
