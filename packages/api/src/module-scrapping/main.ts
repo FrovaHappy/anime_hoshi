@@ -1,4 +1,4 @@
-import { chromium } from 'playwright'
+import { firefox } from 'playwright'
 
 import { scannedAnimeblix } from './scrapping/animeblix'
 import { scannedJkanime } from './scrapping/jkanime'
@@ -6,10 +6,7 @@ import { scannedAnimeFlv } from './scrapping/animeFlv'
 import { scannedMonoschinos } from './scrapping/chinosmonos'
 
 export async function startScrapping() {
-  const browser = await chromium.launch({
-    channel: 'chrome',
-    headless: false,
-  })
+  const browser = await firefox.launch()
 
   let pagesScrapped = await Promise.allSettled([
     scannedAnimeFlv(browser),

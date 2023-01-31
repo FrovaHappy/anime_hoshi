@@ -1,7 +1,7 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedJkanime(browser: Browser) {
-  const page = await browser.newPage({ permissions: [] })
+  const page = await browser.newPage()
   await page.goto('https://jkanime.net/', {
     timeout: 0,
     waitUntil: 'domcontentloaded',
