@@ -2,7 +2,10 @@ import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedJkanime(browser: Browser) {
   const page = await browser.newPage({ permissions: [] })
-  await page.goto('https://jkanime.net/', { waitUntil: 'domcontentloaded' })
+  await page.goto('https://jkanime.net/', {
+    timeout: 0,
+    waitUntil: 'domcontentloaded',
+  })
 
   const content = await page.evaluate(() => {
     const ListEpisodios = document.querySelector('.maximoaltura')

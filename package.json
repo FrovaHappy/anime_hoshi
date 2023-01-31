@@ -14,7 +14,7 @@
     "lint:frontend": "npm run lint --workspace=packages/frontend",
     "build:api": "npm run build --workspace=packages/api",
     "build:frontend": "npm run build --workspace=packages/frontend",
-    "build": "npm run build:api && npm run build:frontend && npx playwright install-deps",
+    "build": "npx playwright install chromium && npm run build:api && npm run build:frontend",
     "start": "node ./packages/api/dist/index.js"
   },
   "keywords": [],

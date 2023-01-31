@@ -1,8 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedMonoschinos(browser: Browser) {
-  const page = await browser.newPage({ permissions: [] })
-  await page.goto('https://monoschinos2.com/', { waitUntil: 'domcontentloaded' })
+  const page = await browser.newPage()
+  await page.goto('https://monoschinos2.com/', { timeout: 0, waitUntil: 'domcontentloaded' })
 
   const content = await page.evaluate(() => {
     const ListEpisodios = document.querySelector('.row')

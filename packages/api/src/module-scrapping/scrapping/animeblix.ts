@@ -1,8 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedAnimeblix(browser: Browser) {
-  const page = await browser.newPage({ permissions: [] })
-  await page.goto('https://animeblix.com/', { waitUntil: 'domcontentloaded' })
+  const page = await browser.newPage()
+  await page.goto('https://animeblix.com/', { timeout: 0, waitUntil: 'domcontentloaded' })
 
   const content = await page.evaluate(() => {
     const ListEpisodios = document.querySelector('.latestEpisodes')?.querySelector('.row')
@@ -11,7 +11,7 @@ export async function scannedAnimeblix(browser: Browser) {
     arrayLi?.forEach((element) => {
       const elementA = element.querySelector('.episodeListItem__title')!.querySelector('a')!
       let episodeString = element.querySelector('.episodeListItem__number')!.textContent!
-      episodeString = episodeString.split(' ')[1]
+      episodeString = episodeString.split(' ')[2]
       const episode = parseInt(episodeString)
 
       let title = elementA.textContent!
