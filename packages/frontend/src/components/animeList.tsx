@@ -7,7 +7,7 @@ interface props {
   animeList: AnimeList[]
 }
 function getlastEpisode(animeList: AnimeList) {
-  const arrayNumEpisodes = Object.keys(animeList.episodes).sort((a, b) => parseInt(a) - parseInt(b))
+  const arrayNumEpisodes = Object.keys(animeList.episodes)?.sort((a, b) => parseInt(a) - parseInt(b)) ?? []
   const arrayTitleinPages = Object.keys(animeList.titleinPages)
   const updateEpisode = animeList.episodes[arrayNumEpisodes.at(-1) || 0]?.updateEpisode!
   const pagesIsPlural = arrayTitleinPages.length == 1 ? arrayTitleinPages[0] : `${arrayTitleinPages.length} paginas`
