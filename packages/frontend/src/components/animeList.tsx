@@ -31,7 +31,7 @@ export function AnimeComponet({ animeList }: props) {
   }
   return (
     <div className="animeList">
-      {animeList.reverse().map((animeEdited, i) => {
+      {animeList.map((animeEdited, i) => {
         const styleShadows =
           i === index
             ? { boxShadow: `0px 0px 0.625rem ${animeEdited.dataAnilist.coverImage.color}`, borderRadius: '.3125rem' }
