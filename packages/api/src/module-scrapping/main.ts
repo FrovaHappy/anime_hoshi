@@ -9,7 +9,7 @@ import { scannedMonoschinos } from './scrapping/chinosmonos'
 export async function startScrapping() {
   chromium.use(StealthPlugin())
 
-  const browser = await chromium.launch({ chromiumSandbox: true })
+  const browser = await chromium.launch()
 
   let pagesScrapped = await Promise.allSettled([
     scannedAnimeFlv(browser),
