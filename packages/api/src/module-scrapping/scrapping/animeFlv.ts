@@ -4,7 +4,7 @@ export async function scannedAnimeFlv(browser: Browser) {
   const page = await browser.newPage()
   await page.goto('https://www3.animeflv.net/', {
     timeout: 0,
-    waitUntil: 'domcontentloaded',
+    waitUntil: 'networkidle',
   })
   const content = await page.evaluate(() => {
     const ListEpisodios = document.querySelector('.ListEpisodios')
