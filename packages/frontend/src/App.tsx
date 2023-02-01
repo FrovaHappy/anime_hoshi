@@ -13,7 +13,7 @@ function App() {
       .then((response) => response.json())
       .catch(() => [])
     const animelist = await data
-    SetAnimelist(animelist.reverse())
+    SetAnimelist(animelist)
   }
 
   useEffect(() => {
