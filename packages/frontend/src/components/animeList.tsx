@@ -7,7 +7,7 @@ interface props {
   animeList: AnimeList[]
 }
 function getlastEpisode(animeList: AnimeList) {
-  const arrayNumEpisodes = Object.keys(animeList.episodes)?.sort((a, b) => parseInt(a) - parseInt(b)) ?? []
+  const arrayNumEpisodes = Object.keys(animeList.episodes).sort((a, b) => parseInt(a) - parseInt(b)) ?? []
   const arrayTitleinPages = Object.keys(animeList.titleinPages)
   const updateEpisode = animeList.episodes[arrayNumEpisodes.at(-1) || 0]?.updateEpisode!
   const pagesIsPlural = arrayTitleinPages.length == 1 ? arrayTitleinPages[0] : `${arrayTitleinPages.length} paginas`
@@ -25,6 +25,9 @@ export function AnimeComponet({ animeList }: props) {
   const [index, setindex] = useState(NaN)
   const SetIndex = (index: number) => {
     setindex(index)
+  }
+  if (animeList.length == 0) {
+    return <h1>esta cargando</h1>
   }
   return (
     <div className="animeList">
