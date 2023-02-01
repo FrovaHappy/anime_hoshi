@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react'
 import { AnimeList } from '../../types'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import { AnimeInfo } from './components/animeInfo'
+import { urlApi } from './config'
 
 function App() {
   const [animeList, SetAnimelist] = useState<AnimeList[]>([])
 
   const query = async () => {
-    const data = await fetch('/anime')
+    const data = await fetch(`${urlApi}/animes`)
       .then((response) => response.json())
       .catch(() => [])
     const animelist = await data
