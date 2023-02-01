@@ -10,7 +10,9 @@ function App() {
 
   const query = async () => {
     const data = await fetch('/anime')
-    const animelist = await data.json()
+      .then((response) => response.json())
+      .catch(() => [])
+    const animelist = await data
     SetAnimelist(animelist.reverse())
   }
 
