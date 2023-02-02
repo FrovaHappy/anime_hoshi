@@ -9,7 +9,7 @@ interface props {
 function getlastEpisode(animeList: AnimeList) {
   const arrayNumEpisodes = Object.keys(animeList?.episodes ?? {}).sort((a, b) => parseInt(a) - parseInt(b)) ?? []
   const arrayTitleinPages = Object.keys(animeList?.titleinPages ?? {})
-  const updateEpisode = animeList.episodes[arrayNumEpisodes.at(-1) || 0]?.updateEpisode!
+  const updateEpisode = animeList?.episodes[arrayNumEpisodes.at(-1) || 0]?.updateEpisode!
   const pagesIsPlural = arrayTitleinPages.length == 1 ? arrayTitleinPages[0] : `${arrayTitleinPages.length} paginas`
   return {
     episode: <>Ep. {arrayNumEpisodes.at(-1)}</>,
@@ -32,6 +32,7 @@ export function AnimeComponet({ animeList }: props) {
   return (
     <div className="animeList">
       {animeList.map((animeEdited, i) => {
+        console.log(animeEdited)
         const styleShadows =
           i === index
             ? { boxShadow: `0px 0px 0.625rem ${animeEdited.dataAnilist.coverImage.color}`, borderRadius: '.3125rem' }
