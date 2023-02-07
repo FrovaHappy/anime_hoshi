@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
+import { AnimeList } from '../../../types'
 import { List } from '../../types'
+import { getlastEpisodeInfo } from '../utils/getLastEpisodeInfo'
+import { getTimeAgo } from '../utils/getTimeAgo'
 interface Props {
   list: List
   color: string
+  anime: AnimeList
 }
 function switchActive(index: number, mySetActive: (value: number) => void) {
   mySetActive(index)
 }
-export function EpisodesConteiner({ list, color }: Props) {
+export function EpisodesConteiner({ list, color, anime }: Props) {
   useEffect(() => {
     setActive(0)
   }, [color])
@@ -19,6 +23,7 @@ export function EpisodesConteiner({ list, color }: Props) {
   const listNamePage = Object.keys(list)
   return (
     <div className="episodes_conteiner">
+      <span>{getTimeAgo(getlastEpisodeInfo(anime).updateEpisode)}</span>
       <div className="tab">
         {listNamePage.map((page, index) => {
           const isActiveColor =

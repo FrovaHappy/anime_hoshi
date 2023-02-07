@@ -51,7 +51,7 @@ export function AnimeInfo({ animeList }: props) {
       <h3 className="anime-info__title" style={{ color: color }}>
         {anime.dataAnilist.title.romaji}
       </h3>
-      <EpisodesConteiner list={list} color={color} />
+      <EpisodesConteiner list={list} color={color} anime={anime} />
     </div>
   )
 }

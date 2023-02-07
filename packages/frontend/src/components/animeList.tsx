@@ -2,23 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimeList } from '../../../types'
 import '../styles/animeList.scss'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { getlastEpisodeInfo } from '../utils/getLastEpisodeInfo'
 
 interface props {
   animes: AnimeList[]
-}
-function getlastEpisode(animeList: AnimeList) {
-  const keyEpisodesSort =
-    Object.keys(animeList?.episodes ?? {})
-      .sort((a, b) => parseInt(a) - parseInt(b))
-      .at(-1) ?? ''
-  const KeyNamePages = Object.keys(animeList?.episodes[keyEpisodesSort]?.pagesUrl ?? {})
-  const updateEpisode = animeList?.episodes[keyEpisodesSort]?.updateEpisode!
-  const pagesIsPlural = KeyNamePages.length == 1 ? KeyNamePages[0] : `${KeyNamePages.length} paginas`
-  return {
-    episode: <>Ep. {keyEpisodesSort}</>,
-    pages: <>En {pagesIsPlural}</>,
-    updateEpisode: updateEpisode,
-  }
 }
 
 function setColortoElement(index: number, SetIndex: (value: number) => void) {
@@ -35,13 +24,17 @@ export function AnimeComponet({ animes }: props) {
   return (
     <div className="animeList">
       {animes.map((anime, i) => {
+        const getEpisodeAndPages = getlastEpisodeInfo(anime)
+        const color = anime.dataAnilist.coverImage.color ?? '#fff'
         const styleShadows =
           i === index
-            ? { boxShadow: `0px 0px 0.625rem ${anime.dataAnilist.coverImage.color}`, borderRadius: '.3125rem' }
+            ? {
+                boxShadow: `0px 0px 0.625rem .125rem ${color}`,
+                borderRadius: '.3125rem',
+              }
             : undefined
-        const styleBackgroundColor = i === index ? { backgroundColor: anime.dataAnilist.coverImage.color } : undefined
-        const getEpisodeAndPages = getlastEpisode(anime)
-        const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000 ? { opacity: 1 } : undefined
+        const renderPoint: React.CSSProperties | undefined =
+          Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000 ? undefined : { contentVisibility: 'hidden' }
         return (
           <Link
             key={anime.dataAnilist.id}
@@ -52,17 +45,16 @@ export function AnimeComponet({ animes }: props) {
             }}
           >
             <div className="targetAnime">
-              <p className="targetAnime__pages">{getEpisodeAndPages.pages}</p>
-              <div className="targetAnime__img-conteiner" style={styleBackgroundColor}>
-                <span className="targetAnime__episode">{getEpisodeAndPages.episode}</span>
-                <span className="targetAnime__point" style={renderPoint}></span>
-                <img
-                  className="targetAnime__img"
-                  src={anime.dataAnilist.coverImage.large}
-                  alt={anime.dataAnilist.title.romaji}
-                />
-                <h5 className="targetAnime__title">{anime.dataAnilist.title.romaji}</h5>
-              </div>
+              <p className="targetAnime__episode">
+                {<FontAwesomeIcon icon={faSeedling} style={renderPoint} className="targetAnime__point" />} Ep.{' '}
+                {getEpisodeAndPages.keyLastEpisode}
+              </p>
+              <img
+                className="targetAnime__img"
+                src={anime.dataAnilist.coverImage.large}
+                alt={anime.dataAnilist.title.romaji}
+              />
+              <h5 className="targetAnime__title">{anime.dataAnilist.title.romaji}</h5>
             </div>
           </Link>
         )

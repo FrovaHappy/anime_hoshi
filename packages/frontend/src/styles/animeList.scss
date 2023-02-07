@@ -1,7 +1,4 @@
-:root {
-  --shadowTarget: 0px 0px .4375rem #000000;
-  --borderRadius:.3125rem;
-}
+@import "./variables.scss";
 .animeList {
   box-sizing: border-box;
   display: grid;
@@ -16,12 +13,17 @@
 
 .targetAnime {
   display: flex;
+  flex-direction: column;
+  position: relative;
+  aspect-ratio: 6/9;
   box-shadow: var(--shadowTarget);
-    flex-direction: column;
-    border-radius: var(--borderRadius);
+  border-radius: var(--borderRadius);
+  background-color: var(--backgroundColorContent);
   &__img {
     border-radius: var(--borderRadius);
+    object-fit: cover;
     width: 100%;
+    height: 100%;
   }
 
   &__title {
@@ -34,19 +36,8 @@
     align-content: center;
     z-index: 100;
     color: rgb(255, 255, 255);
-    text-shadow: var(--shadowTarget);
+    text-shadow: 0px 0px .625rem #000000;
   }
-  &__img-conteiner{
-    position: relative;
-    border-radius: var(--borderRadius);
-    background-color: black;
-  }
-  &__pages {
-    margin: 0;
-    padding: .3125rem;
-    color: rgb(255, 255, 255);
-  }
-    
   &__episode {
     background-color: #000000af;
     color: white;
@@ -54,18 +45,11 @@
     top: .3125rem;
     left: .3125rem;
     position: absolute;
-    padding: .3125rem;
+    padding: .3125rem .625rem;
     font-size: .875rem;
   }
   &__point{
-    width: .625rem;
-    height: .625rem;
-    border-radius: .625rem;
-    background-color: rgb(0, 255, 0);
+    color: rgb(0, 255, 0);
     box-shadow: var(--shadowTarget);
-    position: absolute;
-    top: .3125rem;
-    right: .3125rem;
-    opacity: 0;
   }
 }
