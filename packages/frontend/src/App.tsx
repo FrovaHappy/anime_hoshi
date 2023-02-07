@@ -24,7 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <AnimeComponet animeList={animeList} />
+        <AnimeComponet animes={animeList} />
         <Routes>
           <Route path={'/'} element={<AnimeInfo animeList={animeList} />} />
           <Route path={'/:id'} element={<AnimeInfo animeList={animeList} />} />

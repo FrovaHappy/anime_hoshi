@@ -4,16 +4,18 @@ import { AnimeList } from '../../../types'
 import '../styles/animeList.scss'
 
 interface props {
-  animeList: AnimeList[]
+  animes: AnimeList[]
 }
 function getlastEpisode(animeList: AnimeList) {
-  const arrayNumEpisodes = Object.keys(animeList?.episodes ?? {}).sort((a, b) => parseInt(a) - parseInt(b)) ?? []
-  console.log(arrayNumEpisodes)
-  const arrayTitleinPages = Object.keys(animeList?.titleinPages ?? {})
-  const updateEpisode = animeList?.episodes[arrayNumEpisodes.at(-1) || 0]?.updateEpisode!
-  const pagesIsPlural = arrayTitleinPages.length == 1 ? arrayTitleinPages[0] : `${arrayTitleinPages.length} paginas`
+  const keyEpisodesSort =
+    Object.keys(animeList?.episodes ?? {})
+      .sort((a, b) => parseInt(a) - parseInt(b))
+      .at(-1) ?? ''
+  const KeyNamePages = Object.keys(animeList?.episodes[keyEpisodesSort]?.pagesUrl ?? {})
+  const updateEpisode = animeList?.episodes[keyEpisodesSort]?.updateEpisode!
+  const pagesIsPlural = KeyNamePages.length == 1 ? KeyNamePages[0] : `${KeyNamePages.length} paginas`
   return {
-    episode: <>Ep. {arrayNumEpisodes.at(-1)}</>,
+    episode: <>Ep. {keyEpisodesSort}</>,
     pages: <>En {pagesIsPlural}</>,
     updateEpisode: updateEpisode,
   }
@@ -22,30 +24,28 @@ function getlastEpisode(animeList: AnimeList) {
 function setColortoElement(index: number, SetIndex: (value: number) => void) {
   SetIndex(index)
 }
-export function AnimeComponet({ animeList }: props) {
+export function AnimeComponet({ animes }: props) {
   const [index, setindex] = useState(NaN)
   const SetIndex = (index: number) => {
     setindex(index)
   }
-  if (animeList.length == 0) {
+  if (animes.length == 0) {
     return <h1>esta cargando</h1>
   }
   return (
     <div className="animeList">
-      {animeList.map((animeEdited, i) => {
-        console.log(animeEdited)
+      {animes.map((anime, i) => {
         const styleShadows =
           i === index
-            ? { boxShadow: `0px 0px 0.625rem ${animeEdited.dataAnilist.coverImage.color}`, borderRadius: '.3125rem' }
+            ? { boxShadow: `0px 0px 0.625rem ${anime.dataAnilist.coverImage.color}`, borderRadius: '.3125rem' }
             : undefined
-        const styleBackgroundColor =
-          i === index ? { backgroundColor: animeEdited.dataAnilist.coverImage.color } : undefined
-        const getEpisodeAndPages = getlastEpisode(animeEdited)
+        const styleBackgroundColor = i === index ? { backgroundColor: anime.dataAnilist.coverImage.color } : undefined
+        const getEpisodeAndPages = getlastEpisode(anime)
         const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000 ? { opacity: 1 } : undefined
         return (
           <Link
-            key={animeEdited.dataAnilist.id}
-            to={`/${animeEdited.dataAnilist.id}`}
+            key={anime.dataAnilist.id}
+            to={`/${anime.dataAnilist.id}`}
             style={styleShadows}
             onClick={() => {
               setColortoElement(i, SetIndex)
@@ -58,10 +58,10 @@ export function AnimeComponet({ animeList }: props) {
                 <span className="targetAnime__point" style={renderPoint}></span>
                 <img
                   className="targetAnime__img"
-                  src={animeEdited.dataAnilist.coverImage.large}
-                  alt={animeEdited.dataAnilist.title.romaji}
+                  src={anime.dataAnilist.coverImage.large}
+                  alt={anime.dataAnilist.title.romaji}
                 />
-                <h5 className="targetAnime__title">{animeEdited.dataAnilist.title.romaji}</h5>
+                <h5 className="targetAnime__title">{anime.dataAnilist.title.romaji}</h5>
               </div>
             </div>
           </Link>
