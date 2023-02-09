@@ -1,11 +1,8 @@
-:root {
-  --shadowTarget: 0px 0px .4375rem #000000;
-  --borderRadius:.3125rem;
-}
+@import './variables.scss';
 .anime-info{
   width: 28.125rem;
   box-sizing: border-box;
-  background-color: #151515;
+  background-color: var(--backgroundColorSecondary);
   &__title {
     color: white;
     padding: 1.25rem;
