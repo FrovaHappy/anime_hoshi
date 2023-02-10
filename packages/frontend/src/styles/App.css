@@ -31,6 +31,9 @@
 .App-link {
   color: #61dafb;
 }
+.itemNewEpisodes{
+  color: rgb(0, 255, 0);
+}
 
 @keyframes App-logo-spin {
   from {
