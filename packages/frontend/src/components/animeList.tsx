@@ -5,6 +5,7 @@ import '../styles/animeList.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSeedling } from '@fortawesome/free-solid-svg-icons'
 import { getlastEpisodeInfo } from '../utils/getLastEpisodeInfo'
+import { isVisibly } from '../utils/renderCondicional'
 
 interface props {
   animes: AnimeList[]
@@ -33,8 +34,7 @@ export function AnimeComponet({ animes }: props) {
                 borderRadius: '.3125rem',
               }
             : undefined
-        const renderPoint: React.CSSProperties | undefined =
-          Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000 ? undefined : { contentVisibility: 'hidden' }
+        const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
         return (
           <Link
             key={anime.dataAnilist.id}
@@ -46,7 +46,7 @@ export function AnimeComponet({ animes }: props) {
           >
             <div className="targetAnime">
               <p className="targetAnime__episode">
-                {<FontAwesomeIcon icon={faSeedling} style={renderPoint} className="targetAnime__point" />} Ep.{' '}
+                {<FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes" />} Ep.{' '}
                 {getEpisodeAndPages.keyLastEpisode}
               </p>
               <img
