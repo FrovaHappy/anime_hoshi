@@ -8,7 +8,7 @@
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #222;
+  background-color: var(--backgroundColor);
   color: var(--textColor)
 }
 
@@ -24,11 +24,11 @@ a{
 }
 
 *::-webkit-scrollbar-track {
-  background: #222;        /* color of the tracking area */
+  background: var(--backgroundColor);        /* color of the tracking area */
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: white;    /* color of the scroll thumb */
   border-radius: 1.25rem;       /* roundness of the scroll thumb */
-  border: .3125rem solid #222;  /* creates padding around scroll thumb */
+  border: .3125rem solid var(--backgroundColor);  /* creates padding around scroll thumb */
 }

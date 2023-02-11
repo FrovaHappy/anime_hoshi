@@ -1,10 +1,11 @@
 :root{
-  --shadowTarget: 0px 0px .625rem .125rem #000000ea;
+  --shadowTarget: 0px 0px .625rem .125rem #00000050;
   --borderRadius:.3125rem;
-  --textColor: #d4d4d4;
-  --backgroundColorPrimary: #121212;
-  --backgroundColorSecondary: #0b0b0b;
-  --backgroundColorContent: #2a2929;
-  --backgroundColorContentHover: #4d4b4b;
+  --textColor: #f5f5f5;
+  --textColorAlternative: #c5c5c5;
+  --backgroundColor: #36393f;
+  --backgroundColorAlternative: #2f3136;
+  --backgroundColorContent: #42464d;
+  --backgroundColorContentHover: #3c3f45;
   
 }
