@@ -31,7 +31,6 @@ export function AnimeComponet({ animes }: props) {
           i === index
             ? {
                 boxShadow: `0px 0px 0.625rem .125rem ${color}`,
-                borderRadius: '.3125rem',
               }
             : undefined
         const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
@@ -46,7 +45,7 @@ export function AnimeComponet({ animes }: props) {
           >
             <div className="targetAnime">
               <p className="targetAnime__episode">
-                {<FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes" />} Ep.{' '}
+                {<FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes" />}Ep.{' '}
                 {getEpisodeAndPages.keyLastEpisode}
               </p>
               <img

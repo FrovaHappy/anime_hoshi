@@ -93,8 +93,8 @@ function episodeElementComponent(item: { url: string; update: number; episode: n
     <li className="conteiner__item" key={item.episode}>
       <a href={item.url} target="_blank" rel="noreferrer" className="item">
         <p className="item__text">
-          <FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes" />
-          <b>Episodio {item.episode}</b>
+          <FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes item__newEp" />
+          Episodio {item.episode}
         </p>
       </a>
     </li>
