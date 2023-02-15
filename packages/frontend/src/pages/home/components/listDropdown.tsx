@@ -1,4 +1,4 @@
-import { faCaretDown, faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { faCaretDown, faFire } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { hours } from '../../../enum'
@@ -41,7 +41,7 @@ export default function RenderListDropdown({
             const internalComponent = (
               <>
                 <FontAwesomeIcon
-                  icon={faSeedling}
+                  icon={faFire}
                   style={isVisibly(renderPoint)}
                   className="itemNewEpisodes episodes__option--newEp"
                 />

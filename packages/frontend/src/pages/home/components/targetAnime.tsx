@@ -1,6 +1,6 @@
 import { getlastEpisodeInfo } from '../../../utils/getLastEpisodeInfo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { faFire } from '@fortawesome/free-solid-svg-icons'
 import { isVisibly } from '../../../utils/renderCondicional'
 import { AnimeList } from '../../../../../types'
 type Props = {
@@ -27,7 +27,7 @@ export default function TargetAnimeConponent({ anime, setId, id }: Props) {
       style={styleShadows}
     >
       <p className="targetAnime__episode">
-        {<FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes" />}Ep.{' '}
+        {<FontAwesomeIcon icon={faFire} style={isVisibly(renderPoint)} className="itemNewEpisodes" />}Ep.{' '}
         {getEpisodeAndPages.keyLastEpisode}
       </p>
       <img className="targetAnime__img" src={anime.dataAnilist.coverImage.large} alt={anime.dataAnilist.title.romaji} />

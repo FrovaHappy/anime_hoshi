@@ -63,13 +63,29 @@
   }
 }
 .item{
+  display: flex;
+  padding: .4375rem 1.5625rem;
+  align-items: center;
   &__text{
-    padding: .4375rem .625rem;
-    color: var(--textColorAlternative);
-    &:hover{
-      background-color: var(--backgroundColorContentHover);
+    color: var(--textColor);
+    &--newEp{
+      position: absolute;
+      transform: translate(-1.25rem);
+    }
+    &--timeAgo{
+      color: var(--textColorAlternative);
+      flex-grow: 1;
+      text-align: end;
+    }
+    &--externalLink{
+      margin-left: .625rem;
+      color: var(--textColorAlternative);
+      font-size: 90%;
     }
   }
+  &:hover{
+      background-color: var(--backgroundColorContentHover);
+    }
 }
 .episodes{
   position: relative;

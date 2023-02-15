@@ -7,7 +7,7 @@ import { getTimeAgo } from '../../utils/getTimeAgo'
 import renderCondicional, { isVisibly } from '../../utils/renderCondicional'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling, faRotate } from '@fortawesome/free-solid-svg-icons'
+import { faFire, faRotate, faExternalLink } from '@fortawesome/free-solid-svg-icons'
 import RenderListDropdown from './components/listDropdown'
 
 interface Props {
@@ -31,11 +31,11 @@ function episodeElementComponent(item: { url: string; update: number; episode: n
   const renderPoint = renderCondicional.validInsideOf(hours['8h'], item.update)
   return (
     <li className="conteiner__item" key={item.episode}>
-      <a href={item.url} target="_blank" rel="noreferrer" className="item">
-        <p className="item__text">
-          <FontAwesomeIcon icon={faSeedling} style={isVisibly(renderPoint)} className="itemNewEpisodes item__newEp" />
-          Episodio {item.episode}
-        </p>
+      <a href={item.url} target="_blank" rel="noreferrer" className="item ">
+        <FontAwesomeIcon icon={faFire} style={isVisibly(renderPoint)} className="itemNewEpisodes item__text--newEp" />
+        <p className="item__text">Episodio {item.episode}</p>
+        <p className="item__text--timeAgo">{getTimeAgo(item.update)}</p>
+        <FontAwesomeIcon className="item__text--externalLink" icon={faExternalLink} />
       </a>
     </li>
   )
