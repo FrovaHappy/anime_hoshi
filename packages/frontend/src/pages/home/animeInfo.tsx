@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { AnimeList, EpisodesContent } from '../../../../types'
-import { EpisodesConteiner } from './episodesConteiner'
+import { EpisodesConteiner } from './components/animeInfo__body'
 import './styles/animeInfo.scss'
 import { List } from '../../../types'
 interface props {
