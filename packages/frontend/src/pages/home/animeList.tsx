@@ -10,7 +10,7 @@ interface props {
 }
 
 export function AnimeComponet({ animes }: props) {
-  const [id, setId] = useState<number | undefined>()
+  const [id, setId] = useState<number>(0)
   if (animes.length == 0) {
     return <h1>esta cargando</h1>
   }
@@ -18,9 +18,7 @@ export function AnimeComponet({ animes }: props) {
     <>
       <div className="animeList">
         {animes.map((anime) => {
-          const setShadows = anime.dataAnilist.id == id
-
-          return <TargetAnime key={anime.dataAnilist.id} anime={anime} setId={setId} setShadows={setShadows} />
+          return <TargetAnime key={anime.dataAnilist.id} anime={anime} setId={setId} id={id} />
         })}
       </div>
       <AnimeInfo animes={animes} id={id} />

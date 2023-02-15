@@ -6,9 +6,10 @@ import { AnimeList } from '../../../../../types'
 type Props = {
   anime: AnimeList
   setId: (value: number) => void
-  setShadows: boolean
+  id: number
 }
-export default function TargetAnimeConponent({ anime, setId, setShadows }: Props) {
+export default function TargetAnimeConponent({ anime, setId, id }: Props) {
+  const setShadows = anime.dataAnilist.id == id
   const getEpisodeAndPages = getlastEpisodeInfo(anime)
   const color = anime.dataAnilist.coverImage.color ?? '#fff'
   const styleShadows = setShadows
