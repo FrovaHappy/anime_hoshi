@@ -1,40 +1,90 @@
-@import '../../../styles/variables.scss';
-.anime-info{
+.anime-info {
   width: 28.125rem;
-  padding: .9375rem;
+  padding: 0.9375rem;
   box-sizing: border-box;
   background-color: var(--backgroundColorAlternative);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.animeInfoHeader {
+  width: 100%;
+  display: flex;
+  &__img {
+    aspect-ratio: 6/9;
+    width: 9.375rem;
+    overflow: hidden;
+    border-radius: var(--borderRadius);
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0.625rem;
+    width: inherit;
+    position: relative;
 
-  &__title {
-    color: white;
-    padding: 1.25rem;
+    &--title {
+      display: flex;
+      font-size: 1.25em;
+      align-items: center;
+      margin-bottom: 0.625rem;
+      border-radius: var(--borderRadius);
+      background-color: var(--backgroundColorContentHover);
+      justify-content: center;
+      flex-grow: 1;
+    }
+    &--info {
+      color: var(--textColor);
+      background-color: var(--backgroundColorContentHover);
+      display: flex;
+    }
+  }
+}
+.properties {
+  padding: 0.4375rem 0.625rem;
+  border-radius: var(--borderRadius);
+}
+.anilist {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-left: auto;
+  color: var(--textColor);
+  padding: .125rem .3125rem;
+  background-color: rgba(0, 0, 24, 0.479);
+  border-radius: var(--borderRadius);
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  &__img {
+    width: 1.1875rem;
+  }
+  &__externalLink{
+    font-size: 60%;
+    margin-right: .3125rem;
   }
 }
 .tab {
   display: flex;
   align-items: center;
   text-align: center;
-  justify-content:  space-evenly;
+  justify-content: space-evenly;
   &__button {
     box-sizing: border-box;
     width: 100%;
     background-color: #00000000;
     color: #c5c5c5;
     padding-bottom: 1.25rem;
-    border: .0625rem #00000000;
+    border: 0.0625rem #00000000;
   }
-  
 }
-.conteiner{
+.conteiner {
   width: 100%;
   height: 25rem;
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
-  &__select{
+  &__select {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,14 +93,14 @@
     background-color: var(--backgroundColorContent);
     box-sizing: border-box;
     overflow: hidden;
-    margin-top: .625rem;
+    margin-top: 0.625rem;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: auto;
     list-style: none;
     border-radius: var(--borderRadius);
-    animation-duration: .2s;
+    animation-duration: 0.2s;
     animation-name: traslateconteiner;
   }
   @keyframes traslateconteiner {
@@ -62,46 +112,46 @@
     }
   }
 }
-.item{
+.item {
   display: flex;
-  padding: .4375rem 1.5625rem;
+  padding: 0.4375rem 1.5625rem;
   align-items: center;
-  &__text{
+  &__text {
     color: var(--textColor);
-    &--newEp{
+    &--newEp {
       position: absolute;
       transform: translate(-1.25rem);
     }
-    &--timeAgo{
+    &--timeAgo {
       color: var(--textColorAlternative);
       flex-grow: 1;
       text-align: end;
     }
-    &--externalLink{
-      margin-left: .625rem;
+    &--externalLink {
+      margin-left: 0.625rem;
       color: var(--textColorAlternative);
       font-size: 90%;
     }
   }
-  &:hover{
-      background-color: var(--backgroundColorContentHover);
-    }
+  &:hover {
+    background-color: var(--backgroundColorContentHover);
+  }
 }
-.episodes{
+.episodes {
   position: relative;
-  &__select{
+  &__select {
     width: 15.625rem;
     box-sizing: border-box;
     border-radius: var(--borderRadius);
-    padding: .4375rem .625rem;
+    padding: 0.4375rem 0.625rem;
     background-color: var(--backgroundColorContent);
     display: flex;
     user-select: none;
-    &:hover{
+    &:hover {
       background-color: var(--backgroundColorContentHover);
     }
   }
-  &__options{
+  &__options {
     position: absolute;
     z-index: 10;
     width: 15.625rem;
@@ -116,14 +166,14 @@
     top: 2.375rem;
     user-select: none;
   }
-  &__option{
+  &__option {
     display: flex;
-    padding: .4375rem .625rem;
-    &--namePage{
+    padding: 0.4375rem 0.625rem;
+    &--namePage {
       width: -webkit-fill-available;
       text-align: left;
     }
-    &:hover{
+    &:hover {
       background-color: var(--backgroundColorContentHover);
     }
   }

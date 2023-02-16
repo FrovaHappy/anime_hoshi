@@ -3,6 +3,7 @@ import { AnimeList, EpisodesContent } from '../../../../types'
 import { EpisodesConteiner } from './components/animeInfo__body'
 import './styles/animeInfo.scss'
 import { List } from '../../../types'
+import { AnimeInfoHeader } from './components/animeInfo__header'
 interface props {
   animes: AnimeList[]
   id: number | undefined
@@ -48,9 +49,7 @@ export function AnimeInfo({ animes, id }: props) {
   const color = anime?.dataAnilist.coverImage.color || '#fff'
   return (
     <div className="anime-info">
-      <h3 className="anime-info__title" style={{ color: color }}>
-        {anime.dataAnilist.title.romaji}
-      </h3>
+      <AnimeInfoHeader anime={anime} color={color} />
       <EpisodesConteiner list={list} color={color} anime={anime} />
     </div>
   )
