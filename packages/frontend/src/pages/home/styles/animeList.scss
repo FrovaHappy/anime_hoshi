@@ -1,4 +1,4 @@
-@import "./variables.scss";
+@import '../../../styles/variables.scss';
 .animeList {
   box-sizing: border-box;
   display: grid;
@@ -19,6 +19,7 @@
   box-shadow: var(--shadowTarget);
   border-radius: var(--borderRadius);
   background-color: var(--backgroundColorAlternative);
+  user-select: none;
   &__img {
     border-radius: var(--borderRadius);
     object-fit: cover;
