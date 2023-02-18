@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom'
 import { AnimeList, EpisodesContent } from '../../../../types'
 import { EpisodesConteiner } from './components/animeInfo__body'
-import './styles/animeInfo.scss'
+import '../../styles/pages/home/homeInfo.scss'
 import { List } from '../../../types'
 import { AnimeInfoHeader } from './components/animeInfo__header'
 interface props {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { AnimeList } from '../../../../types'
-import './styles/animeList.scss'
+import '../../styles/pages/home/homeList.scss'
 
 import { AnimeInfo } from './animeInfo'
 import TargetAnime from './components/targetAnime'
