@@ -22,6 +22,10 @@
   user-select: none;
   &__img {
     border-radius: var(--borderRadius);
+    background-image: url('../../../../public/resources/loadingImg.gif');
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
     object-fit: cover;
     width: 100%;
     height: 100%;

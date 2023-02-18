@@ -3,6 +3,7 @@ import { AnimeList } from '../../../../types'
 import '../../styles/pages/home/homeList.scss'
 
 import { AnimeInfo } from './animeInfo'
+import { FetchLoading } from './components/fetchLoading'
 import TargetAnime from './components/targetAnime'
 
 interface props {
@@ -12,7 +13,7 @@ interface props {
 export function AnimeComponet({ animes }: props) {
   const [id, setId] = useState<number>(0)
   if (animes.length == 0) {
-    return <h1>esta cargando</h1>
+    return <FetchLoading />
   }
   return (
     <>

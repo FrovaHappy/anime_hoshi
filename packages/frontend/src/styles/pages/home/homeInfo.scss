@@ -1,3 +1,4 @@
+@import url(./blocks/fetchLoading.scss);
 .anime-info {
   width: 28.125rem;
   padding: 0.9375rem;
@@ -25,24 +26,23 @@
 
     &--title {
       display: flex;
-      font-size: 1.25em;
       align-items: center;
       margin-bottom: 0.625rem;
       border-radius: var(--borderRadius);
-      background-color: var(--backgroundColorContentHover);
       justify-content: center;
       flex-grow: 1;
     }
     &--info {
       color: var(--textColor);
-      background-color: var(--backgroundColorContentHover);
       display: flex;
     }
   }
 }
 .properties {
   padding: 0.4375rem 0.625rem;
+  font-size: .8125rem;
   border-radius: var(--borderRadius);
+  background-color: var(--backgroundColorContent);
 }
 .anilist {
   position: absolute;
@@ -51,7 +51,7 @@
   margin-left: auto;
   color: var(--textColor);
   padding: .125rem .3125rem;
-  background-color: rgba(0, 0, 24, 0.479);
+  background-color: rgba(0, 0, 24, 0.342);
   border-radius: var(--borderRadius);
   display: flex;
   align-items: center;
@@ -60,7 +60,7 @@
     width: 1.1875rem;
   }
   &__externalLink{
-    font-size: 60%;
+    font-size: .8125rem;
     margin-right: .3125rem;
   }
 }

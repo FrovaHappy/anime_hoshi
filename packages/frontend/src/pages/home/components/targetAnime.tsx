@@ -30,7 +30,12 @@ export default function TargetAnimeConponent({ anime, setId, id }: Props) {
         {<FontAwesomeIcon icon={faFire} style={isVisibly(renderPoint)} className="itemNewEpisodes" />}Ep.{' '}
         {getEpisodeAndPages.keyLastEpisode}
       </p>
-      <img className="targetAnime__img" src={anime.dataAnilist.coverImage.large} alt={anime.dataAnilist.title.romaji} />
+      <img
+        className="targetAnime__img"
+        src={anime.dataAnilist.coverImage.large}
+        alt={anime.dataAnilist.title.romaji}
+        loading="lazy"
+      />
       <h5 className="targetAnime__title">{anime.dataAnilist.title.romaji}</h5>
     </div>
   )

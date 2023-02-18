@@ -1,0 +1,15 @@
+.fetchLoading{
+  display: flex;
+  padding: 1.875rem;
+  margin: auto;
+  border-radius: var(--borderRadius);
+  background-color: var(--backgroundColorContent);
+  align-items: center;
+  &__text{
+    padding-left: .9375rem;
+    font-size: 1.50rem;
+  }
+  &__img{
+    height: 9.375rem;
+  }
+}
