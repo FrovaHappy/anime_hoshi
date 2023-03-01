@@ -49,7 +49,7 @@ export function AnimeInfo({ animes, id }: props) {
   const color = anime?.dataAnilist.coverImage.color || '#fff'
   return (
     <div className="anime-info">
-      <AnimeInfoHeader anime={anime} color={color} />
+      <AnimeInfoHeader anime={anime} />
       <EpisodesConteiner list={list} color={color} anime={anime} />
     </div>
   )

@@ -3,30 +3,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire } from '@fortawesome/free-solid-svg-icons'
 import { isVisibly } from '../../../utils/renderCondicional'
 import { AnimeList } from '../../../../../types'
+import { setColorPrimary } from '../../../utils/toogleColorPrimary'
 type Props = {
   anime: AnimeList
   setId: (value: number) => void
   id: number
 }
 export default function TargetAnimeConponent({ anime, setId, id }: Props) {
-  const setShadows = anime.dataAnilist.id == id
+  const compareId = anime.dataAnilist.id == id
   const getEpisodeAndPages = getlastEpisodeInfo(anime)
   const color = anime.dataAnilist.coverImage.color ?? '#fff'
-  const styleShadows = setShadows
-    ? {
-        boxShadow: `0px 0px 0.625rem .125rem ${color}`,
-      }
-    : undefined
+  const setClassTarget = compareId ? 'targetAnime targetAnime--active' : 'targetAnime'
+  const setClassEpisode = compareId ? 'targetAnime__episode targetAnime__episode--active' : 'targetAnime__episode'
   const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
   return (
     <div
-      className="targetAnime"
+      className={setClassTarget}
       onClick={() => {
         setId(anime.dataAnilist.id)
+        setColorPrimary(color)
       }}
-      style={styleShadows}
     >
-      <p className="targetAnime__episode">
+      <p className={setClassEpisode}>
         {<FontAwesomeIcon icon={faFire} style={isVisibly(renderPoint)} className="itemNewEpisodes" />}Ep.{' '}
         {getEpisodeAndPages.keyLastEpisode}
       </p>

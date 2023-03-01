@@ -4,9 +4,8 @@ import { faExternalLink } from '@fortawesome/free-solid-svg-icons'
 
 type Props = {
   anime: AnimeList
-  color: string
 }
-export function AnimeInfoHeader({ anime, color }: Props) {
+export function AnimeInfoHeader({ anime }: Props) {
   return (
     <div className="animeInfoHeader">
       <img
@@ -16,7 +15,7 @@ export function AnimeInfoHeader({ anime, color }: Props) {
       />
 
       <div className="animeInfoHeader__container">
-        <h3 className="animeInfoHeader__container--title" style={{ color: color }}>
+        <h3 className="animeInfoHeader__container--title">
           {anime.dataAnilist.title.romaji}
           <a
             className="anilist"
