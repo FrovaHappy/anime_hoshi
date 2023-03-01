@@ -93,7 +93,7 @@
   &__list {
     background-color: var(--backgroundColorContent);
     box-sizing: border-box;
-    overflow: hidden;
+    overflow-x: hidden;
     margin-top: 0.625rem;
     display: flex;
     flex-direction: column;
@@ -103,6 +103,14 @@
     border-radius: var(--borderRadius);
     animation-duration: 0.2s;
     animation-name: traslateconteiner;
+    &::-webkit-scrollbar-track {
+      background: var(--backgroundColorContent);
+      border-top-right-radius: var(--borderRadius);
+      border-bottom-right-radius: var(--borderRadius);
+    }
+    &::-webkit-scrollbar-thumb {
+      border: .3125rem solid var(--backgroundColorContent);
+    }
   }
   @keyframes traslateconteiner {
     from {

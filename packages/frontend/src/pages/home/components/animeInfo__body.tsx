@@ -12,7 +12,7 @@ import RenderListDropdown from './listDropdown'
 
 interface Props {
   list: List
-  color: string
+  id: number
   anime: AnimeList
 }
 
@@ -40,8 +40,8 @@ function episodeElementComponent(item: { url: string; update: number; episode: n
     </li>
   )
 }
-export function EpisodesConteiner({ list, color, anime }: Props) {
-  const { active, setActive } = toogleEpisodeOptions([color])
+export function EpisodesConteiner({ list, id, anime }: Props) {
+  const { active, setActive } = toogleEpisodeOptions([id])
   const activeState = { active, setActive }
   const listSortedForNamePage = Object.keys(list)
   const lastEpisodeInfo = getlastEpisodeInfo(anime)
@@ -56,7 +56,8 @@ export function EpisodesConteiner({ list, color, anime }: Props) {
             activeState={activeState}
           />
           <span>
-            {<FontAwesomeIcon icon={faRotate} />} {getTimeAgo(lastEpisodeInfo.updateEpisode)}
+            {<FontAwesomeIcon icon={faRotate} />}
+            {getTimeAgo(lastEpisodeInfo.updateEpisode)}
           </span>
         </div>
         {listSortedForNamePage.map((page) => {
