@@ -1,3 +1,4 @@
+import './fetchLoading.scss'
 export const FetchLoading = () => {
   return (
     <div className="fetchLoading">

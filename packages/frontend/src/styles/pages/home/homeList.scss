@@ -1,4 +1,3 @@
-@import '../../../styles/variables.scss';
 .animeList {
   box-sizing: border-box;
   display: grid;
@@ -58,7 +57,7 @@
     }
   }
   &--active{
-    border-right: .1875rem solid var(--colorPrimary);
-    border-bottom: .1875rem solid var(--colorPrimary);
+    border-bottom: .25rem solid var(--colorPrimary);
+    text-shadow: 0 0 8px #000000;
   }
 }
