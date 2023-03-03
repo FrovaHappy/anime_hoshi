@@ -13,6 +13,8 @@
 .targetAnime {
   display: flex;
   flex-direction: column;
+  height: max-content;
+  overflow: hidden;
   position: relative;
   aspect-ratio: 6/9;
   box-sizing: border-box;
@@ -26,7 +28,6 @@
     background-repeat: no-repeat;
     background-position: center;
     object-fit: cover;
-    border-radius: calc(var(--borderRadius) - .125rem);
     width: 100%;
     height: 100%;
   }
@@ -34,14 +35,13 @@
   &__title {
     box-sizing: border-box;
     position: absolute;
-    padding: .3125rem;
+    padding: .625rem .3125rem;
     margin: 0;
     width: 100%;
-    bottom: .625rem;
-    align-content: center;
-    z-index: 100;
+    bottom: 0;
+    font-size: .8125rem;
     color: var(--textColor);
-    text-shadow: 0px 0px .625rem #000000;
+    background-image: linear-gradient(0deg, #00000080,#00000080,#00000080,#00000080,#00000020, transparent);
   }
   &__episode {
     background-color: #000000af;
