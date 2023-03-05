@@ -1,0 +1,16 @@
+.contribute{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  &__img{
+    width: 2.5rem;
+    background-size: contain;
+    margin-right: .625rem;
+  }
+  &__text{
+    text-align: left;
+    font-size: .75em;
+    color: var(--textColorAlternative);
+    text-shadow: 0 0 .1875rem #000000;
+  }
+}

@@ -1,0 +1,60 @@
+.welcome{
+  box-sizing: border-box;
+  width: 28.125rem;
+  overflow: hidden;
+  padding: 1.25rem;
+  background-image: url("../../../../public/resources/welcomeBackground.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  &__title{
+    font-size: 2rem;
+    padding: 0 0 .9375rem 0;
+    text-shadow: var(--shadowTarget);
+  }
+  &__subtitle{
+    font-size: 1.125rem;
+    text-shadow: var(--shadowTarget);
+  }
+  &__helperRow{
+    text-align: start;
+    font-size: 1.25rem;
+  }
+}
+
+.helperRow{
+    display: flex;
+    align-items: center;
+    padding: .3125rem 0;
+  &__align{
+    display: flex;
+  }
+  &__text{
+    text-align: left;
+    font-size: .875rem;
+  }
+  &__num{
+    margin-right: .3125rem;
+    font-size: .875rem;
+  }
+  &__item{
+    width: 3.125rem;
+    position: relative;
+    margin: 0 .9375rem;
+    &--img{
+      position: absolute;
+      right: 0px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 15%;
+    }
+    &--bg{
+      position: relative;
+      color: #2E9BFF;
+      width: 100%;
+    }
+  }
+}
