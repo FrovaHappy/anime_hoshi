@@ -1,5 +1,5 @@
 import { InfoEpisodeRecovered, QueryAnilist } from '../../../../types'
-import { findIncidences, findIncidencesOverflowEpisode } from '../../database/anime.db'
+import { findIncidences } from '../../database/anime.db'
 import { EpisodeNumber } from '../../Enum'
 import { queryAnilistForTitle } from './queryAnilist'
 
@@ -8,10 +8,9 @@ export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisod
   let queryAnilist: QueryAnilist | undefined
 
   let animeIncidence = await findIncidences(resultScrapedForItem.title, undefined, namePage)
-  if (!animeIncidence) animeIncidence = await findIncidencesOverflowEpisode(namePage, resultScrapedForItem.title)
   if (!animeIncidence) queryAnilist = await queryAnilistForTitle(resultScrapedForItem.title)
 
-  const mediaAnilist = queryAnilist?.data?.Media
+  const mediaAnilist = queryAnilist?.data?.Media ?? animeIncidence?.dataAnilist
   resultScrapedForItem.episode ||= mediaAnilist?.episodes || EpisodeNumber.lastEpisodeNotFound
 
   if (resultScrapedForItem.episode === EpisodeNumber.lastEpisodeNotFound) {
@@ -37,7 +36,7 @@ export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisod
   if (!animeIncidence) animeIncidence = await findIncidences('', mediaAnilist!.id, namePage)
 
   let titleinPages = animeIncidence?.titleinPages || {}
-  if (!animeIncidence?.titleinPages[`${namePage}-overflow`]) titleinPages[namePage] = resultScrapedForItem.title
+  if (!animeIncidence?.titleinPages[`${namePage}-fixed`]) titleinPages[namePage] = resultScrapedForItem.title
 
   return {
     resultScrapedForItemModified: resultScrapedForItem,

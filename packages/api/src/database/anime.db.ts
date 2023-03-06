@@ -5,8 +5,13 @@ import { animeModel } from './models/anime.model'
 export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStatus.emty, namePage = '') {
   const titleinPageString = `{ "titleinPages.${namePage}":"${titleAnimeInPage}" }`
   const titleinPage = JSON.parse(titleinPageString)
+  const titleinPageStringFixed = `{ "titleinPages.${namePage}-fixed":"${titleAnimeInPage}" }`
+  const titleinPageFixed = JSON.parse(titleinPageStringFixed)
+
   const anime = await animeModel.findOne({
     $or: [
+      titleinPage,
+      titleinPageFixed,
       {
         'dataAnilist.title': { english: titleAnimeInPage },
       },
@@ -16,20 +21,10 @@ export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStat
       {
         'dataAnilist.title': { userPreferred: titleAnimeInPage },
       },
-      titleinPage,
       {
         'dataAnilist.id': idInAnilist,
       },
     ],
-  })
-  return anime
-}
-
-export async function findIncidencesOverflowEpisode(namePage: string, titleAnimeInPage: string) {
-  const titleinPageString = `{ "titleinPages.${namePage}-overflow":"${titleAnimeInPage}" }`
-  const titleinPage = JSON.parse(titleinPageString)
-  const anime = await animeModel.findOne({
-    $or: [titleinPage],
   })
   return anime
 }
