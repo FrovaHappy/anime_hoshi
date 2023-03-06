@@ -4,10 +4,10 @@ function setEpisode(
   episodesOfAnimeList: Episodes,
   episodewithoutNaN: number,
   resultScrapedForItem: InfoEpisodeRecovered,
-  namePage: string
+  namePage: string,
+  needUpdate: boolean
 ) {
   const numberOfEpisode = episodewithoutNaN
-  let needUpdate = false
   let episodes = episodesOfAnimeList
   let episode = episodes[numberOfEpisode]
   if (episode) {
@@ -44,9 +44,17 @@ export function formattingBeforeSaving(
   const fivedaytomiliseconds = 432_000_000
   if (Date.now() > animeIncidence.updateAnilist + fivedaytomiliseconds) {
     console.log('Anilist updated for time expired')
+    needUpdate = true
+    animeEdited.updateAnilist = Date.now()
   }
 
-  const setEpisodesStatus = setEpisode(episodes, resultScrapedForItem.episode, resultScrapedForItem, namePage)
+  const setEpisodesStatus = setEpisode(
+    episodes,
+    resultScrapedForItem.episode,
+    resultScrapedForItem,
+    namePage,
+    needUpdate
+  )
   needUpdate = setEpisodesStatus.needUpdate
   animeEdited.episodes = { ...setEpisodesStatus.episodes }
 

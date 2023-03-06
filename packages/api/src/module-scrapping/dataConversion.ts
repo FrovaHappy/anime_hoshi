@@ -5,6 +5,7 @@ import { InfoEpisodeRecovered } from '../../../types'
 import refreshCache from './modules/refreshCache'
 import { formattingBeforeSaving } from './modules/formattingBeforeSaving'
 import { findConcidencesInDatabase } from './modules/findConcidencesInDatabase'
+import { formartItemScraper } from './modules/fomartItemScraper'
 
 export async function setAnime() {
   console.log('start conversion ...')
@@ -20,6 +21,7 @@ export async function setAnime() {
     let updated = 0
 
     for (let resultScrapedForItem of resultPageArray) {
+      resultScrapedForItem = formartItemScraper(resultScrapedForItem)
       let { animeIncidence, error } = await findConcidencesInDatabase(resultScrapedForItem, namePage)
       if (error) {
         errors.push(error)
@@ -46,9 +48,13 @@ export async function setAnime() {
   }
   await refreshCache.animeList(animespublished, needUpdateArray)
   console.table(
-    errors.map((err) => {
-      err.resultScrapedForItem.url = err.resultScrapedForItem.url.slice(7, 20)
-      return err.resultScrapedForItem
+    errors.map((error) => {
+      return {
+        page: error.namePage,
+        title: error.title,
+        typeError: error.typeError,
+        episode: error.episode,
+      }
     })
   )
 }
