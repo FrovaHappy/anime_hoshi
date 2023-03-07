@@ -2,7 +2,8 @@ import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedAnimeblix(browser: Browser) {
   const page = await browser.newPage()
-  await page.goto('https://animeblix.com/', { timeout: 0, waitUntil: 'domcontentloaded' })
+  await page.goto('https://animeblix.com/')
+  await page.getByText('Últimos episodios', { exact: true }).waitFor()
 
   const content = await page.evaluate(() => {
     const ListEpisodios = document.querySelector('.latestEpisodes')?.querySelector('.row')
@@ -30,5 +31,5 @@ export async function scannedAnimeblix(browser: Browser) {
     return infoEpisodeRecovered
   })
   await page.close()
-  return { animeblix: content }
+  return { animeblix: content.reverse() }
 }

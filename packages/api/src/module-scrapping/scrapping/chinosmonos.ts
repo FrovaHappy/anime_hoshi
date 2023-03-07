@@ -2,7 +2,8 @@ import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
 export async function scannedMonoschinos(browser: Browser) {
   const page = await browser.newPage()
-  await page.goto('https://monoschinos2.com/', { timeout: 0, waitUntil: 'domcontentloaded' })
+  await page.goto('https://monoschinos2.com/')
+  await page.getByText('Capítulos Recientes').waitFor()
 
   const content = await page.evaluate(() => {
     const ListEpisodios = document.querySelector('.row')
@@ -22,5 +23,5 @@ export async function scannedMonoschinos(browser: Browser) {
     return infoEpisodeRecovered
   })
   await page.close()
-  return { monosChinos: content }
+  return { monosChinos: content.reverse() }
 }
