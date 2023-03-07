@@ -1,8 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-export async function scannedAnimeblix(browser: Browser) {
+async function scannedAnimeblix(browser: Browser) {
   const page = await browser.newPage()
-  await page.goto('https://animeblix.com/')
+  await page.goto('https://animeblix.com/', { waitUntil: 'commit' })
   await page.getByText('Últimos episodios', { exact: true }).waitFor()
 
   const content = await page.evaluate(() => {
@@ -32,4 +32,7 @@ export async function scannedAnimeblix(browser: Browser) {
   })
   await page.close()
   return { animeblix: content.reverse() }
+}
+export default {
+  startAttackPage: scannedAnimeblix,
 }

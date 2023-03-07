@@ -1,8 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-export async function scannedMonoschinos(browser: Browser) {
+async function scannedMonoschinos(browser: Browser) {
   const page = await browser.newPage()
-  await page.goto('https://monoschinos2.com/')
+  await page.goto('https://monoschinos2.com/', { waitUntil: 'commit' })
   await page.getByText('Capítulos Recientes').waitFor()
 
   const content = await page.evaluate(() => {
@@ -24,4 +24,7 @@ export async function scannedMonoschinos(browser: Browser) {
   })
   await page.close()
   return { monosChinos: content.reverse() }
+}
+export default {
+  startAttackPage: scannedMonoschinos,
 }

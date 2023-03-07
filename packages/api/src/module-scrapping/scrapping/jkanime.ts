@@ -1,8 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-export async function scannedJkanime(browser: Browser) {
+async function scannedJkanime(browser: Browser) {
   const page = await browser.newPage()
-  await page.goto('https://jkanime.net/')
+  await page.goto('https://jkanime.net/', { waitUntil: 'commit' })
   await page.getByText('ÚLTIMOS ANIMES AGREGADOS').waitFor()
 
   const content = await page.evaluate(() => {
@@ -24,4 +24,7 @@ export async function scannedJkanime(browser: Browser) {
   })
   await page.close()
   return { jkanime: content.reverse() }
+}
+export default {
+  startAttackPage: scannedJkanime,
 }
