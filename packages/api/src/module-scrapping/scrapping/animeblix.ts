@@ -1,6 +1,6 @@
-import { Browser } from 'playwright'
+import { BrowserContext } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-async function scannedAnimeblix(browser: Browser) {
+async function scannedAnimeblix(browser: BrowserContext) {
   const page = await browser.newPage()
   await page.goto('https://animeblix.com/', { waitUntil: 'commit' })
   await page.getByText('Últimos episodios', { exact: true }).waitFor()

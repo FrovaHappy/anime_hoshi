@@ -1,6 +1,6 @@
-import { Browser } from 'playwright'
+import { BrowserContext } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-async function scannedMonoschinos(browser: Browser) {
+async function scannedMonoschinos(browser: BrowserContext) {
   const page = await browser.newPage()
   await page.goto('https://monoschinos2.com/', { waitUntil: 'commit' })
   await page.getByText('Capítulos Recientes').waitFor()
