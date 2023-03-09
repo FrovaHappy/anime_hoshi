@@ -13,7 +13,6 @@ type FileAttack = {
 const scrapersPagesFiles = fs.readdirSync(path.join(__dirname, 'scrapping/'))
 
 export async function startScrapping() {
-  const pathToExtension = path.join(__dirname, 'uBlockOrigin.zip')
   const userDataDir = '/tmp/test-user-data-dir'
   console.time('browser-scraping')
   const getPagesAttacks: FileAttack[] = []
@@ -23,11 +22,7 @@ export async function startScrapping() {
   }
 
   chromium.use(StealthPlugin())
-  const browser = await chromium.launchPersistentContext(userDataDir, {
-    headless: true,
-    args: [`--disable-extensions-except=${pathToExtension}`, '--headless=chromium'],
-    ignoreDefaultArgs: ['--disable-component-extensions-with-background-pages'],
-  })
+  const browser = await chromium.launchPersistentContext(userDataDir)
 
   let pagesScrapped = await Promise.allSettled(getPagesAttacks.map((page) => page.startAttackPage(browser)))
   const pages = pagesScrapped
