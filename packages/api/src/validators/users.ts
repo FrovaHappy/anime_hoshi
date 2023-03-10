@@ -19,25 +19,17 @@ const expRegofUsername = (username: string) => {
   return true
 }
 
-const validateUserNew = [
+
+const validateUser = [
   check('username').exists().isString().custom(expRegofUsername),
   check('password').exists().isString().escape(),
-  validateResult
-]
-const validateUserCurrent = [
-  check('username').exists().isString().custom(expRegofUsername),
-  check('password').exists().isString().escape(),
-  validateResult
+  validateResult,
 ]
 const validateUserUpdate = [
   check('username').exists().isString().custom(expRegofUsername),
   check('oldPassword').exists().isString().escape(),
   check('newPassword').exists().isString().escape(),
-  validateResult
+  validateResult,
 ]
 
-export default {
-  validateUserNew,
-  validateUserCurrent,
-  validateUserUpdate
-}
+export { validateUser, validateUserUpdate }
