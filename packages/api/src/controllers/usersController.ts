@@ -13,11 +13,10 @@ export async function signup(req: Request, res: Response) {
     passwordHash,
     roles: ['user'],
   }
-  await servicesCreateUser(user).then((userNew) => {
-    !userNew
-      ? res.status(400).send({ error: 'User already created' })
-      : res.status(201).send({ message: 'user successfully created' })
-  })
+  const userNew = await servicesCreateUser(user)
+  !userNew
+    ? res.status(400).send({ error: 'User already created' })
+    : res.status(201).send({ message: 'user successfully created' })
 }
 export async function signin(req: Request, res: Response) {
   const user: IuserWithoutPasswordHash = {
