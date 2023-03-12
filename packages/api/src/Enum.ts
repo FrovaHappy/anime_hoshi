@@ -6,7 +6,6 @@ export const enum EpisodeNumber {
 }
 
 export const enum CacheKeys {
-  animePublished = 'animePublished',
-  animeUpdated = 'animeUpdated',
+  tempVapidkey = 'tempVapidkey',
   animeList = 'animeList',
 }
