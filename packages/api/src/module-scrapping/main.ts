@@ -34,7 +34,7 @@ export async function startScrapping() {
       return []
     })
     .flat()
-  await browser.close()
+  await browser.close().catch(() => { throw new Error ('Failed to close')})
   console.timeEnd('browser-scraping')
   return pages
 }
