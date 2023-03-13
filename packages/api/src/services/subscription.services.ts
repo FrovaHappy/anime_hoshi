@@ -3,7 +3,7 @@ import cache from '../utils/cache'
 import cryptoJS from 'crypto-js'
 import { CacheKeys } from '../Enum'
 import { Subscription, TempVapidkey } from '../../type'
-import { addNewSubscription, getOneSubscription } from '../database/subscriptions.db'
+import { addNewSubscription, UpdateOneSubscription } from '../database/subscriptions.db'
 import configs from '../config'
 
 export function createVapidKey() {
@@ -13,13 +13,30 @@ export function createVapidKey() {
   cache.set(CacheKeys.tempVapidkey, tempVapidkeys)
   return vapidkey.publicKey
 }
+function searchVapidkey(publicKey: string) {
+  let tempVapidkeys: TempVapidkey[] = cache.get(CacheKeys.tempVapidkey) || []
+  const indexVapidkey = tempVapidkeys.findIndex((v) => v.publicKey === publicKey)
+  const vapidkey = tempVapidkeys[indexVapidkey]
+  tempVapidkeys.splice(indexVapidkey, 1)
+  cache.set(CacheKeys.tempVapidkey, tempVapidkeys)
+  return {
+    value: vapidkey,
+    index: indexVapidkey,
+  }
+}
 
-export async function saveSubscription(subscription: PushSubscriptionJSON, publicKey: string) {
-  const tempVapidkeys: TempVapidkey[] = cache.get(CacheKeys.tempVapidkey) || []
-  const Vapidkey = tempVapidkeys.find((v) => v.publicKey === publicKey) || null
-  if (Vapidkey === null) {
-    const subscriptionFromDb = await getOneSubscription(publicKey)
+export async function saveSubscription(pushSubscription: PushSubscriptionJSON, publicKey: string) {
+  const encryptedPushSubscription = cryptoJS.AES.encrypt(
+    JSON.stringify(pushSubscription),
+    configs.CRYPTO_KEY
+  ).toString()
+  const vapidkey = searchVapidkey(publicKey)
+  console.log('🚀 ~ file: subscription.services.ts:26 ~ saveSubscription ~ Vapidkey:', vapidkey)
+
+  if (vapidkey.value === undefined) {
+    const subscriptionFromDb = await UpdateOneSubscription(publicKey, encryptedPushSubscription)
     if (subscriptionFromDb) {
+      console.log('🚀 ~ file: subscription.services.ts:28 ~ saveSubscription ~ subscriptionFromDb:', subscriptionFromDb)
       return {
         error: false,
         statuscode: 200,
@@ -35,9 +52,9 @@ export async function saveSubscription(subscription: PushSubscriptionJSON, publi
     }
   }
   const encryptedSubscription: Subscription = {
-    publicKey: Vapidkey.publicKey,
-    privateKey: cryptoJS.AES.encrypt(Vapidkey.privateKey, configs.CRYPTO_KEY).toString(),
-    subscription: cryptoJS.AES.encrypt(JSON.stringify(subscription), configs.CRYPTO_KEY).toString(),
+    publicKey: vapidkey.value.publicKey,
+    privateKey: cryptoJS.AES.encrypt(vapidkey.value.privateKey, configs.CRYPTO_KEY).toString(),
+    subscription: encryptedPushSubscription,
   }
   const subscriptiondatabase = await addNewSubscription(encryptedSubscription)
   if (!subscriptiondatabase) {

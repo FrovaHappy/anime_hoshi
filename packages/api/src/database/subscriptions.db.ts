@@ -14,3 +14,9 @@ export async function addNewSubscription(subscription: Subscription) {
     return null
   })
 }
+
+export async function UpdateOneSubscription(publicKey: string, encryptedPushSubscription: string) {
+  const filter = { publicKey: publicKey }
+  const update = { subscription: encryptedPushSubscription }
+  return subscriptionsModel.findOneAndUpdate(filter, update, { returnDocument: 'after' })
+}
