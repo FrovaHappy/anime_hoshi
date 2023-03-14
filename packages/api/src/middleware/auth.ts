@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import config from '../config'
+import { configs } from '../config'
 import { Request, Response, NextFunction } from 'express'
 
 const verifyToken = (req: Request, res: Response, next: NextFunction) => {
@@ -9,7 +9,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   }
   token = token?.slice(7)?.toString() ?? 'default'
   try {
-    const decoded = jwt.verify(token, config.TOKEN_KEY)
+    const decoded = jwt.verify(token, configs.TOKEN_KEY)
     req.body.tokenDecoded = decoded
   } catch (err) {
     return res.status(401).send('Invalid Token')

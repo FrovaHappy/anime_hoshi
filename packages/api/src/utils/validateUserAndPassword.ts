@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { IuserWithoutPasswordHash } from '../../type'
-import config from '../config'
+import { configs } from '../config'
 import { findUser } from '../database/users.db'
 
 export async function validateUserAndPassword(user: IuserWithoutPasswordHash) {
@@ -16,7 +16,7 @@ export async function validateUserAndPassword(user: IuserWithoutPasswordHash) {
     roles: searchUserDB?.roles,
   }
   const createTokenSession = (payloadToken: Object) => {
-    const token = jwt.sign(payloadToken, config.TOKEN_KEY, {
+    const token = jwt.sign(payloadToken, configs.TOKEN_KEY, {
       expiresIn: '2h',
     })
     return token

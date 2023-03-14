@@ -1,5 +1,5 @@
 import { connect, set } from 'mongoose'
-import configs from './config'
+import {configs} from './config'
 
 // connection to db
 export async function mongoose() {

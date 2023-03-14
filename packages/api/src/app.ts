@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import config from './config'
+import {configs} from './config'
 import routes from './routes'
 const path = require("path");
 const app = express()
@@ -15,8 +15,8 @@ app.use(routes)
 app.use(express.static(path.join(__dirname, 'public')))
 // liste
 
-app.listen(config.PORT, () => {
-  console.log(`server on port ${config.PORT}`)
+app.listen(configs.PORT, () => {
+  console.log(`server on port ${configs.PORT}`)
 })
 
 export default app

@@ -1,7 +1,7 @@
 import cryptoJS from 'crypto-js'
 import webpush, { PushSubscription } from 'web-push'
 import { Subscription } from '../../type'
-import configs from '../config'
+import {configs} from '../config'
 import { getOneSubscription } from '../database/subscriptions.db'
 
 function descrypterSubscription(subscription: Subscription) {

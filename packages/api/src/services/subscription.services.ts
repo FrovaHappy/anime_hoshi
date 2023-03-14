@@ -4,7 +4,7 @@ import cryptoJS from 'crypto-js'
 import { CacheKeys } from '../Enum'
 import { Subscription, TempVapidkey } from '../../type'
 import { addNewSubscription, UpdateOneSubscription } from '../database/subscriptions.db'
-import configs from '../config'
+import { configs } from '../config'
 
 export function createVapidKey() {
   const vapidkey = webpush.generateVAPIDKeys()
