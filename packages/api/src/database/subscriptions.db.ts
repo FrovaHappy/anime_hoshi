@@ -17,6 +17,6 @@ export async function addNewSubscription(subscription: Subscription) {
 
 export async function UpdateOneSubscription(publicKey: string, encryptedPushSubscription: string) {
   const filter = { publicKey: publicKey }
-  const update = { subscription: encryptedPushSubscription }
+  const update = { subscription: encryptedPushSubscription, lastUpdated: (Date.now()) }
   return subscriptionsModel.findOneAndUpdate(filter, update, { returnDocument: 'after' })
 }

@@ -55,6 +55,7 @@ export async function saveSubscription(pushSubscription: PushSubscriptionJSON, p
     publicKey: vapidkey.value.publicKey,
     privateKey: cryptoJS.AES.encrypt(vapidkey.value.privateKey, configs.CRYPTO_KEY).toString(),
     subscription: encryptedPushSubscription,
+    lastUpdated: Date.now(),
   }
   const subscriptiondatabase = await addNewSubscription(encryptedSubscription)
   if (!subscriptiondatabase) {
