@@ -1,12 +1,13 @@
 import { Router } from 'express'
 import { getSubscription, postSubscription } from '../controllers/subscription.controller'
 import { buildWebPush } from '../utils/webPush'
+import { validateSubscription } from '../validators/subscription'
 
 const router = Router()
 
 router.get('/', getSubscription)
 //TODO: check body
-router.post('/', postSubscription)
+router.post('/',validateSubscription, postSubscription)
 
 router.post("/new-message", async (req, res) => {
   const { message, publicKey } = req.body;

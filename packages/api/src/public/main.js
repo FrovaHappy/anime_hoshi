@@ -33,11 +33,11 @@ const subscription = async () => {
   // Send Notification
   const id = await fetch('http://127.0.0.1:3001/subscription', {
     method: 'POST',
-    body: JSON.stringify({ pushSubscripton: subscription, publicKey: PUBLIC_VAPID_KEY }),
+    body: JSON.stringify({ pushSubscription: subscription, publicKey: PUBLIC_VAPID_KEY }),
     headers: {
       'Content-Type': 'application/json',
     },
-  })
+  }).then(response => response.json()).then(response=> console.log(response))
   console.log('Subscribed!')
 }
 
