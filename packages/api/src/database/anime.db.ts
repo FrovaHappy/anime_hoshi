@@ -29,13 +29,13 @@ export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStat
   return anime
 }
 
-export async function findAndUpdateAnime(animeEdited: AnimeList) {
+export async function UpdateOneAnime(animeEdited: AnimeList) {
   const config = { upsert: true, returnDocument: 'after' }
   const filter = {
     'dataAnilist.id': animeEdited.dataAnilist.id,
   }
 
-  const anime = await animeModel.findOneAndReplace(filter, animeEdited, config)
+  const anime = await animeModel.findOneAndUpdate(filter, animeEdited, config)
 
   return anime
 }

@@ -2,11 +2,10 @@ import { AnimeList } from '../../../../types'
 import cache from '../../utils/cache'
 import { findIncidences } from '../../database/anime.db'
 import { CacheKeys } from '../../Enum'
-async function animeList(animespublished: number[], needUpdateArray: number[]) {
-  const animeList = cache.get(CacheKeys.animeList) as number[] | undefined
-
-  if (needUpdateArray.length != 0 || !animeList) {
-    console.log('  refresh cache: ' + CacheKeys.animeList)
+async function animeList(animespublished: number[], needUpdateArray: AnimeList[]) {
+  const animeCache = cache.get(CacheKeys.animeList) as AnimeList[] | undefined
+  if (needUpdateArray.length != 0 || !animeCache) {
+    console.log('\nrefresh cache: ' + CacheKeys.animeList)
     let animeList: AnimeList[] = []
     for (const id of animespublished) {
       const anime = await findIncidences(undefined, id)
