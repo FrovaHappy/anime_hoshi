@@ -1,7 +1,7 @@
-import { AnimeList } from '../../../../types'
-import cache from '../../utils/cache'
-import { findIncidences } from '../../database/anime.db'
-import { CacheKeys } from '../../Enum'
+import { AnimeList } from '../../../types'
+import cache from './cache'
+import { findIncidences } from '../database/anime.db'
+import { CacheKeys } from '../Enum'
 async function animeList(animespublished: number[], needUpdateArray: AnimeList[]) {
   const animeCache = cache.get(CacheKeys.animeList) as AnimeList[] | undefined
   if (needUpdateArray.length != 0 || !animeCache) {
