@@ -1,6 +1,6 @@
-import { BrowserContext } from 'playwright'
+import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-async function scannedAnimeFlv(browser: BrowserContext) {
+async function scannedAnimeFlv(browser: Browser) {
   const page = await browser.newPage()
   await page.goto('https://www3.animeflv.net/', { waitUntil: 'commit' })
   await page.getByText('Últimos episodios').waitFor()

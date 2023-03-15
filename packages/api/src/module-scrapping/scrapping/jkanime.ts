@@ -1,6 +1,6 @@
-import { BrowserContext } from 'playwright'
+import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
-async function scannedJkanime(browser: BrowserContext) {
+async function scannedJkanime(browser: Browser) {
   const page = await browser.newPage()
   await page.goto('https://jkanime.net/', { waitUntil: 'commit' })
   await page.getByText('ÚLTIMOS ANIMES AGREGADOS').waitFor()

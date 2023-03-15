@@ -2,10 +2,10 @@ import { chromium } from 'playwright-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import * as fs from 'fs'
 import path from 'path'
-import { BrowserContext } from 'playwright'
+import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../types'
 type FileAttack = {
-  startAttackPage: (browser: BrowserContext) => {
+  startAttackPage: (browser: Browser) => {
     [key: string]: InfoEpisodeRecovered
   }
 }
@@ -13,7 +13,6 @@ type FileAttack = {
 const scrapersPagesFiles = fs.readdirSync(path.join(__dirname, 'scrapping/'))
 
 export async function startScrapping() {
-  const userDataDir = '/tmp/test-user-data-dir'
   console.time('browser-scraping')
   const getPagesAttacks: FileAttack[] = []
   for (const namefile of scrapersPagesFiles) {
@@ -22,7 +21,7 @@ export async function startScrapping() {
   }
 
   chromium.use(StealthPlugin())
-  const browser = await chromium.launchPersistentContext(userDataDir)
+  const browser = await chromium.launch()
 
   let pagesScrapped = await Promise.allSettled(getPagesAttacks.map((page) => page.startAttackPage(browser)))
   const pages = pagesScrapped
