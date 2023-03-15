@@ -18,3 +18,7 @@ export interface Subscription extends TempVapidkey {
   lastUpdated: number
 }
 
+export type PagesScraped = {
+  [key: string]: InfoEpisodeRecovered;
+}[]
+

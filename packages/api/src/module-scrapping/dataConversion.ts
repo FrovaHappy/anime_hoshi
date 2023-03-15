@@ -1,14 +1,13 @@
 import { UpdateOneAnime } from '../database/anime.db'
 import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
-import { startScrapping } from './startScrapping'
 import { AnimeList, InfoEpisodeRecovered } from '../../../types'
 import { formattingBeforeSaving } from './modules/formattingBeforeSaving'
 import { findConcidencesInDatabase } from './modules/findConcidencesInDatabase'
 import { formartItemScraper } from './modules/fomartItemScraper'
+import { PagesScraped } from '../../type'
 
-export async function setAnime() {
-  console.log('start conversion ...')
-  const allResultScraped = await startScrapping()
+export async function setAnime(allResultScraped:PagesScraped) {
+  console.log('\nstart Restructure Anime Data ... ')
   let errors = []
   let animespublished: number[] = (await findAnimePublished())?.[0]?.animePublished || []
   let animeUpdated: AnimeList[] = []

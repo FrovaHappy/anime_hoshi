@@ -12,7 +12,8 @@ type FileAttack = {
 
 const scrapersPagesFiles = fs.readdirSync(path.join(__dirname, 'scrapping/'))
 
-export async function startScrapping() {
+async function startScrapping() {
+  console.log('start scraping atack...')
   console.time('browser-scraping')
   const getPagesAttacks: FileAttack[] = []
   for (const namefile of scrapersPagesFiles) {
@@ -35,5 +36,7 @@ export async function startScrapping() {
     .flat()
   await browser.close().catch(() => { throw new Error ('Failed to close')})
   console.timeEnd('browser-scraping')
-  return pages
+  process.send!(pages)
+  return
 }
+startScrapping()
