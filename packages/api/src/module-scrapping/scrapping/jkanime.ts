@@ -10,9 +10,8 @@ async function scannedJkanime(browser: Browser) {
     const arrayLi = ListEpisodios?.querySelectorAll('a')
     let infoEpisodeRecovered: InfoEpisodeRecovered[] = []
     arrayLi?.forEach((element) => {
-      let episodeString = element.querySelector('h6')!.textContent!.split(/[ ]+/)
-      const episode = parseInt(episodeString[2])
-
+      let episodeString = element.querySelector('h6')!.textContent!.match(/[\w\d]+/g)
+      const episode = parseInt(episodeString === null ? '' : episodeString.at(-1) ?? '')
       const infoCap = {
         url: element.href!,
         episode,
