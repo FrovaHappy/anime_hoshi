@@ -7,8 +7,9 @@ export function getSubscription(_req: Request, res: Response) {
 }
 
 export async function postSubscription(req: Request, res: Response) {
-  const { pushSubscripton, publicKey } = req.body
+  const { pushSubscription, publicKey } = req.body
+
   console.log(req.body)
-  const { error, message, statuscode } = await saveSubscription(pushSubscripton, publicKey)
+  const { error, message, statuscode } = await saveSubscription(JSON.stringify(pushSubscription), publicKey)
   error ? res.status(statuscode).json({ message }) : res.status(statuscode).json({ message})
 }

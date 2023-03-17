@@ -25,18 +25,14 @@ function searchVapidkey(publicKey: string) {
   }
 }
 
-export async function saveSubscription(pushSubscription: PushSubscriptionJSON, publicKey: string) {
-  const encryptedPushSubscription = cryptoJS.AES.encrypt(
-    JSON.stringify(pushSubscription),
-    configs.CRYPTO_KEY
-  ).toString()
+export async function saveSubscription(pushSubscription: string, publicKey: string) {
+  const encryptedPushSubscription = cryptoJS.AES.encrypt(pushSubscription, configs.CRYPTO_KEY).toString()
   const vapidkey = searchVapidkey(publicKey)
-  console.log('🚀 ~ file: subscription.services.ts:26 ~ saveSubscription ~ Vapidkey:', vapidkey)
+  console.log({ vapidkey, pushSubscription })
 
   if (vapidkey.value === undefined) {
     const subscriptionFromDb = await UpdateOneSubscription(publicKey, encryptedPushSubscription)
     if (subscriptionFromDb) {
-      console.log('🚀 ~ file: subscription.services.ts:28 ~ saveSubscription ~ subscriptionFromDb:', subscriptionFromDb)
       return {
         error: false,
         statuscode: 200,

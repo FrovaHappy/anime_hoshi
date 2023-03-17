@@ -3,6 +3,7 @@ import path from 'path'
 import refreshCache from '../utils/refreshCache'
 import { setAnime } from './dataConversion'
 import { PagesScraped } from '../../type'
+import { pushNotifications } from './modules/pushNotifications'
 
 export function startRestructureData() {
   const pathFile = path.join(__dirname, 'startScrapping')
@@ -13,6 +14,7 @@ export function startRestructureData() {
     await refreshCache.animeList(animespublished, animeUpdated)
     console.log(`animesUpdated: ${JSON.stringify(animeUpdated.map((anime) => anime.dataAnilist.id))}`)
     console.log(`errors: ${errors.length}\n···················`)
+    console.log(await pushNotifications(animeUpdated))
   })
   return
 }
