@@ -6,8 +6,11 @@ import { PagesScraped } from '../../type'
 import { pushNotifications } from './modules/pushNotifications'
 
 export function startRestructureData() {
+  const controller = new AbortController()
+  const { signal } = controller
+
   const pathFile = path.join(__dirname, 'startScrapping')
-  const childProcess = fork(pathFile, { timeout: 40000 })
+  const childProcess = fork(pathFile, { timeout: 40000, signal })
   childProcess.on('message', async (message: PagesScraped) => {
     childProcess.kill()
     const { animeUpdated, animespublished, errors } = await setAnime(message)
@@ -15,6 +18,12 @@ export function startRestructureData() {
     console.log(`animesUpdated: ${JSON.stringify(animeUpdated.map((anime) => anime.dataAnilist.id))}`)
     console.log(`errors: ${errors.length}\n···················`)
     console.log(await pushNotifications(animeUpdated))
+  })
+  setTimeout(() => {
+    controller.abort()
+  }, 40000)
+  childProcess.addListener('error', (err) => {
+    console.log(err)
   })
   return
 }
