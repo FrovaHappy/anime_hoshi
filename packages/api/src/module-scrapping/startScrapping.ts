@@ -11,14 +11,14 @@ type FileAttack = {
   }
 }
 
-const scrapersPagesFiles = fs.readdirSync(path.join(__dirname, 'scrapping/'))
+const scrapersPagesFiles = fs.readdirSync(path.join(__dirname, 'pagesToAttack/'))
 
 async function startScrapping() {
   console.log('start scraping atack...')
   console.time('browser-scraping')
   const getPagesAttacks: FileAttack[] = []
   for (const namefile of scrapersPagesFiles) {
-    const file: FileAttack = (await import(path.join(__dirname, 'scrapping/', namefile))).default
+    const file: FileAttack = (await import(path.join(__dirname, 'pagesToAttack/', namefile))).default
     getPagesAttacks.push(file)
   }
 
