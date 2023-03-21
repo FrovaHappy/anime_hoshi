@@ -1,6 +1,6 @@
 import { Browser } from 'playwright'
-import { InfoEpisodeRecovered } from '../../../../types'
-import { newPageToScrap } from '../modules/newPageToScrap'
+import { InfoEpisodeRecovered } from '../../../../../types'
+import { newPageToScrap } from '../newPageToScrap'
 async function scannedAnimeblix(browser: Browser) {
   const callback = () => {
     const ListEpisodios = document.querySelector('.latestEpisodes')?.querySelector('.row')

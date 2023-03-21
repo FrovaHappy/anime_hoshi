@@ -3,7 +3,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import * as fs from 'fs'
 import path from 'path'
 import { Browser } from 'playwright'
-import { InfoEpisodeRecovered } from '../../../types'
+import { InfoEpisodeRecovered } from '../../../../types'
 type FileAttack = {
   startAttackPage: (browser: Browser) => {
     content: { [key: string]: InfoEpisodeRecovered }

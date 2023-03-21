@@ -1,6 +1,6 @@
 import { Browser } from 'playwright'
-import { InfoEpisodeRecovered } from '../../../../types'
-import { newPageToScrap } from '../startScraping/newPageToScrap'
+import { InfoEpisodeRecovered } from '../../../../../types'
+import { newPageToScrap } from '../newPageToScrap'
 async function scannedJkanime(browser: Browser) {
   const callback = () => {
     const ListEpisodios = document.querySelector('.maximoaltura')
