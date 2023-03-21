@@ -1,11 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
+import { newPageToScrap } from '../modules/newPageToScrap'
 async function scannedJkanime(browser: Browser) {
-  const page = await browser.newPage()
-  await page.goto('https://jkanime.net/', { waitUntil: 'commit' })
-  await page.getByText('ÚLTIMOS ANIMES AGREGADOS').waitFor()
-
-  const content = await page.evaluate(() => {
+  const callback = () => {
     const ListEpisodios = document.querySelector('.maximoaltura')
     const arrayLi = ListEpisodios?.querySelectorAll('a')
     let infoEpisodeRecovered: InfoEpisodeRecovered[] = []
@@ -20,9 +17,15 @@ async function scannedJkanime(browser: Browser) {
       infoEpisodeRecovered.push(infoCap)
     })
     return infoEpisodeRecovered
+  }
+  const content = await newPageToScrap({
+    browser,
+    url: 'https://jkanime.net/',
+    pageTitle: 'jkanime',
+    textToMatches: 'Programación',
+    callback,
   })
-  await page.close()
-  return { jkanime: content.reverse() }
+  return content
 }
 export default {
   startAttackPage: scannedJkanime,

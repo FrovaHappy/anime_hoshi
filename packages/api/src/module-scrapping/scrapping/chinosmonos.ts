@@ -1,11 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
+import { newPageToScrap } from '../modules/newPageToScrap'
 async function scannedMonoschinos(browser: Browser) {
-  const page = await browser.newPage()
-  await page.goto('https://monoschinos2.com/', { waitUntil: 'commit' })
-  await page.getByText('Capítulos Recientes').waitFor()
-
-  const content = await page.evaluate(() => {
+  const callback = () => {
     const ListEpisodios = document.querySelector('.row')
     const arrayLi = ListEpisodios?.querySelectorAll('.col')
     let infoEpisodeRecovered: InfoEpisodeRecovered[] = []
@@ -21,9 +18,15 @@ async function scannedMonoschinos(browser: Browser) {
       infoEpisodeRecovered.push(infoCap)
     })
     return infoEpisodeRecovered
+  }
+  const content = await newPageToScrap({
+    browser,
+    url: 'https://monoschinos2.com/',
+    pageTitle: 'monosChinos',
+    textToMatches: 'Monoschinos - Capítulos Recientes',
+    callback,
   })
-  await page.close()
-  return { monosChinos: content.reverse() }
+  return content
 }
 export default {
   startAttackPage: scannedMonoschinos,

@@ -1,10 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
+import { newPageToScrap } from '../modules/newPageToScrap'
 async function scannedAnimeFlv(browser: Browser) {
-  const page = await browser.newPage()
-  await page.goto('https://www3.animeflv.net/', { waitUntil: 'commit' })
-  await page.getByText('Últimos episodios').waitFor()
-  const content = await page.evaluate(() => {
+  const callback = () => {
     const ListEpisodios = document.querySelector('.ListEpisodios')
     const arrayLi = ListEpisodios?.querySelectorAll('li')
     let infoEpisodeRecovered: InfoEpisodeRecovered[] = []
@@ -21,9 +19,15 @@ async function scannedAnimeFlv(browser: Browser) {
       infoEpisodeRecovered.push(infoCap)
     })
     return infoEpisodeRecovered
+  }
+  const content = await newPageToScrap({
+    browser,
+    url: 'https://www3.animeflv.net/',
+    pageTitle: 'animeFlv',
+    textToMatches: 'Últimos episodios',
+    callback,
   })
-  await page.close()
-  return { animeFlv: content.reverse() }
+  return content
 }
 export default {
   startAttackPage: scannedAnimeFlv,

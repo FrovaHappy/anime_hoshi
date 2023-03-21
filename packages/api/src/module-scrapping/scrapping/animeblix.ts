@@ -1,11 +1,8 @@
 import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../types'
+import { newPageToScrap } from '../modules/newPageToScrap'
 async function scannedAnimeblix(browser: Browser) {
-  const page = await browser.newPage()
-  await page.goto('https://animeblix.com/', { waitUntil: 'commit' })
-  await page.getByText('Últimos episodios', { exact: true }).waitFor()
-
-  const content = await page.evaluate(() => {
+  const callback = () => {
     const ListEpisodios = document.querySelector('.latestEpisodes')?.querySelector('.row')
     const arrayLi = ListEpisodios?.querySelectorAll('.col-6')
     let infoEpisodeRecovered: InfoEpisodeRecovered[] = []
@@ -29,10 +26,17 @@ async function scannedAnimeblix(browser: Browser) {
       infoEpisodeRecovered.push(infoCap)
     })
     return infoEpisodeRecovered
+  }
+  const content = await newPageToScrap({
+    browser,
+    url: 'https://animeblix.com/',
+    pageTitle: 'animeblix',
+    textToMatches: 'Últimos episodios',
+    callback,
   })
-  await page.close()
-  return { animeblix: content.reverse() }
+  return content
 }
+
 export default {
   startAttackPage: scannedAnimeblix,
 }

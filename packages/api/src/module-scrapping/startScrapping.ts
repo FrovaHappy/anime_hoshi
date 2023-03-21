@@ -6,7 +6,8 @@ import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../types'
 type FileAttack = {
   startAttackPage: (browser: Browser) => {
-    [key: string]: InfoEpisodeRecovered
+    content: { [key: string]: InfoEpisodeRecovered }
+    error: { value: boolean; message: string }
   }
 }
 
@@ -24,17 +25,16 @@ async function startScrapping() {
   chromium.use(StealthPlugin())
   const browser = await chromium.launch()
 
-  let pagesScrapped = await Promise.allSettled(getPagesAttacks.map((page) => page.startAttackPage(browser)))
-  const pages = pagesScrapped
-    .map((page) => {
-      if (page.status === 'fulfilled') {
-        return page.value
-      }
-      console.error(`Failed to load ${page.reason} \n`)
-      return []
-    })
-    .flat()
-  await browser.close().catch(() => { throw new Error ('Failed to close')})
+  let pagesScrapped = await Promise.all(getPagesAttacks.map((page) => page.startAttackPage(browser)))
+  const pages = pagesScrapped.map((page) => {
+    if (page.error.value === true) {
+      console.log(`${Object.keys(page.content)[0]}: ${page.error.message}`)
+    }
+    return page.content
+  })
+  await browser.close().catch(() => {
+    throw new Error('Failed to try closed browser')
+  })
   console.timeEnd('browser-scraping')
   process.send!(pages)
   return
