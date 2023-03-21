@@ -6,7 +6,7 @@ import { PagesScraped } from '../../type'
 import { pushNotifications } from './modules/pushNotifications'
 
 export function startRestructureData() {
-  const pathFile = path.join(__dirname, 'startScraping/startScrapping')
+  const pathFile = path.join(__dirname, 'startScraping')
   const childProcess = fork(pathFile, { timeout: 40000 })
   childProcess.on('message', async (message: PagesScraped) => {
     childProcess.kill()
