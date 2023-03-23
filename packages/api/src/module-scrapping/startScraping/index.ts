@@ -29,7 +29,7 @@ async function startScrapping() {
   let pagesScrapped = await Promise.all(getPagesAttacks.map((page) => page.startAttackPage(browser)))
   const pages = pagesScrapped.map((page) => {
     if (page.error.value === true) {
-      console.log(`${Object.keys(page.content)[0]}: ${page.error.message}`)
+      console.log(`** ${Object.keys(page.content)[0]}: ${page.error.message}`)
     }
     return page.content
   })

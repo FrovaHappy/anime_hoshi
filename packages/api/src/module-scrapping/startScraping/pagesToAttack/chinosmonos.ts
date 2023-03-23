@@ -23,7 +23,7 @@ async function scannedMonoschinos(browser: Browser) {
     browser,
     url: 'https://monoschinos2.com/',
     pageTitle: 'monosChinos',
-    textToMatches: 'Monoschinos - Capítulos Recientes',
+    selectorAwait: '.heroarea1',
     callback,
   })
   return content

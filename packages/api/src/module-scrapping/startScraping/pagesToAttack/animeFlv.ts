@@ -24,7 +24,7 @@ async function scannedAnimeFlv(browser: Browser) {
     browser,
     url: 'https://www3.animeflv.net/',
     pageTitle: 'animeFlv',
-    textToMatches: 'Últimos episodios',
+    selectorAwait: '.Main',
     callback,
   })
   return content

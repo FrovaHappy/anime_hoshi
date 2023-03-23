@@ -31,7 +31,7 @@ async function scannedAnimeblix(browser: Browser) {
     browser,
     url: 'https://animeblix.com/',
     pageTitle: 'animeblix',
-    textToMatches: 'Últimos episodios',
+    selectorAwait: '.main-home',
     callback,
   })
   return content

@@ -22,7 +22,7 @@ async function scannedJkanime(browser: Browser) {
     browser,
     url: 'https://jkanime.net/',
     pageTitle: 'jkanime',
-    textToMatches: 'Programación',
+    selectorAwait: '.anime__sidebar__comment',
     callback,
   })
   return content
