@@ -2,22 +2,21 @@ import { fork } from 'child_process'
 import path from 'path'
 import refreshCache from '../utils/refreshCache'
 import { setAnime } from './dataConversion'
-import { PagesScraped } from '../../type'
 import { pushNotifications } from './modules/pushNotifications'
+import * as fsPromise from 'fs/promises'
 
 export function startRestructureData() {
   const pathFile = path.join(__dirname, 'startScraping')
-  const childProcess = fork(pathFile, { timeout: 40000 })
-  childProcess.on('message', async (message: PagesScraped) => {
-    childProcess.kill()
-    const { animeUpdated, animespublished, errors } = await setAnime(message)
+  const childProcess = fork(pathFile, { timeout: 25000 })
+  childProcess.addListener('close', async (code) => {
+    if (code !== 0) throw new Error('* Failed scraping... code: ' + code)
+    console.log('* Done scraping... code: ' + code)
+    const pages = JSON.parse(await fsPromise.readFile('./pages.txt', 'utf8'))
+    const { animeUpdated, animespublished, errors } = await setAnime(pages)
     await refreshCache.animeList(animespublished, animeUpdated)
     console.log(`animesUpdated: ${JSON.stringify(animeUpdated.map((anime) => anime.dataAnilist.id))}`)
     console.log(`errors: ${errors.length}\n···················`)
     console.log(await pushNotifications(animeUpdated))
-  })
-  childProcess.addListener('close', (code) => {
-    console.log('Done subprocess with code: ' + code)
   })
   return
 }
