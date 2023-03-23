@@ -8,18 +8,18 @@
     "packages/frontend"
   ],
   "engines": {
-    "node": "18.*",
-    "npm": "9.*"
+    "npm": "^9.*"
   },
   "scripts": {
     "co": "sui-mono commit",
-    "dev:api": "npm run dev --workspace=packages/api",
-    "dev:frontend": "npm run start --workspace=packages/frontend",
-    "lint:api": "npm run lint --workspace=packages/api ",
-    "lint:frontend": "npm run lint --workspace=packages/frontend",
-    "build:api": "npx playwright install-deps chromium && npm run build --workspace=packages/api",
-    "build:frontend": "npm run build --workspace=packages/frontend",
-    "start": "node ./packages/api/dist/index.js"
+    "dependencies": "npx playwright install chromium",
+    "api:lint": "npm run lint --workspace=packages/api ",
+    "api:dev": "npm run dependencies && npm run dev --workspace=packages/api",
+    "api:build": " npm run dependencies && npm run build --workspace=packages/api",
+    "api:start": "node ./packages/api/dist/index.js",
+    "frontend:dev": "npm run start --workspace=packages/frontend",
+    "frontend:lint": "npm run lint --workspace=packages/frontend",
+    "frontend:build": "npm run build --workspace=packages/frontend"
   },
   "keywords": [],
   "author": "",
