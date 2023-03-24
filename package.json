@@ -8,7 +8,8 @@
     "packages/frontend"
   ],
   "engines": {
-    "npm": "9.*"
+    "node": "18",
+    "npm": "9"
   },
   "scripts": {
     "co": "sui-mono commit",
