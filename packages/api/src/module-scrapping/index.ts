@@ -7,7 +7,7 @@ import * as fsPromise from 'fs/promises'
 
 export function startRestructureData() {
   const pathFile = path.join(__dirname, 'startScraping')
-  const childProcess = fork(pathFile, { timeout: 30000 })
+  const childProcess = fork(pathFile, { timeout: 28000 })
   childProcess.addListener('close', async (code) => {
     if (code !== 0) throw new Error('* Failed scraping... code: ' + code)
     console.log('* Done scraping... code: ' + code)

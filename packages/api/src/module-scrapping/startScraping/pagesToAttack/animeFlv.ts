@@ -1,4 +1,4 @@
-import { Browser } from 'playwright-core'
+import { Browser } from 'playwright'
 import { InfoEpisodeRecovered } from '../../../../../types'
 import { newPageToScrap } from '../newPageToScrap'
 async function scannedAnimeFlv(browser: Browser) {
