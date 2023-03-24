@@ -8,11 +8,11 @@
     "packages/frontend"
   ],
   "engines": {
-    "npm": "^9.*"
+    "npm": "9.*"
   },
   "scripts": {
     "co": "sui-mono commit",
-    "dependencies": "npx playwright install chromium",
+    "dependencies": "npx playwright install-deps chromium",
     "api:lint": "npm run lint --workspace=packages/api ",
     "api:dev": "npm run dependencies && npm run dev --workspace=packages/api",
     "api:build": " npm run dependencies && npm run build --workspace=packages/api",
