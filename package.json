@@ -13,10 +13,10 @@
   },
   "scripts": {
     "co": "sui-mono commit",
-    "dependencies": "npx playwright install-deps chromium",
+    "api:dependencies": "npx playwright install-deps chromium",
     "api:lint": "npm run lint --workspace=packages/api ",
-    "api:dev": "npm run dependencies && npm run dev --workspace=packages/api",
-    "api:build": " npm run dependencies && npm run build --workspace=packages/api",
+    "api:dev": "npm run api:dependencies && npm run dev --workspace=packages/api",
+    "api:build": " npm run api:dependencies && npm run build --workspace=packages/api",
     "api:start": "node ./packages/api/dist/index.js",
     "frontend:dev": "npm run start --workspace=packages/frontend",
     "frontend:lint": "npm run lint --workspace=packages/frontend",
