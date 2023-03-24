@@ -1,4 +1,4 @@
-import { Browser } from 'playwright'
+import { Browser } from 'playwright-core'
 import { InfoEpisodeRecovered } from '../../../../../types'
 import { newPageToScrap } from '../newPageToScrap'
 async function scannedMonoschinos(browser: Browser) {

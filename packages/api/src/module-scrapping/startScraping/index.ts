@@ -3,7 +3,7 @@ import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 import * as fs from 'fs'
 import * as fsPromises from 'fs/promises'
 import path from 'path'
-import { Browser } from 'playwright'
+import { Browser } from 'playwright-core'
 import { InfoEpisodeRecovered } from '../../../../types'
 type FileAttack = {
   startAttackPage: (browser: Browser) => {
@@ -24,7 +24,7 @@ async function startScrapping() {
   }
 
   chromium.use(StealthPlugin())
-  const browser = await chromium.launch()
+  const browser = (await chromium.launch()) as Browser
 
   let pagesScrapped = await Promise.all(getPagesAttacks.map((page) => page.startAttackPage(browser)))
   const pages = pagesScrapped.map((page) => {
