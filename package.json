@@ -17,7 +17,7 @@
     "api:lint": "npm run lint --workspace=packages/api ",
     "api:dev": "npm run api:dependencies && npm run dev --workspace=packages/api",
     "api:build": " npm run api:dependencies && npm run build --workspace=packages/api",
-    "api:start": "node ./packages/api/dist/index.js",
+    "api:start": "node ./packages/api/dist/index.js --max-memory-restart 254M",
     "frontend:dev": "npm run start --workspace=packages/frontend",
     "frontend:lint": "npm run lint --workspace=packages/frontend",
     "frontend:build": "npm run build --workspace=packages/frontend"

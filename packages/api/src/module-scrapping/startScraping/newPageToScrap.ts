@@ -14,7 +14,7 @@ export async function newPageToScrap(newPagesSettings: NewPagesSettings) {
     value: false,
   }
   const page = await browser.newPage()
-  await page.goto(url, { waitUntil: 'commit', timeout: 15000 }).catch(() => {
+  await page.goto(url, { waitUntil: 'commit', timeout: 5000 }).catch(() => {
     error = { message: 'timeout to load page', value: true }
   })
   await page.waitForSelector(selectorAwait, { timeout: 10000 }).catch(() => {
