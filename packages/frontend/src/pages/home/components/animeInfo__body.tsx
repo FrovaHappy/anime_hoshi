@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { AnimeList } from '../../../../../types'
 import { hours } from '../../../enum'
 import { List } from '../../../../types'
 import { getlastEpisodeInfo } from '../../../utils/getLastEpisodeInfo'
@@ -9,11 +8,10 @@ import renderCondicional, { isVisibly } from '../../../utils/renderCondicional'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire, faRotate, faExternalLink } from '@fortawesome/free-solid-svg-icons'
 import RenderListDropdown from './listDropdown'
+import { useAnimeContext } from '../../contexts/contextHome'
 
 interface Props {
   list: List
-  id: number
-  anime: AnimeList
 }
 
 function toogleEpisodeOptions(depencies: any[]) {
@@ -40,8 +38,10 @@ function episodeElementComponent(item: { url: string; update: number; episode: n
     </li>
   )
 }
-export function EpisodesConteiner({ list, id, anime }: Props) {
-  const { active, setActive } = toogleEpisodeOptions([id])
+export function EpisodesConteiner({ list }: Props) {
+  const { anime } = useAnimeContext()
+  if (!anime) return <> episode conteiner empty</>
+  const { active, setActive } = toogleEpisodeOptions([anime])
   const activeState = { active, setActive }
   const listSortedForNamePage = Object.keys(list)
   const lastEpisodeInfo = getlastEpisodeInfo(anime)

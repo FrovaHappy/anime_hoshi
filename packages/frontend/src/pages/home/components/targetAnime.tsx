@@ -4,15 +4,15 @@ import { faFire } from '@fortawesome/free-solid-svg-icons'
 import { isVisibly } from '../../../utils/renderCondicional'
 import { AnimeList } from '../../../../../types'
 import { setColorPrimary } from '../../../utils/toogleColorPrimary'
+import { useAnimeContext } from '../../contexts/contextHome'
 type Props = {
-  anime: AnimeList
-  setId: (value: number) => void
-  id: number
+  thisAnime: AnimeList
 }
-export default function TargetAnimeConponent({ anime, setId, id }: Props) {
-  const compareId = anime.dataAnilist.id == id
-  const getEpisodeAndPages = getlastEpisodeInfo(anime)
-  const color = anime.dataAnilist.coverImage.color ?? '#fff'
+export default function TargetAnimeConponent({ thisAnime }: Props) {
+  const { anime, setAnime } = useAnimeContext()
+  const compareId = thisAnime.dataAnilist.id == anime?.dataAnilist.id
+  const getEpisodeAndPages = getlastEpisodeInfo(thisAnime)
+  const color = thisAnime.dataAnilist.coverImage.color ?? '#fff'
   const setClassTarget = compareId ? 'targetAnime targetAnime--active' : 'targetAnime'
   const setClassEpisode = compareId ? 'targetAnime__episode targetAnime__episode--active' : 'targetAnime__episode'
   const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
@@ -20,7 +20,7 @@ export default function TargetAnimeConponent({ anime, setId, id }: Props) {
     <div
       className={setClassTarget}
       onClick={() => {
-        setId(anime.dataAnilist.id)
+        setAnime(thisAnime)
         setColorPrimary(color)
       }}
     >
@@ -30,11 +30,11 @@ export default function TargetAnimeConponent({ anime, setId, id }: Props) {
       </p>
       <img
         className="targetAnime__img"
-        src={anime.dataAnilist.coverImage.large}
-        alt={anime.dataAnilist.title.romaji}
+        src={thisAnime.dataAnilist.coverImage.large}
+        alt={thisAnime.dataAnilist.title.romaji}
         loading="lazy"
       />
-      <h5 className="targetAnime__title">{anime.dataAnilist.title.romaji}</h5>
+      <h5 className="targetAnime__title">{thisAnime.dataAnilist.title.romaji}</h5>
     </div>
   )
 }

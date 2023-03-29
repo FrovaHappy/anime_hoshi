@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
+import { useAnimesContext } from '../../contexts/contextHome'
 
 export const useFetch = (url: string) => {
-  const [data, setData] = useState<any[]>([])
+  const { setAnimes } = useAnimesContext()
+  const [data, _setData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
 
   const query = async () => {
     await fetch(url)
       .then((response) => response.json())
-      .then((response) => setData(response.reverse()))
+      .then((response) => setAnimes(response.reverse()))
       .finally(() => setLoading(false))
       .catch(() => setError(true))
   }
