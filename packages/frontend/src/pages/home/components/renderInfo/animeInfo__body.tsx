@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { hours } from '../../../enum'
-import { List } from '../../../../types'
-import { getlastEpisodeInfo } from '../../../utils/getLastEpisodeInfo'
-import { getTimeAgo } from '../../../utils/getTimeAgo'
-import renderCondicional, { isVisibly } from '../../../utils/renderCondicional'
+import { hours } from '../../../../enum'
+import { List } from '../../../../../types'
+import { getlastEpisodeInfo } from '../../../../utils/getLastEpisodeInfo'
+import { getTimeAgo } from '../../../../utils/getTimeAgo'
+import renderCondicional, { isVisibly } from '../../../../utils/renderCondicional'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire, faRotate, faExternalLink } from '@fortawesome/free-solid-svg-icons'
-import RenderListDropdown from './listDropdown'
-import { useAnimeContext } from '../../contexts/contextHome'
+import RenderListDropdown from '../listDropdown'
+import { useAnimeContext } from '../../../contexts/contextHome'
 
 interface Props {
   list: List

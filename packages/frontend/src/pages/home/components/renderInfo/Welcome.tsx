@@ -1,6 +1,6 @@
-import { Contribute } from './contribute'
+import { Contribute } from '../contribute'
 import './welcome.scss'
-import main from '../../../utils/swSubscribe'
+import main from '../../../../utils/swSubscribe'
 type Props = { className: string | undefined }
 
 const HelperItemBackground = ({ className }: Props) => {
