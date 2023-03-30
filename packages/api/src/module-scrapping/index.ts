@@ -9,8 +9,8 @@ export function startRestructureData() {
   const pathFile = path.join(__dirname, 'startScraping')
   const childProcess = fork(pathFile, { timeout: 28000 })
   childProcess.addListener('close', async (code) => {
-    if (code !== 0) throw new Error('* Failed scraping... code: ' + code)
-    console.log('* Done scraping... code: ' + code)
+    console.log('* Done scraping... code: ' + code || 'null')
+    if (code !== 0) throw new Error('* Failed scraping... code: ' + code || 'null')
     const pages = JSON.parse(await fsPromise.readFile('./pages.txt', 'utf8'))
     const { animeUpdated, animespublished, errors } = await setAnime(pages)
     await refreshCache.animeList(animespublished, animeUpdated)
