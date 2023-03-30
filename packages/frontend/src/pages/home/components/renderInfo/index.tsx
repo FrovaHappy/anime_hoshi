@@ -3,7 +3,7 @@ import './index.scss'
 import { AnimeInfoHeader } from './animeInfo__header'
 import { listPageLinks } from '../../utils/listsPagesLinks'
 import { Welcome } from './Welcome'
-import { Contribute } from '../contribute'
+import { Contribute } from './contribute'
 import { useAnimeContext } from '../../../contexts/contextHome'
 
 function renderInfo() {
