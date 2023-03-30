@@ -1,5 +1,6 @@
 import { Contribute } from './contribute'
 import './welcome.scss'
+import main from '../../../utils/swSubscribe'
 type Props = { className: string | undefined }
 
 const HelperItemBackground = ({ className }: Props) => {
@@ -60,6 +61,14 @@ export const Welcome = () => {
           urlImage="./resources/itemPlay.png"
           text="Elige el anime, después elige la pagina y ve el episodio..."
         />
+        <button
+          onClick={() => {
+            main()
+          }}
+        >
+          {' '}
+          notify
+        </button>
         <p>... y listo, disfruta de tu anime.</p>
       </div>
       <Contribute />

@@ -1,4 +1,4 @@
-import { AnimeList } from '../../../../types'
+import { AnimeList, Payload } from '../../../../types'
 import { Subscription } from '../../../type'
 import { getAllSubscriptions } from '../../database/subscriptions.db'
 import { buildWebPush } from './webPush'
@@ -24,13 +24,7 @@ async function buildStackSubscriptions() {
   if (temporalSubscriptions.length > 0) stackSubscriptions.push(temporalSubscriptions)
   return { stackSubscriptions, total: subscriptions.length }
 }
-type Payload = {
-  title: string
-  options: {
-    icon: string
-    body: string
-  }
-}
+
 function buildStackPayload(animesUpdated: AnimeList[]) {
   const payload: Payload[] = []
   for (const anime of animesUpdated) {

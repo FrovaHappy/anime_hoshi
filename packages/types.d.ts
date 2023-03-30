@@ -46,3 +46,10 @@ export interface AnimeList {
   titleinPages: KeyDinamicString
   lastEpisodesOfTempPreview?: number
 }
+export type Payload = {
+  title: string
+  options: {
+    icon: string
+    body: string
+  }
+}

@@ -1,5 +1,6 @@
 {
   "parserOptions": {
-      "project": ["path/to/your/tsconfig/file"]
+      "project": ["path/to/your/tsconfig/file"],
+      "ecmaVersion": 2022
   }
 }
