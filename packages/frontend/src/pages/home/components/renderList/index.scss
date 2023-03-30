@@ -1,0 +1,12 @@
+.animeList {
+  box-sizing: border-box;
+  display: grid;
+  gap: .9375rem;
+  grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr));
+  align-items: center;
+  padding: 1.25rem;
+  flex: auto;
+    height: 100%;
+    overflow: auto;
+}
+

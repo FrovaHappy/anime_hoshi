@@ -1,10 +1,10 @@
-import '../../styles/pages/home/homeList.scss'
-import { useAnimesContext } from '../contexts/contextHome'
-import { urlApi } from '../../config'
-import { FetchLoading } from './components/fetchLoading'
-import { useFetch } from './utils/useFetch'
+import './index.scss'
+import { useAnimesContext } from '../../../contexts/contextHome'
+import { urlApi } from '../../../../config'
+import { FetchLoading } from './fetchLoading'
+import { useFetch } from '../../utils/useFetch'
 
-import TargetAnime from './components/targetAnime'
+import TargetAnime from './targetAnime'
 const renderList = () => {
   const { loading, error } = useFetch(`${urlApi}/animes`)
   const { animes } = useAnimesContext()

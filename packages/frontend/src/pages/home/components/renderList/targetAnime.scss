@@ -1,15 +1,3 @@
-.animeList {
-  box-sizing: border-box;
-  display: grid;
-  gap: .9375rem;
-  grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr));
-  align-items: center;
-  padding: 1.25rem;
-  flex: auto;
-    height: 100%;
-    overflow: auto;
-}
-
 .targetAnime {
   display: flex;
   flex-direction: column;
@@ -23,7 +11,7 @@
   background-color: var(--backgroundColorAlternative);
   user-select: none;
   &__img {
-    background-image: url('../../../../public/resources/loadingImg.gif');
+    background-image: url('../../../../../public/resources/loadingImg.gif');
     background-size: 60%;
     background-repeat: no-repeat;
     background-position: center;

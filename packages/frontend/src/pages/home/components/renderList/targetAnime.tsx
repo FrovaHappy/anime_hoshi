@@ -1,10 +1,11 @@
-import { getlastEpisodeInfo } from '../../../utils/getLastEpisodeInfo'
+import { getlastEpisodeInfo } from '../../../../utils/getLastEpisodeInfo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFire } from '@fortawesome/free-solid-svg-icons'
-import { isVisibly } from '../../../utils/renderCondicional'
-import { AnimeList } from '../../../../../types'
-import { setColorPrimary } from '../../../utils/toogleColorPrimary'
-import { useAnimeContext } from '../../contexts/contextHome'
+import { isVisibly } from '../../../../utils/renderCondicional'
+import { AnimeList } from '../../../../../../types'
+import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
+import { useAnimeContext } from '../../../contexts/contextHome'
+import './targetAnime.scss'
 type Props = {
   thisAnime: AnimeList
 }

@@ -1,6 +1,6 @@
 import { ContextHome } from '../contexts/contextHome'
 import RenderInfo from './components/renderInfo'
-import RenderList from './renderList'
+import RenderList from './components/renderList'
 
 export default function Home() {
   return (
