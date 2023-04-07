@@ -5,6 +5,7 @@ import IconClose from './Close'
 import IconBug from './Bug'
 import IconNew from './New'
 import { IconPointNav, IconPointNavActive } from './PointNav'
+import IconRotate from './Rotate'
 
 type IconProps = {
   className?: string
@@ -20,7 +21,18 @@ type Icon =
   | 'IconClose'
   | 'IconPointNav'
   | 'IconPointNavActive'
-const icons = { IconHome, IconCircleInfo, IconGear, IconClose, IconBug, IconNew, IconPointNav, IconPointNavActive }
+  | 'IconRotate'
+const icons = {
+  IconHome,
+  IconCircleInfo,
+  IconGear,
+  IconClose,
+  IconBug,
+  IconNew,
+  IconPointNav,
+  IconPointNavActive,
+  IconRotate,
+}
 
 const filterIcon = (iconProps: IconProps) => {
   const { className, iconName, style } = iconProps
