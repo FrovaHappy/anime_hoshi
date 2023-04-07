@@ -5,10 +5,12 @@ import { getlastEpisodeInfo } from '../../../../utils/getLastEpisodeInfo'
 import { getTimeAgo } from '../../../../utils/getTimeAgo'
 import renderCondicional, { isVisibly } from '../../../../utils/renderCondicional'
 
+import Icon from '../../../../Icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFire, faRotate, faExternalLink } from '@fortawesome/free-solid-svg-icons'
+import { faRotate, faExternalLink } from '@fortawesome/free-solid-svg-icons'
 import RenderListDropdown from '../listDropdown'
 import { useAnimeContext } from '../../../contexts/contextHome'
+import filterIcon from '../../../../Icons'
 
 interface Props {
   list: List
@@ -30,7 +32,7 @@ function episodeElementComponent(item: { url: string; update: number; episode: n
   return (
     <li className="conteiner__item" key={item.episode}>
       <a href={item.url} target="_blank" rel="noreferrer" className="item ">
-        <FontAwesomeIcon icon={faFire} style={isVisibly(renderPoint)} className="itemNewEpisodes item__text--newEp" />
+        <Icon iconName="IconNew" style={isVisibly(renderPoint)} className="itemNewEpisodes item__text--newEp" />
         <p className="item__text">Episodio {item.episode}</p>
         <p className="item__text--timeAgo">{getTimeAgo(item.update)}</p>
         <FontAwesomeIcon className="item__text--externalLink" icon={faExternalLink} />

@@ -35,15 +35,17 @@
     background-color: #000000af;
     color: var(--textColor);
     border-radius: var(--borderRadius);
+    display: flex;
+    justify-items: center;
+    gap: .3125rem;
     top: .3125rem;
     left: .3125rem;
     position: absolute;
     padding: .3125rem .625rem;
     font-size: .875rem;
-    &--active{
-      background-color: var(--colorPrimary);
-    }
+    height: 1.125rem;
   }
+  
   &--active{
     border-bottom: .25rem solid var(--colorPrimary);
     text-shadow: 0 0 8px #000000;

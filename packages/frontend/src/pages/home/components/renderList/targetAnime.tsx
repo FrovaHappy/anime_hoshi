@@ -1,6 +1,5 @@
 import { getlastEpisodeInfo } from '../../../../utils/getLastEpisodeInfo'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFire } from '@fortawesome/free-solid-svg-icons'
+import Icon from '../../../../Icons'
 import { isVisibly } from '../../../../utils/renderCondicional'
 import { AnimeList } from '../../../../../../types'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
@@ -15,7 +14,6 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
   const getEpisodeAndPages = getlastEpisodeInfo(thisAnime)
   const color = thisAnime.dataAnilist.coverImage.color ?? '#fff'
   const setClassTarget = compareId ? 'targetAnime targetAnime--active' : 'targetAnime'
-  const setClassEpisode = compareId ? 'targetAnime__episode targetAnime__episode--active' : 'targetAnime__episode'
   const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
   return (
     <div
@@ -25,10 +23,10 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
         setColorPrimary(color)
       }}
     >
-      <p className={setClassEpisode}>
-        {<FontAwesomeIcon icon={faFire} style={isVisibly(renderPoint)} className="itemNewEpisodes" />}Ep.{' '}
-        {getEpisodeAndPages.keyLastEpisode}
-      </p>
+      <div className="targetAnime__episode">
+        Ep. {getEpisodeAndPages.keyLastEpisode}
+        <Icon iconName="IconNew" style={isVisibly(renderPoint)} className="itemNewEpisodes" />
+      </div>
       <img
         className="targetAnime__img"
         src={thisAnime.dataAnilist.coverImage.large}
