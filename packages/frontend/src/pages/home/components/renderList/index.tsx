@@ -12,13 +12,14 @@ const renderList = () => {
   if (loading) return <FetchLoading />
   if (!animes) return <>problem render list</>
   return (
-    <>
-      <div className="animeList">
+    <div className="renderList">
+      <p className="renderList__title">Animes En Emisión</p>
+      <div className="renderList__targets">
         {animes.map((thisAnime) => {
           return <TargetAnime key={thisAnime.dataAnilist.id} thisAnime={thisAnime} />
         })}
       </div>
-    </>
+    </div>
   )
 }
 

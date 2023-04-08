@@ -13,11 +13,11 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
   const compareId = thisAnime.dataAnilist.id == anime?.dataAnilist.id
   const getEpisodeAndPages = getlastEpisodeInfo(thisAnime)
   const color = thisAnime.dataAnilist.coverImage.color ?? '#fff'
-  const setClassTarget = compareId ? 'targetAnime targetAnime--active' : 'targetAnime'
+  const setOpaqueImg = compareId || !anime ? 'targetAnime__img' : 'targetAnime__img targetAnime__img--opaque'
   const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
   return (
     <div
-      className={setClassTarget}
+      className="targetAnime"
       onClick={() => {
         setAnime(thisAnime)
         setColorPrimary(color)
@@ -28,12 +28,12 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
         <Icon iconName="IconNew" style={isVisibly(renderPoint)} className="itemNewEpisodes" />
       </div>
       <img
-        className="targetAnime__img"
+        className={setOpaqueImg}
         src={thisAnime.dataAnilist.coverImage.large}
         alt={thisAnime.dataAnilist.title.romaji}
         loading="lazy"
       />
-      <h5 className="targetAnime__title">{thisAnime.dataAnilist.title.romaji}</h5>
+      <p className="targetAnime__title">{thisAnime.dataAnilist.title.romaji}</p>
     </div>
   )
 }

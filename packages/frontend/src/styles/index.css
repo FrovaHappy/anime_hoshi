@@ -1,34 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-*{
+* {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  
 }
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
-  color: var(--textColor)
+  color: var(--textColor);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-a{
+a {
   text-decoration: none;
 }
 *::-webkit-scrollbar {
-  width: 1rem;               /* width of the entire scrollbar */
+  width: 0.625rem; /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
-  background: var(--backgroundColor);        /* color of the tracking area */
+  background: #0000; /* color of the tracking area */
+  border: 1px solid var(--bgContent);
+  border-radius: .3125rem;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: white;    /* color of the scroll thumb */
-  border-radius: 1.25rem;       /* roundness of the scroll thumb */
-  border: .3125rem solid var(--backgroundColor);  /* creates padding around scroll thumb */
+  background-color: var(--colorPrimary); /* color of the scroll thumb */
+  border-radius: 0.3125rem; /* roundness of the scroll thumb */
 }

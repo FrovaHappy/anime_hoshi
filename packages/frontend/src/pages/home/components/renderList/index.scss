@@ -1,12 +1,16 @@
-.animeList {
-  box-sizing: border-box;
-  display: grid;
-  gap: .9375rem;
-  grid-template-columns: repeat(auto-fill, minmax(9.375rem, .55fr));
-  align-items: center;
-  padding: 1.25rem;
-  flex: auto;
+.renderList {
+  box-sizing: content-box;
+  width: inherit;
+  margin: .625rem .1875rem .625rem .9375rem;
+  overflow-y: auto;
+  &__targets {
+    box-sizing: border-box;
+    display: grid;
+    gap: 0.9375rem;
+    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 0.55fr));
+    align-items: center;
+    padding-right: .3125rem;
+    flex: auto;
     height: 100%;
-    overflow: auto;
+  }
 }
-
