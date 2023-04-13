@@ -3,10 +3,15 @@ export interface InfoEpisodeRecovered {
   title: string
   episode: number
 }
+type Status = 'FINISHED' | 'RELEASING' | 'NOT_YET_RELEASED' | 'CANCELLED' | 'HIATUS'
+type Format = 'MUSIC' | 'ONA' | 'OVA' | 'SPECIAL' | 'MOVIE' | 'TV_SHORT' | 'TV'
 export interface DataAnilist {
   id: number
   episodes: number | null
-  status: string
+  status?: Status
+  format?: Format
+  description?: string
+  averageScore?: number
   coverImage: CoverImage
   title: Title
 }

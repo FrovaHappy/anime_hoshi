@@ -6,6 +6,10 @@ export async function queryAnilistForTitle(searchForTitle: string): Promise<Quer
     Media(search: $search, type: ANIME) {
       id
       episodes
+      status
+      format
+      description
+      averageScore
       coverImage {
         large
         medium
