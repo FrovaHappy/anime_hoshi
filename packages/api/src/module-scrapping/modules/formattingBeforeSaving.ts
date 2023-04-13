@@ -1,5 +1,5 @@
-import { AnimeList, Episodes, InfoEpisodeRecovered } from '../../../../types'
-
+import { AnimeList, Episodes, EpisodesContent, InfoEpisodeRecovered, PagesUrlObject } from '../../../../types'
+type PagesUrl = { [x: string]: string | undefined } | PagesUrlObject
 function setEpisode(
   episodesOfAnimeList: Episodes,
   episodewithoutNaN: number,
@@ -9,27 +9,15 @@ function setEpisode(
 ) {
   const numberOfEpisode = episodewithoutNaN
   let episodes = episodesOfAnimeList
-  let episode = episodes[numberOfEpisode]
-  if (episode) {
-    const pagesUrl = episode.pagesUrl
-    if (pagesUrl[namePage]) return { episodes, needUpdate }
-
-    needUpdate = true
-    pagesUrl[namePage] = resultScrapedForItem.url
-    episode.pagesUrl = pagesUrl
-    episode.updateEpisode = Date.now()
-    episodes[numberOfEpisode] = episode
-  } else {
-    needUpdate = true
-    let pageUrl = {
-      [namePage]: resultScrapedForItem.url,
-    }
-    let newEpisode = {
-      updateEpisode: Date.now(),
-      pagesUrl: pageUrl,
-    }
-    episodes[numberOfEpisode] = newEpisode
-  }
+  let episode: EpisodesContent = episodes[numberOfEpisode] ?? ({} as EpisodesContent)
+  let pagesUrl: PagesUrl = episode?.pagesUrl ?? {}
+  if (pagesUrl[namePage]) return { episodes, needUpdate }
+  if (Object.keys(pagesUrl).length === 0) episode.updateEpisode = Date.now()
+  needUpdate = true
+  pagesUrl[namePage] = { url: resultScrapedForItem.url, update: Date.now() }
+  episode.pagesUrl = pagesUrl
+  episodes[numberOfEpisode] = episode
+  console.log({ episodes })
   return { episodes, needUpdate }
 }
 

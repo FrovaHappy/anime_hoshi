@@ -31,13 +31,19 @@ export interface TopList {
 }
 export interface EpisodesContent {
   updateEpisode: number
-  pagesUrl: KeyDinamicString
+  pagesUrl: KeyDinamicString | PagesUrlObject
 }
 export interface Episodes {
   [key: string]: EpisodesContent | undefined
 }
 interface KeyDinamicString {
   [key: string]: string | undefined
+}
+export interface PagesUrlObject {
+  [key: string]: {
+    url: string
+    update: number
+  }
 }
 export interface AnimeList {
   updateAnilist: number

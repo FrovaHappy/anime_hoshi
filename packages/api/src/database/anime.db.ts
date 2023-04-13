@@ -39,4 +39,6 @@ export async function UpdateOneAnime(animeEdited: AnimeList) {
 
   return anime
 }
-
+export async function findAll() {
+  return await animeModel.find({})
+}
