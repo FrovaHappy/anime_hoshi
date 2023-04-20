@@ -2,20 +2,17 @@ import { AnimeList, EpisodesContent } from '../../../../../types'
 import { List } from '../../../../types'
 
 const episodesFormat = (listOrdenatedForPage: List, episode: EpisodesContent, namePage: string, keyEpisode: string) => {
-  const url = episode.pagesUrl[namePage]!
-  const update = episode.updateEpisode
+  let pageUrl = episode.pagesUrl[namePage]!
+  let url = typeof pageUrl === 'string' ? pageUrl : pageUrl.url
+
+  const update = typeof pageUrl === 'string' ? episode.updateEpisode : pageUrl.update
   const element = {
     url,
     update,
     episode: parseInt(keyEpisode),
   }
-  let listElementModified = listOrdenatedForPage[namePage]
-  if (!listElementModified) {
-    listOrdenatedForPage[namePage] = [element]
-  } else {
-    listElementModified.push(element)
-    listOrdenatedForPage[namePage] = listElementModified
-  }
+  listOrdenatedForPage[namePage] = [...(listOrdenatedForPage[namePage] ?? []), element]
+  
   return listOrdenatedForPage
 }
 
