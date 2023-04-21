@@ -6,6 +6,7 @@ import IconBug from './Bug'
 import IconNew from './New'
 import { IconPointNav, IconPointNavActive } from './PointNav'
 import IconRotate from './Rotate'
+import IconExternalLink from './ExternalLink'
 
 type IconProps = {
   className?: string
@@ -22,6 +23,7 @@ type Icon =
   | 'IconPointNav'
   | 'IconPointNavActive'
   | 'IconRotate'
+  | 'IconExternalLink'
 const icons = {
   IconHome,
   IconCircleInfo,
@@ -32,13 +34,20 @@ const icons = {
   IconPointNav,
   IconPointNavActive,
   IconRotate,
+  IconExternalLink,
 }
 
 const filterIcon = (iconProps: IconProps) => {
   const { className, iconName, style } = iconProps
   const { path, viewBox } = icons[iconName]
   return (
-    <svg className={className} style={style} viewBox={viewBox} xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+    <svg
+      className={className}
+      style={{ ...(style ?? {}), display: 'inline' }}
+      viewBox={viewBox}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+    >
       {path}
     </svg>
   )

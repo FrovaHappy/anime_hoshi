@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRotate, faExternalLink } from '@fortawesome/free-solid-svg-icons'
 import RenderListDropdown from '../listDropdown'
 import { useAnimeContext } from '../../../contexts/contextHome'
-import filterIcon from '../../../../Icons'
 
 interface Props {
   list: List

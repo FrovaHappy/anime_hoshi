@@ -18,13 +18,12 @@ a {
   text-decoration: none;
 }
 *::-webkit-scrollbar {
-  width: 0.625rem; /* width of the entire scrollbar */
+  width: .4375rem; /* width of the entire scrollbar */
 }
 
 *::-webkit-scrollbar-track {
-  background: #0000; /* color of the tracking area */
-  border: 1px solid var(--bgContent);
-  border-radius: .3125rem;
+  background: #2c2c2c52;
+  border-radius: .2188rem;
 }
 
 *::-webkit-scrollbar-thumb {
