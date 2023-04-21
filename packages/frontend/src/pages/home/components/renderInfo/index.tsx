@@ -1,12 +1,12 @@
 import { EpisodesConteiner } from './animeInfo__body'
 import './index.scss'
-import { AnimeInfoHeader } from './animeInfo__header'
 import { listPageLinks } from '../../utils/listsPagesLinks'
 import { Welcome } from './Welcome'
 import { Contribute } from './contribute'
 import { useAnimeContext } from '../../../contexts/contextHome'
 import Icons from '../../../../Icons'
 import { AnimeList } from '../../../../../../types'
+import Metadata from './Metadata'
 type Props = {
   anime: AnimeList
 }
@@ -28,7 +28,9 @@ function Description({ anime }: Props) {
         alt={anime.dataAnilist.title.romaji}
       />
       <p className="renderInfo__description--title">Descripción:</p>
-      <p className="renderInfo__description--body">{anime.dataAnilist.description ?? 'ola'}</p>
+      <p className="renderInfo__description--body">
+        {anime.dataAnilist.description ?? 'No se que anime se trata, pero esta  buenísimo. Te lo recomiendo 19/10 👍'}
+      </p>
     </div>
   )
 }
@@ -51,7 +53,7 @@ function renderInfo() {
         <LinkToAnilist anime={anime} />
       </div>
       <h3 className="renderInfo__title">{anime.dataAnilist.title.romaji}</h3>
-      <AnimeInfoHeader anime={anime} />
+      <Metadata anime={anime} />
       <Description anime={anime} />
       <EpisodesConteiner list={list} />
       <Contribute />
