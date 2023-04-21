@@ -42,3 +42,6 @@ export async function UpdateOneAnime(animeEdited: AnimeList) {
 export async function findAll() {
   return await animeModel.find({})
 }
+export async function deletedOne(anilistId: number) {
+  return await animeModel.deleteOne({ 'dataAnilist.id': anilistId })
+}
