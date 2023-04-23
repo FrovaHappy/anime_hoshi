@@ -1,12 +1,11 @@
-import { EpisodesConteiner } from './animeInfo__body'
 import './index.scss'
-import { listPageLinks } from '../../utils/listsPagesLinks'
 import { Welcome } from './Welcome'
 import { Contribute } from './contribute'
 import { useAnimeContext } from '../../../contexts/contextHome'
 import Icons from '../../../../Icons'
 import { AnimeList } from '../../../../../../types'
 import Metadata from './Metadata'
+import RenderEpisodesDropdown from './RenderEpisodesDropdown'
 type Props = {
   anime: AnimeList
 }
@@ -38,7 +37,6 @@ function Description({ anime }: Props) {
 function renderInfo() {
   const { anime, setAnime } = useAnimeContext()
   if (!anime) return <Welcome />
-  const list = listPageLinks(anime)
   return (
     <div className="renderInfo">
       <div className="renderInfo__actions">
@@ -55,7 +53,7 @@ function renderInfo() {
       <h3 className="renderInfo__title">{anime.dataAnilist.title.romaji}</h3>
       <Metadata anime={anime} />
       <Description anime={anime} />
-      <EpisodesConteiner list={list} />
+      <RenderEpisodesDropdown />
       <Contribute />
     </div>
   )
