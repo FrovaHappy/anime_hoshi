@@ -1,0 +1,56 @@
+.selectPage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3125rem;
+  height: fit-content;
+  &__selected {
+    background-color: var(--bgContentAlt);
+    padding: 0.3125rem 0.625rem;
+    display: flex;
+    box-sizing: border-box;
+    gap: 0.3125rem;
+    width: 12.5rem;
+    border-radius: .3125rem;
+    align-items: center;
+    &--pageName{
+      width: -webkit-fill-available;
+      text-align: start;
+    }
+    cursor: default;
+    &:hover {
+      background-color: var(--bgContentHover);
+    }
+  }
+  &__newEp {
+    height: 0.8125rem;
+  }
+  &__options {
+    display: flex;
+    width: 12.5rem;
+    flex-direction: column;
+    background-color: var(--bgContentAlt);
+    box-shadow: 0 0 0.3125rem rgba(0, 0, 0, 0.575);
+    border-radius: .3125rem;
+    overflow: hidden;
+    cursor: default;
+  }
+  &__option {
+    color: var(--textColorAlt);
+    display: flex;
+    height: 1.6875rem;
+    align-items: center;
+    gap: 0.3125rem;
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    padding: 0.3125rem 0.4375rem;
+    text-align: start;
+    &:hover {
+      background-color: var(--bgContentHover);
+    }
+  }
+}

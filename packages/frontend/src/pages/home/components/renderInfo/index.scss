@@ -1,34 +1,3 @@
-.animeInfoHeader {
-  width: 100%;
-  display: flex;
-  &__img {
-    aspect-ratio: 6/9;
-    width: 9.375rem;
-    overflow: hidden;
-    border-radius: var(--borderRadius);
-  }
-  &__container {
-    display: flex;
-    flex-direction: column;
-    padding-left: 0.625rem;
-    width: inherit;
-    position: relative;
-
-    &--title {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.625rem;
-      color: var(--colorPrimary);
-      border-radius: var(--borderRadius);
-      justify-content: center;
-      flex-grow: 1;
-    }
-    &--info {
-      color: var(--textColor);
-      display: flex;
-    }
-  }
-}
 .properties {
   padding: 0.4375rem 0.625rem;
   font-size: .8125rem;
@@ -124,6 +93,20 @@
       border-radius: .3125rem;
     }
   }
+  &__lastUpdate{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: .875rem;
+    color: var(--textColorAlt);
+    position: relative;
+    gap: .3125rem;
+    width: -webkit-fill-available;
+    padding: .3125rem 0;
+    &--icon{
+      height: .8125rem;
+    }
+  }
 }
 .tab {
   display: flex;
@@ -181,32 +164,6 @@
     }
   }
 }
-.item {
-  display: flex;
-  padding: 0.4375rem 1.5625rem;
-  align-items: center;
-  &__text {
-    color: var(--textColor);
-    &--newEp {
-      position: absolute;
-      height: 1rem;
-      transform: translate(-1.25rem);
-    }
-    &--timeAgo {
-      color: var(--textColorAlternative);
-      flex-grow: 1;
-      text-align: end;
-    }
-    &--externalLink {
-      margin-left: 0.625rem;
-      color: var(--textColorAlternative);
-      font-size: 90%;
-    }
-  }
-  &:hover {
-    background-color: var(--backgroundColorContentHover);
-  }
-}
 .episodes {
   position: relative;
   &__select {
@@ -246,5 +203,20 @@
     &:hover {
       background-color: var(--backgroundColorContentHover);
     }
+  }
+}
+@media (max-width: 56.0625rem){
+  .renderInfo{
+    position: absolute;
+    box-sizing: border-box;
+    width: auto;
+    z-index: 500;
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    padding: 1.5625rem calc(50% - 15.625rem);
+    background-color: var(--bgContentTransparent) ;
+    backdrop-filter: blur(.625rem);
+
   }
 }

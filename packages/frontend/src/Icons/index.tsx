@@ -41,13 +41,7 @@ const filterIcon = (iconProps: IconProps) => {
   const { className, iconName, style } = iconProps
   const { path, viewBox } = icons[iconName]
   return (
-    <svg
-      className={className}
-      style={{ ...(style ?? {}), display: 'inline' }}
-      viewBox={viewBox}
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-    >
+    <svg className={className} style={style} viewBox={viewBox} xmlns="http://www.w3.org/2000/svg" fill="currentColor">
       {path}
     </svg>
   )
