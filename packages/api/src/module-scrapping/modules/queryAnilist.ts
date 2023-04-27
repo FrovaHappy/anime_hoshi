@@ -10,6 +10,7 @@ export async function queryAnilistForTitle(searchForTitle: string): Promise<Quer
       format
       description
       averageScore
+      duration
       coverImage {
         large
         medium
