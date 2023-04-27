@@ -1,4 +1,5 @@
 import { AnimeList, Episodes, EpisodesContent, InfoEpisodeRecovered, PagesUrlObject } from '../../../../types'
+import { TimestampTimings } from '../../Enum'
 type PagesUrl = { [x: string]: string | undefined } | PagesUrlObject
 function setEpisode(
   episodesOfAnimeList: Episodes,
@@ -29,11 +30,11 @@ export function formattingBeforeSaving(
   let animeEdited = animeIncidence
   let { episodes } = animeIncidence
   let needUpdate = false
-  const fivedaytomiliseconds = 432_000_000
-  if (Date.now() > animeIncidence.updateAnilist + fivedaytomiliseconds) {
-    console.log('Anilist updated for time expired')
+  const canDataAnilistUpdated = Date.now() > animeIncidence.updateAnilist + TimestampTimings.fiveDays
+  if (canDataAnilistUpdated) {
     needUpdate = true
     animeEdited.updateAnilist = Date.now()
+    console.log(`dataAnilistUpdated: ${animeEdited.dataAnilist.id} | new time: ${animeEdited.updateAnilist}`)
   }
 
   const setEpisodesStatus = setEpisode(

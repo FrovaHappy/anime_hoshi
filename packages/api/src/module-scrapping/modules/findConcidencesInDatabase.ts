@@ -1,19 +1,42 @@
 import { InfoEpisodeRecovered, QueryAnilist } from '../../../../types'
+import { TimestampTimings } from '../../Enum'
 import { findIncidences } from '../../database/anime.db'
 import { casesErrorsEpisode } from './casesErrorsEpisode'
 import { queryAnilistForTitle } from './queryAnilist'
+type DataOfScraper = {
+  scrapObject: InfoEpisodeRecovered
+  namePage: string
+}
+async function getDatas({ scrapObject, namePage }: DataOfScraper) {
+  let queryAnilist: QueryAnilist | undefined
+  let canUpdate = false
+  let animeInDB = await findIncidences(scrapObject.title, undefined, namePage)
+  if (!Boolean(animeInDB)) queryAnilist = await queryAnilistForTitle(scrapObject.title)
+
+  let dataAnilist = queryAnilist?.data?.Media ?? animeInDB?.dataAnilist
+  if (!animeInDB && Boolean(dataAnilist)) animeInDB = await findIncidences('', dataAnilist!.id, namePage)
+
+  if (Boolean(animeInDB?.updateAnilist)) {
+    const canDataAnilistUpdated = Date.now() > animeInDB!.updateAnilist + TimestampTimings.fiveDays
+    if (canDataAnilistUpdated) {
+      queryAnilist = await queryAnilistForTitle(scrapObject.title)
+      console.log(`find queryAnilist: ${queryAnilist?.data?.Media?.id}`)
+    }
+    dataAnilist = queryAnilist?.data?.Media ?? dataAnilist
+    canUpdate = true
+  }
+  return { animeInDB, dataAnilist, canUpdate }
+}
 
 export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisodeRecovered, namePage: string) {
-  let queryAnilist: QueryAnilist | undefined
-  let animeIncidence = await findIncidences(resultScrapedForItem.title, undefined, namePage)
-  if (!animeIncidence) queryAnilist = await queryAnilistForTitle(resultScrapedForItem.title)
-
-  const mediaAnilist = queryAnilist?.data?.Media ?? animeIncidence?.dataAnilist
-  if (!mediaAnilist) {
+  const datas = await getDatas({ scrapObject: resultScrapedForItem, namePage: namePage })
+  const { dataAnilist } = datas
+  const animeIncidence = datas.animeInDB
+  if (!dataAnilist) {
     return {
       resultScrapedForItemModified: resultScrapedForItem,
       error: {
-        typeError: 'mediaAnilist Undefined',
+        typeError: 'dataAnilist Undefined',
         namePage,
         url: resultScrapedForItem.url,
         title: resultScrapedForItem.title,
@@ -22,12 +45,7 @@ export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisod
       animeIncidence,
     }
   }
-  if (!animeIncidence) animeIncidence = await findIncidences('', mediaAnilist.id, namePage)
-  const fivedaytomiliseconds = 432_000_000
-  if (animeIncidence && Date.now() > animeIncidence.updateAnilist + fivedaytomiliseconds) {
-    queryAnilist = await queryAnilistForTitle(animeIncidence.dataAnilist.title.romaji)
-  }
-  const { error, itemScraper } = casesErrorsEpisode(animeIncidence, mediaAnilist, resultScrapedForItem, namePage)
+  const { error, itemScraper } = casesErrorsEpisode(animeIncidence, dataAnilist, resultScrapedForItem, namePage)
   if (error) {
     return {
       resultScrapedForItemModified: resultScrapedForItem,
@@ -38,16 +56,18 @@ export async function findConcidencesInDatabase(resultScrapedForItem: InfoEpisod
   resultScrapedForItem = itemScraper
 
   let titleinPages = animeIncidence?.titleinPages || {}
-  if (!animeIncidence?.titleinPages[`${namePage}-fixed`]) titleinPages[namePage] = resultScrapedForItem.title
+  if (!titleinPages[`${namePage}-fixed`]) titleinPages[namePage] = resultScrapedForItem.title
+  const updateAnilist = animeIncidence?.updateAnilist || Date.now()
+  const episodes = animeIncidence?.episodes || {}
 
   return {
     resultScrapedForItemModified: resultScrapedForItem,
     error: null,
     animeIncidence: {
-      updateAnilist: animeIncidence?.updateAnilist || Date.now(),
+      updateAnilist,
       titleinPages,
-      dataAnilist: mediaAnilist,
-      episodes: animeIncidence?.episodes || {},
+      dataAnilist,
+      episodes,
     },
   }
 }
