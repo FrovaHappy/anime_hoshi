@@ -82,6 +82,7 @@
     width: -webkit-fill-available;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     &--item{
       cursor: default;
       height:  1.375rem;
