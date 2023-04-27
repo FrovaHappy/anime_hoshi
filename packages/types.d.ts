@@ -12,6 +12,7 @@ export interface DataAnilist {
   format?: Format
   description?: string
   averageScore?: number
+  duration?: number
   coverImage: CoverImage
   title: Title
 }

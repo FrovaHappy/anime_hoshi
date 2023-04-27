@@ -18,6 +18,7 @@ const animeSchema = new Schema<AnimeList>(
       status: { type: 'string', required: true },
       description: { type: 'string', required: true },
       averageScore: { type: 'number', required: true },
+      duration: { type: 'number', required: true },
       title: {
         english: { type: 'string', required: true },
         romaji: { type: 'string', required: true },
