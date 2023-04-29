@@ -13,7 +13,10 @@
   height: -webkit-fill-available;
   border-radius: 0.3125rem;
   overflow: hidden;
-  transition: width .4s;
+  transition: width 0.4s;
+  &__menu {
+    display: none;
+  }
   &:hover {
     width: 12.5rem;
   }
@@ -57,5 +60,62 @@
     margin: 0.625rem;
     border-radius: 50%;
     background-color: black;
+  }
+}
+@media (max-width: 56.0625rem) {
+  .box__nav {
+    position: absolute;
+    display: flex;
+    flex-direction: row-reverse;
+    height: 2.75rem;
+    width: 2.75rem;
+    margin: 0.625rem;
+    z-index: 1000;
+    right: 0;
+    bottom: 0;
+    justify-items: end;
+    overflow: hidden;
+
+    background-color: var(--bgContent);
+    backdrop-filter: blur(0px);
+    border-radius: .3125rem;
+    transition: width 0.4s, height 0.4s, margin 0.2s, backdrop-filter 0.4s, padding 0.2s;
+    &--active {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: .625rem;
+      border-radius: 0;
+      background-color: var(--bgContentTransparent);
+      backdrop-filter: blur(10px);
+    }
+  }
+  .nav {
+    display: flex;
+    margin: 0;
+    padding: 64px 20px;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    bottom: 0;
+    width: 100vw;
+    align-items: flex-end;
+    &__menu {
+      display: block;
+      color: var(--colorPrimary);
+      height: 1.5rem;
+      align-self: flex-end;
+      padding: 0.625rem;
+    }
+    &:hover {
+      width: inherit;
+    }
+  }
+  .routes {
+    flex-direction: row-reverse;
+    background-color: transparent;
+    &__point {
+      display: none;
+    }
   }
 }

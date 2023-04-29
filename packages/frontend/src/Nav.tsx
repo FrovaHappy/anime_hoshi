@@ -1,16 +1,19 @@
 import './Nav.scss'
 import { Link, useLocation } from 'react-router-dom'
 import Icon from './Icons'
+import { useState } from 'react'
 
 function Nav() {
+  const [canRenderMenu, setCanRenderMenu] = useState(false)
   const param = useLocation()
   const isRenderPoint = (clickPath: String) => {
     if (param.pathname === clickPath) return <Icon iconName="IconPointNavActive" className="routes__point" />
     return <Icon iconName="IconPointNav" className="routes__point" />
   }
-  console.log(param)
+  const renderMenu = !canRenderMenu ? 'IconBars' : 'IconClose'
+  const classNavActive = canRenderMenu ? 'box__nav--active' : ''
   return (
-    <div className="box__nav">
+    <div className={`box__nav ${classNavActive}`} onClick={() => setCanRenderMenu(!canRenderMenu)}>
       <div className="nav">
         <div className="separate"></div>
         <Link to={'/'} className="routes">
@@ -40,6 +43,7 @@ function Nav() {
           {isRenderPoint('/user')}
         </Link>
       </div>
+      <Icon iconName={renderMenu} className={`nav__menu`} />
     </div>
   )
 }
