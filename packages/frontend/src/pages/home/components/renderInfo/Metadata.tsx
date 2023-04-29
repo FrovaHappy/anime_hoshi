@@ -5,10 +5,11 @@ type Props = {
 }
 function formatTime(duration?: number): string {
   if (!duration) return ''
-  const inHours = duration / 60
-  const hasHour = Math.floor(inHours) > 1
-  if (hasHour) return `${inHours.toFixed(1)} Hora/s`
-  return `${duration} Minuto/s`
+  const inHours = Math.floor(duration / 60)
+  const hasHour = inHours > 0
+  const inMinutes = hasHour ? Math.floor((duration / 60 - inHours) * 60) : duration
+  if (hasHour) return `${inHours} Horas ${inMinutes > 0 ? inMinutes + ' minutos' : ''}`
+  return `${inMinutes} Minutos`
 }
 function Metadata({ anime }: Props) {
   const { episodes, id, format, status, averageScore, duration } = anime.dataAnilist
