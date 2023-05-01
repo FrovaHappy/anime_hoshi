@@ -7,3 +7,7 @@ export type List = {
       }[]
     | undefined
 }
+export type notificationProperty = {
+  hasAccept: boolean
+  updated?: number
+}
