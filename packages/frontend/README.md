@@ -5,6 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Environment variables
 ```bash 
 URL_API=http://your.url.endpoint
+REACT_APP_DISCORD_WIDGET = 'url del widget del widget de discord.'
 ```
 
 ## Available Scripts

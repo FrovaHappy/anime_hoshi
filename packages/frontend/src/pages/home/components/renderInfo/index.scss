@@ -33,6 +33,9 @@
   gap: 0.625rem;
   flex-direction: column;
   background-color: var(--bgContent);
+  &__discord{
+    height: -webkit-fill-available;
+  }
   &__actions {
     display: flex;
     justify-content: space-between;

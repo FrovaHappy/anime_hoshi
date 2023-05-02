@@ -1,3 +1,4 @@
-const urlApi = process.env.REACT_APP_URLAPI //'https://scraping-api-production.up.railway.app'
+const urlApi = process.env.REACT_APP_URLAPI
+const discordWiget = process.env.REACT_APP_DISCORD_WIDGET
 console.log(urlApi)
-export { urlApi }
+export { urlApi, discordWiget }
