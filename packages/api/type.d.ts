@@ -22,3 +22,9 @@ export type PagesScraped = {
   [key: string]: InfoEpisodeRecovered;
 }[]
 
+export type TokenBody = {
+  username: string
+  id: string
+  roles: string[]
+}
+export type RoleUser = 'owner' | 'admin' | 'user'

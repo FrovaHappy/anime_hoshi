@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { IuserWithoutPasswordHash } from '../../type'
+import { IuserWithoutPasswordHash, TokenBody } from '../../type'
 import { configs } from '../config'
 import { findUser } from '../database/users.db'
 
@@ -10,9 +10,9 @@ export async function validateUserAndPassword(user: IuserWithoutPasswordHash) {
 
   const passwordHashDB = searchUserDB.passwordHash ?? ''
   const passwordCompare = await bcrypt.compare(user.password, passwordHashDB)
-  const payloadToken = {
+  const payloadToken: TokenBody = {
     username: searchUserDB?.username,
-    id: searchUserDB?.id,
+    id: searchUserDB?.id as string,
     roles: searchUserDB?.roles,
   }
   const createTokenSession = (payloadToken: Object) => {
