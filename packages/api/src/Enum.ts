@@ -10,6 +10,13 @@ export const enum CacheKeys {
   animeList = 'animeList',
 }
 
+export enum NamePages {
+  'animeFlv' = 'animeFlv',
+  'monosChinos' = 'monosChinos',
+  'animeblix' = 'animeblix',
+  'jkanime' = 'jkanime',
+}
+
 export const enum TimestampTimings {
   fiveDays = 432_000_000,
   eightHours = 28_800_000,
