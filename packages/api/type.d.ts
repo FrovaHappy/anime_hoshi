@@ -28,3 +28,4 @@ export type TokenBody = {
   roles: string[]
 }
 export type RoleUser = 'owner' | 'admin' | 'user'
+export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime'
