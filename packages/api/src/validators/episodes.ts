@@ -67,6 +67,10 @@ function checkEpisodesStructure(episodes: { [x: string]: Episode }) {
   return true
 }
 
-const validateEpisodes = [check('episodes').isObject({ strict: true }).custom(checkEpisodesStructure), validateResult]
+const validateEpisodes = [
+  check('episodes').isObject({ strict: true }).custom(checkEpisodesStructure),
+  check('id').isNumeric(),
+  validateResult,
+]
 
 export { validateEpisodes }
