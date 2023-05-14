@@ -1,12 +1,13 @@
-import { startRestructureData } from './module-scrapping';
+import { startRestructureData } from './module-scrapping/index'
 import { mongoose } from './mongoose'
 import { parserUrlsPages } from './parserUrlsPages'
+import serverApp from './app'
 ;(async () => {
   try {
     await mongoose()
     const parser = await parserUrlsPages()
     console.log(parser)
-    await import('./app')
+    serverApp()
     startRestructureData()
     setInterval(() => startRestructureData(), 900000) // 15 minutes
   } catch (e) {
