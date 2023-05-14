@@ -1,12 +1,12 @@
-import { UpdateOneAnime } from '../database/anime.db'
-import { findAnimePublished, updatedAnimesPublished } from '../database/animePublished'
-import { AnimeList, InfoEpisodeRecovered } from '../../../types'
-import { formattingBeforeSaving } from './modules/formattingBeforeSaving'
-import { findConcidencesInDatabase } from './modules/findConcidencesInDatabase'
-import { formartItemScraper } from './modules/fomartItemScraper'
-import { PagesScraped } from '../../type'
+import { UpdateOneAnime } from '../../database/anime.db'
+import { findAnimePublished, updatedAnimesPublished } from '../../database/animePublished'
+import { AnimeList, InfoEpisodeRecovered } from '../../../../types'
+import { formattingBeforeSaving } from './formattingBeforeSaving'
+import { findConcidencesInDatabase } from './findConcidencesInDatabase'
+import { formartItemScraper } from './fomartItemScraper'
+import { PagesScraped } from '../../../type'
 
-export async function setAnime(allResultScraped:PagesScraped) {
+export async function setAnime(allResultScraped: PagesScraped) {
   console.log('\nstart Restructure Anime Data ... ')
   let errors = []
   let animespublished: number[] = (await findAnimePublished())?.[0]?.animePublished || []

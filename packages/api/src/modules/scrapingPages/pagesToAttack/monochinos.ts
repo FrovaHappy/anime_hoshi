@@ -1,4 +1,4 @@
-import { DataAttck } from '../../../type'
+import { DataAttck } from '../../../../type'
 import buildScrapPages from '../buildScrapPages'
 
 const data: DataAttck = {

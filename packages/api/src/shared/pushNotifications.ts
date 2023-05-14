@@ -1,6 +1,6 @@
-import { AnimeList, Payload } from '../../../../types'
-import { Subscription } from '../../../type'
-import { getAllSubscriptions } from '../../database/subscriptions.db'
+import { AnimeList, Payload } from '../../../types'
+import { Subscription } from '../../type'
+import { getAllSubscriptions } from '../database/subscriptions.db'
 import { buildWebPush } from './webPush'
 
 async function buildStackSubscriptions() {

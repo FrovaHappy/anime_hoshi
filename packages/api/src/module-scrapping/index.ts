@@ -1,7 +1,7 @@
 import { fork } from 'child_process'
 import refreshCache from '../utils/refreshCache'
-import { setAnime } from './dataConversion'
-import { pushNotifications } from './modules/pushNotifications'
+import { setAnime } from '../modules/BuildAnimes/dataConversion'
+import { pushNotifications } from '../shared/pushNotifications'
 import * as fsPromise from 'fs/promises'
 
 export function startRestructureData() {

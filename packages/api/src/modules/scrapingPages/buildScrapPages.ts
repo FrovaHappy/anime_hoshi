@@ -1,7 +1,7 @@
 import { JSDOM } from 'jsdom'
 import getHtml from './getHtml'
-import { InfoEpisodeRecovered } from '../../../types'
-import { DataAttck } from '../../type'
+import { InfoEpisodeRecovered } from '../../../../types'
+import { DataAttck } from '../../../type'
 
 export default async function buildScrapPages({
   urlPage,
