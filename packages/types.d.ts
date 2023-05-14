@@ -3,6 +3,9 @@ export interface InfoEpisodeRecovered {
   title: string
   episode: number
 }
+export type PagesAttacked = {
+  [x: string]: InfoEpisodeRecovered[]
+}[]
 type Status = 'FINISHED' | 'RELEASING' | 'NOT_YET_RELEASED' | 'CANCELLED' | 'HIATUS'
 type Format = 'MUSIC' | 'ONA' | 'OVA' | 'SPECIAL' | 'MOVIE' | 'TV_SHORT' | 'TV'
 export interface DataAnilist {

@@ -27,5 +27,15 @@ export type TokenBody = {
   id: string
   roles: string[]
 }
+export type DataAttck = {
+  urlPage: string
+  selectorEpisodes: string
+  selectorUrl: string
+  selectorEpisode: string
+  positionEpisodeInString: number
+  selectorTitle: string
+  namePages: PagesNames
+  testMode: boolean
+}
 export type RoleUser = 'owner' | 'admin' | 'user'
 export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime'
