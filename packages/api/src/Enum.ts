@@ -13,5 +13,5 @@ export const enum CacheKeys {
 export const enum TimestampTimings {
   fiveDays = 432_000_000,
   eightHours = 28_800_000,
-  fifteenMinutes = 90_000,
+  fifteenMinutes = 900_000,
 }

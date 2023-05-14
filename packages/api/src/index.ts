@@ -1,4 +1,4 @@
-import { startRestructureData } from './module-scrapping/index'
+import IntervalScrap from './intervalScrap'
 import { mongoose } from './mongoose'
 import { parserUrlsPages } from './parserUrlsPages'
 import serverApp from './app'
@@ -8,8 +8,7 @@ import serverApp from './app'
     const parser = await parserUrlsPages()
     console.log(parser)
     serverApp()
-    startRestructureData()
-    setInterval(() => startRestructureData(), 900000) // 15 minutes
+    IntervalScrap()
   } catch (e) {
     console.error(e)
   }

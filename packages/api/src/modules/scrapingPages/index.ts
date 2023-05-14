@@ -14,5 +14,3 @@ export default async function ScrapingPages() {
   )
   return pages.filter((page) => page !== null) as PagesAttacked
 }
-
-ScrapingPages()

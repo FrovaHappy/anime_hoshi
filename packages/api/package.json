@@ -39,9 +39,6 @@
     "jsdom": "22.0.0",
     "jsonwebtoken": "9.0.0",
     "mongoose": "6.8.3",
-    "playwright": "1.29.2",
-    "playwright-extra": "4.3.5",
-    "puppeteer-extra-plugin-stealth": "2.11.1",
     "web-push": "3.5.0"
   },
   "eslintConfig": {
