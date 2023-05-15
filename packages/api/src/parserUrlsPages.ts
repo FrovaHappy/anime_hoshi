@@ -1,11 +1,16 @@
 import { AnimeList, PagesUrlObject } from '../../types'
 import { UpdateOneAnime, deletedOne, findAll } from './database/anime.db'
+import log from './shared/log'
 
 async function deletedEpisodesEmpty(anime: AnimeList) {
   const totalEpisodes = Object.keys(anime.episodes).length
   if (totalEpisodes === 0) {
     await deletedOne(anime.dataAnilist.id)
-    console.log('Deleted ' + anime.dataAnilist.id)
+    log({
+      type: 'info',
+      message: '[parse url Pages] deleted anime with episodes empty',
+      content: anime,
+    })
     return true
   }
   return false
@@ -25,11 +30,20 @@ export async function parserUrlsPages() {
 
     numEpisodes.forEach((numEpisode) => {
       let episode = anime.episodes[numEpisode]!
-      if (!episode.pagesUrl) console.error({ error: 'pages url no found', id: anime.dataAnilist.id, numEpisode })
+      if (!episode.pagesUrl)
+        log({
+          type: 'warning',
+          message: '[parse urlPages] pagesUrl no found',
+          content: { numEpisode, episode, anime },
+        })
       const pagesNames = Object.keys(episode.pagesUrl ?? {})
       let urlsPages: PagesUrlObject = {}
       if (!episode.updateEpisode) {
-        console.error({ error: 'updated episode no found', id: anime.dataAnilist.id })
+        log({
+          type: 'warning',
+          message: '[parse urlPages] updated episode no found',
+          content: { numEpisode, episode, anime },
+        })
         urlUpdate = true
         episode.updateEpisode = Date.now()
         episodes[numEpisode] = episode
@@ -56,9 +70,14 @@ export async function parserUrlsPages() {
     }
     total++
   }
-  return {
-    updated,
-    totalepisode: total,
-    totalAnime: animes.length,
-  }
+  await log({
+    type: 'info',
+    message: `[parse urlPages] Parsed ${updated} of ${total} episodes`,
+    content: {
+      updated,
+      totalepisode: total,
+      totalAnime: animes.length,
+    },
+  })
+  return
 }

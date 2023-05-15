@@ -1,5 +1,6 @@
 import agentkeepalive from 'agentkeepalive'
 import { Headers, Agents, CacheOptions, Method, ResponseType } from './types'
+import Log from '../../shared/log'
 
 export default async function getHtml(url: string) {
   try {
@@ -41,6 +42,14 @@ export default async function getHtml(url: string) {
     return { content: content.toString('utf-8') }
   } catch (e: any) {
     const got = (await import('got')).got
+    const { code, options } = e
+    const { url: urlError } = options
+    console.log(e)
+    await Log({
+      type: 'warning',
+      message: `[getHtml] ${urlError.hostname}`,
+      content: { urlError, code },
+    })
     const response: string = await got
       .get(`http://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
       .then((response) => {

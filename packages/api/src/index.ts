@@ -5,8 +5,7 @@ import serverApp from './app'
 ;(async () => {
   try {
     await mongoose()
-    const parser = await parserUrlsPages()
-    console.log(parser)
+    await parserUrlsPages()
     serverApp()
     IntervalScrap()
   } catch (e) {

@@ -5,6 +5,7 @@ import { formattingBeforeSaving } from './formattingBeforeSaving'
 import { findConcidencesInDatabase } from './findConcidencesInDatabase'
 import { formartItemScraper } from './fomartItemScraper'
 import { PagesScraped } from '../../../type'
+import log from '../../shared/log'
 
 export async function setAnime(allResultScraped: PagesScraped) {
   console.log('\nstart Restructure Anime Data ... ')
@@ -39,6 +40,11 @@ export async function setAnime(allResultScraped: PagesScraped) {
     }
     console.log(`${namePage} - updated: ${updated}/${resultPageArray.length}`)
   }
+  await log({
+    type: 'warning',
+    message: `[build Anime] ${errors.length} animes with problems`,
+    content: errors,
+  })
   return {
     errors,
     animeUpdated,

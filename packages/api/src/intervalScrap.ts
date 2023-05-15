@@ -6,11 +6,10 @@ import refreshCache from './utils/refreshCache'
 
 async function runSortAnimes() {
   const pagesScraped = await ScrapingPages()
-  const { animeUpdated, animespublished, errors } = await setAnime(pagesScraped)
+  const { animeUpdated, animespublished } = await setAnime(pagesScraped)
   await refreshCache.animeList(animespublished, animeUpdated)
   console.log(`animesUpdated: ${JSON.stringify(animeUpdated.map((anime) => anime.dataAnilist.id))}`)
-  console.log(`errors: ${errors.length}\n···················`)
-  console.log(await pushNotifications(animeUpdated))
+  await pushNotifications(animeUpdated)
 }
 export default function IntervalScrap() {
   runSortAnimes()

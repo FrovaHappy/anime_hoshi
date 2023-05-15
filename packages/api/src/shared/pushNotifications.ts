@@ -1,7 +1,9 @@
+import { WebPushError } from 'web-push'
 import { AnimeList, Payload } from '../../../types'
 import { Subscription } from '../../type'
 import { getAllSubscriptions } from '../database/subscriptions.db'
 import { buildWebPush } from './webPush'
+import log from './log'
 
 async function buildStackSubscriptions() {
   const subscriptions = await getAllSubscriptions()
@@ -51,37 +53,37 @@ async function sendNotifications(subscriptions: Subscription[], payload: string)
   let countPush = 0
   const promisePush = async (subscriptionEncrypted: Subscription) => {
     const { webpush, subscription } = await buildWebPush(subscriptionEncrypted)
-    let details: { publicKey: string; error: unknown | null }[] = []
-
+    let reject: { publicKey: string; error: unknown } | undefined
     await webpush
       ?.sendNotification(subscription, payload)
-      .catch((err) => {
-        details.push({
+      .catch((err: WebPushError) => {
+        reject = {
           publicKey: subscriptionEncrypted.publicKey,
           error: err,
-        })
+        }
       })
-      .finally(() => {
+      .then(() => {
         ++countPush
-        details.push({
-          publicKey: subscriptionEncrypted.publicKey,
-          error: null,
-        })
       })
 
-    return details
+    return reject
   }
-  let resolve = (await Promise.allSettled(subscriptions.map((subscription) => promisePush(subscription))))
+  let resultRejects = (await Promise.allSettled(subscriptions.map((subscription) => promisePush(subscription))))
     .map((response) => {
       if (response.status === 'fulfilled') {
         return response.value
       }
-      return response.reason
+      log({
+        type: 'error',
+        message: '[webpush] error unexpected...',
+        content: { reason: response.reason },
+      })
+      return undefined
     })
-    .filter((response) => response !== null)
+    .filter((response) => response !== undefined)
   return {
-    details: resolve,
-    countPush: countPush,
+    rejects: resultRejects,
+    success: countPush,
   }
 }
 
@@ -90,10 +92,22 @@ export async function pushNotifications(animesUpdated: AnimeList[]) {
   const payload = buildStackPayload(animesUpdated)
   if (animesUpdated.length === 0) return { push: 0, total: total, animesUpdated: animesUpdated.length }
   let push = 0
+  let totalRejects: any[] = []
   for await (const subscription of stackSubscriptions) {
-    const { countPush, details } = await sendNotifications(subscription, payload)
-    console.log(details)
-    push += countPush
+    const { success, rejects } = await sendNotifications(subscription, payload)
+    totalRejects = [...rejects, ...totalRejects]
+    push += success
   }
-  return { push: push, total: total, animesUpdated: animesUpdated.length }
+  const details = { succes: push, rejects: totalRejects, total, animesUpdated: animesUpdated.length }
+  await log({
+    type: 'warning',
+    message: `[webpush] ${totalRejects.length} pushNotifications rejects of ${total}`,
+    content: totalRejects,
+  })
+  await log({
+    type: 'info',
+    message: `[webpush] ${push} pushNotifications successfully sending of ${total}`,
+    content: details,
+  })
+  return details
 }
