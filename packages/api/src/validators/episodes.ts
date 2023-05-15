@@ -17,6 +17,7 @@ const PagesNamesObj: { [x: string]: PagesNames } = {
   monosChinos: 'monosChinos',
   animeblix: 'animeblix',
   jkanime: 'jkanime',
+  crunchyroll: 'crunchyroll',
 }
 function checkEpisodesStructure(episodes: { [x: string]: Episode }) {
   const errorMessage = {

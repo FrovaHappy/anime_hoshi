@@ -1,30 +1,6 @@
-import { Agent as HttpAgent } from 'node:http'
-import { Agent as HttpsAgent } from 'node:https'
 import agentkeepalive from 'agentkeepalive'
-type Method =
-  | 'GET'
-  | 'POST'
-  | 'PUT'
-  | 'PATCH'
-  | 'HEAD'
-  | 'DELETE'
-  | 'OPTIONS'
-  | 'TRACE'
-  | 'get'
-  | 'post'
-  | 'put'
-  | 'patch'
-  | 'head'
-  | 'delete'
-  | 'options'
-  | 'trace'
-type Headers = Record<string, string | string[] | undefined>
-type Agents = {
-  http?: HttpAgent | false
-  https?: HttpsAgent | false
-  http2?: unknown | false
-}
-export type ResponseType = 'json' | 'buffer' | 'text'
+import { Headers, Agents, CacheOptions, Method, ResponseType } from './types'
+
 export default async function getHtml(url: string) {
   try {
     const got = (await import('got')).got
@@ -35,6 +11,8 @@ export default async function getHtml(url: string) {
       responseType: ResponseType
       dnsCache: boolean
       headers: Headers
+      cacheOptions: CacheOptions
+      handlers?: any
     } = {
       method: 'GET',
       decompress: false,
@@ -48,17 +26,39 @@ export default async function getHtml(url: string) {
       },
       responseType: 'buffer',
       dnsCache: true,
-      headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) ' },
+      cacheOptions: {
+        shared: true,
+        cacheHeuristic: 0.1,
+        immutableMinTimeToLive: 24 * 3600 * 1000, // 24h
+        ignoreCargoCult: true,
+      },
+      headers: {
+        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)',
+      },
     }
     const response = await got(url, options)
-    if (response.statusCode !== 200) throw new Error(response.statusMessage)
     const content: Buffer = response.body as Buffer
     return { content: content.toString('utf-8') }
-  } catch (e) {
-    return {
-      error: true,
-      bodyError: e,
-      content: null,
+  } catch (e: any) {
+    const got = (await import('got')).got
+    const response: string = await got
+      .get(`http://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
+      .then((response) => {
+        if (response.ok) return JSON.parse(response.body)
+        throw new Error('Network response was not ok.')
+      })
+      .then((data) => {
+        return data.contents
+      })
+      .catch((err) => (e = { fail: true, ...err }))
+    if (e?.fail) {
+      return {
+        error: true,
+        bodyError: e,
+        content: null,
+      }
     }
+
+    return { content: response }
   }
 }

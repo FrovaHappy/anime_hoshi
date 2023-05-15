@@ -38,4 +38,4 @@ export type DataAttck = {
   testMode: boolean
 }
 export type RoleUser = 'owner' | 'admin' | 'user'
-export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime'
+export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime' | 'crunchyroll'

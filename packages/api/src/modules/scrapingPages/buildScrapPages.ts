@@ -14,14 +14,18 @@ export default async function buildScrapPages({
   testMode,
 }: DataAttck) {
   const testModeLog = (values: object) => {
-    if (testMode) console.log(JSON.stringify({ ...values }) + '\n--------------------------------')
+    if (testMode) console.log(JSON.stringify(values) + '\n--------------------------------')
   }
-  const { content } = await getHtml(urlPage)
+  const { content, bodyError, error } = await getHtml(urlPage)
+  testModeLog({ content, bodyError, error })
   if (!content) return null
-  testModeLog({ content })
   const { document: d } = new JSDOM(content).window
 
   const list = d.querySelectorAll(selectorEpisodes)
+  if (testMode)
+    d.querySelector(selectorEpisodes)
+      ? console.log('selectorEpisodes was finding')
+      : console.log('selectorEpisodes was not found')
   let scrapEpisodes: Array<InfoEpisodeRecovered> = []
   list.forEach((node) => {
     let url = node.getAttribute('href') ?? node.querySelector(selectorUrl)?.getAttribute('href')
