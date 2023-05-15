@@ -9,7 +9,7 @@ const data: DataAttck = {
   selectorUrl: '.featured-episode > a',
   selectorTitle: '.season-name > a > cite',
   namePages: 'crunchyroll',
-  testMode: true,
+  testMode: false,
 }
 export default {
   data,
