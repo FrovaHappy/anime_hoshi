@@ -1,6 +1,7 @@
 import { InfoEpisodeRecovered, QueryAnilist } from '../../../../types'
 import { TimestampTimings } from '../../Enum'
 import { findIncidences } from '../../database/anime.db'
+import Log from '../../shared/log'
 import { casesErrorsEpisode } from './casesErrorsEpisode'
 import { queryAnilistForTitle } from './queryAnilist'
 type DataOfScraper = {
@@ -20,7 +21,11 @@ async function getDatas({ scrapObject, namePage }: DataOfScraper) {
     const canDataAnilistUpdated = Date.now() > animeInDB!.updateAnilist + TimestampTimings.fiveDays
     if (canDataAnilistUpdated) {
       queryAnilist = await queryAnilistForTitle(scrapObject.title)
-      console.log(`find queryAnilist: ${queryAnilist?.data?.Media?.id}`)
+      await Log({
+        type: 'info',
+        message: `[build Anime] dataAnilist of ID ${queryAnilist?.data?.Media?.id} was updated for time expired `,
+        content: queryAnilist,
+      })
     }
     dataAnilist = queryAnilist?.data?.Media ?? dataAnilist
     canUpdate = true

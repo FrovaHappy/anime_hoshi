@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import {configs} from './config'
 import routes from './routes'
-const path = require("path");
+
 const app = express()
 // middlewares
 export default function App() {
@@ -12,9 +12,6 @@ export default function App() {
 
   // routers
   app.use(routes)
-
-  app.use(express.static(path.join(__dirname, 'public')))
-  // liste
 
   app.listen(configs.PORT, () => {
     console.log(`server on port ${configs.PORT}`)

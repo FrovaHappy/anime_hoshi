@@ -12,6 +12,7 @@ export async function setAnime(allResultScraped: PagesScraped) {
   let errors = []
   let animespublished: number[] = (await findAnimePublished())?.[0]?.animePublished || []
   let animeUpdated: AnimeList[] = []
+  let animesCounters: any[] = []
 
   for (const resultScrapedForPage of allResultScraped) {
     const namePage = Object.keys(resultScrapedForPage)[0]
@@ -38,13 +39,21 @@ export async function setAnime(allResultScraped: PagesScraped) {
         await updatedAnimesPublished(animespublished)
       }
     }
-    console.log(`${namePage} - updated: ${updated}/${resultPageArray.length}`)
+    animesCounters.push({ namePage, totalUpdated: updated, total: resultPageArray.length })
   }
+  let totalEpisodesUpdated = 0
+  animesCounters.forEach((v) => (totalEpisodesUpdated += v.totalUpdated))
   await log({
-    type: 'warning',
-    message: `[build Anime] ${errors.length} animes with problems`,
-    content: errors,
+    type: 'info',
+    message: `[build Anime]${totalEpisodesUpdated} episodes updated was updated`,
+    content: { animesCounters, updatedIds: animeUpdated.map((anime) => anime.dataAnilist.id) },
   })
+  if (errors.length > 0)
+    await log({
+      type: 'warning',
+      message: `[build Anime] ${errors.length} animes with problems`,
+      content: errors,
+    })
   return {
     errors,
     animeUpdated,

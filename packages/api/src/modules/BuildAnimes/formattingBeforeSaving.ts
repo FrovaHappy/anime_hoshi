@@ -18,7 +18,6 @@ function setEpisode(
   pagesUrl[namePage] = { url: resultScrapedForItem.url, update: Date.now() }
   episode.pagesUrl = pagesUrl
   episodes[numberOfEpisode] = episode
-  console.log({ episodes })
   return { episodes, needUpdate }
 }
 
@@ -34,7 +33,6 @@ export function formattingBeforeSaving(
   if (canDataAnilistUpdated) {
     needUpdate = true
     animeEdited.updateAnilist = Date.now()
-    console.log(`dataAnilistUpdated: ${animeEdited.dataAnilist.id} | new time: ${animeEdited.updateAnilist}`)
   }
 
   const setEpisodesStatus = setEpisode(

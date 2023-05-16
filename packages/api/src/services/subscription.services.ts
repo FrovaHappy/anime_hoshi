@@ -28,7 +28,6 @@ function searchVapidkey(publicKey: string) {
 export async function saveSubscription(pushSubscription: string, publicKey: string) {
   const encryptedPushSubscription = cryptoJS.AES.encrypt(pushSubscription, configs.CRYPTO_KEY).toString()
   const vapidkey = searchVapidkey(publicKey)
-  console.log({ vapidkey, pushSubscription })
 
   if (vapidkey.value === undefined) {
     const subscriptionFromDb = await UpdateOneSubscription(publicKey, encryptedPushSubscription)

@@ -8,7 +8,6 @@ async function runSortAnimes() {
   const pagesScraped = await ScrapingPages()
   const { animeUpdated, animespublished } = await setAnime(pagesScraped)
   await refreshCache.animeList(animespublished, animeUpdated)
-  console.log(`animesUpdated: ${JSON.stringify(animeUpdated.map((anime) => anime.dataAnilist.id))}`)
   await pushNotifications(animeUpdated)
 }
 export default function IntervalScrap() {
