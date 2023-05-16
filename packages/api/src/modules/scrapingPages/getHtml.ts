@@ -42,12 +42,12 @@ export default async function getHtml(url: string) {
     return { content: content.toString('utf-8') }
   } catch (e: any) {
     const got = (await import('got')).got
-    const { code, options } = e
-    const { url: urlError } = options
+    const { code } = e
+    const urlObjet = new URL(url)
     await Log({
       type: 'warning',
-      message: `[getHtml] ${urlError.hostname}`,
-      content: { urlError, code },
+      message: `[getHtml] ${urlObjet.hostname}  started his second request`,
+      content: { url: urlObjet, code },
     })
     const response: string = await got
       .get(`http://api.allorigins.win/get?url=${encodeURIComponent(url)}`)
@@ -60,6 +60,11 @@ export default async function getHtml(url: string) {
       })
       .catch((err) => (e = { fail: true, ...err }))
     if (e?.fail) {
+      await Log({
+        type: 'error',
+        message: `[getHtml] ${urlObjet.hostname} `,
+        content: { message: e.message, code: e.code, url: urlObjet },
+      })
       return {
         error: true,
         bodyError: e,
