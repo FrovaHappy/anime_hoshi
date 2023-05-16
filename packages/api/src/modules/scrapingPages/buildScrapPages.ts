@@ -38,8 +38,8 @@ export default async function buildScrapPages({
     )
     testModeLog({ title, url, episode })
     if (!url || !title) return
-    url = url?.includes(urlPage) ? url : urlPage + url?.slice(1)
-
+    const UrlPage = new URL(urlPage)
+    url = url?.includes(UrlPage.origin) ? url : UrlPage.origin + url
     scrapEpisodes.push({ url, episode, title })
   })
   return { [namePages]: scrapEpisodes }
