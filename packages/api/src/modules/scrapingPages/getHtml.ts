@@ -44,7 +44,6 @@ export default async function getHtml(url: string) {
     const got = (await import('got')).got
     const { code, options } = e
     const { url: urlError } = options
-    console.log(e)
     await Log({
       type: 'warning',
       message: `[getHtml] ${urlError.hostname}`,

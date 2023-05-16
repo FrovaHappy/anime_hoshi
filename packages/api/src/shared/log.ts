@@ -10,10 +10,8 @@ export default async function Log({ type, message, content }: { type: LogType; m
 
   let logFile: any[]
   if (existsSync(pathFile)) {
-    console.log(pathFile)
     logFile = JSON.parse(await readFile(pathFile, { encoding: 'utf8' }))
   } else {
-    console.log(pathFile)
     logFile = []
   }
 
