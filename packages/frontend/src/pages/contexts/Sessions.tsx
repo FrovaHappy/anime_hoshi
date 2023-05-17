@@ -10,7 +10,6 @@ type StateComponent<T> = {
 const ShowComponentContext = createContext<StateComponent<ComponentType> | undefined>(undefined)
 export function useShowComponent() {
   const context = useContext(ShowComponentContext)
-  console.log(context)
   if (!context) throw new Error('showComponentContext out of context')
   const showComponent = context.showComponent as ComponentType
   const setShowComponent = context['setShowComponent'] as (v: ComponentType) => void

@@ -16,7 +16,6 @@ function signUp() {
   }
   useEffect(() => {
     const initFetch = async () => {
-      console.log(signUp)
       if (signUp) {
         await fetch(`${urlApi}/user/signup`, {
           method: 'POST',
@@ -27,7 +26,6 @@ function signUp() {
         })
           .then((response) => response.json())
           .then((response) => {
-            console.log(response)
             if (response.code === 201) {
               setShowComponent(ComponentType.signin)
             }
