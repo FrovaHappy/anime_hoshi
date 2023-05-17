@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { AnimeList } from '../../../../types'
 
 type Props = {
-  children: any
+  children: React.ReactNode
 }
 type AnimesContext =
   | {

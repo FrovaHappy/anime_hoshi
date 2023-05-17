@@ -15,8 +15,8 @@ export async function signup(req: Request, res: Response) {
   }
   const userNew = await servicesCreateUser(user)
   !userNew
-    ? res.status(400).send({ error: 'User already created' })
-    : res.status(201).send({ message: 'user successfully created' })
+    ? res.status(400).send({ code: 400, error: 'User already created', contents: null })
+    : res.status(201).send({ code: 201, message: 'user successfully created', contents: null })
 }
 export async function signin(req: Request, res: Response) {
   const user: IuserWithoutPasswordHash = {
@@ -25,6 +25,6 @@ export async function signin(req: Request, res: Response) {
   }
   const loginResult = await validateUserAndPassword(user)
   loginResult
-    ? res.status(200).json({ token: loginResult })
-    : res.status(403).json({ message: 'Invalid username or password' })
+    ? res.status(200).json({ code: 200, message: 'user singin successfully', contents: { token: loginResult } })
+    : res.status(403).json({ code: 403, message: 'Invalid username or password', contents: null })
 }
