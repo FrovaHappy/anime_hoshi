@@ -16,9 +16,9 @@ function TogleSessions() {
   const { showComponent } = useShowComponent()
   return (
     <>
-      {showComponent === ComponentType.children ? User() : null}
-      {showComponent === ComponentType.signin ? SignIn() : null}
-      {showComponent === ComponentType.signup ? SignUp() : null}
+      {showComponent === ComponentType.children ? <User /> : null}
+      {showComponent === ComponentType.signin ? <SignIn /> : null}
+      {showComponent === ComponentType.signup ? <SignUp /> : null}
     </>
   )
 }
