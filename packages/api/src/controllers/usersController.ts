@@ -15,7 +15,7 @@ export async function signup(req: Request, res: Response) {
   }
   const userNew = await servicesCreateUser(user)
   !userNew
-    ? res.status(400).send({ code: 400, error: 'User already created', contents: null })
+    ? res.status(400).send({ code: 400, message: 'User already created', contents: null })
     : res.status(201).send({ code: 201, message: 'user successfully created', contents: null })
 }
 export async function signin(req: Request, res: Response) {

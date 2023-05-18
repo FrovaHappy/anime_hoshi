@@ -1,3 +1,6 @@
+export interface ObjectKeyDynamic<T> {
+  [k: string]: T
+}
 export type List = {
   [key: string]:
     | {

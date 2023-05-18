@@ -1,14 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useShowComponent, ComponentType } from '../contexts/Sessions'
 import { urlApi } from '../../config'
+import useFetch from '../../hooks/useFetch'
+import { ObjectKeyDynamic } from '../../../types'
 function signUp() {
   const { setShowComponent } = useShowComponent()
-  const [signUp, setSingUp] = useState<
-    | {
-        [k: string]: FormDataEntryValue
-      }
-    | undefined
-  >(undefined)
+  const [signUp, setSingUp] = useState<ObjectKeyDynamic<FormDataEntryValue> | undefined>(undefined)
+  const [error, setError] = useState<string>('')
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const field = Object.fromEntries(new window.FormData(event.target as any))
@@ -17,20 +15,10 @@ function signUp() {
   useEffect(() => {
     const initFetch = async () => {
       if (signUp) {
-        await fetch(`${urlApi}/user/signup`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify(signUp),
-        })
-          .then((response) => response.json())
-          .then((response) => {
-            if (response.code === 201) {
-              setShowComponent(ComponentType.signin)
-            }
-          })
-          .catch(() => console.log('error'))
+        const response = await useFetch({ url: `${urlApi}/user/signup`, method: 'POST', body: signUp })
+        if (response?.code === 201) return setShowComponent(ComponentType.signin)
+        if (response?.code === 400) return setError(response.message)
+        return setError('Error en la petición.')
       }
     }
     initFetch()
@@ -44,6 +32,7 @@ function signUp() {
         <input required type="text" name="username" id="username" />
         <p>Contraseña</p>
         <input required type="password" name="password" id="password" minLength={8} maxLength={128} />
+        {error !== '' ? <p>{error}</p> : null}
         <button onClick={() => setShowComponent(ComponentType.children)}>volver</button>
         <button type="submit">Crear Sesión</button>
       </form>
