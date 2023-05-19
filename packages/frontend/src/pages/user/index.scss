@@ -1,0 +1,20 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: .625rem;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  &__tabs {
+    width: -webkit-fill-available;
+    display: flex;
+    align-items: start;
+    padding-bottom: .625rem;
+  }
+  &__body {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    display: flex;
+    gap: .9375rem;
+    align-items: start;
+  }
+}

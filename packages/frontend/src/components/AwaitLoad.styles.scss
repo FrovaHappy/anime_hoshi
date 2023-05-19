@@ -1,0 +1,19 @@
+.awaitLoad {
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  &__animation {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    animation: 3s infinite backwards slidein;
+    background: linear-gradient(to right, transparent, #ffffff10, transparent);
+    @keyframes slidein {
+      from {
+        transform: rotate(45deg) translate(-200%, 0) scale(200%);
+      }
+
+      to {
+        transform:rotate(45deg) translate(200%, 0) scale(200%);
+      }
+    }
+  }
+}
