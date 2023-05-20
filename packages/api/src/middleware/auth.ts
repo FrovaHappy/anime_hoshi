@@ -3,22 +3,28 @@ import { configs } from '../config'
 import { Request, Response, NextFunction } from 'express'
 import { RoleUser, TokenBody } from '../../type'
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
-  let token = req.headers.authorization
-  if (!token) {
-    return res.status(403).send('A token is required for authentication')
-  }
-  token = token?.slice(7)?.toString() ?? 'default'
+function decodedToken(token: string) {
+  token = token.slice(7).toString()
   try {
-    const decoded = jwt.verify(token, configs.TOKEN_KEY)
-    req.body.tokenDecoded = decoded
-  } catch (err) {
-    return res.status(401).send('Invalid Token')
+    const decoded = jwt.verify(token, configs.TOKEN_KEY) as TokenBody
+    return decoded
+  } catch (e) {
+    return undefined
   }
-  return next()
 }
+function createToken(payloadToken: Object, expiresIn: '2h' | '24h' | '3d' | '5d') {
+  const token = jwt.sign(payloadToken, configs.TOKEN_KEY, {
+    expiresIn,
+  })
+  return token
+}
+
 function hasRole(req: Request, res: Response, next: NextFunction, role: RoleUser) {
-  const tokenDecoded: TokenBody | undefined = req.body.tokenDecoded
+  let { authorization } = req.headers
+  if (!authorization) {
+    return res.status(403).send('A token is required for this path')
+  }
+  const tokenDecoded = decodedToken(authorization) as TokenBody | undefined
   if (!tokenDecoded) throw new Error(`required ejection of verifyToken previously`)
   const isValidRole = tokenDecoded.roles.some((r) => r === role)
   if (!isValidRole) return res.status(401).send(`${role} role is required for this route.`)
@@ -30,4 +36,4 @@ const checkRole = {
   owner: (req: Request, res: Response, next: NextFunction) => hasRole(req, res, next, 'owner'),
 }
 
-export default { verifyToken, checkRole }
+export default { checkRole, decodedToken, createToken }
