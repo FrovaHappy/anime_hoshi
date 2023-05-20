@@ -18,7 +18,7 @@ function parseDescription(description?: string) {
   if (description) {
     description = description.replaceAll(/(<[/]?i>)+/g, '')
     const descriptionArray = description.split(/(<br>[\s]?)+/g).filter((v) => !v.includes('<br>'))
-    return descriptionArray.map((des) => <p>{des}</p>)
+    return descriptionArray.map((des, i) => <p key={i}>{des}</p>)
   }
   return <p>No se que anime se trata, pero esta buenísimo. Te lo recomiendo 19/10 👍 </p>
 }
@@ -31,7 +31,7 @@ function Description({ anime }: Props) {
         alt={anime.dataAnilist.title.romaji}
       />
       <p className="renderInfo__description--title">Descripción:</p>
-      <p className="renderInfo__description--body">{parseDescription(anime.dataAnilist.description)}</p>
+      <div className="renderInfo__description--body">{parseDescription(anime.dataAnilist.description)}</div>
     </div>
   )
 }
