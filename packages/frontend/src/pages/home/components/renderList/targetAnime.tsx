@@ -5,11 +5,13 @@ import { AnimeList } from '../../../../../../types'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
 import { useAnimeContext } from '../../../contexts/contextHome'
 import './targetAnime.scss'
+import { useRef } from 'react'
 type Props = {
   thisAnime: AnimeList
 }
 export default function TargetAnimeConponent({ thisAnime }: Props) {
   const { anime, setAnime } = useAnimeContext()
+  const hasOnClickPrevius = useRef(false)
   const compareId = thisAnime.dataAnilist.id == anime?.dataAnilist.id
   const getEpisodeAndPages = getlastEpisodeInfo(thisAnime)
   const color = thisAnime.dataAnilist.coverImage.color ?? '#fff'
@@ -19,7 +21,14 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
     <div
       className="targetAnime"
       onClick={() => {
-        setAnime(thisAnime)
+        if (!compareId) hasOnClickPrevius.current = false
+        if (compareId && hasOnClickPrevius.current === true) {
+          setAnime(undefined)
+          hasOnClickPrevius.current = false
+        } else {
+          setAnime(thisAnime)
+          hasOnClickPrevius.current = true
+        }
         setColorPrimary(color)
       }}
     >
