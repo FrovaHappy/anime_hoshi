@@ -1,5 +1,7 @@
-import { findUser, createUser, deleteUser } from '../database/users.db'
+import { findUser, createUser, deleteUser, updateUser } from '../database/users.db'
 import { Iuser } from '../../type'
+import auth from '../middleware/auth'
+import passwordHash from '../utils/passwordHash'
 
 /**
  * @param user
@@ -15,4 +17,19 @@ async function servicesDeleteUser(user: Iuser) {
   const userDeleted = await deleteUser(user.username)
   return userDeleted
 }
-export { servicesCreateUser, servicesDeleteUser }
+function createUserToken(payload: { username: string; id: string; roles: string[] }) {
+  return auth.createToken(payload, '24h')
+}
+type UserUpdate = {
+  oldPassword: string
+  newPassword: string
+  username: string
+}
+async function servicesUpdateUser({ oldPassword, newPassword, username }: UserUpdate) {
+  const validatePassword = await passwordHash.compare(username, oldPassword)
+  if (!validatePassword) return undefined
+  const newpasswordHash = await passwordHash.encrypt(newPassword)
+  const userUpdate = await updateUser({ username, passwordHash: newpasswordHash, roles: validatePassword.roles })
+  return userUpdate ?? undefined
+}
+export { servicesCreateUser, servicesDeleteUser, createUserToken, servicesUpdateUser }

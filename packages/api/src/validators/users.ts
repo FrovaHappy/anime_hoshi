@@ -26,7 +26,6 @@ const validateUser = [
   validateResult,
 ]
 const validateUserUpdate = [
-  check('username').exists().isString().custom(expRegofUsername),
   check('oldPassword').exists().isString().escape(),
   check('newPassword').exists().isString().escape(),
   validateResult,
