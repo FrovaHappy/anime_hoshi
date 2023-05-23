@@ -1,0 +1,25 @@
+.options {
+  &__col {
+    display: flex;
+    gap: .3125rem;
+    flex-direction: column;
+    width: -webkit-fill-available;
+  }
+  &__row {
+    display: flex;
+    gap: .3125rem;
+    flex-direction: row;
+    width: -webkit-fill-available;
+  }
+  &__title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--textColor);
+    align-self: start;
+  }
+  &__description {
+    font-size: 0.8125rem;
+    color: var(--textColorAlt);
+    align-self: start;
+  }
+}

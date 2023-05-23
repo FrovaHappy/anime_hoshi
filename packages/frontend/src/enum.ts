@@ -3,4 +3,5 @@ export enum hours {
 }
 export const enum KeysLocalStorage {
   notificationProperty = 'notificationProperty',
+  token = 'token',
 }

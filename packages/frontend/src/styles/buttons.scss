@@ -1,0 +1,30 @@
+@mixin theme($theme: transparent, $hover: #ffffff10) {
+  padding: .4375rem .875rem;
+  border: 0;
+  border-radius: .3125rem;
+  font-size: .875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background-color: $theme;
+  color: var(--textColor);
+  transition: background-color .2s ease ;
+  &:hover {
+    background-color: $hover;
+  }
+}
+.button {
+  @include theme;
+  border: 1px solid var(--textColorAlt);
+  &__green {
+    @include theme($theme: #53d769, $hover: #46c263);
+  }
+  &__red {
+    @include theme($theme: #fc3d39, $hover: #e33437);
+  }
+  &__blue {
+    @include theme($theme: #5ba4fc, $hover: #5497ee);
+  }
+  &__gray {
+    @include theme($theme: #f8f8f8, $hover: #e6e6e6);
+  }
+}

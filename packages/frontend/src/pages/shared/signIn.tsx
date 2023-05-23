@@ -3,6 +3,7 @@ import { useShowComponent, ComponentType } from '../contexts/Sessions'
 import { ObjectKeyDynamic } from '../../../types'
 import useFetch from '../../hooks/useFetch'
 import { urlApi } from '../../config'
+import { KeysLocalStorage } from '../../enum'
 
 function signIn() {
   const { setShowComponent } = useShowComponent()
@@ -19,7 +20,7 @@ function signIn() {
         const response = await useFetch({ url: `${urlApi}/user/signin`, method: 'POST', body: signIn })
         console.log(response)
         if (response?.code === 200) {
-          window.localStorage.setItem('token', response.contents.token)
+          window.localStorage.setItem(KeysLocalStorage.token, response.contents.token)
           return setShowComponent(ComponentType.children)
         }
         if (response?.code === 403) return setError(response.message)

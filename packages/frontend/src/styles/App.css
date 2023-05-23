@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './buttons.scss';
 .App {
   text-align: center;
   display: flex;
