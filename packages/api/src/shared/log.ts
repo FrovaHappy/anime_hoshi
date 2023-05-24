@@ -1,7 +1,8 @@
 import { writeFile, readFile } from 'fs/promises'
 import { existsSync } from 'fs'
-type LogType = 'info' | 'warning' | 'error'
-export default async function Log({ type, message, content }: { type: LogType; message: string; content: Object }) {
+import { Log } from '../../../types'
+
+export default async function Log({ type, message, content }: Log) {
   const date = new Date()
   const day = date.getUTCDate()
   const month = date.getUTCMonth()

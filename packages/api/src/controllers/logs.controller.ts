@@ -9,5 +9,5 @@ export async function getLogs(req: Request, res: Response) {
     return res.status(409).json({ code: 409, ok: false, menssage: 'onDate not is a validated string' })
   }
   const logs = await logsServices.getLogs()
-  return res.status(200).json({ code: 200, ok: true, content: logs })
+  return res.status(200).json({ code: 200, ok: true, contents: logs })
 }

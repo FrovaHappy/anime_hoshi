@@ -4,7 +4,8 @@ import { Request, Response, NextFunction } from 'express'
 import { RoleUser, TokenBody } from '../../type'
 
 function decodedToken(token: string) {
-  token = token.slice(7).toString()
+  console.log('decoded token', token)
+  token = token.replace('Bearer ', '').toString()
   try {
     const decoded = jwt.verify(token, configs.TOKEN_KEY) as TokenBody
     return decoded
@@ -25,7 +26,8 @@ function hasRole(req: Request, res: Response, next: NextFunction, role: RoleUser
     return res.status(403).send('A token is required for this path')
   }
   const tokenDecoded = decodedToken(authorization) as TokenBody | undefined
-  if (!tokenDecoded) throw new Error(`required ejection of verifyToken previously`)
+  if (!tokenDecoded)
+    return res.status(403).json({ code: 403, message: 'token is required or is invalid', contents: null })
   const isValidRole = tokenDecoded.roles.some((r) => r === role)
   if (!isValidRole) return res.status(401).send(`${role} role is required for this route.`)
   return next()

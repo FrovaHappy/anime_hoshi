@@ -68,3 +68,9 @@ export type Payload = {
     body: string
   }
 }
+export type LogType = 'info' | 'warning' | 'error'
+export interface Log {
+  type: LogType
+  message: string
+  content: Object
+}

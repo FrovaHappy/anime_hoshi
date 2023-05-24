@@ -1,14 +1,32 @@
-async function useFetch({ url, method, body }: { url: string; method: string; body?: Object }) {
+/**
+ * @returns returns the json response already solved, in case of error returns null
+ */
+async function useFetch({
+  url,
+  method,
+  body,
+  authorization = '',
+}: {
+  url: string
+  method: string
+  body?: Object
+  authorization?: string
+}) {
   let options = {
     method,
-    headers: {
+    headers: new Headers({
+      Authorization: 'Bearer ' + authorization,
       'Content-Type': 'application/json;charset=utf-8',
-    },
-    body: JSON.stringify(body ?? {}),
+    }),
+    body: body ? JSON.stringify(body) : undefined,
   }
+
   const data: any | null = await fetch(url, options)
     .then((res) => res.json())
-    .catch(() => null)
+    .catch((e) => {
+      console.log(e)
+      return null
+    })
 
   return data
 }

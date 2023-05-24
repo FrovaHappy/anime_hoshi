@@ -4,13 +4,14 @@ import SignIn from '../shared/signIn'
 import SignUp from '../shared/signUp'
 import UserSettings from './userSettings'
 import './index.scss'
+import Dashboard from './dashboard'
 export const enum TogleTabsName {
   usuario = 'usuario',
   dashboard = 'dashboard',
 }
 function Children() {
   const [togleTabs, setTogleTabs] = useState(TogleTabsName.usuario)
-  const TogleTabs = togleTabs === TogleTabsName.usuario ? <UserSettings /> : <div> dashboard </div>
+  const TogleTabs = togleTabs === TogleTabsName.usuario ? <UserSettings /> : <Dashboard />
   return (
     <>
       <div className="main__tabs">
