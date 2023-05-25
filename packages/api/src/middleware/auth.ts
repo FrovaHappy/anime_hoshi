@@ -4,7 +4,6 @@ import { Request, Response, NextFunction } from 'express'
 import { RoleUser, TokenBody } from '../../type'
 
 function decodedToken(token: string) {
-  console.log('decoded token', token)
   token = token.replace('Bearer ', '').toString()
   try {
     const decoded = jwt.verify(token, configs.TOKEN_KEY) as TokenBody

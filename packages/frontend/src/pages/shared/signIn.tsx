@@ -18,7 +18,6 @@ function signIn() {
     const initFetch = async () => {
       if (signIn) {
         const response = await useFetch({ url: `${urlApi}/user/signin`, method: 'POST', body: signIn })
-        console.log(response)
         if (response?.code === 200) {
           window.localStorage.setItem(KeysLocalStorage.token, response.contents.token)
           return setShowComponent(ComponentType.children)

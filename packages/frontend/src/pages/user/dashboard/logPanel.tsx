@@ -64,7 +64,6 @@ function getLogOnData(date: string, deps: any[]) {
     if (!token) {
       setError('bad_token')
       setLoad(false)
-      console.log(token)
       result = { error, contents, load }
     } else {
       const fethLogs = async () => {
@@ -97,7 +96,6 @@ export default function Main() {
   const [data, setData] = useState(getDataNow().string)
   const logs = getLogs([])
   const logsOnData = getLogOnData(data, [data])
-  console.log(logs, logsOnData)
   return (
     <>
       <div>{logs.load ? <> loading logs datas </> : RenderLogs(logs.error, logs.contents, setData)}</div>
