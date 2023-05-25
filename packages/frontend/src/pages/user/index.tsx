@@ -12,11 +12,20 @@ export const enum TogleTabsName {
 function Children() {
   const [togleTabs, setTogleTabs] = useState(TogleTabsName.usuario)
   const TogleTabs = togleTabs === TogleTabsName.usuario ? <UserSettings /> : <Dashboard />
+  const activeTogleTab = (tabName: TogleTabsName) =>
+    togleTabs === tabName ? 'main__tab main__tab--active' : 'main__tab'
   return (
     <>
       <div className="main__tabs">
-        <button onClick={() => setTogleTabs(TogleTabsName.usuario)}>Usuario</button>
-        <button onClick={() => setTogleTabs(TogleTabsName.dashboard)}>Dashboard</button>
+        <button onClick={() => setTogleTabs(TogleTabsName.usuario)} className={activeTogleTab(TogleTabsName.usuario)}>
+          Usuario
+        </button>
+        <button
+          onClick={() => setTogleTabs(TogleTabsName.dashboard)}
+          className={activeTogleTab(TogleTabsName.dashboard)}
+        >
+          Dashboard
+        </button>
       </div>
       <div className="main__body">{TogleTabs}</div>
     </>
