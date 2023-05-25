@@ -7,7 +7,7 @@
   &__tabs {
     width: -webkit-fill-available;
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     padding-bottom: .625rem;
   }
   &__body {
@@ -15,6 +15,6 @@
     height: -webkit-fill-available;
     display: flex;
     gap: .9375rem;
-    align-items: start;
+    align-items: flex-start;
   }
 }
