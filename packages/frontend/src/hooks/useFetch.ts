@@ -23,7 +23,7 @@ async function useFetch({
 
   const data: any | null = await fetch(url, options)
     .then((res) => res.json())
-    .catch((e) => {
+    .catch(() => {
       return null
     })
 
