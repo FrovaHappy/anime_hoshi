@@ -26,17 +26,23 @@ export async function setAnime(allResultScraped: PagesScraped) {
         errors.push(error)
         continue
       }
-      const { animeEdited, needUpdate } = formattingBeforeSaving(resultScrapedForItem, animeIncidence!, namePage)
+      const { animeEdited, needUpdate, hasUpdate } = formattingBeforeSaving(
+        resultScrapedForItem,
+        animeIncidence!,
+        namePage
+      )
       if (needUpdate) {
         const animeSave = (await UpdateOneAnime(animeEdited))!
         updated++
-        animespublished = animespublished
-          .filter((id) => !(id === animeSave.dataAnilist.id))
-          .concat(animeSave.dataAnilist.id)
+        if (hasUpdate === 'forNewEpisode') {
+          animespublished = animespublished
+            .filter((id) => !(id === animeSave.dataAnilist.id))
+            .concat(animeSave.dataAnilist.id)
+          await updatedAnimesPublished(animespublished)
+        }
         animeUpdated = animeUpdated
           .filter((anime) => !(anime.dataAnilist.id === animeSave.dataAnilist.id))
           .concat(animeSave)
-        await updatedAnimesPublished(animespublished)
       }
     }
     animesCounters.push({ namePage, totalUpdated: updated, total: resultPageArray.length })

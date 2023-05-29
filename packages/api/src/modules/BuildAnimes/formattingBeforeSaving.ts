@@ -1,12 +1,14 @@
 import { AnimeList, Episodes, EpisodesContent, InfoEpisodeRecovered, PagesUrlObject } from '../../../../types'
 import { TimestampTimings } from '../../Enum'
 type PagesUrl = { [x: string]: string | undefined } | PagesUrlObject
+type HasUpdate = 'forNewEpisode' | 'forAnilistUpdated' | ''
 function setEpisode(
   episodesOfAnimeList: Episodes,
   episodewithoutNaN: number,
   resultScrapedForItem: InfoEpisodeRecovered,
   namePage: string,
-  needUpdate: boolean
+  needUpdate: boolean,
+  hasUpdate: HasUpdate
 ) {
   const numberOfEpisode = episodewithoutNaN
   let episodes = episodesOfAnimeList
@@ -15,10 +17,11 @@ function setEpisode(
   if (pagesUrl[namePage]) return { episodes, needUpdate }
   if (Object.keys(pagesUrl).length === 0) episode.updateEpisode = Date.now()
   needUpdate = true
+  hasUpdate = 'forNewEpisode'
   pagesUrl[namePage] = { url: resultScrapedForItem.url, update: Date.now() }
   episode.pagesUrl = pagesUrl
   episodes[numberOfEpisode] = episode
-  return { episodes, needUpdate }
+  return { episodes, needUpdate, hasUpdate }
 }
 
 export function formattingBeforeSaving(
@@ -29,9 +32,12 @@ export function formattingBeforeSaving(
   let animeEdited = animeIncidence
   let { episodes } = animeIncidence
   let needUpdate = false
+  let hasUpdate: HasUpdate = ''
+
   const canDataAnilistUpdated = Date.now() > animeIncidence.updateAnilist + TimestampTimings.fiveDays
   if (canDataAnilistUpdated) {
     needUpdate = true
+    hasUpdate = 'forAnilistUpdated'
     animeEdited.updateAnilist = Date.now()
   }
 
@@ -40,10 +46,11 @@ export function formattingBeforeSaving(
     resultScrapedForItem.episode,
     resultScrapedForItem,
     namePage,
-    needUpdate
+    needUpdate,
+    hasUpdate
   )
   needUpdate = setEpisodesStatus.needUpdate
   animeEdited.episodes = { ...setEpisodesStatus.episodes }
-
-  return { animeEdited, needUpdate }
+  hasUpdate = setEpisodesStatus.hasUpdate ?? hasUpdate
+  return { animeEdited, needUpdate, hasUpdate }
 }
