@@ -1,22 +1,35 @@
 .user {
   &__title {
     display: flex;
+    padding-bottom: .3125rem;
     align-self: start;
     font-size: 1.25rem;
   }
   &__nav {
     width: 15.625rem;
     background: var(--bgContent);
+    
+    display: flex;
+    flex-direction: column;
     font-size: 0.875rem;
+    & > a {
+      color: var(--textColor);
+    }
   }
   &__optionsContainer {
     width: -webkit-fill-available;
-    background: var(--bgContent);
-    padding: 0.625rem;
+    
+    display: flex;
+    flex-direction: column;
+    gap: .3125rem;
   }
   &__options {
     display: flex;
+    padding: 0.625rem;
+    background: var(--bgContent);
     flex-direction: column;
+    border-radius: .3125rem;
+    gap: .3125rem;
     &--rigth {
       display: flex;
       align-self: flex-end;

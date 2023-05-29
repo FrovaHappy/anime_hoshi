@@ -1,6 +1,6 @@
 import { notificationProperty } from '../../../../../types'
 import { KeysLocalStorage } from '../../../../enum'
-import notifyMe from '../../utils/swSubscribe'
+import notifyMe from '../../../../utils/swSubscribe'
 import './QueryNotifications.scss'
 
 function QueryNotifications(renderNotification: (value: boolean) => void) {
@@ -19,6 +19,7 @@ function QueryNotifications(renderNotification: (value: boolean) => void) {
       <img className="notification__image" src="./resources/kanna-pay.gif" alt="kanna pay meme" loading="lazy" />
       <p className="notification__body">
         Para poder, recibir las novedades de los episodios recientes que se agregan, te recomendamos que te subscribas.
+        (por el momento, recibiras todas las actualizaciones)
       </p>
       <button className="notification__accept" onClick={() => setNotificationProperty(true)}>
         Si Claro!

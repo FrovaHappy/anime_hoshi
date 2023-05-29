@@ -1,7 +1,8 @@
+import { urlApi } from '../config'
 async function getPublicKey() {
   const publicKey = localStorage.getItem('publicKey')
   const data = !publicKey
-    ? await fetch('http://127.0.0.1:3001/subscription')
+    ? await fetch(`${urlApi}/subscription`)
         .then((response) => response.json())
         .then((response) => response.publicKey)
     : publicKey
@@ -11,19 +12,16 @@ async function getPublicKey() {
 
 const subscription = async () => {
   const PUBLIC_VAPID_KEY = await getPublicKey()
-  console.log('🚀 ~ file: main.js:10 ~ subscription ~ PUBLIC_VAPID_KEY:', PUBLIC_VAPID_KEY)
 
   // Service Worker
   const register = await navigator.serviceWorker.register('./worker.js', {
     scope: '/',
   })
-  console.log('New Service Worker')
 
   // Listen Push Notifications
-  console.log('Listening Push Notifications')
   const getPushSubscription = await register.pushManager.getSubscription()
   if (getPushSubscription) {
-    await getPushSubscription.unsubscribe().finally(() => console.log('Push subscription deleted'))
+    await getPushSubscription.unsubscribe()
   }
   const subscription = await register.pushManager.subscribe({
     userVisibleOnly: true,
@@ -31,7 +29,7 @@ const subscription = async () => {
   })
 
   // Send Notification
-  await fetch('http://127.0.0.1:3001/subscription', {
+  await fetch(`${urlApi}/subscription`, {
     method: 'POST',
     body: JSON.stringify({ pushSubscription: subscription, publicKey: PUBLIC_VAPID_KEY }),
     headers: {
@@ -40,7 +38,7 @@ const subscription = async () => {
   })
     .then((response) => response.json())
     .then((response) => console.log(response))
-  console.log('Subscribed!')
+  //TODO: show the subcription was correct
 }
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -57,18 +55,14 @@ function urlBase64ToUint8Array(base64String: string) {
 }
 
 // Service Worker Support
-function notifyMe() {
+async function notifyMe() {
   // Comprobamos si el navegador soporta las notificaciones
   if (!('Notification' in window)) {
-    console.log('Este navegador no es compatible con las notificaciones de escritorio')
-  }
-
-  // Comprobamos si los permisos han sido concedidos anteriormente
-  else if (Notification.permission === 'granted') {
-    // Si es correcto, lanzamos una notificación
+    console.error('Este navegador no es compatible con las notificaciones de escritorio')
+  } else if (Notification.permission === 'granted') {
     if ('serviceWorker' in navigator) {
       subscription().catch((err) => {
-        console.log(err)
+        console.error(err)
       })
     }
   }
@@ -80,11 +74,21 @@ function notifyMe() {
       if (permission === 'granted') {
         if ('serviceWorker' in navigator) {
           subscription().catch((err) => {
-            console.log(err)
+            console.error(err)
           })
         }
       }
     })
+  }
+}
+
+export async function unsubscribe() {
+  const register = await navigator.serviceWorker.register('./worker.js', {
+    scope: '/',
+  })
+  const getPushSubscription = await register.pushManager.getSubscription()
+  if (getPushSubscription) {
+    await getPushSubscription.unsubscribe()
   }
 }
 export default notifyMe
