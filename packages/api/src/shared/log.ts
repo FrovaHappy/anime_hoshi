@@ -1,5 +1,4 @@
 import { writeFile, readFile } from 'fs/promises'
-import { existsSync } from 'fs'
 import path from 'path'
 import { Log } from '../../../types'
 
@@ -11,12 +10,14 @@ export default async function Log({ type, message, content }: Log) {
   const pathFile = path.join(__dirname, `../../log/${year}-${month}-${day}.txt`)
 
   let logFile: any[]
-  if (existsSync(pathFile)) {
+  let oldLogFile: [string, any[]] = [pathFile, []]
+  try {
     logFile = JSON.parse(await readFile(pathFile, { encoding: 'utf8' }))
-  } else {
-    logFile = []
+    oldLogFile = [pathFile, logFile]
+  } catch {
+    oldLogFile[0] === pathFile ? (logFile = oldLogFile[1]) : (logFile = [])
   }
 
   const newLog = { type, message, content, timestamp: Date.now() }
-  await writeFile(pathFile, JSON.stringify([newLog, ...logFile]))
+  await writeFile(pathFile, JSON.stringify([newLog, ...logFile]).replace(';', ''))
 }
