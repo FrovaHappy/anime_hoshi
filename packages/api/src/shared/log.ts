@@ -1,5 +1,6 @@
 import { writeFile, readFile } from 'fs/promises'
 import { existsSync } from 'fs'
+import path from 'path'
 import { Log } from '../../../types'
 
 export default async function Log({ type, message, content }: Log) {
@@ -7,7 +8,7 @@ export default async function Log({ type, message, content }: Log) {
   const day = date.getUTCDate()
   const month = date.getUTCMonth()
   const year = date.getUTCFullYear()
-  const pathFile = `./log/${year}-${month}-${day}.txt`
+  const pathFile = path.join(__dirname, `../../log/${year}-${month}-${day}.txt`)
 
   let logFile: any[]
   if (existsSync(pathFile)) {
