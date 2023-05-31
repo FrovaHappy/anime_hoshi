@@ -13,6 +13,7 @@ async function animeList(animespublished: number[], needUpdateArray: AnimeList[]
     }
     cache.set(CacheKeys.animeList, animeList)
   }
+  cache.set(CacheKeys.animesUpdatedTime, Date.now())
 }
 
 export default {

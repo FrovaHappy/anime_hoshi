@@ -8,6 +8,7 @@ export const enum EpisodeNumber {
 export const enum CacheKeys {
   tempVapidkey = 'tempVapidkey',
   animeList = 'animeList',
+  animesUpdatedTime = 'animeUpdatedTime',
 }
 
 export const enum TimestampTimings {

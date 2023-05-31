@@ -74,3 +74,8 @@ export interface Log {
   message: string
   content: Object
 }
+export type JsonResponse = {
+  code: number
+  message: string
+  contents: any
+}
