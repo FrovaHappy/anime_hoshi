@@ -1,16 +1,16 @@
 import './index.scss'
 import { useAnimesContext } from '../../../contexts/contextHome'
-import { urlApi } from '../../../../config'
 import { FetchLoading } from './fetchLoading'
-import { useFetch } from '../../utils/useFetch'
-
 import TargetAnime from './targetAnime'
+import { getAnimes } from './getAnimes'
+
 const renderList = () => {
-  const { loading, error } = useFetch(`${urlApi}/animes`)
+  const { load, error } = getAnimes()
   const { animes } = useAnimesContext()
-  if (error) return <div>error 😐</div>
-  if (loading) return <FetchLoading />
-  if (!animes) return <>problem render list</>
+  if (load) return <FetchLoading />
+  if (error === 'badRequest') return <div>Error Con la Api 😐</div>
+  if (error === 'cacheEmpty') return <div>Espera mientras se inicia el servidor</div>
+  if (!animes) return <div>Error Inesperado </div>
   return (
     <div className="renderList">
       <p className="renderList__title">Animes En Emisión</p>
