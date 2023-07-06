@@ -8,14 +8,13 @@ export type Episode = {
   lastUpdate: number
 }
 
-export type Episodes = DynamicObj<Episode>
+export type Episodes = Array<Episode>
 
 export type Page = {
   startCount: number
   title: string
   lastUpdate: number
   redirectId: number | null
-
   episodes: Episodes
 }
 
@@ -24,4 +23,5 @@ export type Pages = DynamicObj<Page>
 export type Anime = {
   dataAnilist: DataAnilist
   pages: Pages
+  lastUpdate: number
 }

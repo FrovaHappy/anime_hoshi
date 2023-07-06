@@ -6,7 +6,7 @@ export type DataAnilist = {
   episodes: number | null
   status: Status // TODO: put this in Unknown
   format: Format // TODO: put this in Unknown
-  description: string // TODO: add description to eveyone
+  description: string | null // TODO: add description to eveyone
   averageScore: number | null // TODO: verify the null value
   duration: number | null // TODO: verify the null value
   coverImage: CoverImage
@@ -19,7 +19,7 @@ export interface CoverImage {
 }
 export interface Title {
   romaji: string
-  english: string
+  english: string | null
   native: string
   userPreferred: string
 }
