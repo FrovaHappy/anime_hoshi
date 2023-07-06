@@ -1,30 +1,33 @@
-import { IdStatus } from '../Enum'
 import { AnimeList } from '../../../types'
 import { animeModel } from './models/anime.model'
+type Params = {
+  search: string
+  searchType: 'id' | 'title'
+  namePage: string
+}
+export async function findOne({ search, searchType, namePage }: Params) {
+  let query = ''
+  let titleInDataAnilist: any[] = []
+  if (searchType === 'title') {
+    query = `{ "titleinPages.${namePage}":"${search}" }`
+    titleInDataAnilist = [
+      {
+        'dataAnilist.title': { english: search },
+      },
+      {
+        'dataAnilist.title': { romanji: search },
+      },
+      {
+        'dataAnilist.title': { userPreferred: search },
+      },
+    ]
+  }
+  if (searchType === 'id') query = `{"dataAnilist.id": "${search} }`
 
-export async function findIncidences(titleAnimeInPage = '', idInAnilist = IdStatus.emty, namePage = '') {
-  const titleinPageString = `{ "titleinPages.${namePage}":"${titleAnimeInPage}" }`
-  const titleinPage = JSON.parse(titleinPageString)
-  const titleinPageStringFixed = `{ "titleinPages.${namePage}-fixed":"${titleAnimeInPage}" }`
-  const titleinPageFixed = JSON.parse(titleinPageStringFixed)
+  const queryParse = [JSON.parse(query), ...titleInDataAnilist]
 
   const anime = await animeModel.findOne({
-    $or: [
-      titleinPage,
-      titleinPageFixed,
-      {
-        'dataAnilist.title': { english: titleAnimeInPage },
-      },
-      {
-        'dataAnilist.title': { romanji: titleAnimeInPage },
-      },
-      {
-        'dataAnilist.title': { userPreferred: titleAnimeInPage },
-      },
-      {
-        'dataAnilist.id': idInAnilist,
-      },
-    ],
+    $or: queryParse,
   })
   return anime
 }

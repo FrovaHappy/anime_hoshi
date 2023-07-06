@@ -1,10 +1,9 @@
 import IntervalScrap from './intervalScrap'
 import { mongoose } from './mongoose'
-import { parserUrlsPages } from './parserUrlsPages'
 import serverApp from './app'
 ;(async () => {
   await mongoose()
-  await parserUrlsPages()
+  //TODO: agregar parseado a la v2 de Anime
   serverApp()
   IntervalScrap()
 })()

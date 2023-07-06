@@ -1,18 +1,30 @@
 import mongoose from 'mongoose'
-import { AnimeList, EpisodesContent } from '../../../../types'
+import { type Episode, type Anime, type Page } from '../../../../types/Anime'
 const { Schema, model } = mongoose
 
-const episodesSchema = new Schema<EpisodesContent>(
+const episodeSchema = new Schema<Episode>(
   {
-    updateEpisode: { type: 'number', required: true },
-    pagesUrl: { type: Object, of: 'string', required: true, default: {} },
+    episode: { type: 'number', required: true },
+    lastUpdate: { type: 'number', required: true },
+    link: { type: 'string', required: true },
   },
   { _id: false, id: false }
 )
-const animeSchema = new Schema<AnimeList>(
+const pageScchema = new Schema<Page>(
+  {
+    episodes: { type: Object, of: episodeSchema, required: true, default: {} },
+    lastUpdate: { type: 'number', required: true },
+    redirectId: { type: 'number', required: true },
+    startCount: { type: 'number', required: true },
+    title: { type: 'string', required: true },
+  },
+  { _id: false, id: false }
+)
+const animeSchema = new Schema<Anime>(
   {
     dataAnilist: {
       id: { type: 'number', required: true },
+      lastUpdated: { type: 'number', required: true },
       episodes: { type: 'number', required: true },
       format: { type: 'string', required: true },
       status: { type: 'string', required: true },
@@ -31,10 +43,7 @@ const animeSchema = new Schema<AnimeList>(
         color: { type: 'string', required: true },
       },
     },
-    titleinPages: { type: Object, of: 'string', required: true },
-    updateAnilist: { type: 'number', required: true },
-    episodes: { type: Object, of: episodesSchema, required: true, default: {} },
-    lastEpisodesOfTempPreview: { type: 'number', required: false },
+    pages: { type: Object, of: pageScchema, required: true, default: {} },
   },
   { _id: false, id: false }
 ).set('toJSON', {
