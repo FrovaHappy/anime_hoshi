@@ -1,4 +1,4 @@
-import { AnimeList } from '../../../types'
+import { Anime } from '../../../types/Anime'
 import { animeModel } from './models/anime.model'
 type Params = {
   search: string
@@ -9,30 +9,32 @@ export async function findOne({ search, searchType, namePage }: Params) {
   let query = ''
   let titleInDataAnilist: any[] = []
   if (searchType === 'title') {
-    query = `{ "titleinPages.${namePage}":"${search}" }`
+    query = `{ "pages.${namePage}.title":"${search}"}`
     titleInDataAnilist = [
       {
-        'dataAnilist.title': { english: search },
+        'dataAnilist.title.userPreferred': search,
       },
       {
-        'dataAnilist.title': { romanji: search },
+        'dataAnilist.title.romaji': search,
       },
       {
-        'dataAnilist.title': { userPreferred: search },
+        'dataAnilist.title.english': search,
       },
     ]
   }
-  if (searchType === 'id') query = `{"dataAnilist.id": "${search} }`
+  if (searchType === 'id') query = `{"dataAnilist.id": "${search}" }`
 
-  const queryParse = [JSON.parse(query), ...titleInDataAnilist]
+  const querysParse = [JSON.parse(query), ...titleInDataAnilist]
 
-  const anime = await animeModel.findOne({
-    $or: queryParse,
-  })
+  let anime
+  for (const queryParse of querysParse) {
+    anime = await animeModel.findOne(queryParse)
+    if (anime) break
+  }
   return anime
 }
 
-export async function UpdateOneAnime(animeEdited: AnimeList) {
+export async function UpdateOneAnime(animeEdited: Anime) {
   const config = { upsert: true, returnDocument: 'after' }
   const filter = {
     'dataAnilist.id': animeEdited.dataAnilist.id,

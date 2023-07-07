@@ -2,6 +2,7 @@ import { JSDOM } from 'jsdom'
 import getHtml from './getHtml'
 import { InfoEpisodeRecovered } from '../../../../types'
 import { DataAttck } from '../../../type'
+import { formartItemScraper } from './fomartItemScraper'
 
 export default async function buildScrapPages({
   urlPage,
@@ -29,8 +30,8 @@ export default async function buildScrapPages({
   let scrapEpisodes: Array<InfoEpisodeRecovered> = []
   list.forEach((node) => {
     let url = node.getAttribute('href') ?? node.querySelector(selectorUrl)?.getAttribute('href')
-    const title = node.querySelector(selectorTitle)?.textContent
-    const episode = parseInt(
+    let title = node.querySelector(selectorTitle)?.textContent
+    let episode = parseInt(
       node
         .querySelector(selectorEpisode)
         ?.textContent?.match(/[\w\d]+/g)
@@ -40,6 +41,12 @@ export default async function buildScrapPages({
     if (!url || !title) return
     const UrlPage = new URL(urlPage)
     url = url?.includes(UrlPage.origin) ? url : UrlPage.origin + url
+
+    const dataFormated = formartItemScraper({ url, title, episode })
+    url = dataFormated.url
+    title = dataFormated.title
+    episode = dataFormated.episode
+
     scrapEpisodes.push({ url, episode, title })
   })
   return { [namePages]: scrapEpisodes }
