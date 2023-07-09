@@ -67,7 +67,7 @@ async function queryAnilist({ searchType, search }: Params) {
 export default async function Main({ search, searchType }: Params) {
   const response = await queryAnilist({ search, searchType })
   if (response === null) null
-  if (response.data === null) {
+  if (response.errors) {
     Log({ message: '[anilist] Error in Query', type: 'warning', content: response.errors })
     return null
   }

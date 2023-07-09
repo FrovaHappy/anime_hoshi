@@ -34,15 +34,15 @@ export async function findOne({ search, searchType, namePage }: Params) {
   return anime
 }
 
-export async function UpdateOneAnime(animeEdited: Anime) {
-  const config = { upsert: true, returnDocument: 'after' }
-  const filter = {
-    'dataAnilist.id': animeEdited.dataAnilist.id,
-  }
+export async function updateOne({ anime, filter }: { anime: Anime; filter: object }) {
+  const result = await animeModel.findOneAndUpdate(filter, anime, {
+    upsert: true,
+    returnDocument: 'after',
+    overwrite: true,
+    strict: true,
+  })
 
-  const anime = await animeModel.findOneAndUpdate(filter, animeEdited, config)
-
-  return anime
+  return result
 }
 export async function findAll() {
   return await animeModel.find({})
@@ -50,3 +50,4 @@ export async function findAll() {
 export async function deletedOne(anilistId: number) {
   return await animeModel.deleteOne({ 'dataAnilist.id': anilistId })
 }
+export default { findOne, updateOne }

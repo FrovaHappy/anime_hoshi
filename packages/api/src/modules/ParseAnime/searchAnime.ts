@@ -1,3 +1,4 @@
+import { Anime } from '../../../../types/Anime'
 import { TimestampTimings } from '../../Enum'
 import fetchAnilist, { SearchOptions } from './fetchAnilist'
 import { fetchDatabase } from './fetchDatabase'
@@ -12,10 +13,22 @@ async function searchAnime({ title, namePage }: Params) {
 
     let newDatabase = await fetchDatabase({ search: `${dataAnilist.id}`, searchType: 'id', namePage })
     !newDatabase
-      ? (newDatabase = { dataAnilist: dataAnilist, pages: {} } as any) // TODO: comprovar si hay problem
+      ? (newDatabase = { dataAnilist: dataAnilist, pages: {}, lastUpdate: Date.now() }) // TODO: comprovar si hay problem
       : (newDatabase.dataAnilist = dataAnilist)
 
-    database = newDatabase!
+    database = newDatabase as Anime
+  }
+  if (!database.pages[namePage]) {
+    const pages = {
+      [namePage]: {
+        episodes: [],
+        lastUpdate: Date.now(),
+        redirectId: null,
+        startCount: 1,
+        title: title,
+      },
+    }
+    database.pages = { ...pages, ...database.pages }
   }
   const id = database.dataAnilist.id
   const dataAnilistIsExpired = Date.now() > database.dataAnilist.lastUpdate + TimestampTimings.fiveDays
