@@ -36,6 +36,8 @@ export type DataAttck = {
   selectorTitle: string
   namePages: PagesNames
   testMode: boolean
+  remplaceTitle?: [searchValue: string | RegExp, remplaceValue: string][]
+  remplaceEpisode?: [searchValue: string | RegExp, remplaceValue: string][]
 }
 export type RoleUser = 'owner' | 'admin' | 'user'
 export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime' | 'crunchyroll'

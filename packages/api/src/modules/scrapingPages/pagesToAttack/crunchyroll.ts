@@ -10,6 +10,7 @@ const data: DataAttck = {
   selectorTitle: '.season-name > a > cite',
   namePages: 'crunchyroll',
   testMode: false,
+  remplaceEpisode: [['Estreno', '1']],
 }
 export default {
   data,

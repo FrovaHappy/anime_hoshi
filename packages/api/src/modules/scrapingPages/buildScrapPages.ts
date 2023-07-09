@@ -2,8 +2,14 @@ import { JSDOM } from 'jsdom'
 import getHtml from './getHtml'
 import { InfoEpisodeRecovered } from '../../../../types'
 import { DataAttck } from '../../../type'
-import { formartItemScraper } from './fomartItemScraper'
-
+import { EpisodeNumber } from '../../Enum'
+function remplaseString(str: string, rules: [searchValue: string | RegExp, remplaceValue: string][]) {
+  for (const rule of rules) {
+    const [searchValue, remplaceValue] = rule
+    str = str.replace(searchValue, remplaceValue)
+  }
+  return str
+}
 export default async function buildScrapPages({
   urlPage,
   selectorEpisode,
@@ -13,6 +19,8 @@ export default async function buildScrapPages({
   namePages,
   positionEpisodeInString,
   testMode,
+  remplaceEpisode = [],
+  remplaceTitle = [],
 }: DataAttck) {
   const testModeLog = (values: object) => {
     if (testMode) console.log(JSON.stringify(values) + '\n--------------------------------')
@@ -31,22 +39,25 @@ export default async function buildScrapPages({
   list.forEach((node) => {
     let url = node.getAttribute('href') ?? node.querySelector(selectorUrl)?.getAttribute('href')
     let title = node.querySelector(selectorTitle)?.textContent
-    let episode = parseInt(
+    let episodeStr =
       node
         .querySelector(selectorEpisode)
         ?.textContent?.match(/[\w\d]+/g)
         ?.at(positionEpisodeInString) ?? ''
-    )
-    testModeLog({ title, url, episode })
+    episodeStr = remplaseString(episodeStr, remplaceEpisode)
+
+    testModeLog({ title, url, episodeStr })
     if (!url || !title) return
     const UrlPage = new URL(urlPage)
     url = url?.includes(UrlPage.origin) ? url : UrlPage.origin + url
 
-    const dataFormated = formartItemScraper({ url, title, episode })
-    url = dataFormated.url
-    title = dataFormated.title
-    episode = dataFormated.episode
-
+    title = remplaseString(title, [[/["]/g, ''], ...remplaceTitle])
+    const episodeParse = (str: string) => {
+      let episodeInt = parseInt(str)
+      if (!Boolean(episodeInt)) episodeInt = EpisodeNumber.lastEpisodeNotFound
+      return episodeInt
+    }
+    const episode = episodeParse(episodeStr)
     scrapEpisodes.push({ url, episode, title })
   })
   return { [namePages]: scrapEpisodes }
