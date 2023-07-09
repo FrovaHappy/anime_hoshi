@@ -98,12 +98,13 @@ export default async function parse() {
           }
           let beforePages = newAnime.pages ?? {}
           const beforeEpisodes = beforePages[uPKey]?.episodes ?? []
+          const episodes = [...beforeEpisodes, newEpisode].sort((a, b) => b.episode - a.episode)
           let newPage = {
             startCount: 1,
             title: oldAnime.titleinPages[uPKey],
             lastUpdate: compareTimestamp(episode.updateEpisode), // controlar el tiempo
             redirectId: null,
-            episodes: [...beforeEpisodes, newEpisode],
+            episodes: episodes,
           }
           beforePages[uPKey] = newPage
 
