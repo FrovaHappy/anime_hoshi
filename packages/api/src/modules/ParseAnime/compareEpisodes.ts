@@ -1,5 +1,6 @@
 import { InfoEpisodeRecovered } from '../../../../types'
 import { Anime } from '../../../../types/Anime'
+import { EpisodeNumber } from '../../Enum'
 type Params = { database: Anime; episodeSrap: InfoEpisodeRecovered; namePage: string }
 export default async function compareEpisodes({ database, episodeSrap, namePage }: Params) {
   let hasUpdated = false
@@ -7,12 +8,15 @@ export default async function compareEpisodes({ database, episodeSrap, namePage 
   let episodes = page.episodes
   let lastUpdate = database.lastUpdate
 
+  if (episodeSrap.episode === EpisodeNumber.lastEpisodeNotFound) {
+    episodeSrap.episode = database.dataAnilist.episodes ?? (episodes[0].episode ?? 0) + 1
+  }
   const epExists = episodes.some((ep) => ep.episode === episodeSrap.episode)
 
   if (!epExists) {
     hasUpdated = true
     episodes.push({
-      episode: episodeSrap.episode,
+      episode: episodeSrap.episode - page.startCount,
       lastUpdate: Date.now(),
       link: episodeSrap.url,
     })

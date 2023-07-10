@@ -34,7 +34,7 @@ async function searchAnime({ title, namePage }: Params) {
   const dataAnilistIsExpired = Date.now() > database.dataAnilist.lastUpdate + TimestampTimings.fiveDays
   if (dataAnilistIsExpired) {
     hasUpdated = true
-    const newDataAnilist = await fetchAnilist({ search: `${id}`, searchType: SearchOptions.forId })
+    const newDataAnilist = await fetchAnilist({ search: id, searchType: SearchOptions.forId })
     if (newDataAnilist) database.dataAnilist = newDataAnilist
   }
   return { database, hasUpdated }

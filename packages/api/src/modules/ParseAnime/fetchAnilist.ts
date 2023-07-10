@@ -1,6 +1,6 @@
 import Log from '../../shared/log'
 import { type DataAnilist } from '../../../../types/dataAnilist'
-type Params = { search: string; searchType: SearchOptions }
+type Params = { search: string | number; searchType: SearchOptions }
 export enum SearchOptions {
   forTitle = 'forTitle',
   forId = 'forId',
@@ -29,16 +29,16 @@ const query = ({ query, media }: { query: string; media: string }) => `
     }
   }`
 
-const searchOptions: { [x: string]: { query: string; variables: (search: string) => object } } = {
+const searchOptions: { [x: string]: { query: string; variables: (search: string | number) => object } } = {
   [SearchOptions.forTitle]: {
     query: query({ query: '$search: String', media: 'search: $search' }),
-    variables: (search: string) => {
+    variables: (search: string | number) => {
       return { search: search }
     },
   },
   [SearchOptions.forId]: {
-    query: query({ query: '$id: Number', media: 'id: $id' }),
-    variables: (search: string) => {
+    query: query({ query: '$id: Int', media: 'id: $id' }),
+    variables: (search: string | number) => {
       return { id: search }
     },
   },
@@ -60,7 +60,7 @@ async function queryAnilist({ searchType, search }: Params) {
   return await fetch(url, options)
     .then((response) => response.json())
     .catch((e) => {
-      Log({ message: 'Error in fetch', type: 'error', content: e })
+      Log({ message: 'Error in fetch', type: 'error', content: { error: e, searchType, search } })
       return null
     })
 }
@@ -68,7 +68,11 @@ export default async function Main({ search, searchType }: Params) {
   const response = await queryAnilist({ search, searchType })
   if (response === null) null
   if (response.errors) {
-    Log({ message: '[anilist] Error in Query', type: 'warning', content: response.errors })
+    Log({
+      message: '[anilist] Error in Query',
+      type: 'warning',
+      content: { errors: response.errors, searchType, search },
+    })
     return null
   }
   const data: DataAnilist = response.data.Media
