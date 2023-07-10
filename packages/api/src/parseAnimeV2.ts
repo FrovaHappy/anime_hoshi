@@ -58,7 +58,11 @@ export default async function parse() {
     let canUpdate = false
     // remove oldDataAnilist for the current
     const oldDataAnilist = oldAnime.dataAnilist
-    let newAnime = {} as Anime
+    let newAnime = {
+      dataAnilist: {},
+      pages: {},
+      lastUpdate: 0,
+    } as Anime
 
     if (Boolean(oldAnime.updateAnilist)) {
       canUpdate = true
@@ -100,7 +104,7 @@ export default async function parse() {
           const beforeEpisodes = beforePages[uPKey]?.episodes ?? []
           const episodes = [...beforeEpisodes, newEpisode].sort((a, b) => b.episode - a.episode)
           let newPage = {
-            startCount: 1,
+            startCount: 0,
             title: oldAnime.titleinPages[uPKey],
             lastUpdate: compareTimestamp(episode.updateEpisode), // controlar el tiempo
             redirectId: null,
@@ -119,9 +123,9 @@ export default async function parse() {
     }
     if (canUpdate)
       await animeModel
-        .findOneAndUpdate({ 'dataAnilist.id': newAnime.dataAnilist.id }, newAnime, {
-          overwrite: true,
+        .findOneAndReplace({ 'dataAnilist.id': newAnime.dataAnilist.id }, newAnime, {
           runValidators: true,
+          strict: true,
         })
         .then((anime) => console.log(`Updated  ${anime?.dataAnilist.id}`))
         .catch((error) => {

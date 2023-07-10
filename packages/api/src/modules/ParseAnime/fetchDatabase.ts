@@ -9,7 +9,10 @@ export async function fetchDatabase({ search, searchType, namePage }: Params) {
   if (searchType === 'title') db = await findOne({ search: search, namePage: namePage, searchType: 'title' })
   if (searchType === 'id') db = await findOne({ search: search, namePage: namePage, searchType: 'id' })
   if (!db) return null
+  db.pages = db.pages ?? {}
   const redirectId = (db.pages[namePage] ?? {}).redirectId ?? null
   if (redirectId) db = await findOne({ search: `${redirectId}`, namePage: namePage, searchType: 'id' })
-  return JSON.parse(JSON.stringify(db)) as Anime
+  db = JSON.parse(JSON.stringify(db)) as Anime
+  db.pages = db.pages ?? {}
+  return db 
 }

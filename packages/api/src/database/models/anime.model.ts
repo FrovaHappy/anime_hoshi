@@ -43,7 +43,7 @@ const animeSchema = new Schema<Anime>(
         color: { type: 'string', default: '#ffffff' },
       },
     },
-    pages: { type: Object, of: pageScchema, default: {} },
+    pages: { type: Object, of: pageScchema, required: true },
     lastUpdate: { type: 'number', required: true },
   },
   { _id: false, id: false }

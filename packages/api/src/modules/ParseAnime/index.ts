@@ -5,6 +5,7 @@ import animeDB from '../../database/anime.db'
 
 async function validateData({ namePage, animesScrap }: { namePage: string; animesScrap: InfoEpisodeRecovered[] }) {
   for (const animeScrap of animesScrap) {
+    if (isNaN(animeScrap.episode)) continue //TODO: manejar la exepcion
     const animeSearch = await searchAnime({ title: animeScrap.title, namePage })
     if (!animeSearch) continue //TODO: manejar la exepcion
     const anime = await compareEpisodes({ database: animeSearch.database, episodeSrap: animeScrap, namePage })
