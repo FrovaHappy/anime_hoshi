@@ -5,12 +5,6 @@ export const enum EpisodeNumber {
   lastEpisodeNotFound = -1,
 }
 
-export const enum CacheKeys {
-  tempVapidkey = 'tempVapidkey',
-  animeList = 'animeList',
-  animesUpdatedTime = 'animeUpdatedTime',
-}
-
 export const enum TimestampTimings {
   fiveDays = 432_000_000,
   eightHours = 28_800_000,

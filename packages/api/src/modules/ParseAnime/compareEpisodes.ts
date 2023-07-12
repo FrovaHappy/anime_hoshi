@@ -11,12 +11,13 @@ export default async function compareEpisodes({ database, episodeSrap, namePage 
   if (episodeSrap.episode === EpisodeNumber.lastEpisodeNotFound) {
     episodeSrap.episode = database.dataAnilist.episodes ?? (episodes[0].episode ?? 0) + 1
   }
+  episodeSrap.episode -= page.startCount
   const epExists = episodes.some((ep) => ep.episode === episodeSrap.episode)
 
   if (!epExists) {
     hasUpdated = true
     episodes.push({
-      episode: episodeSrap.episode - page.startCount,
+      episode: episodeSrap.episode,
       lastUpdate: Date.now(),
       link: episodeSrap.url,
     })

@@ -41,3 +41,4 @@ export type DataAttck = {
 }
 export type RoleUser = 'owner' | 'admin' | 'user'
 export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime' | 'crunchyroll'
+export type CacheKeys = 'animes' | 'animesPublished' | 'animesUpdated'

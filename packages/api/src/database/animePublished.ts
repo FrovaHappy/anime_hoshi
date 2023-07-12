@@ -10,11 +10,19 @@ const animesPublishedSchema = new Schema(
 
 const animesPublishedModel = model('animesPublished', animesPublishedSchema)
 
-export async function findAnimePublished() {
-  return await animesPublishedModel.find()
+export async function findAll() {
+  return ((await animesPublishedModel.find())[0] ?? {}).animePublished ?? []
 }
 
-export async function updatedAnimesPublished(animesPublished: number[]) {
-  const config = { upsert: true, returnDocument: 'after' }
-  return await animesPublishedModel.updateOne(undefined, { animePublished: animesPublished }, config)
+export async function updateAll(animesPublished: number[]) {
+  return await animesPublishedModel.updateOne(
+    undefined,
+    { animePublished: animesPublished },
+    { strict: true, upsert: true }
+  )
+}
+
+export default {
+  findAll,
+  updateAll,
 }

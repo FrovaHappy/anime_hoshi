@@ -24,7 +24,7 @@ async function searchAnime({ title, namePage }: Params) {
         episodes: [],
         lastUpdate: Date.now(),
         redirectId: null,
-        startCount: 1,
+        startCount: 0,
         title: title,
       },
     }
