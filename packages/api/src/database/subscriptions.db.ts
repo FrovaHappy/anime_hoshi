@@ -7,9 +7,10 @@ export async function findAll() {
 
 async function createOrUpdateOne(subscription: Subscription) {
   let query = await subscriptionsModel.findOne({ publicKey: subscription.publicKey })
-  if (!query) {
-    return await subscriptionsModel.create(subscription)
-  }
+
+  if (!query && subscription.privateKey === '') return null
+  if (!query) return await subscriptionsModel.create(subscription)
+
   query.subscription = subscription.subscription
   query.lastUpdated = subscription.lastUpdated
   return await query.save()
