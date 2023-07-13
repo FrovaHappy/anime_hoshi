@@ -4,6 +4,7 @@ import compareEpisodes from './compareEpisodes'
 import animeDB from '../../database/anime.db'
 import Log from '../../shared/log'
 import { BuildRefreshCacheAnimes } from './setChacheAnime'
+import sendNotifications from './pushNotifications'
 
 function errors(err: any, type: 'search Database Error' | 'episode Null Error') {
   return {
@@ -49,6 +50,7 @@ async function validateData({ namePage, animesScrap }: { namePage: string; anime
 
 export default async function index(pagesAttacked: PagesAttacked) {
   const refreshCacheAnime = await BuildRefreshCacheAnimes()
+  const notifications = sendNotifications()
   let hasUpdated = false
   for (let pageScrap of pagesAttacked) {
     const namePage = Object.keys(pageScrap)[0]
@@ -57,6 +59,7 @@ export default async function index(pagesAttacked: PagesAttacked) {
     if (result.totalAnimesUpdated > 0) {
       hasUpdated = true
       refreshCacheAnime.set(result.animesUpdated)
+      notifications.setAnimesUpdated(result.animesUpdated)
     }
     if (result.totalAnilistUpdated > 0) hasUpdated = true
     Log({
@@ -66,5 +69,6 @@ export default async function index(pagesAttacked: PagesAttacked) {
     })
   }
   await refreshCacheAnime.runUpdate(hasUpdated)
+  await notifications.run()
   console.log('finished')
 }

@@ -1,22 +1,20 @@
 import { subscriptionsModel } from './models/subscriptions.model'
 import { Subscription } from '../../type'
 
-export async function getAllSubscriptions() {
+export async function findAll() {
   return subscriptionsModel.find()
 }
 
-export async function getOneSubscription(publicKey: string) {
-  return subscriptionsModel.findOne({ publicKey: publicKey })
+async function createOrUpdateOne(subscription: Subscription) {
+  let query = await subscriptionsModel.findOne({ publicKey: subscription.publicKey })
+  if (!query) {
+    return await subscriptionsModel.create(subscription)
+  }
+  query.subscription = subscription.subscription
+  query.lastUpdated = subscription.lastUpdated
+  return await query.save()
 }
-
-export async function addNewSubscription(subscription: Subscription) {
-  return subscriptionsModel.create(subscription).catch(() => {
-    return null
-  })
-}
-
-export async function UpdateOneSubscription(publicKey: string, encryptedPushSubscription: string) {
-  const filter = { publicKey: publicKey }
-  const update = { subscription: encryptedPushSubscription, lastUpdated: (Date.now()) }
-  return subscriptionsModel.findOneAndUpdate(filter, update, { returnDocument: 'after' })
+export default {
+  createOrUpdateOne,
+  findAll,
 }

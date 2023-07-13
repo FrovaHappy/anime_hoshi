@@ -9,17 +9,17 @@ export interface IuserWithoutPasswordHash {
   password: string
 }
 
-export interface TempVapidkey {
+export interface Vapidkey {
   publicKey: string
   privateKey: string
 }
-export interface Subscription extends TempVapidkey {
+export interface Subscription extends Vapidkey {
   subscription: string
   lastUpdated: number
 }
 
 export type PagesScraped = {
-  [key: string]: InfoEpisodeRecovered;
+  [key: string]: InfoEpisodeRecovered
 }[]
 
 export type TokenBody = {
@@ -41,4 +41,4 @@ export type DataAttck = {
 }
 export type RoleUser = 'owner' | 'admin' | 'user'
 export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime' | 'crunchyroll'
-export type CacheKeys = 'animes' | 'animesPublished' | 'animesUpdated'
+export type CacheKeys = 'animes' | 'animesPublished' | 'animesUpdated' | 'tempVapidKeys'
