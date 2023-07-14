@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import {configs} from './config'
-import routes from './routes'
+import routes from './routes/index.routes'
 
 const app = express()
 // middlewares
