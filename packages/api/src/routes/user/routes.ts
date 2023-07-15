@@ -1,5 +1,5 @@
-import { getUser, signin, signup, updateUser } from '../controllers/usersController'
-import { validateUser, validateUserUpdate } from '../validators/users'
+import { getUser, signin, signup, updateUser } from './controllers'
+import { validateUser, validateUserUpdate } from '../../validators/users'
 import { Router } from 'express'
 const router = Router()
 

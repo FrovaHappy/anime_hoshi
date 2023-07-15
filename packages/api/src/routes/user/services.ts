@@ -1,7 +1,7 @@
-import { findUser, createUser, deleteUser, updateUser } from '../database/users.db'
-import { Iuser } from '../../type'
-import auth from '../middleware/auth'
-import passwordHash from '../utils/passwordHash'
+import { findUser, createUser, deleteUser, updateUser } from '../../database/users.db'
+import { Iuser } from '../../../type'
+import auth from '../../middleware/auth'
+import passwordHash from '../../utils/passwordHash'
 
 /**
  * @param user
