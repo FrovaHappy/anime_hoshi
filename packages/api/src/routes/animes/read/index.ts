@@ -1,8 +1,7 @@
 import { Request, Response } from 'express'
-import { getData } from './services'
-import { JsonResponse } from '../../../../types'
-import { UpdateAnimeBodyType } from './validatorSchema'
-export async function getAnimes(req: Request, res: Response) {
+import { getData } from '../read/services'
+import { JsonResponse } from '../../../../../types'
+export default async function getAnimes(req: Request, res: Response) {
   const id = parseInt(req.query.id?.toLocaleString() ?? '')
 
   const { animes, animesUpdated, animesMinified } = getData()
@@ -19,9 +18,4 @@ export async function getAnimes(req: Request, res: Response) {
     contents: { animes: [...animesMinified], lastUpdate: animesUpdated },
     message: 'animes collections here',
   } as JsonResponse)
-}
-type AnimesReq = Request<unknown, unknown, UpdateAnimeBodyType>
-export async function putAnimes(req: AnimesReq, res: Response) {
-  const body = req.body
-  res.json(body)
 }

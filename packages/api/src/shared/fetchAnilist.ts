@@ -1,5 +1,5 @@
-import Log from '../../shared/log'
-import { type DataAnilist } from '../../../../types/dataAnilist'
+import Log from './log'
+import { type DataAnilist } from '../../../types/dataAnilist'
 type Params = { search: string | number; searchType: SearchOptions }
 export enum SearchOptions {
   forTitle = 'forTitle',

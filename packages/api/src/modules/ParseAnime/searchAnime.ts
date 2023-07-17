@@ -1,6 +1,6 @@
 import { Anime } from '../../../../types/Anime'
 import { TimestampTimings } from '../../Enum'
-import fetchAnilist, { SearchOptions } from './fetchAnilist'
+import fetchAnilist, { SearchOptions } from '../../shared/fetchAnilist'
 import { fetchDatabase } from './fetchDatabase'
 type Params = { title: string; namePage: string }
 async function searchAnime({ title, namePage }: Params) {

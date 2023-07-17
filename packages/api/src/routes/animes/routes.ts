@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { getAnimes, putAnimes } from './controllers'
+import getAnimes from './read'
+import putAnimes from './update'
 import { validators } from '../../middleware/validators'
-import { updateAnime } from './validatorSchema'
+import { updateAnime } from './update/validatorSchema'
 const router = Router()
 
 router.get('/', getAnimes)

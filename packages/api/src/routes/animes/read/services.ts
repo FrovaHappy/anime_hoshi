@@ -1,6 +1,6 @@
-import { Anime } from '../../../../types/Anime'
-import { TimestampTimings } from '../../Enum'
-import cache from '../../utils/cache'
+import { Anime } from '../../../../../types/Anime'
+import { TimestampTimings } from '../../../Enum'
+import cache from '../../../utils/cache'
 export type AnimeMinified = {
   lastUpdate: number
   title: string
