@@ -1,27 +1,23 @@
 import { createContext, useContext, useState } from 'react'
+import { type UseState } from '../../../types'
 export const enum ComponentType {
   children = 'children',
   signin = 'signin',
   signup = 'signup',
 }
-type StateComponent<T> = {
-  [x: string]: T | ((v: T) => void)
-}
-const ShowComponentContext = createContext<StateComponent<ComponentType> | undefined>(undefined)
+
+const ShowComponentContext = createContext<UseState<ComponentType> | undefined>(undefined)
 export function useShowComponent() {
   const context = useContext(ShowComponentContext)
   if (!context) throw new Error('showComponentContext out of context')
-  const showComponent = context.showComponent as ComponentType
-  const setShowComponent = context['setShowComponent'] as (v: ComponentType) => void
+  const [showComponent, setShowComponent] = context
   return { showComponent, setShowComponent }
 }
 
 function Sessiones({ children }: { children: React.ReactNode }) {
   const [showComponent, setShowComponent] = useState<ComponentType>(ComponentType.children)
   return (
-    <ShowComponentContext.Provider value={{ showComponent, setShowComponent }}>
-      {children}
-    </ShowComponentContext.Provider>
+    <ShowComponentContext.Provider value={[showComponent, setShowComponent]}>{children}</ShowComponentContext.Provider>
   )
 }
 

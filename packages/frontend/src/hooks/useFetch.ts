@@ -9,10 +9,10 @@ async function useFetch({
 }: {
   url: string
   method: string
-  body?: Object
+  body?: Record<string, any>
   authorization?: string
 }) {
-  let options = {
+  const options = {
     method,
     headers: new Headers({
       Authorization: 'Bearer ' + authorization,
@@ -21,8 +21,7 @@ async function useFetch({
     body: body ? JSON.stringify(body) : undefined,
   }
 
-  const data: any | null = await fetch(url, options)
-    .then((res) => res.json())
+  const data: any | null = await (await fetch(url, options)).json()
     .catch(() => {
       return null
     })

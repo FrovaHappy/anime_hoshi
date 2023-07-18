@@ -1,16 +1,7 @@
-export interface ObjectKeyDynamic<T> {
-  [k: string]: T
-}
-export type List = {
-  [key: string]:
-    | {
-        url: string
-        update: number
-        episode: number
-      }[]
-    | undefined
-}
-export type notificationProperty = {
+export type ObjectDynamic<T> = Record<string, T>
+
+export interface notificationProperty {
   hasAccept: boolean
   updated?: number
 }
+export type UseState<T> = [T, (key: T) => void]

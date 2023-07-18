@@ -3,25 +3,8 @@ const DATE_UNITS = {
   day: 86400,
   hour: 3600,
   minute: 60,
-  second: 1,
+  second: 1
 }
-type RelativeTimeFormatUnit =
-  | 'year'
-  | 'years'
-  | 'quarter'
-  | 'quarters'
-  | 'month'
-  | 'months'
-  | 'week'
-  | 'weeks'
-  | 'day'
-  | 'days'
-  | 'hour'
-  | 'hours'
-  | 'minute'
-  | 'minutes'
-  | 'second'
-  | 'seconds'
 
 const getSecondsDiff = (timestamp: number) => (Date.now() - timestamp) / 1000
 const getUnitAndValueDate = (secondsElapsed: number) => {
@@ -37,5 +20,5 @@ export const getTimeAgo = (timestamp: number) => {
 
   const secondsElapsed = getSecondsDiff(timestamp)
   const { value, unit } = getUnitAndValueDate(secondsElapsed)!
-  return rtf.format(value, unit as RelativeTimeFormatUnit)
+  return rtf.format(value, unit as any)
 }

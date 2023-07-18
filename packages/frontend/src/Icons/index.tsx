@@ -9,7 +9,7 @@ import IconRotate from './Rotate'
 import IconExternalLink from './ExternalLink'
 import IconBars from './Bars'
 
-type IconProps = {
+interface IconProps {
   className?: string
   style?: React.CSSProperties
   iconName: Icon

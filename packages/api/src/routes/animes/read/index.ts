@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { getData } from '../read/services'
 import { JsonResponse } from '../../../../../types'
 export default async function getAnimes(req: Request, res: Response) {
-  const id = parseInt(req.query.id?.toLocaleString() ?? '')
+  const id = parseInt(req.query.id?.toString() || '')
 
   const { animes, animesUpdated, animesMinified } = getData()
   if (!animes)

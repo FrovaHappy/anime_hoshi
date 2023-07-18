@@ -1,23 +1,23 @@
-import { Anime } from '../../../../../types/Anime'
-import { TimestampTimings } from '../../../Enum'
+import { Anime, AnimeMinified } from '../../../../../types/Anime'
 import cache from '../../../utils/cache'
-export type AnimeMinified = {
-  lastUpdate: number
-  title: string
-  image: string
-  id: number
-}
+
 let animesUpdatedCache: number = 0
 let animesMinified: AnimeMinified[] = []
 
-function minifyAnimes(animes: Anime[]) {
+function minifyAnimes(animes: Anime[]): AnimeMinified[] {
   return animes.map((anime) => {
     const namePages = Object.keys(anime.pages)
     let refEpidode = 0
+    let lastUpdateOld = 0
     for (const name of namePages) {
       const { lastUpdate, episode } = anime.pages[name].episodes[0]
-      if (Date.now() < lastUpdate + TimestampTimings.eightHours) {
+      const time =  lastUpdateOld < lastUpdate
+      if (time) {
         refEpidode = episode
+        lastUpdateOld = lastUpdate
+      }
+      if (refEpidode === 0) {
+        console.log('')
       }
     }
     return {
@@ -26,6 +26,7 @@ function minifyAnimes(animes: Anime[]) {
       image: anime.dataAnilist.coverImage.large,
       id: anime.dataAnilist.id,
       episode: refEpidode,
+      color: anime.dataAnilist.coverImage.color
     }
   })
 }

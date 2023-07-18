@@ -25,3 +25,11 @@ export type Anime = {
   pages: Pages
   lastUpdate: number
 }
+export type AnimeMinified = {
+  lastUpdate: number
+  title: string
+  image: string
+  color: string
+  episode: number
+  id: number
+}

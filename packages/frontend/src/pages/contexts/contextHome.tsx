@@ -1,49 +1,32 @@
 import { createContext, useContext, useState } from 'react'
-import { AnimeList } from '../../../../types'
+import { type AnimeMinified } from '../../../../types/Anime'
+import { type UseState } from '../../../types'
 
-type Props = {
+interface Props {
   children: React.ReactNode
 }
-type AnimesContext =
-  | {
-      animes: AnimeList[] | undefined
-      setAnimes: React.Dispatch<React.SetStateAction<AnimeList[] | undefined>>
-    }
-  | undefined
-type AnimeContext =
-  | {
-      anime: AnimeList | undefined
-      setAnime: React.Dispatch<React.SetStateAction<AnimeList | undefined>>
-    }
-  | undefined
+const CreateAnimesContext = createContext<UseState<AnimeMinified[]> | undefined>(undefined)
+const CreateAnimeContext = createContext<UseState<AnimeMinified | null> | null>(null)
 
-const CreateAnimesContext = createContext<AnimesContext>(undefined)
-const CreateAnimeContext = createContext<AnimeContext>(undefined)
-
-export function useAnimeContext() {
+export function useContextAnime() {
   const context = useContext(CreateAnimeContext)
   if (!context) throw new Error('useIdContext out of context')
-  return context
+  const [animeMinfied, setAnimeMinfied] = context
+  return { animeMinfied, setAnimeMinfied }
 }
-export function useAnimesContext() {
+export function useContextAnimes() {
   const context = useContext(CreateAnimesContext)
   if (!context) throw new Error('useAnimesContext out of context')
-  return context
+  const [animesMinfied, setAnimesMinfied] = context
+  return { animesMinfied, setAnimesMinfied }
 }
 
 export function ContextHome({ children }: Props) {
-  const [animes, setAnimes] = useState<AnimeList[]>()
-  const [anime, setAnime] = useState<AnimeList>()
+  const [animesMinfied, setAnimesMinfied] = useState<AnimeMinified[]>([])
+  const [animeMinfied, setAnimeMinfied] = useState<AnimeMinified | null>(null)
   return (
-    <CreateAnimesContext.Provider value={{ animes, setAnimes }}>
-      <CreateAnimeContext.Provider
-        value={{
-          anime,
-          setAnime,
-        }}
-      >
-        {children}
-      </CreateAnimeContext.Provider>
+    <CreateAnimesContext.Provider value={[animesMinfied, setAnimesMinfied]}>
+      <CreateAnimeContext.Provider value={[animeMinfied, setAnimeMinfied]}>{children}</CreateAnimeContext.Provider>
     </CreateAnimesContext.Provider>
   )
 }

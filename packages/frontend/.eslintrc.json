@@ -1,6 +1,22 @@
 {
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["standard-with-typescript", "plugin:react/recommended"],
   "parserOptions": {
-      "project": ["path/to/your/tsconfig/file"],
-      "ecmaVersion": 2022
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "tsconfigRootDir": "./packages/frontend",
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["react"],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/comma-dangle": "off"
   }
 }

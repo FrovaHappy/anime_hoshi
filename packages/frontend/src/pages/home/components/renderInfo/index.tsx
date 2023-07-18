@@ -1,37 +1,28 @@
+import { getAnime } from './getAnime'
+import { useRef, useState } from 'react'
+import { useContextAnime } from '../../../contexts/contextHome'
 import './index.scss'
-import { Contribute } from './contribute'
-import { useAnimeContext } from '../../../contexts/contextHome'
 import Info from './Info'
-import QueryNotifications from './QueryNotifications'
-import { useState } from 'react'
-import { KeysLocalStorage } from '../../../../enum'
-import { discordWiget } from '../../../../config'
+
+const location = window.location
+const id = new window.URLSearchParams(location.search).get('id') ?? null
 
 function renderInfo() {
-  const { anime, setAnime } = useAnimeContext()
-  const hasAccept = !!localStorage.getItem(KeysLocalStorage.notificationProperty)
-  const canHideInfo = hasAccept && !anime
-  const classRenderInfoDisable = canHideInfo ? 'renderInfo--disabled' : ''
-  const [canRenderNotif, setCanRenderNotif] = useState(!hasAccept)
-  const renderNotification = canRenderNotif ? (
-    QueryNotifications(setCanRenderNotif)
-  ) : (
-    <>
-      <iframe
-        className="renderInfo__discord"
-        src={discordWiget}
-        width="auto"
-        height="500"
-        frameBorder={0}
-        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-      ></iframe>
-    </>
-  )
-  return (
-    <div className={`renderInfo ${classRenderInfoDisable}`}>
-      {anime ? Info(anime, setAnime) : renderNotification}
-      <Contribute />
-    </div>
-  )
+  const [close, setClose] = useState(false)
+  const idRef = useRef(id)
+  const { animeMinfied } = useContextAnime()
+  const animeId = animeMinfied?.id.toString() ?? idRef.current
+
+  const { load, error, anime } = getAnime(animeId)
+  console.log({ idRef, close, animeMinfied, error, load })
+
+  if (error === 'badRequest') return <>badRequest</>
+  if (error === 'errorInResult') return <>errorInResult</>
+  if (load) return <>load</>
+  const closeFuct = () => {
+    if (!animeMinfied) setClose(!close)
+    if (!animeMinfied) idRef.current = null
+  }
+  return <div className="">{anime ? <Info anime={anime} close={closeFuct} /> : <> default </>}</div>
 }
 export default renderInfo

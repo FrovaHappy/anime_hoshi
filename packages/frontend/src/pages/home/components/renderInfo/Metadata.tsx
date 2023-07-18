@@ -1,14 +1,14 @@
-import { AnimeList } from '../../../../../../types'
+import { type Anime } from '../../../../../../types/Anime'
 
-type Props = {
-  anime: AnimeList
+interface Props {
+  anime: Anime
 }
-function formatTime(duration?: number): string {
+function formatTime(duration: number | null): string {
   if (!duration) return ''
   const inHours = Math.floor(duration / 60)
   const hasHour = inHours > 0
   const inMinutes = hasHour ? Math.floor((duration / 60 - inHours) * 60) : duration
-  if (hasHour) return `${inHours} Horas ${inMinutes > 0 ? inMinutes + ' minutos' : ''}`
+  if (hasHour) return `${inHours} Horas ${inMinutes > 0 ? `${inMinutes} minutos` : ''}`
   return `${inMinutes} Minutos`
 }
 function Metadata({ anime }: Props) {
@@ -19,9 +19,9 @@ function Metadata({ anime }: Props) {
 
   return (
     <div className="renderInfo__metadata">
-      {renderMetadata(Boolean(averageScore), `⭐ ${averageScore}%`)}
+      {renderMetadata(Boolean(averageScore), `⭐ ${averageScore ?? ''}%`)}
       {renderMetadata(Boolean(id), `ID ${id}`)}
-      {renderMetadata(Boolean(episodes), `${episodes} Episodios`)}
+      {renderMetadata(Boolean(episodes), `${episodes ?? ''} Episodios`)}
       {renderMetadata(Boolean(format), `${format}`)}
       {renderMetadata(Boolean(status), `${status}`)}
       {renderMetadata(Boolean(duration), formatTime(duration))}

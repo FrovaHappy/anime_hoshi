@@ -26,7 +26,7 @@ export async function BuildRefreshCacheAnimes() {
       totalAnimes = totalAnimes.filter((id) => {
         return !animesId.some((v) => v === id)
       }) //delete id old
-      totalAnimes = [...animesId, ...totalAnimes]
+      totalAnimes = [... new Set([...animesId, ...totalAnimes])]
       totalAnimes = totalAnimes.slice(0, 80)
       return totalAnimes
     },

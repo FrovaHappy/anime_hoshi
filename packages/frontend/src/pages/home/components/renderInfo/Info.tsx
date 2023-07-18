@@ -1,9 +1,9 @@
-import { AnimeList } from '../../../../../../types'
+import { type Anime } from '../../../../../../types/Anime'
 import Icons from '../../../../Icons'
+import { useContextAnime } from '../../../contexts/contextHome'
 import Metadata from './Metadata'
-import RenderEpisodesDropdown from './RenderEpisodesDropdown'
-type Props = {
-  anime: AnimeList
+interface Props {
+  anime: Anime
 }
 function LinkToAnilist({ anime }: Props) {
   return (
@@ -14,7 +14,7 @@ function LinkToAnilist({ anime }: Props) {
     </a>
   )
 }
-function parseDescription(description?: string) {
+function parseDescription(description: string | null) {
   if (description) {
     description = description.replaceAll(/(<[/]?i>)+/g, '')
     const descriptionArray = description.split(/(<br>[\s]?)+/g).filter((v) => !v.includes('<br>'))
@@ -35,14 +35,20 @@ function Description({ anime }: Props) {
     </div>
   )
 }
-function Info(anime: AnimeList, setAnime: (value: any) => void) {
+interface PropsInfo {
+  anime: Anime
+  close: () => void
+}
+function Info({ anime, close }: PropsInfo) {
+  const { setAnimeMinfied } = useContextAnime()
   return (
     <>
       <div className="renderInfo__actions">
         <button
           className="renderInfo__actions--close"
           onClick={() => {
-            setAnime(undefined)
+            setAnimeMinfied(null)
+            close()
           }}
         >
           <Icons iconName="IconClose" />
@@ -52,7 +58,7 @@ function Info(anime: AnimeList, setAnime: (value: any) => void) {
       <h3 className="renderInfo__title">{anime.dataAnilist.title.romaji}</h3>
       <Metadata anime={anime} />
       <Description anime={anime} />
-      <RenderEpisodesDropdown />
+      {/* <RenderEpisodesDropdown /> */}
     </>
   )
 }

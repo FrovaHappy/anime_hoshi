@@ -1,48 +1,45 @@
-import { getlastEpisodeInfo } from '../../../../utils/getLastEpisodeInfo'
 import Icon from '../../../../Icons'
-import { isVisibly } from '../../../../utils/renderCondicional'
-import { AnimeList } from '../../../../../../types'
+import { type AnimeMinified } from '../../../../../../types/Anime'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
-import { useAnimeContext } from '../../../contexts/contextHome'
+import { useContextAnime } from '../../../contexts/contextHome'
 import './targetAnime.scss'
 import { useRef } from 'react'
-type Props = {
-  thisAnime: AnimeList
+
+interface Props {
+  thisAnime: AnimeMinified
+}
+
+export const isVisibly = (conditional: boolean): React.CSSProperties | undefined => {
+  return conditional ? undefined : { visibility: 'hidden', height: 0, width: 0, margin: 0, overflow: 'hidden' }
 }
 export default function TargetAnimeConponent({ thisAnime }: Props) {
-  const { anime, setAnime } = useAnimeContext()
+  const { animeMinfied, setAnimeMinfied } = useContextAnime()
   const hasOnClickPrevius = useRef(false)
-  const compareId = thisAnime.dataAnilist.id == anime?.dataAnilist.id
-  const getEpisodeAndPages = getlastEpisodeInfo(thisAnime)
-  const color = thisAnime.dataAnilist.coverImage.color ?? '#fff'
-  const setOpaqueImg = compareId || !anime ? 'targetAnime__img' : 'targetAnime__img targetAnime__img--opaque'
-  const renderPoint = Date.now() - getEpisodeAndPages.updateEpisode < 28_800_000
+  const compareId = thisAnime.id === animeMinfied?.id
+  const color = thisAnime.color
+  const setOpaqueImg = compareId || !animeMinfied ? 'targetAnime__img' : 'targetAnime__img targetAnime__img--opaque'
+  const renderPoint = Date.now() - thisAnime.lastUpdate < 28_800_000
   return (
     <div
       className="targetAnime"
       onClick={() => {
         if (!compareId) hasOnClickPrevius.current = false
-        if (compareId && hasOnClickPrevius.current === true) {
-          setAnime(undefined)
+        if (compareId && hasOnClickPrevius.current) {
+          setAnimeMinfied(null)
           hasOnClickPrevius.current = false
         } else {
-          setAnime(thisAnime)
+          setAnimeMinfied(thisAnime)
           hasOnClickPrevius.current = true
         }
         setColorPrimary(color)
       }}
     >
       <div className="targetAnime__episode">
-        Ep. {getEpisodeAndPages.keyLastEpisode}
+        Ep. {thisAnime.episode}
         <Icon iconName="IconNew" style={isVisibly(renderPoint)} className="itemNewEpisodes" />
       </div>
-      <img
-        className={setOpaqueImg}
-        src={thisAnime.dataAnilist.coverImage.large}
-        alt={thisAnime.dataAnilist.title.romaji}
-        loading="lazy"
-      />
-      <p className="targetAnime__title">{thisAnime.dataAnilist.title.romaji}</p>
+      <img className={setOpaqueImg} src={thisAnime.image} alt={thisAnime.title} loading="lazy" />
+      <p className="targetAnime__title">{thisAnime.title}</p>
     </div>
   )
 }

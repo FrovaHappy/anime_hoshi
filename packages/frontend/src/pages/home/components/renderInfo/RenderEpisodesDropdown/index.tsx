@@ -1,16 +1,12 @@
-import { AnimeList } from '../../../../../../../types'
+import { type Anime } from '../../../../../../../types/Anime'
 import { getTimeAgo } from '../../../../../utils/getTimeAgo'
 import { useAnimeContext } from '../../../../contexts/contextHome'
 import { listPageLinks } from '../../../utils/listsPagesLinks'
 import RenderEpisodesLink from './RenderEpisodesLink'
 import Items from '../../../../../Icons'
 import SelectPage from './SelectPage'
-function getlastEpisodeNum(anime: AnimeList) {
-  return (
-    Object.keys(anime?.episodes ?? {})
-      .sort((a, b) => parseInt(a) - parseInt(b))
-      .at(-1) ?? ''
-  )
+function getlastEpisodeNum(anime: Anime) {
+  const { animeMinfied } = useAnimeContext()
 }
 
 function index() {
