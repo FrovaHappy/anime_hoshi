@@ -1,0 +1,26 @@
+.select {
+  padding: 0.3125rem;
+  width: min-content;
+
+  
+  user-select: none;
+  &__header {
+    border: 1px solid gray;
+    border-radius: 0.25rem;
+    white-space: nowrap;
+    display: flex;
+  }
+  &__options {
+    display: none;
+  }
+  &:focus > &__options {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    background-color: aqua;
+    position: absolute;
+  }
+  &__options:focus {
+    display: none;
+  }
+}

@@ -1,5 +1,5 @@
-import { type Anime } from '../../../../../../types/Anime'
-
+import { type Anime } from '../../../../../../../types/Anime'
+import './index.scss'
 interface Props {
   anime: Anime
 }
@@ -14,11 +14,11 @@ function formatTime(duration: number | null): string {
 function Metadata({ anime }: Props) {
   const { episodes, id, format, status, averageScore, duration } = anime.dataAnilist
   const renderMetadata = (hasContent: boolean, content: string) => {
-    return hasContent ? <div className="renderInfo__metadata--item">{content}</div> : null
+    return hasContent ? <div className="metadata__item">{content}</div> : null
   }
 
   return (
-    <div className="renderInfo__metadata">
+    <div className="metadata">
       {renderMetadata(Boolean(averageScore), `⭐ ${averageScore ?? ''}%`)}
       {renderMetadata(Boolean(id), `ID ${id}`)}
       {renderMetadata(Boolean(episodes), `${episodes ?? ''} Episodios`)}

@@ -1,0 +1,131 @@
+.metadata {
+  display: flex;
+  gap: 0.3125rem;
+  width: -webkit-fill-available;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  &__item {
+    cursor: default;
+    height: 1.375rem;
+    box-sizing: border-box;
+    justify-items: center;
+    font-size: 0.75rem;
+    background-color: var(--bgContentAlt);
+    padding: 0.1875rem 0.4375rem;
+    border-radius: 0.3125rem;
+  }
+}
+.anilist {
+  display: flex;
+  gap: 0.3125rem;
+  color: var(--textColor);
+  padding: 0.125rem 0.3125rem;
+  background-color: var(--bgContentAlt);
+  border-radius: var(--borderRadius);
+  white-space: nowrap;
+  align-items: center;
+  width: inherit;
+  &__text {
+    width: auto;
+  }
+  &__i {
+    background-image: url('../../../../../../public/pages_icons/anilist.svg');
+    aspect-ratio: 1/1;
+    height: -webkit-fill-available;
+    width: 1.25rem;
+    background-size: contain;
+  }
+}
+.description {
+  display: grid;
+  gap: 0.625rem;
+  grid-template-columns: 6.6875rem auto;
+  grid-template-rows: 1rem 7.8125rem;
+  justify-items: start;
+  cursor: default;
+  &__img {
+    width: -webkit-fill-available;
+    border-radius: 0.3125rem;
+    grid-row: 1/3;
+  }
+  &__title {
+    font-size: 0.875rem;
+  }
+  &__body {
+    display: flex;
+    padding-right: 0.3125rem;
+    flex-direction: column;
+    font-size: 0.8125rem;
+    color: var(--textColorAlt);
+    overflow-y: auto;
+    text-align: left;
+    gap: 0.5rem;
+  }
+}
+.title {
+  font-size: 1rem;
+  color: var(--colorPrimary);
+  transition: color 0.2s ease;
+}
+.actions {
+  display: flex;
+  width: -webkit-fill-available;
+  &__close {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 0.3125rem;
+    border: 0;
+    background-color: transparent;
+    color: var(--colorPrimary);
+    transition: background-color 0.2s ease;
+    &:hover {
+      background-color: var(--bgContentHover);
+    }
+  }
+  &__space {
+    width: -webkit-fill-available;
+    height: auto;
+  }
+}
+.episodesList {
+  display: grid;
+  grid-template-columns: min-content auto;
+  grid-template-rows: min-content auto;
+  height: -webkit-fill-available;
+  .lastUpdate {
+    align-self: center;
+    justify-self: end;
+  }
+  .list {
+    height: -webkit-fill-available;
+    background-color: var(--bgContentAlt);
+    grid-column: 1/3;
+    padding: 0.625rem;
+    &__item {
+      display: flex;
+      color: var(--textColorAlt);
+      width: -webkit-fill-available;
+
+      &--title {
+        color: var(--textColor);
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      &--episode {
+        padding: 0.3125rem 0;
+      }
+      &--episodeNew {
+        color: var(--textColor);
+        padding: 0.3125rem 0;
+        font-weight: 700;
+      }
+      &--lastUpdate {
+        width: -webkit-fill-available;
+        text-align: end;
+      }
+      &--redirect {
+      }
+    }
+  }
+}

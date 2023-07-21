@@ -2,12 +2,13 @@ import { getAnime } from './getAnime'
 import { useRef, useState } from 'react'
 import { useContextAnime } from '../../../contexts/contextHome'
 import './index.scss'
-import Info from './Info'
+import '../../../../styles/popup.scss'
+import ShowData from './showData'
 
 const location = window.location
 const id = new window.URLSearchParams(location.search).get('id') ?? null
 
-function renderInfo() {
+function Conditionals() {
   const [close, setClose] = useState(false)
   const idRef = useRef(id)
   const { animeMinfied } = useContextAnime()
@@ -23,6 +24,16 @@ function renderInfo() {
     if (!animeMinfied) setClose(!close)
     if (!animeMinfied) idRef.current = null
   }
-  return <div className="">{anime ? <Info anime={anime} close={closeFuct} /> : <> default </>}</div>
+  if (!anime) return <>default</>
+  return <ShowData anime={anime} close={closeFuct} />
+}
+function renderInfo() {
+  return (
+    <div className="popup popup__inTablet">
+      <div className="renderInfo">
+        <Conditionals />
+      </div>
+    </div>
+  )
 }
 export default renderInfo

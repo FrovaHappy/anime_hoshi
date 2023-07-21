@@ -40,7 +40,7 @@ const icons = {
   IconBars,
 }
 
-const filterIcon = (iconProps: IconProps) => {
+const FilterIcon = (iconProps: IconProps) => {
   const { className, iconName, style } = iconProps
   const { path, viewBox } = icons[iconName]
   return (
@@ -50,4 +50,4 @@ const filterIcon = (iconProps: IconProps) => {
   )
 }
 
-export default filterIcon
+export default FilterIcon
