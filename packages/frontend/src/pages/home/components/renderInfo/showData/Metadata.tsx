@@ -1,4 +1,6 @@
 import { type Anime } from '../../../../../../../types/Anime'
+import Icons from '../../../../../Icons'
+import { toPascalCase } from '../../../../../utils/general'
 import './index.scss'
 interface Props {
   anime: Anime
@@ -13,17 +15,23 @@ function formatTime(duration: number | null): string {
 }
 function Metadata({ anime }: Props) {
   const { episodes, id, format, status, averageScore, duration } = anime.dataAnilist
-  const renderMetadata = (hasContent: boolean, content: string) => {
+  const renderMetadata = (hasContent: boolean, content: React.ReactNode) => {
     return hasContent ? <div className="metadata__item">{content}</div> : null
   }
 
   return (
     <div className="metadata">
-      {renderMetadata(Boolean(averageScore), `⭐ ${averageScore ?? ''}%`)}
-      {renderMetadata(Boolean(id), `ID ${id}`)}
+      {renderMetadata(
+        Boolean(averageScore),
+        <>
+          <Icons iconName="IconStar" className="metadata__star" />
+          <p>{averageScore ?? ''}% </p>
+        </>
+      )}
+      {renderMetadata(Boolean(id), `Id: ${id}`)}
       {renderMetadata(Boolean(episodes), `${episodes ?? ''} Episodios`)}
-      {renderMetadata(Boolean(format), `${format}`)}
-      {renderMetadata(Boolean(status), `${status}`)}
+      {renderMetadata(Boolean(format), toPascalCase(`${format}`))}
+      {renderMetadata(Boolean(status), toPascalCase(`${status}`))}
       {renderMetadata(Boolean(duration), formatTime(duration))}
     </div>
   )

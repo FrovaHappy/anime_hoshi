@@ -1,14 +1,19 @@
-:root{
-  --shadowTarget: 0px 0px .625rem .125rem #00000050;
-  --borderRadius: .4375rem;
+:root {
+  --shadowTarget: 0px 0px 0.625rem 0.125rem #00000050;
+  --borderRadius: 0.4375rem;
   --colorPrimary: #3d7bff;
   --textColor: #f5f5f5;
   --textColorAlt: #a0a0a0;
-  --bgContent: #181818;
-  --bgContentTransparent: #181818bb;
-  --bgContentAlt: #202020;
-  --bgContentHover: #222222;
+  --bg: #000000;
+  --bgContent: #161616;
+  --bgContentAlt: #1F1F1F;
+  --bgContentHover: #202020;
 
-  --z-menu: 500;
+  
   --z-episode: 50;
+  --font-weight-semiblod: 600;
+  --font-title: 1.25rem;
+  --font-subtitle: .9375rem;
+  --font-color: #f7f7f7;
+  --font-subcolor: #adadad;
 }

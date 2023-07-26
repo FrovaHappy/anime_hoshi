@@ -7,6 +7,10 @@ import IconNew from './New'
 import IconRotate from './Rotate'
 import IconExternalLink from './ExternalLink'
 import IconBars from './Bars'
+import IconStar from './Star'
+import IconCaretUp from './caretUp'
+import IconGitHub from './GitHub'
+import IconDiscord from './Discord'
 
 const icons = {
   IconHome,
@@ -18,6 +22,10 @@ const icons = {
   IconRotate,
   IconExternalLink,
   IconBars,
+  IconStar,
+  IconCaretUp,
+  IconGitHub,
+  IconDiscord,
 }
 
 interface IconProps {

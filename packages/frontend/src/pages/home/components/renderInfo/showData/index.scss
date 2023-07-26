@@ -4,23 +4,35 @@
   width: -webkit-fill-available;
   align-items: center;
   justify-content: center;
+  
   flex-wrap: wrap;
   &__item {
     cursor: default;
     height: 1.375rem;
+    display: flex;
+    align-items: center;
+    gap: .125rem;
     box-sizing: border-box;
     justify-items: center;
     font-size: 0.75rem;
     background-color: var(--bgContentAlt);
+    color: var(--font-subcolor);
     padding: 0.1875rem 0.4375rem;
     border-radius: 0.3125rem;
+    white-space: nowrap;
+  }
+  &__star {
+    width: 0.75rem;
+    aspect-ratio: 1/1;
   }
 }
 .anilist {
   display: flex;
   gap: 0.3125rem;
-  color: var(--textColor);
+  color: var(--font-subcolor);
+  
   padding: 0.125rem 0.3125rem;
+  margin: .3125rem 0;
   background-color: var(--bgContentAlt);
   border-radius: var(--borderRadius);
   white-space: nowrap;
@@ -28,6 +40,7 @@
   width: inherit;
   &__text {
     width: auto;
+    font-size: var(--font-subtitle);
   }
   &__i {
     background-image: url('../../../../../../public/pages_icons/anilist.svg');
@@ -50,35 +63,41 @@
     grid-row: 1/3;
   }
   &__title {
-    font-size: 0.875rem;
+    font-size: var(--font-subtitle);
+    font-weight: var(--font-weight-semiblod);
   }
   &__body {
     display: flex;
     padding-right: 0.3125rem;
     flex-direction: column;
-    font-size: 0.8125rem;
-    color: var(--textColorAlt);
+    color: var(--font-subcolor);
     overflow-y: auto;
     text-align: left;
     gap: 0.5rem;
   }
 }
 .title {
-  font-size: 1rem;
-  color: var(--colorPrimary);
+  font-size: var(--font-title);
   transition: color 0.2s ease;
 }
 .actions {
   display: flex;
   width: -webkit-fill-available;
   &__close {
-    height: 1.5rem;
-    width: 1.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    aspect-ratio: 1/1;
+    width: 1.875rem;
     border-radius: 0.3125rem;
+    padding: 0 .3125rem;
     border: 0;
     background-color: transparent;
     color: var(--colorPrimary);
     transition: background-color 0.2s ease;
+    &--i {
+      width: inherit;
+    }
     &:hover {
       background-color: var(--bgContentHover);
     }
@@ -89,43 +108,65 @@
   }
 }
 .episodesList {
-  display: grid;
-  grid-template-columns: min-content auto;
-  grid-template-rows: min-content auto;
-  height: -webkit-fill-available;
-  .lastUpdate {
-    align-self: center;
-    justify-self: end;
+  display: flex;
+  width: -webkit-fill-available;
+  justify-content: space-between;
+  align-items: center;
+  &__lastUpdate {
+    font-size: var(--font-subtitle);
+    color: var(--font-subcolor);
   }
-  .list {
-    height: -webkit-fill-available;
-    background-color: var(--bgContentAlt);
-    grid-column: 1/3;
-    padding: 0.625rem;
-    &__item {
-      display: flex;
-      color: var(--textColorAlt);
-      width: -webkit-fill-available;
+}
+.list {
+  height: -webkit-fill-available;
+  background-color: var(--bgContentAlt);
+  grid-column: 1/3;
+  padding: 0.625rem;
+  border-radius: 0.3125rem;
+  overflow: auto;
+  &__item {
+    display: flex;
+    align-items: center;
+    padding: 0.125rem;
+    gap: 0.625rem;
+    color: var(--font-subcolor);
+    width: -webkit-fill-available;
 
-      &--title {
-        color: var(--textColor);
-        font-size: 1rem;
-        font-weight: 700;
-      }
-      &--episode {
-        padding: 0.3125rem 0;
-      }
-      &--episodeNew {
-        color: var(--textColor);
-        padding: 0.3125rem 0;
-        font-weight: 700;
-      }
-      &--lastUpdate {
-        width: -webkit-fill-available;
-        text-align: end;
-      }
-      &--redirect {
-      }
+    &--title {
+      color: var(--font-color);
+      cursor: default;
+      text-align: start;
+      padding-bottom: 0.625rem;
+      font-size: var(--font-subtitle);
+      font-weight: var(--font-weight-semiblod);
     }
+    &--episode {
+      padding: 0.3125rem 0;
+      white-space: nowrap;
+    }
+    &:hover {
+      background-color: var(--bgContentHover);
+    }
+    &--episodeNew {
+      color: var(--font-color);
+      font-weight: var(--font-weight-semiblod);
+    }
+    &--lastUpdate {
+      width: -webkit-fill-available;
+      text-align: end;
+    }
+    &--redirect {
+      height: 0.875rem;
+      aspect-ratio: 1/1;
+    }
+  }
+}
+.option {
+  padding: 0.3125rem 0.625rem;
+  border-left: 0.1875rem solid transparent;
+  text-align: start;
+  font-size: var(--font-subtitle);
+  &__new {
+    border-left: 0.1875rem solid var(--colorPrimary);
   }
 }

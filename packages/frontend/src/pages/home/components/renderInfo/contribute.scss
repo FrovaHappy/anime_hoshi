@@ -2,15 +2,15 @@
   display: flex;
   align-items: center;
   width: 100%;
+  gap: .625rem;
   &__img{
     width: 2.5rem;
-    background-size: contain;
-    margin-right: .625rem;
+    aspect-ratio: 1/1;
   }
   &__text{
     text-align: left;
-    font-size: .75em;
-    color: var(--textColorAlternative);
+    font-size: .8125rem;
+    color: var(--font-subcolor);
     text-shadow: 0 0 .1875rem #000000;
   }
 }

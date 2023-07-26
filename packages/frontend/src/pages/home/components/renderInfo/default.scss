@@ -1,0 +1,79 @@
+@keyframes slide {
+  from {
+    transform: translateX(-6.25rem);
+  }
+  to {
+    transform: translateX(18.75rem);
+  }
+}
+.default {
+  &__header {
+    display: flex;
+    &--title {
+      font-size: var(--font-title);
+    }
+    &--setting {
+      width: 1.5rem;
+      color: var(--font-color);
+      transition: color 500ms ease;
+      &:hover {
+        color: var(--colorPrimary);
+      }
+    }
+  }
+  &__imgHome {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    align-items: center;
+    background-image: url('../../../../../public/resources/home.png');
+    background-size: 15rem;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  &__load {
+    padding: 0.625rem 1.5625rem;
+    &--text {
+      font-size: var(--font-subtitle);
+      padding-bottom: 0.3125rem;
+    }
+    &--contentBar {
+      display: block;
+      height: 0.5rem;
+      border-radius: 0.25rem;
+      width: 18.75rem;
+      overflow: hidden;
+    }
+    &--bar {
+      display: block;
+      width: 5rem;
+      background-color: var(--colorPrimary);
+      height: 0.5rem;
+      border-radius: 0.25rem;
+      animation: 2s linear infinite slide;
+    }
+  }
+  &__link {
+    color: var(--font-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0 0 0.3125rem 0;
+    &:hover {
+      text-decoration: underline;
+    }
+    &--discord {
+      height: 1.75rem;
+      aspect-ratio: 1/1;
+      padding: 0.1875rem;
+      box-sizing: border-box;
+      border-radius: 50%;
+      background-color: #5865f2;
+      color: #fff;
+    }
+    &--github {
+      height: 1.75rem;
+      color: var(--font-color);
+    }
+  }
+}

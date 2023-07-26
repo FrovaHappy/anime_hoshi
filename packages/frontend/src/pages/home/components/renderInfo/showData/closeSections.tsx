@@ -31,7 +31,7 @@ function closeSections({ anime, close }: PropsInfo) {
           close()
         }}
       >
-        <Icons iconName="IconClose" />
+        <Icons iconName="IconClose" className="actions__close--i" />
       </button>
       <span className="actions__space"></span>
       <LinkToAnilist anime={anime} />

@@ -1,23 +1,35 @@
 .select {
-  padding: 0.3125rem;
   width: min-content;
-
-  
   user-select: none;
   &__header {
-    border: 1px solid gray;
-    border-radius: 0.25rem;
+    background-color: var(--bgContentAlt);
+    padding-right: .625rem;
+    border-radius: 0.3125rem;
+    overflow: hidden;
     white-space: nowrap;
     display: flex;
+  }
+  &__caret {
+    transform: rotate(-180deg);
+    width: 0.875rem;
+    aspect-ratio: 1/1;
+    transition: transform 200ms ease;
+  }
+  &:focus &__caret {
+    transform: rotate(0deg);
   }
   &__options {
     display: none;
   }
   &:focus > &__options {
     display: flex;
+    overflow: hidden;
+    gap: 0.0625rem;
+    margin-top: 0.3125rem;
+    background-color: var(--bgContent);
+    border-radius: 0.625rem;
     flex-direction: column;
     width: fit-content;
-    background-color: aqua;
     position: absolute;
   }
   &__options:focus {
