@@ -10,7 +10,6 @@ export function getAnimes() {
   const [error, setError] = useState<AnimesError>('')
   const fethAnimes = async () => {
     const response = await useFetch({ url: `${urlApi ?? ''}/animes`, method: 'GET' }).catch(() => { setError('badRequest') })
-    console.log(response)
     response?.code === 200 ? setAnimesMinfied(response.contents.animes) : setError('cacheEmpty')
     setLoad(false)
   }

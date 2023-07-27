@@ -15,6 +15,9 @@
   gap: 0.625rem;
   flex-direction: column;
   background-color: var(--bgContent);
+
+  backdrop-filter: blur(0.625rem);
+  -webkit-backdrop-filter: blur(0.625rem);
   &__discord {
     height: -webkit-fill-available;
   }
@@ -132,17 +135,11 @@
 }
 @media (max-width: 48rem) {
   .renderInfo {
-    position: absolute;
     box-sizing: border-box;
+    flex-shrink: 1;
+    max-width: 25rem;
     width: auto;
-    z-index: 500;
-    overflow: hidden;
-    height: 100%;
-    margin: 0;
-    padding: 1.5625rem calc(50% - 15.625rem);
-    background-color: var(--bgContentTransparent);
-    backdrop-filter: blur(0.625rem);
-    &--disabled {
+    &--hidden {
       display: none;
     }
   }

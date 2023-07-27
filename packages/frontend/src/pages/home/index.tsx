@@ -1,5 +1,6 @@
 import { ContextHome } from '../contexts/contextHome'
 import RenderInfo from './components/renderInfo'
+import Menu from '../contexts/Menu'
 import RenderList from './components/renderList'
 import './index.scss'
 export default function Home() {
@@ -7,7 +8,9 @@ export default function Home() {
     <ContextHome>
       <div className="home">
         <RenderList />
-        <RenderInfo />
+        <Menu>
+          <RenderInfo />
+        </Menu>
       </div>
     </ContextHome>
   )
