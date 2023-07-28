@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import Icons from '../../../../Icons'
 import './default.scss'
-import { useShowChildren } from '../../../contexts/Menu'
 
 function loadingComponent() {
   return (
@@ -14,9 +13,7 @@ function loadingComponent() {
   )
 }
 
-function main({ status }: { status: 'default' | 'loading' }) {
-  const { setShowMenu } = useShowChildren()
-  if (status === 'loading') setShowMenu(true)
+function Main({ status }: { status: 'default' | 'loading' }) {
   return (
     <>
       <div className="default__header">
@@ -46,4 +43,4 @@ function main({ status }: { status: 'default' | 'loading' }) {
   )
 }
 
-export default main
+export default Main

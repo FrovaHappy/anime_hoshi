@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import { urlApi } from '../../../../config'
 import useFetch from '../../../../hooks/useFetch'
 import { type Anime } from '../../../../../../types/Anime'
+import { useShowChildren } from '../../../contexts/Menu'
 
 type AnimesError = 'badRequest' | 'errorInResult' | ''
 
 export function getAnime(animeId: string | null) {
   const [load, setLoad] = useState(true)
+  const {setShowMenu} = useShowChildren()
   const [anime, setAnime] = useState<Anime | null>(null)
   const [error, setError] = useState<AnimesError>('')
   const fethAnimes = async () => {
@@ -19,10 +21,10 @@ export function getAnime(animeId: string | null) {
     setError('')
     if (animeId) {
       fethAnimes().catch((error) => { console.error(error) })
+      setShowMenu(true)
     } else {
       setAnime(null)
       setLoad(false)
-      console.log(anime?.dataAnilist.id)
     }
   }, [animeId])
   return { load, error, anime }

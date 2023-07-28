@@ -24,7 +24,10 @@ export default function ListEpisodes({ anime }: { anime: Anime }) {
     <>
       <div className="episodesList">
         {select({ values: options, onSelect: setNamePage })}
-        <span className="episodesList__lastUpdate"> {getTimeAgo(anime.lastUpdate)} </span>
+        <span className="episodesList__lastUpdate">
+          <Icons iconName="IconRotate" className="episodesList__lastUpdate--i" />
+          {getTimeAgo(anime.lastUpdate)}
+        </span>
       </div>
       <ul className="list">
         <li className="list__item--title">Episodios de {toPascalCase(namePage)}</li>

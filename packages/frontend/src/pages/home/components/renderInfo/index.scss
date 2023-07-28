@@ -9,6 +9,8 @@
   flex-shrink: 0;
   width: 25rem;
   height: -webkit-fill-available;
+
+  overflow: auto;
   padding: 0.625rem;
   border-radius: 0.3125rem;
   display: flex;
