@@ -1,6 +1,6 @@
 import { ErrorTypes } from '../utils/getUser'
 import { ComponentType, useShowComponent } from '../../contexts/Sessions'
-import Options from './Options'
+import Options from './Option'
 import { KeysLocalStorage } from '../../../enum'
 function UserTarget() {
   return (
@@ -20,14 +20,14 @@ function UserEmpty() {
       <h3>Perfil de Usuario</h3>
       <Options
         title="Iniciar Sesión en la Nube"
-        description="Inicia sesión o créate una cuenta para  obtener un backup  y acceder a las herramientas de administrador"
+        description="Inicia sesión o créase una cuenta para  obtener un backup  y acceder a las herramientas de administrador"
         descriptionAction
         actions={
           <>
-            <button onClick={() => setShowComponent(ComponentType.signin)} className="button">
+            <button onClick={() => setShowComponent(ComponentType.signIn)} className="button">
               signIn
             </button>
-            <button onClick={() => setShowComponent(ComponentType.signup)} className="button__blue">
+            <button onClick={() => setShowComponent(ComponentType.signUp)} className="button__blue">
               signUp
             </button>
           </>
@@ -43,17 +43,17 @@ function UserValid() {
     <>
       <h3 className="user__title">Perfil de Usuario</h3>
       <UserTarget />
-      <div className="user__options--rigth">
+      <div className="user__options--right">
         <button
           className="button"
           onClick={() => {
             window.localStorage.removeItem(KeysLocalStorage.token)
-            setShowComponent(ComponentType.signin)
+            setShowComponent(ComponentType.signIn)
           }}
         >
           Cerrar Sesión
         </button>
-        <button onClick={() => setShowComponent(ComponentType.signin)} className="button__blue">
+        <button onClick={() => setShowComponent(ComponentType.signIn)} className="button__blue">
           Cambiar De Usuario
         </button>
         <button className="button__red">Eliminar Usuario</button>
@@ -70,7 +70,7 @@ export default function index({ error }: { data: any; error: ErrorTypes | undefi
     return (
       <>
         tokenInvalid
-        <button onClick={() => setShowComponent(ComponentType.signin)}>Iniciar Sesion</button>
+        <button onClick={() => setShowComponent(ComponentType.signIn)}>Iniciar Sesión</button>
       </>
     )
   }

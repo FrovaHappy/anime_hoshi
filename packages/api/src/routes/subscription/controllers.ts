@@ -10,7 +10,7 @@ export function getSubscription(_req: Request, res: Response) {
 
 export async function postSubscription(req: Request, res: Response) {
   const { pushSubscription, publicKey } = req.body
-  const result = await saveSubscription(pushSubscription, publicKey)
+  const result = await saveSubscription(JSON.stringify(pushSubscription), publicKey)
   return result
     ? res.status(200).json({ message: 'push subscriptions saved', code: 200, contents: null } as JsonResponse)
     : res.status(400).json({

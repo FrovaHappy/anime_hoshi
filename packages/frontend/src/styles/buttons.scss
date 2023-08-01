@@ -1,6 +1,7 @@
 @mixin theme($theme: transparent, $hover: #ffffff10) {
   padding: .4375rem .875rem;
   border: 0;
+  height: min-content;
   border-radius: .3125rem;
   font-size: .875rem;
   font-weight: 500;

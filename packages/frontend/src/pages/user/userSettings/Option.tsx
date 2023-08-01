@@ -1,6 +1,6 @@
 import './Options.styles.scss'
 import '../../../styles/buttons.scss'
-function Options({
+function Option({
   title,
   description,
   descriptionAction = undefined,
@@ -23,4 +23,4 @@ function Options({
   )
 }
 
-export default Options
+export default Option

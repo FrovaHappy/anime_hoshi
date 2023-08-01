@@ -17,7 +17,7 @@ function signUp() {
       if (signUp) {
         const response = await useFetch({ url: `${urlApi}/user/signup`, method: 'POST', body: signUp })
         if (response?.code === 201) {
-          setShowComponent(ComponentType.signin)
+          setShowComponent(ComponentType.signIn)
           return
         }
         if (response?.code === 400) {

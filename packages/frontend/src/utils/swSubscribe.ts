@@ -1,44 +1,38 @@
 import { urlApi } from '../config'
+import { KeysLocalStorage } from '../enum'
 async function getPublicKey() {
-  const publicKey = localStorage.getItem('publicKey')
+  const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)
   const data = !publicKey
     ? await fetch(`${urlApi}/subscription`)
         .then((response) => response.json())
-        .then((response) => response.publicKey)
+        .then((response) => response.contents.publicKey)
     : publicKey
-  localStorage.setItem('publicKey', data)
+  localStorage.setItem(KeysLocalStorage.publicKey, data)
   return data
 }
 
-const subscription = async () => {
+async function subscription() {
   const PUBLIC_VAPID_KEY = await getPublicKey()
 
   // Service Worker
   const register = await navigator.serviceWorker.register('./worker.js', {
     scope: '/',
   })
-
-  // Listen Push Notifications
-  const getPushSubscription = await register.pushManager.getSubscription()
-  if (getPushSubscription) {
-    await getPushSubscription.unsubscribe()
-  }
+  console.log(register)
   const subscription = await register.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY),
   })
-
   // Send Notification
-  await fetch(`${urlApi}/subscription`, {
+  const postSubscriptions = await fetch(`${urlApi}/subscription`, {
     method: 'POST',
     body: JSON.stringify({ pushSubscription: subscription, publicKey: PUBLIC_VAPID_KEY }),
     headers: {
       'Content-Type': 'application/json',
     },
-  })
-    .then((response) => response.json())
-    .then((response) => console.log(response))
-  //TODO: show the subcription was correct
+  }).then((response) => response.json())
+  if (postSubscriptions.code !== 201) return 'error api'
+  return 'active'
 }
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -53,42 +47,31 @@ function urlBase64ToUint8Array(base64String: string) {
   }
   return outputArray
 }
-
+export type SubscriptionStatus = 'active' | 'denied' | 'error api' | 'error compatibility' | 'error not defined'
 // Service Worker Support
-async function notifyMe() {
-  // Comprobamos si el navegador soporta las notificaciones
+export async function subscribe(): Promise<SubscriptionStatus> {
   if (!('Notification' in window)) {
     console.error('Este navegador no es compatible con las notificaciones de escritorio')
-  } else if (Notification.permission === 'granted') {
+    return 'error compatibility'
+  }
+  let permission = Notification.permission
+  if (Notification.permission === 'default') {
+    permission = await Notification.requestPermission()
+  }
+  if (permission === 'granted') {
     if ('serviceWorker' in navigator) {
-      subscription().catch((err) => {
+      return await subscription().catch((err) => {
         console.error(err)
+        return 'error not defined'
       })
     }
   }
-
-  // Si no, pedimos permiso para la notificación
-  else if (Notification.permission !== 'denied') {
-    Notification.requestPermission(function (permission) {
-      // Si el usuario nos lo concede, creamos la notificación
-      if (permission === 'granted') {
-        if ('serviceWorker' in navigator) {
-          subscription().catch((err) => {
-            console.error(err)
-          })
-        }
-      }
-    })
-  }
+  return 'denied'
 }
-
 export async function unsubscribe() {
-  const register = await navigator.serviceWorker.register('./worker.js', {
-    scope: '/',
-  })
-  const getPushSubscription = await register.pushManager.getSubscription()
-  if (getPushSubscription) {
-    await getPushSubscription.unsubscribe()
+  const register = await navigator.serviceWorker.getRegistration('./worker.js')
+  if (register) {
+    return await register.unregister()
   }
+  return false
 }
-export default notifyMe

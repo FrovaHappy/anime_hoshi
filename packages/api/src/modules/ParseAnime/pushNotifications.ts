@@ -46,7 +46,7 @@ async function sendingNotifications(animesId: number[]) {
   const stackSubscriptions = await buildStackSubscriptions()
   const animes = getAnimes(animesId)
   const stackPayload = JSON.stringify(animes.map((anime) => buildPayload(anime)))
-  let totalSusess = 0,
+  let totalSusses = 0,
     totalRejects = 0
 
   for (const subscriptions of stackSubscriptions) {
@@ -55,14 +55,14 @@ async function sendingNotifications(animesId: number[]) {
         return pushNotifications.push(subscription, stackPayload)
       })
     )
-    const sucess = results.filter((result) => result === 200).length
-    const rejects = results.length - sucess
-    totalSusess += sucess
+    const susses = results.filter((result) => result === 200 || result === 201).length
+    const rejects = results.length - susses
+    totalSusses += susses
     totalRejects += rejects
   }
   Log({
-    content: { susess: totalSusess, rejects: totalRejects, total: totalSusess + totalRejects },
-    message: `[anime Notif] ${totalSusess} send of ${totalSusess + totalRejects} `,
+    content: { susses: totalSusses, rejects: totalRejects, total: totalSusses + totalRejects },
+    message: `[anime sendNof] ${totalSusses} send of ${totalSusses + totalRejects} `,
     type: 'info',
   })
 }

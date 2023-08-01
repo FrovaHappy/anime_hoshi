@@ -37,8 +37,8 @@ function TogleSessions() {
   return (
     <div className="main">
       {showComponent === ComponentType.children ? <Children /> : null}
-      {showComponent === ComponentType.signin ? <SignIn /> : null}
-      {showComponent === ComponentType.signup ? <SignUp /> : null}
+      {showComponent === ComponentType.signIn ? <SignIn /> : null}
+      {showComponent === ComponentType.signUp ? <SignUp /> : null}
     </div>
   )
 }

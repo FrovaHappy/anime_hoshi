@@ -2,7 +2,9 @@ import AwaitLoad from '../../../components/AwaitLoad'
 import { getUser } from '../utils/getUser'
 import './index.styles.scss'
 import Info from './Info'
-import Notifications from './notifications'
+
+import notifications from './seccions/notifications'
+const settingCollection = [notifications]
 
 export default function Index() {
   const { error, load, data } = getUser()
@@ -12,11 +14,21 @@ export default function Index() {
         <div id="#info" className="user__options">
           {load ? <AwaitLoad /> : <Info data={data} error={error} />}
         </div>
-        <Notifications />
+        {settingCollection.map((setting) => (
+          <div key={setting.tag} id={setting.tag} className="user__options">
+            <h3>{setting.title}</h3>
+            {setting.Options()}
+          </div>
+        ))}
       </div>
       <div className="user__nav">
-        <a href="#info">Perfil de Usuario</a>
-        <a href="#Notifications">Perfil de Usuario</a>
+        {settingCollection.map((setting) => {
+          return (
+            <a href={`#${setting.tag}`} key={setting.tag}>
+              {setting.title}
+            </a>
+          )
+        })}
       </div>
     </>
   )
