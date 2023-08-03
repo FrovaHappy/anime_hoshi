@@ -13,12 +13,14 @@ async function getPublicKey() {
 
 async function subscription() {
   const PUBLIC_VAPID_KEY = await getPublicKey()
+  const getRegister = await navigator.serviceWorker.getRegistration('./worker.js')
+  let register = getRegister
+    ? getRegister
+    : await navigator.serviceWorker.register('./worker.js', {
+        scope: '/',
+      })
+  register.update()
 
-  // Service Worker
-  const register = await navigator.serviceWorker.register('./worker.js', {
-    scope: '/',
-  })
-  console.log(register)
   const subscription = await register.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY),

@@ -4,7 +4,9 @@ import { Subscription } from '../../type'
 export async function findAll() {
   return subscriptionsModel.find()
 }
-
+async function deleteOne(publicKey: string) {
+  await subscriptionsModel.deleteOne({ publicKey: publicKey })
+}
 async function createOrUpdateOne(subscription: Subscription) {
   let query = await subscriptionsModel.findOne({ publicKey: subscription.publicKey })
 
@@ -18,4 +20,5 @@ async function createOrUpdateOne(subscription: Subscription) {
 export default {
   createOrUpdateOne,
   findAll,
+  deleteOne,
 }
