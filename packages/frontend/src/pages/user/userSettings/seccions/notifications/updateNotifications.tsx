@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { subscribe } from '../../../../../utils/swSubscribe'
-import { KeysLocalStorage, Timestamps } from '../../../../../enum'
-import { NotificationsInAired } from '../../../../../../types'
+import { KeysLocalStorage } from '../../../../../enum'
+import { DEFAULT_NOTIFICATIONS } from '../../../../../utils/const'
 
 function updateNotifications() {
   const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)
@@ -15,13 +15,7 @@ function updateNotifications() {
       onClick={() => {
         setLoad(true)
         subscribe().then(() => {
-          const notifications: NotificationsInAired = {
-            delay: Timestamps.eight_hours,
-            inAwaits: [],
-            maxRemitted: 1,
-            sendWhereFind: 0,
-          }
-          localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(notifications))
+          localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
           setLoad(false)
         })
       }}

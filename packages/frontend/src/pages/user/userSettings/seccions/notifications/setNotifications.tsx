@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { NotificationsInAired } from '../../../../../../types'
-import { KeysLocalStorage, Timestamps } from '../../../../../enum'
+import { KeysLocalStorage } from '../../../../../enum'
 import { subscribe, unsubscribe } from '../../../../../utils/swSubscribe'
 import UpdateNotifications from './updateNotifications'
+import { DEFAULT_NOTIFICATIONS } from '../../../../../utils/const'
 
 export default function setNotifications() {
   const notificationsString = window.localStorage.getItem(KeysLocalStorage.notifications)
@@ -33,13 +33,7 @@ export default function setNotifications() {
       onClick={() => {
         setLoad(true)
         subscribe().then(() => {
-          const notifications: NotificationsInAired = {
-            delay: Timestamps.eight_hours,
-            inAwaits: [],
-            maxRemitted: 1,
-            sendWhereFind: 0,
-          }
-          localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(notifications))
+          localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
           setLoad(false)
         })
       }}
