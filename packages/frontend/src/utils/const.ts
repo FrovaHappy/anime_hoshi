@@ -3,8 +3,8 @@ import { Timestamps } from '../enum'
 
 export const DEFAULT_TOTAL_PAGES = 5
 export const DEFAULT_NOTIFICATIONS: NotificationsInAired = {
-  delay: Timestamps.eight_hours,
-  inAwaits: [],
+  delay: Timestamps.thirty_minutes,
+  expireIn: Timestamps.eight_hours,
   maxRemitted: 1,
-  sendWhereFind: 0,
+  minPages: 0,
 }
