@@ -9,6 +9,7 @@ export type UseState<T> = [T, (key: T) => void]
 export type InAwait = {
   cantRemitted: number // cant of emitted the notification
   expireIn: number
+  created: number
   anime: PayloadAnimeNof
 }
 export type NotificationInAwait = Array<InAwait>

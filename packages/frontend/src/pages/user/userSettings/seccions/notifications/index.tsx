@@ -1,26 +1,54 @@
+import { createContext, useContext, useEffect, useState } from 'react'
 import Option from '../../Option'
 import DelaySetting from './DelaySetting'
 import MaxRemittedSetting from './MaxRemittedSetting'
 import MinPagesSetting from './MinPagesSetting'
 import DefaultSetting from './defaultSetting'
 import SetNotifications from './setNotifications'
+import DBLocal, { type ResultDB } from '../../../../../utils/DBLocal'
+import { UseState } from '../../../../../../types'
+import { KeysLocalStorage } from '../../../../../enum'
 
 const title = 'Notificaciones'
 const tag = 'notifications'
+export interface PropReloadComponent {
+  reload(): void
+}
+const ContextSettings = createContext<UseState<ResultDB | undefined> | undefined>(undefined)
+export function useSettingsContext() {
+  const context = useContext(ContextSettings)
+  if (!context) throw new Error('Out of Context Settings')
+  const [setting, setSetting] = context
+  return { setting, setSetting }
+}
 function Options() {
+  const [render, setRender] = useState(false)
+  const [load, setLoad] = useState(true)
+  const [setting, setSetting] = useState<ResultDB>()
+  useEffect(() => {
+    const database = async () => {
+      setSetting(await DBLocal().get(KeysLocalStorage.notifications))
+      setLoad(false)
+    }
+    database()
+  }, [])
+  const reloadComponent = () => {
+    setRender(!render)
+  }
+  if (load) return <h2> load db </h2>
   return (
-    <>
+    <ContextSettings.Provider value={[setting, setSetting]}>
       <Option
         title="Dar Los Permisos"
         description="Activa o desactiva las notificaciones que te enviamos."
         descriptionAction={undefined}
-        actions={<SetNotifications />}
+        actions={<SetNotifications reload={reloadComponent} />}
       />
       <Option
         title="Restaurar Configuración"
         description="Devuelve la configuración a su valor por defecto."
         descriptionAction={undefined}
-        actions={<DefaultSetting />}
+        actions={<DefaultSetting reload={reloadComponent} />}
       />
       <Option
         title={'Tiempo de espera de Notificaciones'}
@@ -58,7 +86,7 @@ function Options() {
         descriptionAction={undefined}
         actions={undefined}
       />
-    </>
+    </ContextSettings.Provider>
   )
 }
 export default { title, tag, Options }

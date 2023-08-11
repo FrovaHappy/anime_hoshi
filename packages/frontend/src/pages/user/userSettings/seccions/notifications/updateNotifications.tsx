@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { subscribe } from '../../../../../utils/swSubscribe'
 import { KeysLocalStorage } from '../../../../../enum'
 import { DEFAULT_NOTIFICATIONS } from '../../../../../utils/const'
+import initDb from '../../../../../utils/DBLocal'
 
 function updateNotifications() {
   const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)
@@ -14,8 +15,8 @@ function updateNotifications() {
       className="button__blue"
       onClick={() => {
         setLoad(true)
-        subscribe().then(() => {
-          localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
+        subscribe().then(async () => {
+          await initDb().set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
           setLoad(false)
         })
       }}

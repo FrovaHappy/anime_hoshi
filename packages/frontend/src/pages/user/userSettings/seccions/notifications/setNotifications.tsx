@@ -3,9 +3,12 @@ import { KeysLocalStorage } from '../../../../../enum'
 import { subscribe, unsubscribe } from '../../../../../utils/swSubscribe'
 import UpdateNotifications from './updateNotifications'
 import { DEFAULT_NOTIFICATIONS } from '../../../../../utils/const'
+import { PropReloadComponent, useSettingsContext } from '.'
+import initDb from '../../../../../utils/DBLocal'
 
-export default function setNotifications() {
-  const notificationsString = window.localStorage.getItem(KeysLocalStorage.notifications)
+export default function setNotifications({ reload }: PropReloadComponent) {
+  const { setting, setSetting } = useSettingsContext()
+  const notificationsString = setting?.value
   const [load, setLoad] = useState(false)
   if (notificationsString) {
     return (
@@ -15,10 +18,10 @@ export default function setNotifications() {
           className="button__red"
           onClick={() => {
             setLoad(true)
-            unsubscribe().then(() => {
+            unsubscribe().then(async () => {
               setLoad(false)
-              localStorage.removeItem(KeysLocalStorage.notifications)
-              localStorage.removeItem(KeysLocalStorage.publicKey)
+              setSetting(await initDb().delete(KeysLocalStorage.notifications))
+              reload()
             })
           }}
         >
@@ -32,9 +35,10 @@ export default function setNotifications() {
       className="button__blue"
       onClick={() => {
         setLoad(true)
-        subscribe().then(() => {
-          localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
+        subscribe().then(async () => {
+          setSetting(await initDb().set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS)))
           setLoad(false)
+          reload()
         })
       }}
     >

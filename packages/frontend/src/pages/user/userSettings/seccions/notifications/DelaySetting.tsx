@@ -1,23 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { KeysLocalStorage, Timestamps } from '../../../../../enum'
-import { getObjectOfLocaleStorage } from '../../../../../utils/general'
+import { stringToObject } from '../../../../../utils/general'
 import { NotificationsInAired } from '../../../../../../types'
+import initDb from '../../../../../utils/DBLocal'
+import { useSettingsContext } from '.'
 
 export default function DelaySetting() {
-  const notifications = getObjectOfLocaleStorage<NotificationsInAired>(KeysLocalStorage.notifications)
-  const [value, setValue] = useState(notifications?.delay)
+  const { setting, setSetting } = useSettingsContext()
+  const notifications = stringToObject<NotificationsInAired>(setting?.value)
   if (!notifications) return null
-  const onHandleDelay = (e: React.FormEvent<HTMLFormElement>) => {
+  const onHandleDelay = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     let { delay } = Object.fromEntries(new FormData(e.currentTarget))
     if (parseInt(delay as string) < Timestamps.fifteen_minutes) return
     notifications.delay = parseInt(delay as string)
-    localStorage.setItem(KeysLocalStorage.notifications, JSON.stringify(notifications))
-    setValue(notifications.delay)
+    setSetting(await initDb().set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
     <form onSubmit={(e) => onHandleDelay(e)} onChange={(e) => onHandleDelay(e)}>
-      <input type="number" min={Timestamps.fifteen_minutes} name="delay" id="delay" defaultValue={value} />
+      <input type="number" min={Timestamps.fifteen_minutes} name="delay" id="delay" value={notifications.delay} />
     </form>
   )
 }
