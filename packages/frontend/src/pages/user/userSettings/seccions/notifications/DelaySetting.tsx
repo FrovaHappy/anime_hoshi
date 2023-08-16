@@ -18,7 +18,13 @@ export default function DelaySetting() {
   }
   return (
     <form onSubmit={(e) => onHandleDelay(e)} onChange={(e) => onHandleDelay(e)}>
-      <input type="number" min={Timestamps.fifteen_minutes} name="delay" id="delay" value={notifications.delay} />
+      <input
+        type="number"
+        min={Timestamps.fifteen_minutes}
+        name="delay"
+        id="delay"
+        defaultValue={notifications.delay}
+      />
     </form>
   )
 }

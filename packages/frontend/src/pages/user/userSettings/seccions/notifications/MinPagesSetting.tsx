@@ -29,7 +29,7 @@ export default function mimPagesSetting() {
   }
   return (
     <form onChange={(e) => onHandleMaxPages(e)}>
-      <select name="minPages" id="minPages" value={notifications.minPages}>
+      <select name="minPages" id="minPages" defaultValue={notifications.minPages}>
         {mappedOptions(DEFAULT_NOTIFICATIONS.minPages, DEFAULT_TOTAL_PAGES).map((elem) => elem)}
       </select>
     </form>

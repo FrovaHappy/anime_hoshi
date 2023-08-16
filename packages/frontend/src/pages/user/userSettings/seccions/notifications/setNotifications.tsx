@@ -20,6 +20,7 @@ export default function setNotifications({ reload }: PropReloadComponent) {
             setLoad(true)
             unsubscribe().then(async () => {
               setLoad(false)
+              localStorage.removeItem(KeysLocalStorage.publicKey)
               setSetting(await initDb().delete(KeysLocalStorage.notifications))
               reload()
             })
