@@ -1,3 +1,4 @@
+import type React from 'react'
 import { type Anime } from '../../../../../../../types/Anime'
 import Icons from '../../../../../Icons'
 import { toPascalCase } from '../../../../../utils/general'
@@ -16,17 +17,17 @@ function formatTime(duration: number | null): string {
 function Metadata({ anime }: Props) {
   const { episodes, id, format, status, averageScore, duration } = anime.dataAnilist
   const renderMetadata = (hasContent: boolean, content: React.ReactNode) => {
-    return hasContent ? <div className="metadata__item">{content}</div> : null
+    return hasContent ? <div className='metadata__item'>{content}</div> : null
   }
 
   return (
-    <div className="metadata">
+    <div className='metadata'>
       {renderMetadata(
         Boolean(averageScore),
         <>
-          <Icons iconName="IconStar" className="metadata__star" />
+          <Icons iconName='IconStar' className='metadata__star' />
           <p>{averageScore ?? ''}% </p>
-        </>
+        </>,
       )}
       {renderMetadata(Boolean(id), `Id: ${id}`)}
       {renderMetadata(Boolean(episodes), `${episodes ?? ''} Episodios`)}

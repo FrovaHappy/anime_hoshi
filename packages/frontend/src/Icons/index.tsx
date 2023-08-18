@@ -1,3 +1,4 @@
+import type React from 'react'
 import IconHome from './Home'
 import IconCircleInfo from './CircleInfo'
 import IconGear from './Gear'
@@ -38,7 +39,7 @@ const FilterIcon = (iconProps: IconProps) => {
   const { className, iconName, style } = iconProps
   const { jsx, viewBox } = icons[iconName]
   return (
-    <svg className={className} style={style} viewBox={viewBox} xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+    <svg className={className} style={style} viewBox={viewBox} xmlns='http://www.w3.org/2000/svg' fill='currentColor'>
       {jsx}
     </svg>
   )

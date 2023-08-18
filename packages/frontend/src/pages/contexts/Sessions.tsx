@@ -1,3 +1,4 @@
+import type React from 'react'
 import { createContext, useContext, useState } from 'react'
 import { type UseState } from '../../../types'
 export const enum ComponentType {

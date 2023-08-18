@@ -3,9 +3,9 @@ import { KeysLocalStorage } from '../enum'
 async function getPublicKey() {
   const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)
   const data = !publicKey
-    ? await fetch(`${urlApi}/subscription`)
-        .then((response) => response.json())
-        .then((response) => response.contents.publicKey)
+    ? await fetch(`${urlApi}/subscription`) // eslint-disable-next-line @typescript-eslint/indent
+        .then(async response => await response.json()) // eslint-disable-next-line @typescript-eslint/indent
+        .then(response => response.contents.publicKey)
     : publicKey
   localStorage.setItem(KeysLocalStorage.publicKey, data)
   return data
@@ -14,12 +14,12 @@ async function getPublicKey() {
 async function subscription() {
   const PUBLIC_VAPID_KEY = await getPublicKey()
   const getRegister = await navigator.serviceWorker.getRegistration('./worker.js')
-  let register = getRegister
-    ? getRegister
-    : await navigator.serviceWorker.register('./worker.js', {
-        scope: '/',
-      })
-  register.update()
+  const register =
+    getRegister ??
+    (await navigator.serviceWorker.register('./worker.js', {
+      scope: '/',
+    }))
+  await register.update()
 
   const subscription = await register.pushManager.subscribe({
     userVisibleOnly: true,
@@ -28,11 +28,14 @@ async function subscription() {
   // Send Notification
   const postSubscriptions = await fetch(`${urlApi}/subscription`, {
     method: 'POST',
-    body: JSON.stringify({ pushSubscription: subscription, publicKey: PUBLIC_VAPID_KEY }),
+    body: JSON.stringify({
+      pushSubscription: subscription,
+      publicKey: PUBLIC_VAPID_KEY,
+    }),
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((response) => response.json())
+  }).then(async response => await response.json())
   if (postSubscriptions.code !== 201) return 'error api'
   return 'active'
 }
@@ -49,7 +52,12 @@ function urlBase64ToUint8Array(base64String: string) {
   }
   return outputArray
 }
-export type SubscriptionStatus = 'active' | 'denied' | 'error api' | 'error compatibility' | 'error not defined'
+export type SubscriptionStatus =
+  | 'active'
+  | 'denied'
+  | 'error api'
+  | 'error compatibility'
+  | 'error not defined'
 // Service Worker Support
 export async function subscribe(): Promise<SubscriptionStatus> {
   if (!('Notification' in window)) {
@@ -62,7 +70,7 @@ export async function subscribe(): Promise<SubscriptionStatus> {
   }
   if (permission === 'granted') {
     if ('serviceWorker' in navigator) {
-      return await subscription().catch((err) => {
+      return await subscription().catch(err => {
         console.error(err)
         return 'error not defined'
       })

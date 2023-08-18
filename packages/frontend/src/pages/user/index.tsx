@@ -5,37 +5,42 @@ import SignUp from '../shared/signUp'
 import UserSettings from './userSettings'
 import './index.scss'
 import Dashboard from './dashboard'
-export const enum TogleTabsName {
+export const enum ToggleTabsName {
   usuario = 'usuario',
   dashboard = 'dashboard',
 }
 function Children() {
-  const [togleTabs, setTogleTabs] = useState(TogleTabsName.usuario)
-  const TogleTabs = togleTabs === TogleTabsName.usuario ? <UserSettings /> : <Dashboard />
-  const activeTogleTab = (tabName: TogleTabsName) =>
-    togleTabs === tabName ? 'main__tab main__tab--active' : 'main__tab'
+  const [toggleTabs, setToggleTabs] = useState(ToggleTabsName.usuario)
+  const ToggleTabs = toggleTabs === ToggleTabsName.usuario ? <UserSettings /> : <Dashboard />
+  const activeToggleTab = (tabName: ToggleTabsName) =>
+    toggleTabs === tabName ? 'main__tab main__tab--active' : 'main__tab'
   return (
     <>
-      <div className="main__tabs">
-        <button onClick={() => setTogleTabs(TogleTabsName.usuario)} className={activeTogleTab(TogleTabsName.usuario)}>
+      <div className='main__tabs'>
+        <button
+          onClick={() => {
+            setToggleTabs(ToggleTabsName.usuario)
+          }}
+          className={activeToggleTab(ToggleTabsName.usuario)}>
           Usuario
         </button>
         <button
-          onClick={() => setTogleTabs(TogleTabsName.dashboard)}
-          className={activeTogleTab(TogleTabsName.dashboard)}
-        >
+          onClick={() => {
+            setToggleTabs(ToggleTabsName.dashboard)
+          }}
+          className={activeToggleTab(ToggleTabsName.dashboard)}>
           Dashboard
         </button>
       </div>
-      <div className="main__body">{TogleTabs}</div>
+      <div className='main__body'>{ToggleTabs}</div>
     </>
   )
 }
-function TogleSessions() {
+function ToggleSessions() {
   const { showComponent } = useShowComponent()
 
   return (
-    <div className="main">
+    <div className='main'>
       {showComponent === ComponentType.children ? <Children /> : null}
       {showComponent === ComponentType.signIn ? <SignIn /> : null}
       {showComponent === ComponentType.signUp ? <SignUp /> : null}
@@ -45,7 +50,7 @@ function TogleSessions() {
 function index() {
   return (
     <Sessions>
-      <TogleSessions />
+      <ToggleSessions />
     </Sessions>
   )
 }

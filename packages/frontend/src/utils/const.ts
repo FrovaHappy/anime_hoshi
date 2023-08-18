@@ -1,4 +1,4 @@
-import { NotificationsInAired } from '../../types'
+import { type NotificationsInAired } from '../../types'
 import { Timestamps } from '../enum'
 
 export const DEFAULT_TOTAL_PAGES = 5

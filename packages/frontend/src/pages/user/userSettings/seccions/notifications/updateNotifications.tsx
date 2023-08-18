@@ -12,15 +12,14 @@ function updateNotifications() {
 
   return (
     <button
-      className="button__blue"
-      onClick={() => {
+      className='button__blue'
+      onClick={() => async () => {
         setLoad(true)
-        subscribe().then(async () => {
+        await subscribe().then(async () => {
           await initDb().set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
           setLoad(false)
         })
-      }}
-    >
+      }}>
       {load ? <p>. . . </p> : <p>Solo Actualizar</p>}
     </button>
   )

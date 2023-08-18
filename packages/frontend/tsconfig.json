@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -17,5 +17,6 @@
     "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
     "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */
   },
-  "include": ["src"]
+  "include": ["./src"],
+  "exclude": ["./.eslintrc.cjs"]
 }

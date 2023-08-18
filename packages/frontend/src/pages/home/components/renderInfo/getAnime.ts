@@ -8,7 +8,7 @@ type AnimesError = 'badRequest' | 'errorInResult' | ''
 
 export function getAnime(animeId: string | null) {
   const [load, setLoad] = useState(true)
-  const {setShowMenu} = useShowChildren()
+  const { setShowMenu } = useShowChildren()
   const [anime, setAnime] = useState<Anime | null>(null)
   const [error, setError] = useState<AnimesError>('')
   const fethAnimes = async () => {

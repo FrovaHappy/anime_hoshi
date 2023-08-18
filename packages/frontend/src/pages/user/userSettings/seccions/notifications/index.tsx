@@ -6,13 +6,13 @@ import MinPagesSetting from './MinPagesSetting'
 import DefaultSetting from './defaultSetting'
 import SetNotifications from './setNotifications'
 import DBLocal, { type ResultDB } from '../../../../../utils/DBLocal'
-import { UseState } from '../../../../../../types'
+import { type UseState } from '../../../../../../types'
 import { KeysLocalStorage } from '../../../../../enum'
 
 const title = 'Notificaciones'
 const tag = 'notifications'
 export interface PropReloadComponent {
-  reload(): void
+  reload: () => void
 }
 const ContextSettings = createContext<UseState<ResultDB | undefined> | undefined>(undefined)
 export function useSettingsContext() {
@@ -30,7 +30,9 @@ function Options() {
       setSetting(await DBLocal().get(KeysLocalStorage.notifications))
       setLoad(false)
     }
-    database()
+    database().catch(() => {
+      throw new Error('error load Notification id IndexedDb')
+    })
   }, [])
   const reloadComponent = () => {
     setRender(!render)
@@ -39,14 +41,14 @@ function Options() {
   return (
     <ContextSettings.Provider value={[setting, setSetting]}>
       <Option
-        title="Dar Los Permisos"
-        description="Activa o desactiva las notificaciones que te enviamos."
+        title='Dar Los Permisos'
+        description='Activa o desactiva las notificaciones que te enviamos.'
         descriptionAction={undefined}
         actions={<SetNotifications reload={reloadComponent} />}
       />
       <Option
-        title="Restaurar Configuración"
-        description="Devuelve la configuración a su valor por defecto."
+        title='Restaurar Configuración'
+        description='Devuelve la configuración a su valor por defecto.'
         descriptionAction={undefined}
         actions={<DefaultSetting reload={reloadComponent} />}
       />

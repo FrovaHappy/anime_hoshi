@@ -1,3 +1,4 @@
+import type React from 'react'
 import Icon from '../../../../Icons'
 import { type AnimeMinified } from '../../../../../../types/Anime'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
@@ -21,7 +22,7 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
   const renderPoint = Date.now() - thisAnime.lastUpdate < 28_800_000
   return (
     <div
-      className="targetAnime"
+      className='targetAnime'
       onClick={() => {
         if (!compareId) hasOnClickPrevius.current = false
         if (compareId && hasOnClickPrevius.current) {
@@ -32,14 +33,13 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
           hasOnClickPrevius.current = true
         }
         setColorPrimary(color)
-      }}
-    >
-      <div className="targetAnime__episode">
+      }}>
+      <div className='targetAnime__episode'>
         Ep. {thisAnime.episode}
-        <Icon iconName="IconNew" style={isVisibly(renderPoint)} className="itemNewEpisodes" />
+        <Icon iconName='IconNew' style={isVisibly(renderPoint)} className='itemNewEpisodes' />
       </div>
-      <img className={setOpaqueImg} src={thisAnime.image} alt={thisAnime.title} loading="lazy" />
-      <p className="targetAnime__title">{thisAnime.title}</p>
+      <img className={setOpaqueImg} src={thisAnime.image} alt={thisAnime.title} loading='lazy' />
+      <p className='targetAnime__title'>{thisAnime.title}</p>
     </div>
   )
 }

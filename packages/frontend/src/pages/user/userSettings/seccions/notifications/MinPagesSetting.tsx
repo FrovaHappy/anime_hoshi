@@ -1,6 +1,6 @@
-import React from 'react'
+import type React from 'react'
 import { stringToObject } from '../../../../../utils/general'
-import { NotificationsInAired } from '../../../../../../types'
+import { type NotificationsInAired } from '../../../../../../types'
 import { KeysLocalStorage } from '../../../../../enum'
 import { DEFAULT_NOTIFICATIONS, DEFAULT_TOTAL_PAGES } from '../../../../../utils/const'
 import { useSettingsContext } from '.'
@@ -12,7 +12,7 @@ function mappedOptions(min: number, max: number) {
     options.push(
       <option value={i} key={i}>
         {i}
-      </option>
+      </option>,
     )
   }
   return options
@@ -28,9 +28,12 @@ export default function mimPagesSetting() {
     setSetting(await initDb().set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <form onChange={(e) => onHandleMaxPages(e)}>
-      <select name="minPages" id="minPages" defaultValue={notifications.minPages}>
-        {mappedOptions(DEFAULT_NOTIFICATIONS.minPages, DEFAULT_TOTAL_PAGES).map((elem) => elem)}
+    <form
+      onChange={e => async () => {
+        await onHandleMaxPages(e)
+      }}>
+      <select name='minPages' id='minPages' defaultValue={notifications.minPages}>
+        {mappedOptions(DEFAULT_NOTIFICATIONS.minPages, DEFAULT_TOTAL_PAGES).map(elem => elem)}
       </select>
     </form>
   )

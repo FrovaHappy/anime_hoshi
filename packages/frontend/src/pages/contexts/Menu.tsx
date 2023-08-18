@@ -1,7 +1,8 @@
+import type React from 'react'
 import { createContext, useContext, useState } from 'react'
 import Icons from '../../Icons'
 import './Menu.scss'
-import { UseState } from '../../../types'
+import { type UseState } from '../../../types'
 
 const ShowChildrenContext = createContext<UseState<boolean> | undefined>(undefined)
 export function useShowChildren() {
@@ -20,8 +21,8 @@ function Main({ children }: React.PropsWithChildren) {
     <ShowChildrenContext.Provider value={[showMenu, setShowMenu]}>
       <div className={`menu ${MenuRender}`}>
         {children}
-        <div className="menu__button" onClick={onClick}>
-          <Icons iconName="IconBars" className="menu__icon" />
+        <div className='menu__button' onClick={onClick}>
+          <Icons iconName='IconBars' className='menu__icon' />
         </div>
       </div>
     </ShowChildrenContext.Provider>
