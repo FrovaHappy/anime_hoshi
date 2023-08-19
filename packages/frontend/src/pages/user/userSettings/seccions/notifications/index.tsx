@@ -27,10 +27,11 @@ function Options() {
   const [setting, setSetting] = useState<ResultDB>()
   useEffect(() => {
     const database = async () => {
-      setSetting(await DBLocal().get(KeysLocalStorage.notifications))
+      setSetting(await DBLocal.get(KeysLocalStorage.notifications))
       setLoad(false)
     }
-    database().catch(() => {
+    database().catch(e => {
+      console.error(e)
       throw new Error('error load Notification id IndexedDb')
     })
   }, [])

@@ -24,13 +24,10 @@ export default function MaxRemittedSetting() {
   const onHandleChange = async (e: React.FormEvent<HTMLFormElement>) => {
     const { maxRemitted } = Object.fromEntries(new FormData(e.currentTarget))
     notifications.maxRemitted = parseInt(maxRemitted as string)
-    setSetting(await initDb().set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
+    setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <form
-      onChange={e => async () => {
-        await onHandleChange(e)
-      }}>
+    <form onChange={onHandleChange}>
       <select name='maxRemitted' id='maxRemitted' defaultValue={notifications.maxRemitted}>
         {mappedOptions(DEFAULT_NOTIFICATIONS.maxRemitted, DEFAULT_TOTAL_PAGES).map(elem => elem)}
       </select>

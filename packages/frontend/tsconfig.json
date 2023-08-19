@@ -18,5 +18,4 @@
     "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */
   },
   "include": ["./src"],
-  "exclude": ["./.eslintrc.cjs"]
 }

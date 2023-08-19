@@ -13,10 +13,10 @@ function updateNotifications() {
   return (
     <button
       className='button__blue'
-      onClick={() => async () => {
+      onClick={async () => {
         setLoad(true)
         await subscribe().then(async () => {
-          await initDb().set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
+          await initDb.set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS))
           setLoad(false)
         })
       }}>

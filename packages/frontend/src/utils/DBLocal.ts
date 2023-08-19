@@ -5,13 +5,8 @@ export interface ResultDB {
   key: string
   value: any
 }
-interface Transaction {
-  get: (key: string) => Promise<ResultDB | undefined>
-  set: (key: string, value: any) => Promise<ResultDB>
-  delete: (key: string) => Promise<undefined>
-}
-async function initTransaction() {
-  return await new Promise<IDBObjectStore>((resolve, reject) => {
+const initTransaction = async () =>
+  await new Promise<IDBObjectStore>((resolve, reject) => {
     const dbRequest = window.indexedDB.open(DB_NAME, DB_VERSION)
     dbRequest.onerror = err => {
       reject(err)
@@ -25,50 +20,40 @@ async function initTransaction() {
       object.createIndex('value', 'value', { unique: false })
     }
     dbRequest.onsuccess = () => {
-      const transaction = dbRequest.result
-        .transaction(DB_COLLECTION, 'readwrite')
-        .objectStore(DB_COLLECTION)
+      const transaction = dbRequest.result.transaction(DB_COLLECTION, 'readwrite').objectStore(DB_COLLECTION)
       resolve(transaction)
     }
   })
-}
-export default function initDb(): Transaction {
-  return {
-    async get(key: string) {
-      return await new Promise<ResultDB | undefined>(resolve => {
-        return async () => {
-          const transaction = await initTransaction()
-          const object = transaction.get(key)
-          object.onsuccess = () => {
-            resolve(object.result)
-          }
+
+export default {
+  get: async (key: string) => {
+    const transaction = await initTransaction()
+    const object = transaction.get(key)
+    return await new Promise<ResultDB | undefined>(resolve => {
+      object.onsuccess = () => {
+        resolve(object.result)
+      }
+    })
+  },
+  async set(key: string, value: string) {
+    const transaction = await initTransaction()
+    let object = transaction.put({ key, value })
+    return await new Promise<ResultDB>(resolve => {
+      object.onsuccess = () => {
+        object = transaction.get(key)
+        object.onsuccess = () => {
+          resolve(object.result as unknown as ResultDB)
         }
-      })
-    },
-    async set(key: string, value: string) {
-      return await new Promise<ResultDB>(resolve => {
-        return async () => {
-          const transaction = await initTransaction()
-          let object = transaction.put({ key, value })
-          object.onsuccess = () => {
-            object = transaction.get(key)
-            object.onsuccess = () => {
-              resolve(object.result as unknown as ResultDB)
-            }
-          }
-        }
-      })
-    },
-    async delete(key: string) {
-      await new Promise<undefined>(resolve => {
-        return async () => {
-          const transaction = await initTransaction()
-          const object = transaction.delete(key)
-          object.onsuccess = () => {
-            resolve(object.result)
-          }
-        }
-      })
-    },
-  }
+      }
+    })
+  },
+  async delete(key: string) {
+    const transaction = await initTransaction()
+    const object = transaction.delete(key)
+    await new Promise<undefined>(resolve => {
+      object.onsuccess = () => {
+        resolve(object.result)
+      }
+    })
+  },
 }

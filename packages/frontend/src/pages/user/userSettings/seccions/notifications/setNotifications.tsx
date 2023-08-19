@@ -16,12 +16,12 @@ export default function setNotifications({ reload }: PropReloadComponent) {
         <UpdateNotifications />
         <button
           className='button__red'
-          onClick={() => async () => {
+          onClick={async () => {
             setLoad(true)
             await unsubscribe().then(async () => {
               setLoad(false)
               localStorage.removeItem(KeysLocalStorage.publicKey)
-              await initDb().delete(KeysLocalStorage.notifications)
+              await initDb.delete(KeysLocalStorage.notifications)
               setSetting(undefined)
               reload()
             })
@@ -34,15 +34,10 @@ export default function setNotifications({ reload }: PropReloadComponent) {
   return (
     <button
       className='button__blue'
-      onClick={() => async () => {
+      onClick={async () => {
         setLoad(true)
         await subscribe().then(async () => {
-          setSetting(
-            await initDb().set(
-              KeysLocalStorage.notifications,
-              JSON.stringify(DEFAULT_NOTIFICATIONS),
-            ),
-          )
+          setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS)))
           setLoad(false)
           reload()
         })

@@ -3,20 +3,16 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'standard-with-typescript',
-    'plugin:react/recommended',
-    'eslint:recommended',
-    'plugin:react/jsx-runtime',
-  ],
+  extends: ['standard-with-typescript', 'plugin:react/recommended', 'eslint:recommended', 'plugin:react/jsx-runtime'],
   overrides: [
     {
       env: {
         node: true,
       },
-      files: ['.eslintrc.cjs'],
+      files: ['./.eslintrc.cjs', './*/*.js'],
       parserOptions: {
         sourceType: 'script',
+        project: false,
       },
     },
   ],
@@ -31,5 +27,14 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/comma-dangle': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: {
+          arguments: false,
+          attributes: false,
+        },
+      },
+    ],
   },
 }

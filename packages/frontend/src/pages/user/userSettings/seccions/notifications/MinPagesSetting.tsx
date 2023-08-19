@@ -25,13 +25,10 @@ export default function mimPagesSetting() {
     e.preventDefault()
     const { minPages } = Object.fromEntries(new FormData(e.currentTarget))
     notifications.minPages = parseInt(minPages as string)
-    setSetting(await initDb().set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
+    setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <form
-      onChange={e => async () => {
-        await onHandleMaxPages(e)
-      }}>
+    <form onChange={onHandleMaxPages}>
       <select name='minPages' id='minPages' defaultValue={notifications.minPages}>
         {mappedOptions(DEFAULT_NOTIFICATIONS.minPages, DEFAULT_TOTAL_PAGES).map(elem => elem)}
       </select>

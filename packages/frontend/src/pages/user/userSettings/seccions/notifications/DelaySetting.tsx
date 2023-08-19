@@ -14,16 +14,10 @@ export default function DelaySetting() {
     const { delay } = Object.fromEntries(new FormData(e.currentTarget))
     if (parseInt(delay as string) < Timestamps.fifteen_minutes) return
     notifications.delay = parseInt(delay as string)
-    setSetting(await initDb().set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
+    setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <form
-      onSubmit={e => async () => {
-        await onHandleDelay(e)
-      }}
-      onChange={e => async () => {
-        await onHandleDelay(e)
-      }}>
+    <form onSubmit={onHandleDelay} onChange={onHandleDelay}>
       <input
         type='number'
         min={Timestamps.fifteen_minutes}
