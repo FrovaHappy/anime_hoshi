@@ -1,4 +1,4 @@
-import { PayloadAnimeNof } from '../types/Payloads'
+import { type PayloadAnimeNof } from '../types/Payloads'
 export type ObjectDynamic<T> = Record<string, T>
 
 export interface notificationProperty {
@@ -6,13 +6,14 @@ export interface notificationProperty {
   updated?: number
 }
 export type UseState<T> = [T, (key: T) => void]
-export type InAwait = {
+export interface InAwait {
   cantRemitted: number // cant of emitted the notification
   expireIn: number
   created: number
   anime: PayloadAnimeNof
+  pastLengthPages: number
 }
-export type NotificationInAwait = Array<InAwait>
+export type NotificationInAwait = InAwait[]
 export interface NotificationsInAired {
   maxRemitted: number
   delay: number

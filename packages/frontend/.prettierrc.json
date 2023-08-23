@@ -4,7 +4,8 @@
   "jsxSingleQuote": true,
   "arrowParens": "avoid",
   "semi": false,
-  "trailingComma": "all",
+  "trailingComma": "none",
   "bracketSameLine": true,
-  "parser": "typescript"
+  "parser": "typescript",
+  "endOfLine": "crlf"
 }

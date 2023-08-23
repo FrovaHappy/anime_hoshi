@@ -11,8 +11,8 @@ export function getAnime(animeId: string | null) {
   const { setShowMenu } = useShowChildren()
   const [anime, setAnime] = useState<Anime | null>(null)
   const [error, setError] = useState<AnimesError>('')
-  const fethAnimes = async () => {
-    const response = await useFetch({ url: `${urlApi ?? ''}/animes?id=${animeId ?? ''}`, method: 'GET' }).catch(() => { setError('badRequest') })
+  const fetchAnimes = async () => {
+    const response = await useFetch({ url: `${urlApi ?? ''}/animes?id=${animeId ?? ''}`, method: 'GET' })
     response.code === 200 ? setAnime(response.contents) : setError('errorInResult')
     setLoad(false)
   }
@@ -20,7 +20,9 @@ export function getAnime(animeId: string | null) {
     setLoad(true)
     setError('')
     if (animeId) {
-      fethAnimes().catch((error) => { console.error(error) })
+      fetchAnimes().catch(error => {
+        console.error(error)
+      })
       setShowMenu(true)
     } else {
       setAnime(null)

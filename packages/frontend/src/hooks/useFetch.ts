@@ -1,11 +1,16 @@
 /**
  * @returns returns the json response already solved, in case of error returns null
  */
-async function useFetch({
+interface JSONResponse<T> {
+  code: number
+  message: string
+  contents: T
+}
+async function useFetch<T = any>({
   url,
   method,
   body,
-  authorization = '',
+  authorization = ''
 }: {
   url: string
   method: string
@@ -16,17 +21,16 @@ async function useFetch({
     method,
     headers: new Headers({
       Authorization: 'Bearer ' + authorization,
-      'Content-Type': 'application/json;charset=utf-8',
+      'Content-Type': 'application/json;charset=utf-8'
     }),
-    body: body ? JSON.stringify(body) : undefined,
+    body: body ? JSON.stringify(body) : undefined
   }
 
-  const data: any | null = await (await fetch(url, options)).json()
-    .catch(() => {
-      return null
-    })
+  const data: any | null = await (await fetch(url, options)).json().catch(() => {
+    return null
+  })
 
-  return data
+  return data as JSONResponse<T>
 }
 
 export default useFetch
