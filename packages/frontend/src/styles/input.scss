@@ -1,0 +1,66 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:root {
+  --width-input: 4.375rem
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input:focus-visible {
+  outline: none;
+}
+
+select:focus-visible {
+  outline: none;
+}
+
+.input {
+  &__number {
+    background-color: transparent;
+    color: var(--textColor);
+    font-size: var(--font-subtitle);
+    box-sizing: border-box;
+    height: fit-content;
+    width: var(--width-input);
+    padding: .3125rem .75rem;
+    border: none;
+    text-align: center;
+    border-bottom: 2px solid var(--textColor);
+
+    &:hover,
+    &:focus {
+      border-bottom: 2px solid var(--colorPrimary);
+    }
+
+    &:invalid {
+      color: red;
+      border-bottom: 2px solid red;
+    }
+  }
+
+  &__select,
+  &__select select {
+    border: none;
+    border-bottom: 2px solid var(--textColor);
+    padding: .3125rem .75rem;
+    text-align: center;
+    width: var(--width-input);
+    box-sizing: border-box;
+    height: fit-content;
+    color: var(--textColor);
+    font-size: var(--font-subtitle);
+    background-color: var(--bgContent);
+
+    &:hover,
+    &:focus {
+      border-bottom: 2px solid var(--colorPrimary);
+    }
+  }
+}

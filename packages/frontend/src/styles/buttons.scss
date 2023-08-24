@@ -1,10 +1,11 @@
 @mixin theme($theme: transparent, $hover: #ffffff10) {
-  padding: .4375rem .875rem;
+  padding: .3125rem .75rem;
   border: 0;
+  
+  box-sizing: border-box;
   height: min-content;
   border-radius: .3125rem;
-  font-size: .875rem;
-  font-weight: 500;
+  font-size: var(--font-subtitle);
   white-space: nowrap;
   background-color: $theme;
   color: var(--textColor);
@@ -14,7 +15,7 @@
   }
 }
 .button {
-  @include theme;
+  @include theme();
   border: 1px solid var(--textColorAlt);
   &__green {
     @include theme($theme: #53d769, $hover: #46c263);

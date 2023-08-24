@@ -1,25 +1,33 @@
-.options {
-  &__col {
+.option {
+  display: flex;
+  width: -webkit-fill-available;
+  gap: .9375rem;
+  align-items: center;
+
+  &__info {
     display: flex;
     gap: .3125rem;
     flex-direction: column;
     width: -webkit-fill-available;
   }
-  &__row {
+
+  &__actions {
     display: flex;
     gap: .3125rem;
     flex-direction: row;
-    width: -webkit-fill-available;
   }
+
   &__title {
-    font-size: 1rem;
+    font-size: var(--font-subtitle);
     font-weight: 500;
     color: var(--textColor);
     align-self: start;
   }
+
   &__description {
-    font-size: 0.8125rem;
+    font-size: var(--font-body);
     color: var(--textColorAlt);
+    width: auto;
     align-self: start;
   }
 }

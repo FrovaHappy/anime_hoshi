@@ -4,30 +4,34 @@ import { stringToObject } from '../../../../../utils/general'
 import { type NotificationsInAired } from '../../../../../../types'
 import initDb from '../../../../../utils/DBLocal'
 import { useSettingsContext } from '.'
+import '../../../../../styles/input.scss'
+import { useState } from 'react'
 
 export default function DelaySetting() {
   const { setting, setSetting } = useSettingsContext()
   const notifications = stringToObject<NotificationsInAired>(setting?.value)
+  const [value, setValue] = useState((notifications?.delay ?? 0) / 60000)
   if (!notifications) return null
-  const delayInMin = notifications.delay / 60000
-  const onHandleDelay = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const { delay } = Object.fromEntries(new FormData(e.currentTarget))
-    notifications.delay = parseInt(delay as string) * 60000
+  const onHandleDelay = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const delay = parseInt(e.target.value)
+    setValue(delay)
+    const test = (n: number) => n >= 0 && n <= 120
+    if (!test(value)) return
+    notifications.delay = delay * 60000
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <form onSubmit={onHandleDelay} onChange={onHandleDelay}>
-      <input
-        type='number'
-        name='delay'
-        id='delay'
-        min={0}
-        step={1}
-        max={120}
-        defaultValue={delayInMin}
-        placeholder='in minutes'
-      />
-    </form>
+    <input
+      onChange={onHandleDelay}
+      onBlur={onHandleDelay}
+      className='input__number'
+      type='number'
+      name='delay'
+      min={0}
+      step={1}
+      max={120}
+      value={value}
+      placeholder='0'
+    />
   )
 }

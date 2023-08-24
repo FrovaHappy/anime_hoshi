@@ -10,25 +10,25 @@ export default function Index() {
   const { error, load, data } = getUser()
   return (
     <>
-      <div className="user__optionsContainer">
-        <div id="#info" className="user__options">
-          {load ? <AwaitLoad /> : <Info data={data} error={error} />}
-        </div>
-        {settingCollection.map((setting) => (
-          <div key={setting.tag} id={setting.tag} className="user__options">
-            <h3>{setting.title}</h3>
-            {setting.Options()}
-          </div>
-        ))}
-      </div>
-      <div className="user__nav">
-        {settingCollection.map((setting) => {
+      <div className='user__nav'>
+        {settingCollection.map(setting => {
           return (
             <a href={`#${setting.tag}`} key={setting.tag}>
               {setting.title}
             </a>
           )
         })}
+      </div>
+      <div className='user__options'>
+        <div id='#info' className='user__options'>
+          {load ? <AwaitLoad /> : <Info data={data} error={error} />}
+        </div>
+        {settingCollection.map(setting => (
+          <div key={setting.tag} id={setting.tag} className='optionsContainer'>
+            <h3 className='optionsContainer__title'>{setting.title}</h3>
+            {setting.Options()}
+          </div>
+        ))}
       </div>
     </>
   )

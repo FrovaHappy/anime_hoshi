@@ -5,13 +5,14 @@ import { type NotificationsInAired } from '../../../../../../types'
 import { stringToObject } from '../../../../../utils/general'
 import { useSettingsContext } from '.'
 import initDb from '../../../../../utils/DBLocal'
+import '../../../../../styles/input.scss'
 function mappedOptions(min: number, max: number) {
   const options: React.ReactElement[] = []
   for (let i = min; i <= max; i++) {
     options.push(
       <option value={i} key={i}>
         {i}
-      </option>,
+      </option>
     )
   }
   return options
@@ -28,7 +29,7 @@ export default function MaxRemittedSetting() {
   }
   return (
     <form onChange={onHandleChange}>
-      <select name='maxRemitted' id='maxRemitted' defaultValue={notifications.maxRemitted}>
+      <select className='input__select' title='maxRemitted' name='maxRemitted' defaultValue={notifications.maxRemitted}>
         {mappedOptions(DEFAULT_NOTIFICATIONS.maxRemitted, DEFAULT_TOTAL_PAGES).map(elem => elem)}
       </select>
     </form>

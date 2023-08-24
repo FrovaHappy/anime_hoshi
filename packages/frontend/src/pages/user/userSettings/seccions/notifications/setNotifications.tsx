@@ -26,7 +26,7 @@ export default function setNotifications({ reload }: PropReloadComponent) {
               reload()
             })
           }}>
-          {load ? <p> . . . </p> : <p>Borrar la suscripción</p>}
+          {load ? <p> . . . </p> : <>Borrar la suscripción</>}
         </button>
       </>
     )
@@ -42,7 +42,7 @@ export default function setNotifications({ reload }: PropReloadComponent) {
           reload()
         })
       }}>
-      {load ? <p>. . . </p> : <p>Suscribirse</p>}
+      {load ? <p>. . . </p> : <>Suscribirse</>}
     </button>
   )
 }

@@ -1,11 +1,11 @@
 import type React from 'react'
-import './Options.styles.scss'
+import './Option.styles.scss'
 import '../../../styles/buttons.scss'
 function Option({
   title,
   description,
   descriptionAction = undefined,
-  actions,
+  actions
 }: {
   title: string
   description: string
@@ -13,13 +13,13 @@ function Option({
   actions: React.ReactNode
 }) {
   return (
-    <div className='options__row'>
-      <div className='options__col'>
-        <h4 className='options__title'>{title}</h4>
-        <p className='options__description'>{description}</p>
+    <div className='option'>
+      <div className='option__info'>
+        <h4 className='option__title'>{title}</h4>
+        <p className='option__description'>{description}</p>
         {descriptionAction}
       </div>
-      {actions}
+      <div className='option__actions'>{actions}</div>
     </div>
   )
 }

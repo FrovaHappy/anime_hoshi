@@ -12,7 +12,7 @@ function updateNotifications() {
 
   return (
     <button
-      className='button__blue'
+      className='button'
       onClick={async () => {
         setLoad(true)
         await subscribe().then(async () => {
@@ -20,7 +20,7 @@ function updateNotifications() {
           setLoad(false)
         })
       }}>
-      {load ? <p>. . . </p> : <p>Solo Actualizar</p>}
+      {load ? <p>. . . </p> : <>Solo Actualizar</>}
     </button>
   )
 }

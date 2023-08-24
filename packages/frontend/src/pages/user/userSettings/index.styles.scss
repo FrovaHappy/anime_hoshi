@@ -1,53 +1,62 @@
 .user {
-  &__title {
-    display: flex;
-    padding-bottom: .3125rem;
-    align-self: start;
-    font-size: 1.25rem;
-  }
   &__nav {
     width: 15.625rem;
+    height: -webkit-fill-available;
+    overflow: visible;
+    flex-shrink: 0;
     background: var(--bgContent);
-    
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: column;
-    font-size: 0.875rem;
+
     & > a {
+      font-size: var(--font-subtitle);
       color: var(--textColor);
+      padding: .3125rem .75rem;
+      text-align: left;
+      &:hover{
+        background-color: var(--bgContentAlt);
+      }
     }
   }
-  &__optionsContainer {
-    width: -webkit-fill-available;
-    
-    display: flex;
-    flex-direction: column;
-    gap: .3125rem;
-  }
+
   &__options {
-    display: flex;
-    padding: 0.625rem;
-    background: var(--bgContent);
-    flex-direction: column;
-    border-radius: .3125rem;
-    gap: .3125rem;
-    &--rigth {
-      display: flex;
-      align-self: flex-end;
-      gap: .3125rem;
-    }
+    overflow: auto;
+    width: -webkit-fill-available;
   }
 }
+
+.optionsContainer {
+  display: flex;
+  padding: 0.625rem;
+  background: var(--bgContent);
+  flex-direction: column;
+  border-radius: .3125rem;
+  width: -webkit-fill-available;
+  gap: .4375rem;
+
+  &__title {
+    display: flex;
+    padding-bottom: .625rem;
+    align-self: start;
+    font-size: var(--font-title);
+  }
+}
+
 .userTarget {
   display: grid;
   gap: .625rem;
   grid-template-columns: min-content max-content;
   grid-template-rows: repeat(2, min-content);
+
   &__img {
     border-radius: 3.125rem;
     width: 6.25rem;
     grid-row: 1/3;
     aspect-ratio: 1/1;
   }
+
   &__username {
     display: flex;
     font-size: 1.25rem;

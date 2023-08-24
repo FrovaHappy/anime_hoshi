@@ -24,6 +24,8 @@
   &__body {
     width: -webkit-fill-available;
     height: -webkit-fill-available;
+    overflow: auto;
+    padding-right: .3125rem;
     display: flex;
     gap: .9375rem;
     align-items: flex-start;
