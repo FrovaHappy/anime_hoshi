@@ -6,14 +6,13 @@ import MinPagesSetting from './MinPagesSetting'
 import DefaultSetting from './defaultSetting'
 import SetNotifications from './setNotifications'
 import DBLocal, { type ResultDB } from '../../../../../utils/DBLocal'
+import UpdateNotifications from './updateNotifications'
 import { type UseState } from '../../../../../../types'
 import { KeysLocalStorage } from '../../../../../enum'
+import AwaitLoad from '../../../../../components/AwaitLoad'
 
 const title = 'Notificaciones'
 const tag = 'notifications'
-export interface PropReloadComponent {
-  reload: () => void
-}
 const ContextSettings = createContext<UseState<ResultDB | undefined> | undefined>(undefined)
 export function useSettingsContext() {
   const context = useContext(ContextSettings)
@@ -22,7 +21,6 @@ export function useSettingsContext() {
   return { setting, setSetting }
 }
 function Options() {
-  const [render, setRender] = useState(false)
   const [load, setLoad] = useState(true)
   const [setting, setSetting] = useState<ResultDB>()
   useEffect(() => {
@@ -35,28 +33,31 @@ function Options() {
       throw new Error('error load Notification id IndexedDb')
     })
   }, [])
-  const reloadComponent = () => {
-    setRender(!render)
-  }
-  if (load) return <h2> load db </h2>
+  if (load) return <AwaitLoad />
   return (
     <ContextSettings.Provider value={[setting, setSetting]}>
       <Option
         title='Dar Los Permisos'
         description='Activa o desactiva las notificaciones que te enviamos.'
         descriptionAction={undefined}
-        actions={<SetNotifications reload={reloadComponent} />}
+        actions={<SetNotifications />}
+      />
+      <Option
+        title={'Actualizar Notificaciones'}
+        description={'Renueva la paridad con el backend, en caso de no estar recibiendo notificaciones.'}
+        descriptionAction={undefined}
+        actions={<UpdateNotifications />}
       />
       <Option
         title='Restaurar Configuración'
         description='Devuelve la configuración a su valor por defecto.'
         descriptionAction={undefined}
-        actions={<DefaultSetting reload={reloadComponent} />}
+        actions={<DefaultSetting />}
       />
       <Option
         title={'Tiempo de espera de Notificaciones'}
         description={
-          'Controla cuanto tiempo tarda en enviar una notificación si no se cumplen las otras configuraciones.'
+          'Controla cuanto tiempo tarda en enviar una notificación si no se cumplen las otras configuraciones, unidad en minutos.'
         }
         descriptionAction={undefined}
         actions={<DelaySetting />}
@@ -71,9 +72,7 @@ function Options() {
       />
       <Option
         title={'Cantidad minima de paginas por Notificaciones'}
-        description={
-          'La cantidad minima de paginas fuerza el envío de la notificación si este cumple la condición, este afecta al tiempo de espera'
-        }
+        description={'Fuerza la cantidad minima de paginas para el envío de la notificación.'}
         descriptionAction={undefined}
         actions={<MinPagesSetting />}
       />

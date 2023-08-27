@@ -1,33 +1,32 @@
-.user {
-  &__nav {
-    width: 15.625rem;
-    height: -webkit-fill-available;
-    overflow: visible;
-    flex-shrink: 0;
-    background: var(--bgContent);
-    position: sticky;
-    top: 0;
-    display: flex;
-    flex-direction: column;
+.containerMain {
+  display: grid;
+  grid-template-columns: 15.625rem auto;
+  grid-template-rows: min-content;
+  gap: .625rem;
+}
+.gridRow1-auto {
+  grid-row: 1/ span 2; // to occupy the entire first column
+  height: -webkit-fill-available;
+}
+.userNav {
+  background-color: var(--bgContent);
+  position: sticky;
+  top: 3.375rem;
+  display: flex;
+  flex-direction: column;
+  &>a {
+    font-size: var(--font-subtitle);
+    color: var(--textColor);
+    padding: .3125rem .75rem;
+    text-align: left;
 
-    & > a {
-      font-size: var(--font-subtitle);
-      color: var(--textColor);
-      padding: .3125rem .75rem;
-      text-align: left;
-      &:hover{
-        background-color: var(--bgContentAlt);
-      }
+    &:hover {
+      background-color: var(--bgContentAlt);
     }
-  }
-
-  &__options {
-    overflow: auto;
-    width: -webkit-fill-available;
   }
 }
 
-.optionsContainer {
+.sectionContainer {
   display: flex;
   padding: 0.625rem;
   background: var(--bgContent);
@@ -43,23 +42,12 @@
     font-size: var(--font-title);
   }
 }
-
-.userTarget {
-  display: grid;
-  gap: .625rem;
-  grid-template-columns: min-content max-content;
-  grid-template-rows: repeat(2, min-content);
-
-  &__img {
-    border-radius: 3.125rem;
-    width: 6.25rem;
-    grid-row: 1/3;
-    aspect-ratio: 1/1;
-  }
-
-  &__username {
+@media (max-width: 48rem) {
+  .containerMain {
     display: flex;
-    font-size: 1.25rem;
-    align-items: flex-end;
+    flex-direction: column;
+  }
+  .userNav {
+    position: static;
   }
 }

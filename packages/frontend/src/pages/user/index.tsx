@@ -32,7 +32,7 @@ function Children() {
           Dashboard
         </button>
       </div>
-      <div className='main__body'>{ToggleTabs}</div>
+      {ToggleTabs}
     </>
   )
 }
