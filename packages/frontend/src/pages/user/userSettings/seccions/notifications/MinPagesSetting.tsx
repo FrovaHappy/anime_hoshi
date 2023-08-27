@@ -5,6 +5,7 @@ import { KeysLocalStorage } from '../../../../../enum'
 import { DEFAULT_NOTIFICATIONS, DEFAULT_TOTAL_PAGES } from '../../../../../utils/const'
 import { useSettingsContext } from '.'
 import initDb from '../../../../../utils/DBLocal'
+import { useState } from 'react'
 
 function mappedOptions(min: number, max: number) {
   const options: React.ReactElement[] = []
@@ -12,7 +13,7 @@ function mappedOptions(min: number, max: number) {
     options.push(
       <option value={i} key={i}>
         {i}
-      </option>,
+      </option>
     )
   }
   return options
@@ -20,16 +21,18 @@ function mappedOptions(min: number, max: number) {
 export default function mimPagesSetting() {
   const { setting, setSetting } = useSettingsContext()
   const notifications = stringToObject<NotificationsInAired>(setting?.value)
+  const [value, setValue] = useState(notifications?.minPages ?? 0)
   if (!notifications) return null
-  const onHandleMaxPages = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onHandleMaxPages = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.preventDefault()
-    const { minPages } = Object.fromEntries(new FormData(e.currentTarget))
-    notifications.minPages = parseInt(minPages as string)
+    const minPages = parseInt(e.target.value)
+    setValue(minPages)
+    notifications.minPages = minPages
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <form onChange={onHandleMaxPages}>
-      <select className='input__select' name='minPages' title='minPages' defaultValue={notifications.minPages}>
+    <form>
+      <select onChange={onHandleMaxPages} className='input__select' name='minPages' title='minPages' value={value}>
         {mappedOptions(DEFAULT_NOTIFICATIONS.minPages, DEFAULT_TOTAL_PAGES).map(elem => elem)}
       </select>
     </form>
