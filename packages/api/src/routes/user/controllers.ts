@@ -22,10 +22,10 @@ export async function signup(req: Request, res: Response) {
 }
 export async function signin(req: Request, res: Response) {
   const { password, username } = req.body
-  const userValided = await passwordHash.compare(username, password)
-  if (!userValided) return res.status(403).json({ code: 403, message: 'Invalid username or password', contents: null })
-  const token = createUserToken({ username: userValided.username, id: userValided.id, roles: userValided.roles })
-  return res.status(200).json({ code: 200, message: 'user singin successfully', contents: { token } } as JsonResponse)
+  const userValidate = await passwordHash.compare(username, password)
+  if (!userValidate) return res.status(403).json({ code: 403, message: 'Invalid username or password', contents: null })
+  const token = createUserToken({ username: userValidate.username, id: userValidate.id, roles: userValidate.roles })
+  return res.status(200).json({ code: 200, message: 'user singIn successfully', contents: { token } } as JsonResponse)
 }
 export async function getUser(req: Request, res: Response) {
   const { authorization } = req.headers
@@ -34,10 +34,11 @@ export async function getUser(req: Request, res: Response) {
     return res.status(500).json({ code: 500, message: 'error decoding token', contents: {} } as JsonResponse)
   const response = await findUser(decoded.username)
   if (!response) return res.status(403).json({ code: 403, message: 'resource not found', contents: {} } as JsonResponse)
-  const newToken = auth.createToken({ usermane: response.username, roles: response.roles }, '24h')
+  const user = { username: response.username, roles: response.roles }
+  const newToken = auth.createToken(user, '24h')
   return res
     .status(200)
-    .json({ code: 200, message: 'user authenticated', contents: { newToken, ...response.toJSON() } } as JsonResponse)
+    .json({ code: 200, message: 'user authenticated', contents: { newToken, ...user } } as JsonResponse)
 }
 export async function updateUser(req: Request, res: Response) {
   const { authorization } = req.headers

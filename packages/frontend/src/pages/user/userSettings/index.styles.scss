@@ -4,16 +4,19 @@
   grid-template-rows: min-content;
   gap: .625rem;
 }
+
 .gridRow1-auto {
   grid-row: 1/ span 2; // to occupy the entire first column
   height: -webkit-fill-available;
 }
+
 .userNav {
   background-color: var(--bgContent);
   position: sticky;
   top: 3.375rem;
   display: flex;
   flex-direction: column;
+
   &>a {
     font-size: var(--font-subtitle);
     color: var(--textColor);
@@ -41,12 +44,20 @@
     align-self: start;
     font-size: var(--font-title);
   }
+
+  &__anchor {
+    content: '';
+    position: relative;
+    top: -64px;
+  }
 }
+
 @media (max-width: 48rem) {
   .containerMain {
     display: flex;
     flex-direction: column;
   }
+
   .userNav {
     position: static;
   }

@@ -1,7 +1,8 @@
 import './index.styles.scss'
 
 import notifications from './seccions/notifications'
-const settingCollection = [notifications]
+import userSetting from './seccions/userSetting'
+const settingCollection = [userSetting, notifications]
 
 export default function Index() {
   return (
@@ -19,7 +20,8 @@ export default function Index() {
       </div>
 
       {settingCollection.map(setting => (
-        <section key={setting.tag} id={setting.tag} className='sectionContainer'>
+        <section key={setting.tag} className='sectionContainer'>
+          <span id={setting.tag} className='sectionContainer__anchor' />
           <h3 className='sectionContainer__title'>{setting.title}</h3>
           {setting.Options()}
         </section>
