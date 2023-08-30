@@ -7,9 +7,9 @@ export interface ResultLog<T = string> {
   contents: T[] | null
   load: boolean
 }
-export type ErrorLog = '' | 'bad_fetch' | 'bad_token'
+export type ErrorLog = '' | 'error fetch' | 'bad_token'
 function RenderLogsOfData(logs: Log[] | null, error: ErrorLog) {
-  if (error === 'bad_fetch') return <>ocurrió un problema con la petición</>
+  if (error === 'error fetch') return <>ocurrió un problema con la petición</>
   if (error === 'bad_token') return <>la sesión expiro o es requerida</>
   return logs?.map((log, key) => {
     return (
@@ -29,7 +29,7 @@ function getDataNow() {
   return { string: `${year}-${month}-${day}`, year, month, day }
 }
 function RenderLogs(error: ErrorLog, contents: string[] | null, setData: (v: string) => void) {
-  if (error === 'bad_fetch') return <>ocurrió un problema con la petición</>
+  if (error === 'error fetch') return <>ocurrió un problema con la petición</>
   if (error === 'bad_token') return <>la sesión expiro o es requerida</>
   if (!contents) return <>este parece un lugar tranquilo</>
   return contents?.map((data, key) => {

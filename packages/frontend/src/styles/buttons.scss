@@ -1,32 +1,26 @@
-@mixin theme($theme: transparent, $hover: #ffffff10) {
+@mixin theme($theme: transparent, $color: var(--colorPrimary), $hover: $theme) {
   padding: .3125rem .75rem;
   border: 0;
-  
   box-sizing: border-box;
-  height: min-content;
+  height: fit-content;
+  width: fit-content;
   border-radius: .3125rem;
-  font-size: var(--font-subtitle);
+  font-size: var(--font-body);
   white-space: nowrap;
   background-color: $theme;
-  color: var(--textColor);
-  transition: background-color .2s ease ;
+  color: $color;
   &:hover {
     background-color: $hover;
+    filter: brightness(1.1);
   }
 }
 .button {
-  @include theme();
-  border: 1px solid var(--textColorAlt);
-  &__green {
-    @include theme($theme: #53d769, $hover: #46c263);
+  @include theme($theme: var(--colorPrimary), $color: var(--textColor));
+  &__secondary {
+    @include theme($hover: #ffffff0e);
+    border: 1px solid var(--colorPrimary);
   }
-  &__red {
-    @include theme($theme: #fc3d39, $hover: #e33437);
-  }
-  &__blue {
-    @include theme($theme: #5ba4fc, $hover: #5497ee);
-  }
-  &__gray {
-    @include theme($theme: #f8f8f8, $hover: #e6e6e6);
+  &__danger {
+    @include theme($theme: #fa5050, $color: var(--textColor));
   }
 }

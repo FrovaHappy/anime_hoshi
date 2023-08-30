@@ -15,10 +15,10 @@ export default function EmptyUser() {
       descriptionAction
       actions={
         <>
-          <button className='button' onClick={onHandleSignIn}>
+          <button className='button__secondary' onClick={onHandleSignIn}>
             signIn
           </button>
-          <button onClick={onHandleSignUp} className='button__blue'>
+          <button onClick={onHandleSignUp} className='button'>
             signUp
           </button>
         </>

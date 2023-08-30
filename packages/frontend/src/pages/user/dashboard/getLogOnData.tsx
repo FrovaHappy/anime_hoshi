@@ -29,16 +29,16 @@ export function getLogOnData(date: string, deps: any[]) {
         })
         setLoad(false)
         if (response.code !== 200) {
-          setError('bad_fetch')
+          setError('error fetch')
           return
         }
         setContents(response.contents)
 
         result = { error, contents, load }
       }
-      fetchLogs().catch(e => {
-        console.error(e)
-        throw new Error('failed get log')
+      fetchLogs().catch(() => {
+        setLoad(false)
+        result = { error: 'error fetch', contents, load }
       })
     }
   }, deps)

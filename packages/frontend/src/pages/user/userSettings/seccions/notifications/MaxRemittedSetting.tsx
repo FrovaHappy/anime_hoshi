@@ -5,7 +5,6 @@ import { type NotificationsInAired } from '../../../../../../types'
 import { stringToObject } from '../../../../../utils/general'
 import { useSettingsContext } from '.'
 import initDb from '../../../../../utils/DBLocal'
-import '../../../../../styles/input.scss'
 import { useMemo, useState } from 'react'
 function mappedOptions(min: number, max: number) {
   const options: React.ReactElement[] = []

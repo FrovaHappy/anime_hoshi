@@ -4,7 +4,6 @@ import { stringToObject } from '../../../../../utils/general'
 import { type NotificationsInAired } from '../../../../../../types'
 import initDb from '../../../../../utils/DBLocal'
 import { useSettingsContext } from '.'
-import '../../../../../styles/input.scss'
 import { useMemo, useState } from 'react'
 
 export default function DelaySetting() {

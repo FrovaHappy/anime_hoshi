@@ -27,19 +27,17 @@ export function getLogs(deps: any[]) {
           authorization: token
         })
         setLoad(false)
-        if (!response) {
-          setError('bad_fetch')
-          return
-        }
+
         if (response.code !== 200) {
-          setError('bad_fetch')
+          setError('error fetch')
           return
         }
         setContents(response.contents)
         result = { error, contents, load }
       }
       fetchLogs().catch(() => {
-        throw new Error('failed to fetch logs')
+        setLoad(false)
+        result = { error: 'error fetch', contents, load }
       })
     }
   }, deps)

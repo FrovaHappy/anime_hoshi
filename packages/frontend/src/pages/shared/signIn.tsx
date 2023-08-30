@@ -37,19 +37,17 @@ function signIn() {
     <div>
       signIn
       <form onSubmit={onSubmit}>
-        <p>Usuario</p>
-        <input required type="text" name="username" id="username" />
-        <p>Contraseña</p>
-        <input required type="password" name="password" id="password" minLength={8} maxLength={128} />
+        <input required type='text' name='username' id='username' />
+        <input required type='password' name='password' id='password' minLength={8} maxLength={128} />
         {error !== '' ? <p>{error}</p> : null}
         <button
+          type='button'
           onClick={() => {
             setShowComponent(ComponentType.children)
-          }}
-        >
+          }}>
           volver
         </button>
-        <button type="submit">Iniciar Sesión</button>
+        <button type='submit'>Iniciar Sesión</button>
       </form>
     </div>
   )

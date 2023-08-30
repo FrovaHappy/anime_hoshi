@@ -3,7 +3,7 @@ import { urlApi } from '../../../../../config'
 import { KeysLocalStorage } from '../../../../../enum'
 import useFetch from '../../../../../hooks/useFetch'
 
-type ErrorUser = 'token invalid' | ''
+type ErrorUser = 'token invalid' | 'error fetch' | ''
 export interface User {
   newToken: string
   username: string
@@ -49,7 +49,8 @@ export default function useUser(deps: any[]) {
         result = { error, contents, load }
       }
       fetchUser().catch(() => {
-        throw new Error('failed to fetch User')
+        setLoad(false)
+        result = { error: 'error fetch', contents, load }
       })
     }
   }, deps)

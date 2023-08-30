@@ -12,7 +12,7 @@ function updateNotifications() {
 
   return (
     <button
-      className='button'
+      className='button__secondary'
       onClick={async () => {
         setLoad(true)
         await subscribe().then(async () => {

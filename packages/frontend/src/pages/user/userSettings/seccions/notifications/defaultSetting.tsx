@@ -12,7 +12,7 @@ export default function defaultSetting() {
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS)))
   }
   return (
-    <button onClick={onClick} className='button'>
+    <button onClick={onClick} className='button__secondary'>
       Restaurar
     </button>
   )

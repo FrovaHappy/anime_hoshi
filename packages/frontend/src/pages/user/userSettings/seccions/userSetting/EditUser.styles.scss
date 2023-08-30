@@ -1,0 +1,24 @@
+.userForm {
+  display: flex;
+  flex-direction: column;
+  max-width: 28.125rem;
+  padding: .9375rem;
+  border-radius: .625rem;
+  border: .0625rem solid var(--textColorAlt);
+
+  &__label {
+    background-color: transparent;
+    cursor: default;
+    color: var(--textColor);
+    font-size: var(--font-body);
+    width: fit-content;
+    height: fit-content;
+    margin: .625rem 0 0 0;
+    border: none;
+  }
+
+  &__submit {
+    margin-top: .9375rem;
+    align-self: center;
+  }
+}

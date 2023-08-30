@@ -12,7 +12,7 @@ export default function setNotifications() {
   if (notificationsString) {
     return (
       <button
-        className='button__red'
+        className='button__danger'
         onClick={async () => {
           setLoad(true)
           await unsubscribe().then(async () => {
