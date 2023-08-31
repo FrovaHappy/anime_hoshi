@@ -50,7 +50,8 @@ export default function useUser(deps: any[]) {
       }
       fetchUser().catch(() => {
         setLoad(false)
-        result = { error: 'error fetch', contents, load }
+        setError('error fetch')
+        result = { error, contents, load }
       })
     }
   }, deps)

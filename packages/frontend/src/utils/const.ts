@@ -8,3 +8,4 @@ export const DEFAULT_NOTIFICATIONS: NotificationsInAired = {
   maxRemitted: 0,
   minPages: 0
 }
+export const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/

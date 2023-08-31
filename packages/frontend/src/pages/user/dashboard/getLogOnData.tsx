@@ -38,7 +38,8 @@ export function getLogOnData(date: string, deps: any[]) {
       }
       fetchLogs().catch(() => {
         setLoad(false)
-        result = { error: 'error fetch', contents, load }
+        setError('error fetch')
+        result = { error, contents, load }
       })
     }
   }, deps)

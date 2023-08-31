@@ -30,17 +30,24 @@ select:focus-visible {
   height: fit-content;
   padding: .3125rem .75rem .3125rem 0;
   border: none;
+
   &__password {
     background-color: transparent;
     color: var(--textColor);
     font-size: var(--font-body);
     box-sizing: border-box;
     height: fit-content;
-    padding: .3125rem .75rem ;
+    padding: .3125rem .75rem;
     max-width: 28.125rem;
     border: none;
     text-align: center;
     border-bottom: 1px solid var(--textColorAlt);
+
+    &--invalid {
+      color: red;
+      border-bottom: 1px solid red !important;
+    }
+
     &::-ms-reveal {
       border: 2px solid transparent;
       border-radius: 50%;
@@ -51,7 +58,7 @@ select:focus-visible {
     &:focus {
       border-bottom: 1px solid var(--colorPrimary);
     }
-  }
+}
 
   &__number {
     background-color: transparent;

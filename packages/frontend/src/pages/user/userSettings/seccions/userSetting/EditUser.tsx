@@ -2,6 +2,7 @@ import { type User } from './useUser'
 import Option from '../../Option'
 import { ComponentType, useShowComponent } from '../../../../contexts/Sessions'
 import { KeysLocalStorage } from '../../../../../enum'
+import OptionsPassword from './option.password'
 
 import './EditUser.styles.scss'
 
@@ -48,38 +49,8 @@ export default function EditUser({ user }: Props) {
 
       <Option
         title={'Actualizar Contraseña'}
-        description={'Utiliza minúsculas, mayúsculas, números y símbolos'}
-        descriptionAction={
-          <form className='userForm' action='updatePassword'>
-            <label className='userForm__label'>Contraseña:</label>
-            <input
-              className='input__password'
-              required
-              type='password'
-              name='newPassword'
-              placeholder='Contraseña Anterior'
-            />
-            <label className='userForm__label'>Nueva Contraseña:</label>
-            <input
-              required
-              className='input__password'
-              type='password'
-              name='confirmPassword'
-              placeholder='Contraseña Nueva'
-            />
-            <label className='userForm__label'>Confirmar Contraseña:</label>
-            <input
-              required
-              className='input__password'
-              type='password'
-              name='oldPassword'
-              placeholder='Confirmar Contraseña'
-            />
-            <button className='button userForm__submit' type='submit'>
-              Actualizar Contraseña
-            </button>
-          </form>
-        }
+        description={'Utiliza minúsculas, mayúsculas, números y símbolos [ #?!@$%^&*- ]'}
+        descriptionAction={<OptionsPassword user={user} />}
         actions={undefined}
       />
     </>
