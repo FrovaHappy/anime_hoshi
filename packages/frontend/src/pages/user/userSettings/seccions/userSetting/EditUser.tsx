@@ -50,7 +50,7 @@ export default function EditUser({ user }: Props) {
       <Option
         title={'Actualizar Contraseña'}
         description={'Utiliza minúsculas, mayúsculas, números y símbolos [ #?!@$%^&*- ]'}
-        descriptionAction={<OptionsPassword user={user} />}
+        descriptionAction={<OptionsPassword />}
         actions={undefined}
       />
     </>

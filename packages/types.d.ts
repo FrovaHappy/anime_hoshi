@@ -27,8 +27,8 @@ export interface Log {
   message: string
   content: Object
 }
-export type JsonResponse = {
+export type JsonResponse<T = any> = {
   code: number
   message: string
-  contents: any
+  contents: T
 }

@@ -24,16 +24,19 @@ export async function signin(req: Request, res: Response) {
   const { password, username } = req.body
   const userValidate = await passwordHash.compare(username, password)
   if (!userValidate) return res.status(403).json({ code: 403, message: 'Invalid username or password', contents: null })
-  const token = createUserToken({ username: userValidate.username, id: userValidate.id, roles: userValidate.roles })
-  return res.status(200).json({ code: 200, message: 'user singIn successfully', contents: { token } } as JsonResponse)
+  const newToken = createUserToken({ username: userValidate.username, id: userValidate.id, roles: userValidate.roles })
+  return res
+    .status(200)
+    .json({ code: 200, message: 'user singIn successfully', contents: { newToken } } as JsonResponse)
 }
 export async function getUser(req: Request, res: Response) {
   const { authorization } = req.headers
   const decoded = auth.decodedToken(authorization!)
   if (!decoded)
-    return res.status(500).json({ code: 500, message: 'error decoding token', contents: {} } as JsonResponse)
+    return res.status(403).json({ code: 403, message: 'error decoding token', contents: null } as JsonResponse)
   const response = await findUser(decoded.username)
-  if (!response) return res.status(403).json({ code: 403, message: 'resource not found', contents: {} } as JsonResponse)
+  if (!response)
+    return res.status(403).json({ code: 403, message: 'resource not found', contents: null } as JsonResponse)
   const user = { username: response.username, roles: response.roles }
   const newToken = auth.createToken(user, '24h')
   return res
@@ -45,7 +48,12 @@ export async function updateUser(req: Request, res: Response) {
   const { oldPassword, newPassword } = req.body
   const decoded = auth.decodedToken(authorization!)
   if (!decoded)
-    return res.status(500).json({ code: 500, message: 'error decoding token', contents: {} } as JsonResponse)
+    return res.status(403).json({ code: 403, message: 'error decoding token', contents: null } as JsonResponse)
   const user = await servicesUpdateUser({ oldPassword, newPassword, username: decoded.username })
-  return res.status(200).json({ code: 200, message: 'user updated', contents: { user } } as JsonResponse)
+  if (!user) return res.status(403).json({ code: 403, message: 'error updating user', contents: null } as JsonResponse)
+  const userData = { username: user.username, roles: user.roles }
+  const newToken = auth.createToken(userData, '24h')
+  return res
+    .status(200)
+    .json({ code: 200, message: 'user updated', contents: { newToken, ...userData } } as JsonResponse)
 }

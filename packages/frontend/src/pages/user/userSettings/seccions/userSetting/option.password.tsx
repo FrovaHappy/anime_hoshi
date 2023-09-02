@@ -1,8 +1,10 @@
 import { useRef, useState } from 'react'
 import type React from 'react'
-import { type User } from './useUser'
 import { REGEX_PASSWORD } from '../../../../../utils/const'
-export default function OptionsPassword({ user }: { user: User }) {
+import { buildFetch } from '../../../../../hooks/useFetchNew'
+import { urlApi } from '../../../../../config'
+import { KeysLocalStorage } from '../../../../../enum'
+export default function OptionsPassword() {
   const [invalid, setInvalid] = useState(false)
   const newPassword = useRef('')
   const handleNewPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,18 +28,22 @@ export default function OptionsPassword({ user }: { user: User }) {
       setInvalid(true)
     }
   }
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const { oldPassword, newPassword, confirmPassword } = Object.fromEntries(new FormData(e.currentTarget))
     e.currentTarget.reset()
     const equalPassword = newPassword === confirmPassword
     if (!invalid && equalPassword) {
-      const data = {
-        username: user.username,
-        password: oldPassword,
-        newPassword
-      }
-      console.log(data)
+      const { error, data } = await buildFetch({
+        method: 'PUT',
+        url: `${urlApi}/user`,
+        authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
+        body: {
+          oldPassword,
+          newPassword
+        }
+      })
+      console.log(data, error)
     }
   }
   return (

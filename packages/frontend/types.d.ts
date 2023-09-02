@@ -20,3 +20,8 @@ export interface NotificationsInAired {
   expireIn: number
   minPages: number
 }
+export interface User {
+  newToken: string
+  username: string
+  roles: string[]
+}
