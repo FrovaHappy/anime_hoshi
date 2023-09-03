@@ -1,55 +1,58 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import type React from 'react'
 import { REGEX_PASSWORD } from '../../../../../utils/const'
 import { buildFetch } from '../../../../../hooks/useFetchNew'
 import { urlApi } from '../../../../../config'
 import { KeysLocalStorage } from '../../../../../enum'
+import { isValidInput } from '../../../../../utils/general'
 export default function OptionsPassword() {
-  const [invalid, setInvalid] = useState(false)
   const newPassword = useRef('')
   const handleNewPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const password = e.target.value
-    const passwordValid = REGEX_PASSWORD.test(password)
-    if (passwordValid) {
-      e.target.classList.remove('input__password--invalid')
-      console.log(password)
-    } else {
-      e.target.classList.add('input__password--invalid')
-    }
+    isValidInput(e, REGEX_PASSWORD)
     newPassword.current = password
   }
   const handleConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
     const confirmPassword = e.target.value
     if (confirmPassword === newPassword.current) {
-      e.target.classList.remove('input__password--invalid')
-      setInvalid(false)
+      e.target.classList.remove('invalid')
+      e.target.setCustomValidity('')
     } else {
-      e.target.classList.add('input__password--invalid')
-      setInvalid(true)
+      e.target.setCustomValidity('Las contraseñas con coinciden.')
+      e.target.classList.add('invalid')
+      e.target.reportValidity()
     }
   }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const { oldPassword, newPassword, confirmPassword } = Object.fromEntries(new FormData(e.currentTarget))
+    const { oldPassword, newPassword } = Object.fromEntries(new FormData(e.currentTarget))
     e.currentTarget.reset()
-    const equalPassword = newPassword === confirmPassword
-    if (!invalid && equalPassword) {
-      const { error, data } = await buildFetch({
-        method: 'PUT',
-        url: `${urlApi}/user`,
-        authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
-        body: {
-          oldPassword,
-          newPassword
-        }
-      })
-      console.log(data, error)
-    }
+    const { data } = await buildFetch({
+      method: 'PUT',
+      url: `${urlApi}/user`,
+      authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
+      body: {
+        oldPassword,
+        newPassword
+      }
+    })
+    window.localStorage.setItem(KeysLocalStorage.token, data.newToken)
+    // TODO: feedback to user
   }
+
   return (
     <form onSubmit={handleSubmit} className='userForm' action='updatePassword'>
       <label className='userForm__label'>Contraseña:</label>
-      <input required className='input__password' type='password' name='oldPassword' placeholder='Contraseña Actual' />
+      <input
+        required
+        className='input__password'
+        type='password'
+        name='oldPassword'
+        placeholder='Contraseña Actual'
+        onChange={e => {
+          isValidInput(e, REGEX_PASSWORD)
+        }}
+      />
       <label className='userForm__label'>Nueva Contraseña:</label>
       <input
         className='input__password'
@@ -69,7 +72,6 @@ export default function OptionsPassword() {
         name='confirmPassword'
         placeholder='Confirma la Contraseña'
       />
-      <label className='userForm__label'>{invalid ? 'no coinciden' : ''}</label>
       <button className='button userForm__submit' type='submit'>
         Actualizar Contraseña
       </button>

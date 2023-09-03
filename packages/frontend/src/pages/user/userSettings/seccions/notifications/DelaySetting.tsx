@@ -1,6 +1,6 @@
 import type React from 'react'
 import { KeysLocalStorage } from '../../../../../enum'
-import { stringToObject } from '../../../../../utils/general'
+import { isValidInput, stringToObject } from '../../../../../utils/general'
 import { type NotificationsInAired } from '../../../../../../types'
 import initDb from '../../../../../utils/DBLocal'
 import { useSettingsContext } from '.'
@@ -12,6 +12,7 @@ export default function DelaySetting() {
   const [value, setValue] = useState((notifications?.delay ?? 0) / 60000)
   if (!notifications) return null
   const onHandleDelay = async (e: React.FocusEvent<HTMLInputElement>) => {
+    isValidInput(e)
     const delay = parseInt(e.target.value)
     setValue(delay)
     const test = (n: number) => n >= 0 && n <= 120

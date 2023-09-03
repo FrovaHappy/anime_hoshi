@@ -4,6 +4,9 @@ import { type ObjectDynamic } from '../../../types'
 import useFetch from '../../hooks/useFetch'
 import { urlApi } from '../../config'
 import { KeysLocalStorage } from '../../enum'
+import { isValidInput } from '../../utils/general'
+import { REGEX_PASSWORD } from '../../utils/const'
+import './sign.style.scss'
 
 function signIn() {
   const { setShowComponent } = useShowComponent()
@@ -32,22 +35,54 @@ function signIn() {
     }
     initFetch().catch(() => {})
   }, [signIn])
-
   return (
-    <div>
-      signIn
-      <form onSubmit={onSubmit}>
-        <input required type='text' name='username' id='username' />
-        <input required type='password' name='password' id='password' minLength={8} maxLength={128} />
+    <div className='sign'>
+      <form className='signForm' onSubmit={onSubmit}>
+        <h1 className='signForm__title'>signIn</h1>
+        <input
+          required
+          className='input'
+          type='text'
+          name='username'
+          minLength={6}
+          autoComplete='off'
+          placeholder='Usuario'
+          onChange={isValidInput}
+        />
+        <input
+          required
+          className='input__password'
+          type='password'
+          name='password'
+          placeholder='Contraseña'
+          onChange={e => {
+            isValidInput(e, REGEX_PASSWORD)
+          }}
+        />
         {error !== '' ? <p>{error}</p> : null}
-        <button
-          type='button'
-          onClick={() => {
-            setShowComponent(ComponentType.children)
-          }}>
-          volver
+
+        <button className='button' type='submit'>
+          Iniciar Sesión
         </button>
-        <button type='submit'>Iniciar Sesión</button>
+        <p>ó</p>
+        <div className='signForm__contents'>
+          <button
+            type='button'
+            className='button__secondary'
+            onClick={() => {
+              setShowComponent(ComponentType.children)
+            }}>
+            volver
+          </button>
+          <button
+            type='button'
+            className='button__secondary'
+            onClick={() => {
+              setShowComponent(ComponentType.signUp)
+            }}>
+            Crear Usuario
+          </button>
+        </div>
       </form>
     </div>
   )

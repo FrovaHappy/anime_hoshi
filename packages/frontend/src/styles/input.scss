@@ -5,10 +5,6 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-:root {
-  --width-input: 4.375rem
-}
-
 input:focus-visible {
   -moz-appearance: none;
   appearance: none;
@@ -16,89 +12,53 @@ input:focus-visible {
 }
 
 select:focus-visible {
-  -moz-appearance: none;
-  appearance: none;
   outline: none;
 }
 
-.input {
+@mixin schemaInput ($max-width: 28.125rem, $bg: transparent) {
   background-color: transparent;
-  cursor: default;
   color: var(--textColor);
+  box-sizing: border-box;
   font-size: var(--font-body);
-  width: fit-content;
   height: fit-content;
-  padding: .3125rem .75rem .3125rem 0;
+  max-width: $max-width;
+  width: -webkit-fill-available;
+  padding: .3125rem .75rem;
   border: none;
+  text-align: center;
+  border-bottom: 1px solid var(--textColorAlt);
+
+  &:hover,
+  &:focus {
+    border-bottom: 1px solid var(--colorPrimary);
+    background-color: var(--bgContentAlt);
+  }
+}
+
+.invalid {
+  color: red !important;
+  border-bottom: 1px solid red !important;
+}
+
+.input {
+  @include schemaInput();
 
   &__password {
-    background-color: transparent;
-    color: var(--textColor);
-    font-size: var(--font-body);
-    box-sizing: border-box;
-    height: fit-content;
-    padding: .3125rem .75rem;
-    max-width: 28.125rem;
-    border: none;
-    text-align: center;
-    border-bottom: 1px solid var(--textColorAlt);
-
-    &--invalid {
-      color: red;
-      border-bottom: 1px solid red !important;
-    }
+    @include schemaInput();
 
     &::-ms-reveal {
       border: 2px solid transparent;
       border-radius: 50%;
       background-color: currentColor;
     }
-
-    &:hover,
-    &:focus {
-      border-bottom: 1px solid var(--colorPrimary);
-    }
-}
+  }
 
   &__number {
-    background-color: transparent;
-    color: var(--textColor);
-    font-size: var(--font-body);
-    box-sizing: border-box;
-    height: fit-content;
-    width: var(--width-input);
-    padding: .3125rem .75rem;
-    border: none;
-    text-align: center;
-    border-bottom: 1px solid var(--textColorAlt);
-
-    &:hover,
-    &:focus {
-      border-bottom: 1px solid var(--colorPrimary);
-    }
-
-    &:invalid {
-      color: red;
-      border-bottom: 1px solid red;
-    }
+    @include schemaInput($max-width: 4.375rem);
   }
 
   &__select,
   &__select select {
-    border: none;
-    border-bottom: 1px solid var(--textColorAlt);
-    padding: .3125rem .75rem;
-    text-align: center;
-    width: var(--width-input);
-    box-sizing: border-box;
-    height: fit-content;
-    color: var(--textColor);
-    font-size: var(--font-body);
-    background-color: var(--bgContent);
-
-    &:hover,
-    &:focus {
-      border-bottom: 1px solid var(--colorPrimary);
-    }
+    @include schemaInput($max-width:4.3125rem);
   }
 }
