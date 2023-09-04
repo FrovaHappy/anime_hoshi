@@ -28,7 +28,7 @@ export default function setNotifications() {
   }
   return (
     <button
-      className='button__blue'
+      className='button'
       onClick={async () => {
         setLoad(true)
         await subscribe().then(async () => {
