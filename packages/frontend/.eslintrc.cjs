@@ -1,27 +1,28 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
   extends: ['standard-with-typescript', 'plugin:react/recommended', 'eslint:recommended', 'plugin:react/jsx-runtime'],
   overrides: [
     {
       env: {
-        node: true,
+        node: true
       },
-      files: ['./.eslintrc.cjs', './*/*.js'],
+      files: ['./.eslintrc.cjs', './**/*.js'],
       parserOptions: {
         sourceType: 'script',
-        project: false,
-      },
-    },
+        project: false
+      }
+    }
   ],
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: './tsconfig.json',
+    project: ['./tsconfig.json', './*/tsconfig.json']
   },
   plugins: ['react'],
   rules: {
+    '@typescript-eslint/strict-boolean-expressions': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
@@ -32,9 +33,9 @@ module.exports = {
       {
         checksVoidReturn: {
           arguments: false,
-          attributes: false,
-        },
-      },
-    ],
-  },
+          attributes: false
+        }
+      }
+    ]
+  }
 }

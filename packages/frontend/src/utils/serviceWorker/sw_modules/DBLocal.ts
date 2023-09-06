@@ -1,13 +1,20 @@
 const DB_NAME = 'app'
 const DB_VERSION = 1
 const DB_COLLECTION = 'local-storage'
+const w = (() => {
+  try {
+    return window
+  } catch {
+    return self
+  }
+})()
 export interface ResultDB {
   key: string
   value: any
 }
 const initTransaction = async () =>
   await new Promise<IDBObjectStore>((resolve, reject) => {
-    const dbRequest = window.indexedDB.open(DB_NAME, DB_VERSION)
+    const dbRequest = w.indexedDB.open(DB_NAME, DB_VERSION)
     dbRequest.onerror = err => {
       reject(err)
     }
@@ -55,5 +62,5 @@ export default {
         resolve(object.result)
       }
     })
-  },
+  }
 }

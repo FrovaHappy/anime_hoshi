@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { subscribe } from '../../../../../utils/swSubscribe'
 import { KeysLocalStorage } from '../../../../../enum'
 import { DEFAULT_NOTIFICATIONS } from '../../../../../utils/const'
-import initDb from '../../../../../utils/DBLocal'
+import initDb from '../../../../../utils/serviceWorker/sw_modules/DBLocal'
 
 function updateNotifications() {
   const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)

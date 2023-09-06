@@ -4,8 +4,8 @@ import { KeysLocalStorage } from '../../../../../enum'
 import { type NotificationsInAired } from '../../../../../../types'
 import { stringToObject } from '../../../../../utils/general'
 import { useSettingsContext } from '.'
-import initDb from '../../../../../utils/DBLocal'
-import { useMemo, useState } from 'react'
+import initDb from '../../../../../utils/serviceWorker/sw_modules/DBLocal'
+import { useState } from 'react'
 function mappedOptions(min: number, max: number) {
   const options: React.ReactElement[] = []
   for (let i = min; i <= max; i++) {
@@ -29,9 +29,9 @@ export default function MaxRemittedSetting() {
     notifications.maxRemitted = maxRemitted
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
-  useMemo(() => {
-    setValue(notifications.maxRemitted)
-  }, [setting])
+  // useMemo(() => {
+  //   setValue(notifications.maxRemitted)
+  // }, [setting])
   return (
     <select onChange={onHandleChange} className='input__select' title='maxRemitted' name='maxRemitted' value={value}>
       {mappedOptions(DEFAULT_NOTIFICATIONS.maxRemitted, DEFAULT_TOTAL_PAGES).map(elem => elem)}

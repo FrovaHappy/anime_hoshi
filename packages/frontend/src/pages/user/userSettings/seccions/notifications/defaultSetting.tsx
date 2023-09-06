@@ -1,6 +1,6 @@
 import { useSettingsContext } from '.'
 import { KeysLocalStorage } from '../../../../../enum'
-import initDb from '../../../../../utils/DBLocal'
+import initDb from '../../../../../utils/serviceWorker/sw_modules/DBLocal'
 import { DEFAULT_NOTIFICATIONS } from '../../../../../utils/const'
 import { stringToObject } from '../../../../../utils/general'
 

@@ -1,5 +1,6 @@
 import { urlApi } from '../config'
 import { KeysLocalStorage } from '../enum'
+const PATCH_SW = '/sw.js'
 async function getPublicKey() {
   const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)
   const data = !publicKey
@@ -13,30 +14,32 @@ async function getPublicKey() {
 
 async function subscription() {
   const PUBLIC_VAPID_KEY = await getPublicKey()
-  const getRegister = await navigator.serviceWorker.getRegistration('./worker.js')
+  const getRegister = await navigator.serviceWorker.getRegistration(PATCH_SW)
   const register =
     getRegister ??
-    (await navigator.serviceWorker.register('./worker.js', {
+    (await navigator.serviceWorker.register(PATCH_SW, {
       scope: '/',
+      type: 'module'
     }))
   await register.update()
 
   const subscription = await register.pushManager.subscribe({
     userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY),
+    applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_KEY)
   })
   // Send Notification
   const postSubscriptions = await fetch(`${urlApi}/subscription`, {
     method: 'POST',
     body: JSON.stringify({
       pushSubscription: subscription,
-      publicKey: PUBLIC_VAPID_KEY,
+      publicKey: PUBLIC_VAPID_KEY
     }),
     headers: {
-      'Content-Type': 'application/json',
-    },
+      'Content-Type': 'application/json'
+    }
   }).then(async response => await response.json())
   if (postSubscriptions.code !== 201) return 'error api'
+  console.log(postSubscriptions)
   return 'active'
 }
 
@@ -52,12 +55,7 @@ function urlBase64ToUint8Array(base64String: string) {
   }
   return outputArray
 }
-export type SubscriptionStatus =
-  | 'active'
-  | 'denied'
-  | 'error api'
-  | 'error compatibility'
-  | 'error not defined'
+export type SubscriptionStatus = 'active' | 'denied' | 'error api' | 'error compatibility' | 'error not defined'
 // Service Worker Support
 export async function subscribe(): Promise<SubscriptionStatus> {
   if (!('Notification' in window)) {
@@ -79,7 +77,7 @@ export async function subscribe(): Promise<SubscriptionStatus> {
   return 'denied'
 }
 export async function unsubscribe() {
-  const register = await navigator.serviceWorker.getRegistration('./worker.js')
+  const register = await navigator.serviceWorker.getRegistration(PATCH_SW)
   if (register) {
     return await register.unregister()
   }

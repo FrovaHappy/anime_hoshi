@@ -4,7 +4,7 @@ import { type NotificationsInAired } from '../../../../../../types'
 import { KeysLocalStorage } from '../../../../../enum'
 import { DEFAULT_NOTIFICATIONS, DEFAULT_TOTAL_PAGES } from '../../../../../utils/const'
 import { useSettingsContext } from '.'
-import initDb from '../../../../../utils/DBLocal'
+import initDb from '../../../../../utils/serviceWorker/sw_modules/DBLocal'
 import { useState } from 'react'
 
 function mappedOptions(min: number, max: number) {

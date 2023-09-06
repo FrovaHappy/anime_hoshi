@@ -2,9 +2,9 @@ import type React from 'react'
 import { KeysLocalStorage } from '../../../../../enum'
 import { isValidInput, stringToObject } from '../../../../../utils/general'
 import { type NotificationsInAired } from '../../../../../../types'
-import initDb from '../../../../../utils/DBLocal'
+import initDb from '../../../../../utils/serviceWorker/sw_modules/DBLocal'
 import { useSettingsContext } from '.'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 export default function DelaySetting() {
   const { setting, setSetting } = useSettingsContext()
@@ -20,9 +20,9 @@ export default function DelaySetting() {
     notifications.delay = delay * 60000
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
-  useMemo(() => {
-    setValue(notifications.delay / 60000)
-  }, [setting])
+  // useMemo(() => {
+  //   setValue(notifications.delay / 60000)
+  // }, [setting])
   return (
     <input
       onChange={onHandleDelay}
