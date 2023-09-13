@@ -49,7 +49,7 @@ async function pushesReceived(pushes: PayloadAnimeNof[]) {
     currentTime,
     settings: notificationsSettings
   })
-  console.log({ forSend, retained })
+  // console.log({ forSend, retained })
   await DBLocal.set('notificationsInAwait', JSON.stringify([...forSend, ...retained]))
   for await (const inAwait of forSend) {
     const message = buildMessage(inAwait)

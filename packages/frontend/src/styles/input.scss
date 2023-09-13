@@ -59,6 +59,6 @@ select:focus-visible {
 
   &__select,
   &__select select {
-    @include schemaInput($max-width:4.3125rem);
+    @include schemaInput($max-width:6.25rem);
   }
 }

@@ -23,47 +23,45 @@ function buildMessage(inAwait) {
     return { title, options };
 }
 async function pushesReceived(pushes) {
-  const currentTime = Date.now()
-  const notificationsSettings = stringToObject((await DBLocal.get('notifications'))?.value)
-  if (!notificationsSettings) {
-    console.error('Notifications not found in IndexedDB')
-    return
-  }
-  let notificationsInAwait = stringToObject((await DBLocal.get('notificationsInAwait'))?.value) ?? []
-  notificationsInAwait = updateNotifications({
-    currentTime,
-    inAwaits: notificationsInAwait,
-    pushes,
-    settings: notificationsSettings
-  })
-  const { forSend, retained } = filterNotifications({
-    inAwaits: notificationsInAwait,
-    currentTime,
-    settings: notificationsSettings
-  })
-  console.log({ forSend, retained })
-  await DBLocal.set('notificationsInAwait', JSON.stringify([...forSend, ...retained]))
-  for await (const inAwait of forSend) {
-    const message = buildMessage(inAwait)
-    await self.registration.showNotification(message.title, message.options)
-  }
+    const currentTime = Date.now();
+    const notificationsSettings = stringToObject((await DBLocal.get('notifications'))?.value);
+    if (!notificationsSettings) {
+        console.error('Notifications not found in IndexedDB');
+        return;
+    }
+    let notificationsInAwait = stringToObject((await DBLocal.get('notificationsInAwait'))?.value) ?? [];
+    notificationsInAwait = updateNotifications({
+        currentTime,
+        inAwaits: notificationsInAwait,
+        pushes,
+        settings: notificationsSettings
+    });
+    const { forSend, retained } = filterNotifications({
+        inAwaits: notificationsInAwait,
+        currentTime,
+        settings: notificationsSettings
+    });
+    // console.log({ forSend, retained })
+    await DBLocal.set('notificationsInAwait', JSON.stringify([...forSend, ...retained]));
+    for await (const inAwait of forSend) {
+        const message = buildMessage(inAwait);
+        await self.registration.showNotification(message.title, message.options);
+    }
 }
 self.addEventListener('push', e => {
-  const data = e.data?.json() ?? []
-  e.waitUntil(
-    (async () => {
-      const settings = stringToObject((await DBLocal.get('notifications'))?.value)
-      if (!settings) {
-        console.error('Notifications not found in IndexedDB')
-        return
-      }
-      await pushesReceived(data)
-      setTimeout(async () => {
-        await pushesReceived([])
-      }, settings.delay + 30000)
-    })()
-  )
-})
+    const data = e.data?.json();
+    e.waitUntil((async () => {
+        const settings = stringToObject((await DBLocal.get('notifications'))?.value);
+        if (!settings) {
+            console.error('Notifications not found in IndexedDB');
+            return;
+        }
+        await pushesReceived(data);
+        setTimeout(async () => {
+            await pushesReceived([]);
+        }, settings.delay + 30000);
+    })());
+});
 // ON CLICK NOTIFICATION ********************************
 self.addEventListener('notificationclick', event => {
     event.notification.close();
@@ -72,4 +70,3 @@ self.addEventListener('notificationclick', event => {
         await self.clients.openWindow(url);
     })());
 });
-

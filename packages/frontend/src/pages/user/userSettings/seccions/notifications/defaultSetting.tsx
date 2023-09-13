@@ -10,6 +10,7 @@ export default function defaultSetting() {
   if (!notifications) return null
   const onClick = async () => {
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(DEFAULT_NOTIFICATIONS)))
+    window.location.reload()
   }
   return (
     <button onClick={onClick} className='button__secondary'>
