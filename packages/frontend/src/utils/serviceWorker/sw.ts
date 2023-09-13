@@ -28,8 +28,7 @@ function buildMessage(inAwait: InAwait) {
   }
   return { title, options }
 }
-self.addEventListener('push', async e => {
-  const data: PayloadAnimeNof[] = e.data?.json()
+async function pushesReceived(pushes: PayloadAnimeNof[]) {
   const currentTime = Date.now()
   const notificationsSettings = stringToObject<NotificationsInAired>((await DBLocal.get('notifications'))?.value)
   if (!notificationsSettings) {
@@ -42,7 +41,7 @@ self.addEventListener('push', async e => {
   notificationsInAwait = updateNotifications({
     currentTime,
     inAwaits: notificationsInAwait,
-    pushes: data,
+    pushes,
     settings: notificationsSettings
   })
   const { forSend, retained } = filterNotifications({
@@ -50,11 +49,29 @@ self.addEventListener('push', async e => {
     currentTime,
     settings: notificationsSettings
   })
+  console.log({ forSend, retained })
   await DBLocal.set('notificationsInAwait', JSON.stringify([...forSend, ...retained]))
   for await (const inAwait of forSend) {
     const message = buildMessage(inAwait)
     await self.registration.showNotification(message.title, message.options)
   }
+}
+self.addEventListener('push', e => {
+  const data: PayloadAnimeNof[] = e.data?.json()
+
+  e.waitUntil(
+    (async () => {
+      const settings = stringToObject<NotificationsInAired>((await DBLocal.get('notifications'))?.value)
+      if (!settings) {
+        console.error('Notifications not found in IndexedDB')
+        return
+      }
+      await pushesReceived(data)
+      setTimeout(async () => {
+        await pushesReceived([])
+      }, settings.delay + 30000)
+    })()
+  )
 })
 
 // ON CLICK NOTIFICATION ********************************
