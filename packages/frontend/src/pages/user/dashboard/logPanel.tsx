@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { type Log } from '../../../../../types'
 import { getLogs } from './getLogs'
 import { getLogOnData } from './getLogOnData'
+import AwaitLoad from '../../../components/AwaitLoad'
 export interface ResultLog<T = string> {
   error: ErrorLog
   contents: T[] | null
@@ -50,8 +51,8 @@ export default function Main() {
   const logsOnData = getLogOnData(data, [data])
   return (
     <>
-      <div>{logs.load ? <> loading logs datas </> : RenderLogs(logs.error, logs.contents, setData)}</div>
-      <div>{logsOnData.load ? <>loading logs </> : RenderLogsOfData(logsOnData.contents, logsOnData.error)}</div>
+      <div>{logs.load ? <AwaitLoad /> : RenderLogs(logs.error, logs.contents, setData)}</div>
+      <div>{logsOnData.load ? <AwaitLoad /> : RenderLogsOfData(logsOnData.contents, logsOnData.error)}</div>
     </>
   )
 }
