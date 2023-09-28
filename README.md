@@ -6,11 +6,13 @@ Este proyecto busca solucionar el tema las notificaciones de las paginas de anim
 
 Lo único que se almacena en las Base de datos son los links directos a los capítulos de dichas paginas, este proyecto esta pensado de fan para fan y no busca competir con los servicios de streaming, solo servir de atajo a los mismos.
 
-# Links
+## Links
 
 - [sitio web](https://animehoshi.vercel.app/) (no definitivo)
 - [url de la api](https://scraping-api-production.up.railway.app/) (no definitivo)
 - [documentación de la API](https://frovahappy.gitbook.io/anime-hoshi-docs/)
+
+<br>
 
 ## Tecnologías Principales en el Proyecto
 
@@ -44,7 +46,7 @@ Lo único que se almacena en las Base de datos son los links directos a los cap�
 ~$ frontend:build
 ```
 
-# Roadmap 🛫
+## Roadmap 🛫
 
 - implementar una pagina de versionado de la aplicación
 - filtrar las notificaciones por paginas de animes
