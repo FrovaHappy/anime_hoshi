@@ -2,7 +2,7 @@
 
 Este proyecto busca solucionar el tema las notificaciones de las paginas de anime a la hora de publicar nuevo capítulos.
 
-# Importante!
+## Importante!
 
 Lo único que se almacena en las Base de datos son los links directos a los capítulos de dichas paginas, este proyecto esta pensado de fan para fan y no busca competir con los servicios de streaming, solo servir de atajo a los mismos.
 
