@@ -11,6 +11,7 @@ Lo único que se almacena en las Base de datos son los links directos a los cap�
 - [sitio web](https://animehoshi.vercel.app/) (no definitivo)
 - [url de la api](https://scraping-api-production.up.railway.app/) (no definitivo)
 - [documentación de la API](https://frovahappy.gitbook.io/anime-hoshi-docs/)
+
 ## Tecnologías Principales en el Proyecto
 
 - React y ReactRouter
