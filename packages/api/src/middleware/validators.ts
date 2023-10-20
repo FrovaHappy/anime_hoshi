@@ -1,23 +1,22 @@
-import { NextFunction, Request, Response } from 'express'
-import { AnyZodObject, ZodError } from 'zod'
-import { JsonResponse } from '../../../types'
+import { type NextFunction, type Request, type Response } from 'express'
+import { type AnyZodObject, ZodError } from 'zod'
+import { type JsonResponse } from '../../../types'
 
 export function validators(obj: AnyZodObject) {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response<JsonResponse>, next: NextFunction) => {
     try {
       obj.parse({
         body: req.body,
         params: req.params,
-        query: req.query,
+        query: req.query
       })
+      // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
       return next()
     } catch (error) {
       if (error instanceof ZodError) {
-        return res
-          .status(400)
-          .json({ code: 400, contents: error.issues, message: 'schema incorrect...' } as JsonResponse)
+        return res.status(400).json({ code: 400, contents: error.issues, message: 'schema incorrect...' })
       }
-      return res.status(500).json({ code: 500, contents: null, message: ' server error' } as JsonResponse)
+      return res.status(500).json({ code: 500, contents: null, message: ' server error' })
     }
   }
 }

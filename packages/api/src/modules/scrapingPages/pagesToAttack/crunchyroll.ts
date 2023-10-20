@@ -1,4 +1,4 @@
-import { DataAttck } from '../../../../type'
+import type { DataAttck } from '../../../../type'
 import buildScrapPages from '../buildScrapPages'
 
 const data: DataAttck = {
@@ -10,9 +10,9 @@ const data: DataAttck = {
   selectorTitle: '.season-name > a > cite',
   namePages: 'crunchyroll',
   testMode: false,
-  remplaceEpisode: [['Estreno', '1']],
+  remplaceEpisode: [['Estreno', '1']]
 }
 export default {
   data,
-  run: async () => await buildScrapPages(data),
+  run: async () => await buildScrapPages(data)
 }

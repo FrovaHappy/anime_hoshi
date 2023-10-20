@@ -1,10 +1,11 @@
 import express from 'express'
-const routes = express()
 
 import subscription from './subscription/routes'
 import animes from './animes/routes'
 import logs from './logs/routes'
 import user from './user/routes'
+
+const routes = express()
 
 routes.use('/subscription', subscription)
 routes.use('/animes', animes)

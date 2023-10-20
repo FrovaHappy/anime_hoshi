@@ -1,22 +1,24 @@
-import { Anime } from '../../../../types/Anime'
 import { TimestampTimings } from '../../Enum'
 import fetchAnilist, { SearchOptions } from '../../shared/fetchAnilist'
 import { fetchDatabase } from './fetchDatabase'
-type Params = { title: string; namePage: string }
-async function searchAnime({ title, namePage }: Params) {
+interface Params {
+  title: string
+  namePage: string
+}
+async function searchAnime ({ title, namePage }: Params) {
   let hasUpdated = false
   let database = await fetchDatabase({ search: title, namePage, searchType: 'title' })
-  if (!database) {
+  if (database == null) {
     hasUpdated = true
     const dataAnilist = await fetchAnilist({ search: title, searchType: SearchOptions.forTitle })
-    if (!dataAnilist) return null
+    if (dataAnilist == null) return null
 
     let newDatabase = await fetchDatabase({ search: `${dataAnilist.id}`, searchType: 'id', namePage })
-    !newDatabase
-      ? (newDatabase = { dataAnilist: dataAnilist, pages: {}, lastUpdate: Date.now() }) // TODO: comprovar si hay problem
+    ;(newDatabase == null)
+      ? (newDatabase = { dataAnilist, pages: {}, lastUpdate: Date.now() }) // TODO: comprovar si hay problem
       : (newDatabase.dataAnilist = dataAnilist)
 
-    database = newDatabase as Anime
+    database = newDatabase
   }
   if (!database.pages[namePage]) {
     const pages = {
@@ -25,8 +27,8 @@ async function searchAnime({ title, namePage }: Params) {
         lastUpdate: Date.now(),
         redirectId: null,
         startCount: 0,
-        title: title,
-      },
+        title
+      }
     }
     database.pages = { ...pages, ...database.pages }
   }
@@ -35,7 +37,7 @@ async function searchAnime({ title, namePage }: Params) {
   if (dataAnilistIsExpired) {
     hasUpdated = true
     const newDataAnilist = await fetchAnilist({ search: id, searchType: SearchOptions.forId })
-    if (newDataAnilist) database.dataAnilist = newDataAnilist
+    if (newDataAnilist != null) database.dataAnilist = newDataAnilist
   }
   return { database, hasUpdated }
 }

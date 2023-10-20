@@ -1,4 +1,4 @@
-import { DataAttck } from '../../../../type'
+import type { DataAttck } from '../../../../type'
 import buildScrapPages from '../buildScrapPages'
 
 const data: DataAttck = {
@@ -15,10 +15,10 @@ const data: DataAttck = {
     ['2da Temporada', '2nd Season'],
     ['Temporada 2', '2nd Season'],
     ['Temporada', 'Season'],
-    ['Parte', 'Part'],
-  ],
+    ['Parte', 'Part']
+  ]
 }
 export default {
   data,
-  run: async () => await buildScrapPages(data),
+  run: async () => await buildScrapPages(data)
 }

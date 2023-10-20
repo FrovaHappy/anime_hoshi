@@ -18,16 +18,16 @@ export interface Subscription extends Vapidkey {
   lastUpdated: number
 }
 
-export type PagesScraped = {
+export type PagesScraped = Array<{
   [key: string]: InfoEpisodeRecovered
-}[]
+}>
 
-export type TokenBody = {
+export interface TokenBody {
   username: string
   id: string
   roles: string[]
 }
-export type DataAttck = {
+export interface DataAttck {
   urlPage: string
   selectorEpisodes: string
   selectorUrl: string
@@ -36,8 +36,8 @@ export type DataAttck = {
   selectorTitle: string
   namePages: PagesNames
   testMode: boolean
-  remplaceTitle?: [searchValue: string | RegExp, remplaceValue: string][]
-  remplaceEpisode?: [searchValue: string | RegExp, remplaceValue: string][]
+  remplaceTitle?: Array<[searchValue: string | RegExp, remplaceValue: string]>
+  remplaceEpisode?: Array<[searchValue: string | RegExp, remplaceValue: string]>
 }
 export type RoleUser = 'owner' | 'admin' | 'user'
 export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime' | 'crunchyroll'

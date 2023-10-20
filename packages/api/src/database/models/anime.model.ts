@@ -6,7 +6,7 @@ const episodeSchema = new Schema<Episode>(
   {
     episode: { type: 'number', required: true },
     lastUpdate: { type: 'number', required: true },
-    link: { type: 'string', required: true },
+    link: { type: 'string', required: true }
   },
   { _id: false, id: false }
 )
@@ -16,7 +16,7 @@ const pageScchema = new Schema<Page>(
     lastUpdate: { type: 'number', required: true },
     redirectId: { type: 'number', default: null },
     startCount: { type: 'number', required: true },
-    title: { type: 'string', required: true },
+    title: { type: 'string', required: true }
   },
   { _id: false, id: false }
 )
@@ -35,23 +35,23 @@ const animeSchema = new Schema<Anime>(
         romaji: { type: 'string', required: true },
         native: { type: 'string', required: true },
         english: { type: 'string', default: null },
-        userPreferred: { type: 'string', required: true },
+        userPreferred: { type: 'string', required: true }
       },
       coverImage: {
         large: { type: 'string', required: true },
         medium: { type: 'string', required: true },
-        color: { type: 'string', default: '#ffffff' },
-      },
+        color: { type: 'string', default: '#ffffff' }
+      }
     },
     pages: { type: Object, of: pageScchema, required: true },
-    lastUpdate: { type: 'number', required: true },
+    lastUpdate: { type: 'number', required: true }
   },
   { _id: false, id: false }
 ).set('toJSON', {
   transform: (_document, returnObject) => {
     delete returnObject._id
     delete returnObject.__v
-  },
+  }
 })
 
 export const animeModel = model('Anime', animeSchema)

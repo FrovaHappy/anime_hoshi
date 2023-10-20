@@ -1,4 +1,4 @@
-import { InfoEpisodeRecovered, PagesAttacked } from '../../../../types'
+import { type InfoEpisodeRecovered, type PagesAttacked } from '../../../../types'
 import searchAnime from './searchAnime'
 import compareEpisodes from './compareEpisodes'
 import animeDB from '../../database/anime.db'
@@ -6,13 +6,13 @@ import Log from '../../shared/log'
 import { BuildRefreshCacheAnimes } from './setChacheAnime'
 import sendNotifications from './pushNotifications'
 
-function errors(err: any, type: 'search Database Error' | 'episode Null Error') {
+function errors (err: any, type: 'search Database Error' | 'episode Null Error') {
   return {
     type,
-    content: err,
+    content: err
   }
 }
-async function validateData({ namePage, animesScrap }: { namePage: string; animesScrap: InfoEpisodeRecovered[] }) {
+async function validateData ({ namePage, animesScrap }: { namePage: string, animesScrap: InfoEpisodeRecovered[] }) {
   let totalAnimesUpdated = 0
   let totalAnilistUpdated = 0
   let animesUpdated: number[] = []
@@ -24,7 +24,7 @@ async function validateData({ namePage, animesScrap }: { namePage: string; anime
       continue
     }
     const animeSearch = await searchAnime({ title: animeScrap.title, namePage })
-    if (!animeSearch) {
+    if (animeSearch == null) {
       errors(animeScrap, 'search Database Error')
       totalErrors += 1
       continue
@@ -44,15 +44,15 @@ async function validateData({ namePage, animesScrap }: { namePage: string; anime
     totalAnilistUpdated,
     totalAnimesUpdated,
     totalErrors,
-    animesUpdated,
+    animesUpdated
   }
 }
 
-export default async function index(pagesAttacked: PagesAttacked) {
+export default async function index (pagesAttacked: PagesAttacked) {
   const refreshCacheAnime = await BuildRefreshCacheAnimes()
   const notifications = sendNotifications()
   let hasUpdated = false
-  for (let pageScrap of pagesAttacked) {
+  for (const pageScrap of pagesAttacked) {
     const namePage = Object.keys(pageScrap)[0]
     const animesScrap = pageScrap[namePage]
     const result = await validateData({ namePage, animesScrap })
@@ -62,10 +62,10 @@ export default async function index(pagesAttacked: PagesAttacked) {
       notifications.setAnimesUpdated(result.animesUpdated)
     }
     if (result.totalAnilistUpdated > 0) hasUpdated = true
-    Log({
+    await Log({
       content: result,
       message: `[Anime Save] result of ${namePage}: ${result.totalAnilistUpdated}uA/  ${result.totalAnimesUpdated}uE/ ${result.totalErrors}E / ${animesScrap.length} `,
-      type: result.totalErrors > 0 ? 'error' : 'info',
+      type: result.totalErrors > 0 ? 'error' : 'info'
     })
   }
   await refreshCacheAnime.runUpdate(hasUpdated)

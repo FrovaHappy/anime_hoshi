@@ -1,11 +1,14 @@
 import Log from './log'
 import { type DataAnilist } from '../../../types/dataAnilist'
-type Params = { search: string | number; searchType: SearchOptions }
+interface Params {
+  search: string | number
+  searchType: SearchOptions
+}
 export enum SearchOptions {
   forTitle = 'forTitle',
-  forId = 'forId',
+  forId = 'forId'
 }
-const query = ({ query, media }: { query: string; media: string }) => `
+const query = ({ query, media }: { query: string, media: string }) => `
   query(${query}){
     Media(${media}, type: ANIME) {
       id
@@ -29,49 +32,49 @@ const query = ({ query, media }: { query: string; media: string }) => `
     }
   }`
 
-const searchOptions: { [x: string]: { query: string; variables: (search: string | number) => object } } = {
+const searchOptions: Record<string, { query: string, variables: (search: string | number) => object }> = {
   [SearchOptions.forTitle]: {
     query: query({ query: '$search: String', media: 'search: $search' }),
     variables: (search: string | number) => {
-      return { search: search }
-    },
+      return { search }
+    }
   },
   [SearchOptions.forId]: {
     query: query({ query: '$id: Int', media: 'id: $id' }),
     variables: (search: string | number) => {
       return { id: search }
-    },
-  },
+    }
+  }
 }
 
-async function queryAnilist({ searchType, search }: Params) {
+async function queryAnilist ({ searchType, search }: Params) {
   const url = 'https://graphql.anilist.co'
   const options = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Accept: 'application/json',
+      Accept: 'application/json'
     },
     body: JSON.stringify({
       query: searchOptions[searchType].query,
-      variables: searchOptions[searchType].variables(search),
-    }),
+      variables: searchOptions[searchType].variables(search)
+    })
   }
   return await fetch(url, options)
-    .then((response) => response.json())
-    .catch((e) => {
-      Log({ message: 'Error in fetch', type: 'error', content: { error: e, searchType, search } })
+    .then(async response => await response.json())
+    .catch(async e => {
+      await Log({ message: 'Error in fetch', type: 'error', content: { error: e, searchType, search } })
       return null
     })
 }
-export default async function Main({ search, searchType }: Params) {
+export default async function Main ({ search, searchType }: Params) {
   const response = await queryAnilist({ search, searchType })
-  if (response === null) null
+  if (response === null) return null
   if (response.errors) {
-    Log({
+    await Log({
       message: '[anilist] Error in Query',
       type: 'warning',
-      content: { errors: response.errors, searchType, search },
+      content: { errors: response.errors, searchType, search }
     })
     return null
   }

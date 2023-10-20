@@ -5,7 +5,7 @@ import { validateSubscription } from '../../validators/subscription'
 const router = Router()
 
 router.get('/', getSubscription)
-//TODO: check body
+// TODO: check body
 router.post('/', validateSubscription, postSubscription)
 
 export default router

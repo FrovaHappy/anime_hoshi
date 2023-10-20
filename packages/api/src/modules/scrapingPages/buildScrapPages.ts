@@ -1,16 +1,16 @@
 import { JSDOM } from 'jsdom'
 import getHtml from './getHtml'
-import { InfoEpisodeRecovered } from '../../../../types'
-import { DataAttck } from '../../../type'
+import type { InfoEpisodeRecovered } from '../../../../types'
+import type { DataAttck } from '../../../type'
 import { EpisodeNumber } from '../../Enum'
-function remplaseString(str: string, rules: [searchValue: string | RegExp, remplaceValue: string][]) {
+function remplaceString (str: string, rules: Array<[searchValue: string | RegExp, remplaceValue: string]>) {
   for (const rule of rules) {
     const [searchValue, remplaceValue] = rule
     str = str.replace(searchValue, remplaceValue)
   }
   return str
 }
-export default async function buildScrapPages({
+export default async function buildScrapPages ({
   urlPage,
   selectorEpisode,
   selectorEpisodes,
@@ -18,25 +18,17 @@ export default async function buildScrapPages({
   selectorTitle,
   namePages,
   positionEpisodeInString,
-  testMode,
   remplaceEpisode = [],
-  remplaceTitle = [],
+  remplaceTitle = []
 }: DataAttck) {
-  const testModeLog = (values: object) => {
-    if (testMode) console.log(JSON.stringify(values) + '\n--------------------------------')
-  }
-  const { content, bodyError, error } = await getHtml(urlPage)
-  testModeLog({ content, bodyError, error })
+  const { content } = await getHtml(urlPage)
   if (!content) return null
   const { document: d } = new JSDOM(content).window
 
   const list = d.querySelectorAll(selectorEpisodes)
-  if (testMode)
-    d.querySelector(selectorEpisodes)
-      ? console.log('selectorEpisodes was finding')
-      : console.log('selectorEpisodes was not found')
-  let scrapEpisodes: Array<InfoEpisodeRecovered> = []
-  list.forEach((node) => {
+
+  const scrapEpisodes: InfoEpisodeRecovered[] = []
+  list.forEach(node => {
     let url = node.getAttribute('href') ?? node.querySelector(selectorUrl)?.getAttribute('href')
     let title = node.querySelector(selectorTitle)?.textContent
     let episodeStr =
@@ -44,17 +36,16 @@ export default async function buildScrapPages({
         .querySelector(selectorEpisode)
         ?.textContent?.match(/[\w\d]+/g)
         ?.at(positionEpisodeInString) ?? ''
-    episodeStr = remplaseString(episodeStr, remplaceEpisode)
+    episodeStr = remplaceString(episodeStr, remplaceEpisode)
 
-    testModeLog({ title, url, episodeStr })
     if (!url || !title) return
     const UrlPage = new URL(urlPage)
     url = url?.includes(UrlPage.origin) ? url : UrlPage.origin + url
 
-    title = remplaseString(title, [[/["]/g, ''], ...remplaceTitle])
+    title = remplaceString(title, [[/["]/g, ''], ...remplaceTitle])
     const episodeParse = (str: string) => {
       let episodeInt = parseInt(str)
-      if (!Boolean(episodeInt)) episodeInt = EpisodeNumber.lastEpisodeNotFound
+      if (isNaN(episodeInt)) episodeInt = EpisodeNumber.lastEpisodeNotFound
       return episodeInt
     }
     const episode = episodeParse(episodeStr)

@@ -1,17 +1,17 @@
-import { Anime, AnimeMinified } from '../../../../../types/Anime'
+import type { Anime, AnimeMinified } from '../../../../../types/Anime'
 import cache from '../../../utils/cache'
 
 let animesUpdatedCache: number = 0
 let animesMinified: AnimeMinified[] = []
 
-function minifyAnimes(animes: Anime[]): AnimeMinified[] {
-  return animes.map((anime) => {
+function minifyAnimes (animes: Anime[]): AnimeMinified[] {
+  return animes.map(anime => {
     const namePages = Object.keys(anime.pages)
     let refEpidode = 0
     let lastUpdateOld = 0
     for (const name of namePages) {
       const { lastUpdate, episode } = anime.pages[name].episodes[0]
-      const time =  lastUpdateOld < lastUpdate
+      const time = lastUpdateOld < lastUpdate
       if (time) {
         refEpidode = episode
         lastUpdateOld = lastUpdate
@@ -30,10 +30,10 @@ function minifyAnimes(animes: Anime[]): AnimeMinified[] {
     }
   })
 }
-export function getData() {
+export function getData () {
   const animes: Anime[] | null = cache.get('animes') ?? null
   const animesUpdated = cache.get('animesUpdated') ?? 0
-  if (!animes) return { animes, animesUpdated, animesMinified }
+  if (animes == null) return { animes, animesUpdated, animesMinified }
   if (animesUpdated > animesUpdatedCache) {
     animesMinified = minifyAnimes(animes)
     animesUpdatedCache = animesUpdated

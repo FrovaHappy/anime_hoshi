@@ -1,7 +1,7 @@
-import { Agent as HttpAgent } from 'node:http'
-import { Agent as HttpsAgent } from 'node:https'
+import type { Agent as HttpAgent } from 'node:http'
+import type { Agent as HttpsAgent } from 'node:https'
 
-export type CacheOptions = {
+export interface CacheOptions {
   shared?: boolean
   cacheHeuristic?: number
   immutableMinTimeToLive?: number
@@ -25,7 +25,7 @@ export type Method =
   | 'options'
   | 'trace'
 export type Headers = Record<string, string | string[] | undefined>
-export type Agents = {
+export interface Agents {
   http?: HttpAgent | false
   https?: HttpsAgent | false
   http2?: unknown | false

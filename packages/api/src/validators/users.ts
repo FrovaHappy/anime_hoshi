@@ -19,16 +19,15 @@ const expRegofUsername = (username: string) => {
   return true
 }
 
-
 const validateUser = [
   check('username').exists().isString().custom(expRegofUsername),
   check('password').exists().isString().escape(),
-  validateResult,
+  validateResult
 ]
 const validateUserUpdate = [
   check('oldPassword').exists().isString().escape(),
   check('newPassword').exists().isString().escape(),
-  validateResult,
+  validateResult
 ]
 
 export { validateUser, validateUserUpdate }

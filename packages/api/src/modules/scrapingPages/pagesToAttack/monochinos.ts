@@ -1,4 +1,4 @@
-import { DataAttck } from '../../../../type'
+import type { DataAttck } from '../../../../type'
 import buildScrapPages from '../buildScrapPages'
 
 const data: DataAttck = {
@@ -9,9 +9,9 @@ const data: DataAttck = {
   selectorTitle: '.animetitles',
   positionEpisodeInString: -1,
   namePages: 'monosChinos',
-  testMode: false,
+  testMode: false
 }
 export default {
   data,
-  run: async () => await buildScrapPages(data),
+  run: async () => await buildScrapPages(data)
 }

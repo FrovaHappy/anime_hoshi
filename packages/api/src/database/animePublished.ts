@@ -3,18 +3,18 @@ const { Schema, model } = mongoose
 
 const animesPublishedSchema = new Schema(
   {
-    animePublished: [Number],
+    animePublished: [Number]
   },
   { _id: false }
 )
 
 const animesPublishedModel = model('animesPublished', animesPublishedSchema)
 
-export async function findAll() {
-  return ((await animesPublishedModel.find())[0] ?? {}).animePublished ?? []
+export async function findAll () {
+  return (await animesPublishedModel.find())[0]?.animePublished ?? []
 }
 
-export async function updateAll(animesPublished: number[]) {
+export async function updateAll (animesPublished: number[]) {
   return await animesPublishedModel.updateOne(
     undefined,
     { animePublished: animesPublished },
@@ -24,5 +24,5 @@ export async function updateAll(animesPublished: number[]) {
 
 export default {
   findAll,
-  updateAll,
+  updateAll
 }

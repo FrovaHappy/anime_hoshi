@@ -1,5 +1,5 @@
+import type { Subscription } from '../../../type'
 import { Schema, model } from 'mongoose'
-import { Subscription } from '../../../type'
 
 const subcriptionSchema = new Schema<Subscription>({
   publicKey: { type: 'string', required: true },
