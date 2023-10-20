@@ -35,7 +35,7 @@ export async function findOne ({ search, searchType, namePage }: Params) {
 }
 
 export async function updateOne ({ anime, filter }: { anime: Anime, filter: object }) {
-  const result = await animeModel.findOneAndUpdate(filter, anime, {
+  const result = await animeModel.findOneAndReplace(filter, anime, {
     upsert: true,
     returnDocument: 'after',
     overwrite: true,

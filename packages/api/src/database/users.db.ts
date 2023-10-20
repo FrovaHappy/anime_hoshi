@@ -10,6 +10,6 @@ async function deleteUser(username: string) {
   return await UserModel.findOneAndDelete({ username })
 }
 async function updateUser(user: Iuser) {
-  return await UserModel.findOneAndUpdate({ username: user.username }, user, { upsert: true, returnDocument: 'after' })
+  return await UserModel.findOneAndReplace({ username: user.username }, user, { upsert: true, returnDocument: 'after' })
 }
 export { createUser, findUser, deleteUser, updateUser }
