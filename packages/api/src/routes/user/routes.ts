@@ -1,11 +1,12 @@
 import { getUser, signin, signup, updateUser } from './controllers'
-import { validateUser, validateUserUpdate } from '../../validators/users'
 import { Router } from 'express'
+import { passwordUpdateValidate, userValidate } from './validatorSchema'
+import { validators } from '../../middleware/validators'
 const router = Router()
 
 router.get('/', getUser)
-router.put('/', validateUserUpdate, updateUser)
-router.post('/signup', validateUser, signup)
-router.post('/signin', validateUser, signin)
+router.put('/', validators(passwordUpdateValidate), updateUser)
+router.post('/signup', validators(userValidate), signup)
+router.post('/signin', validators(userValidate), signin)
 
 export default router

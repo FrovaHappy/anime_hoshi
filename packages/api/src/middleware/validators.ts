@@ -8,7 +8,8 @@ export function validators(obj: AnyZodObject) {
       obj.parse({
         body: req.body,
         params: req.params,
-        query: req.query
+        query: req.query,
+        headers: req.headers
       })
       // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
       return next()
