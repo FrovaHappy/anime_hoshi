@@ -9,7 +9,7 @@
     "tsc": "tsc",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -33,7 +33,8 @@
     "nodemon": "3.0.1",
     "ts-node": "10.9.1",
     "ts-standard": "12.0.2",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "vitest": "0.34.6"
   },
   "dependencies": {
     "agentkeepalive": "4.5.0",
