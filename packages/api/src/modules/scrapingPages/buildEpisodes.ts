@@ -1,17 +1,7 @@
 import { JSDOM } from 'jsdom'
 import { EpisodeNumber } from '../../Enum'
-import { type EpisodeScrap } from '../../../../types'
-export interface ScrapPage {
-  namePage: string
-  url: string
-  targetSelectorAll: string
-  episodeSelector: string
-  episodePosition: number
-  titleSelector: string
-  urlEpisodeSelector: string
-  remplaceTitle: Array<[searchValue: string | RegExp, remplaceValue: string]>
-  remplaceEpisode: Array<[searchValue: string | RegExp, remplaceValue: string]>
-}
+import type { ValidateResult, ScrapEpisode, ScrapPage } from '../../../../types/ScrapEpisode'
+
 function remplaceString(str: string, rules: Array<[searchValue: string | RegExp, remplaceValue: string]>) {
   for (const rule of rules) {
     const [searchValue, remplaceValue] = rule
@@ -24,17 +14,10 @@ const episodeParse = (str: string) => {
   if (isNaN(episodeInt)) episodeInt = EpisodeNumber.lastEpisodeNotFound
   return episodeInt
 }
-interface ValidateResult {
-  passHTML: boolean
-  passTitleSelector: boolean
-  passTargetSelector: boolean
-  passEpisodeSelector: boolean
-  passEpisodePosition: boolean
-  passUrlEpisodeSelector: boolean
-}
+
 interface Result {
   validateResult: ValidateResult
-  episodes: EpisodeScrap[]
+  episodes: ScrapEpisode[]
 }
 export default async function buildEpisodes(content: string | null, properties: ScrapPage): Promise<Result> {
   const validateResult = {
@@ -43,7 +26,8 @@ export default async function buildEpisodes(content: string | null, properties: 
     passTargetSelector: false,
     passEpisodeSelector: false,
     passEpisodePosition: false,
-    passUrlEpisodeSelector: false
+    passUrlEpisodeSelector: false,
+    timestamp: Date.now()
   }
   if (content === null) return { validateResult, episodes: [] }
   const { document: d } = new JSDOM(content).window
@@ -52,7 +36,7 @@ export default async function buildEpisodes(content: string | null, properties: 
   if (d) validateResult.passHTML = true
   if (list.length > 0) validateResult.passTargetSelector = true
 
-  const episodes: EpisodeScrap[] = []
+  const episodes: ScrapEpisode[] = []
   list.forEach(node => {
     let url = node.getAttribute('href') ?? node.querySelector(properties.urlEpisodeSelector)?.getAttribute('href')
     let title = node.querySelector(properties.titleSelector)?.textContent

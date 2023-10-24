@@ -1,4 +1,5 @@
-import buildEpisodes, { type ScrapPage } from './buildEpisodes'
+import { type ScrapPage } from '../../../../types/ScrapEpisode'
+import buildEpisodes from './buildEpisodes'
 import { PageContentHTML } from './buildEpisodes.mock'
 
 const properties: ScrapPage = {
@@ -10,7 +11,8 @@ const properties: ScrapPage = {
   episodePosition: 0,
   namePage: 'animeFlv',
   remplaceEpisode: [],
-  remplaceTitle: []
+  remplaceTitle: [],
+  validatesResults: []
 }
 const defaultResult = {
   passHTML: false,
@@ -18,12 +20,14 @@ const defaultResult = {
   passTargetSelector: false,
   passEpisodeSelector: false,
   passEpisodePosition: false,
-  passUrlEpisodeSelector: false
+  passUrlEpisodeSelector: false,
+  timestamp: 0
 }
 
 describe('scraping: build Episodes', () => {
   test('invalid Page Content HTML', async () => {
     const { validateResult } = await buildEpisodes(null, properties)
+    validateResult.timestamp = 0
     expect(validateResult).toStrictEqual(defaultResult)
   })
 
