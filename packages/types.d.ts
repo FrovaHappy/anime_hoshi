@@ -3,6 +3,11 @@ export interface InfoEpisodeRecovered {
   title: string
   episode: number
 }
+export interface EpisodeScrap {
+  url: string
+  title: string
+  episode: number
+}
 export type PagesAttacked = {
   [x: string]: InfoEpisodeRecovered[]
 }[]
