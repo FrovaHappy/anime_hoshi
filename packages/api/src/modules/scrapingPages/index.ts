@@ -1,22 +1,28 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import type { DataAttck } from '../../../type'
-import type { InfoEpisodeRecovered, PagesAttacked } from '../../../../types'
-type PageAttackedPromise = Promise<Record<string, InfoEpisodeRecovered[]> | null>
-interface File {
-  data: DataAttck
-  run: () => PageAttackedPromise
+import { type Scrap } from '../../../../types/ScrapEpisode'
+import ScrapPagesDb, { type ScrapPageResponse } from '../../database/scrapPages.db'
+import buildEpisodes from './buildEpisodes'
+import getHtml from './getHtml'
+
+export async function BuildData(page: ScrapPageResponse): Promise<Scrap> {
+  const dataHtml = await getHtml(page.url)
+  const { episodes, validateResult } = await buildEpisodes(dataHtml.content, page)
+  page.validatesResults = [validateResult, ...page.validatesResults].slice(0, 50)
+  await ScrapPagesDb.replaceOne({ _id: page._id }, page)
+  return {
+    namePage: page.namePage,
+    episodes: episodes.reverse()
+  }
 }
-export default async function ScrapingPages () {
+export default async function ScrapingPages() {
   console.log('start scraping pages...')
-  console.time('total time of atack')
-  const pagesToAtack = fs.readdirSync(path.join(__dirname, 'pagesToAttack/'))
+  const logTime = '· resolved in'
+  console.time(logTime)
+  const scrapPages = await ScrapPagesDb.getAll()
   const pages = await Promise.all(
-    pagesToAtack.map(async page => {
-      const pageRun: File = (await require(`./pagesToAttack/${page}`)).default
-      return await pageRun.run()
+    scrapPages.map(async page => {
+      return await BuildData(page)
     })
   )
-  console.timeEnd('total time of atack')
-  return pages.filter(page => page !== null) as PagesAttacked
+  console.timeEnd(logTime)
+  return pages.filter(page => page.episodes.length > 0)
 }

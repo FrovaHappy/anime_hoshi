@@ -1,13 +1,13 @@
-import type { ObjectId } from 'mongoose'
+import type { Types } from 'mongoose'
 import type { ScrapPage } from '../../../types/ScrapEpisode'
 import { scrapPages } from './models/ScrapPages.model'
-interface ScrapPageResponse extends ScrapPage {
-  _id: ObjectId
+export interface ScrapPageResponse extends ScrapPage {
+  _id: Types.ObjectId
 }
 async function getAll() {
   return await scrapPages.find({})
 }
-async function getById(id: ObjectId) {
+async function getById(id: Types.ObjectId) {
   return await scrapPages.findById(id)
 }
 async function getOne(filter: ScrapPageResponse | object) {

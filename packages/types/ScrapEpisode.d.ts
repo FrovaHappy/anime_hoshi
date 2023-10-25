@@ -24,3 +24,7 @@ export interface ScrapEpisode {
   title: string
   episode: number
 }
+export interface Scrap {
+  namePage: string
+  episodes: ScrapEpisode[]
+}

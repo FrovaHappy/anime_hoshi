@@ -1,23 +1,23 @@
-import { type InfoEpisodeRecovered, type PagesAttacked } from '../../../../types'
 import searchAnime from './searchAnime'
 import compareEpisodes from './compareEpisodes'
 import animeDB from '../../database/anime.db'
 import Log from '../../shared/log'
 import { BuildRefreshCacheAnimes } from './setChacheAnime'
 import sendNotifications from './pushNotifications'
+import { type Scrap } from '../../../../types/ScrapEpisode'
 
-function errors (err: any, type: 'search Database Error' | 'episode Null Error') {
+function errors(err: any, type: 'search Database Error' | 'episode Null Error') {
   return {
     type,
     content: err
   }
 }
-async function validateData ({ namePage, animesScrap }: { namePage: string, animesScrap: InfoEpisodeRecovered[] }) {
+async function validateData({ namePage, episodes }: Scrap) {
   let totalAnimesUpdated = 0
   let totalAnilistUpdated = 0
   let animesUpdated: number[] = []
   let totalErrors = 0
-  for (const animeScrap of animesScrap) {
+  for (const animeScrap of episodes) {
     if (isNaN(animeScrap.episode)) {
       errors(animeScrap, 'episode Null Error')
       totalErrors += 1
@@ -48,14 +48,13 @@ async function validateData ({ namePage, animesScrap }: { namePage: string, anim
   }
 }
 
-export default async function index (pagesAttacked: PagesAttacked) {
+export default async function index(pagesAttacked: Scrap[]) {
   const refreshCacheAnime = await BuildRefreshCacheAnimes()
   const notifications = sendNotifications()
   let hasUpdated = false
   for (const pageScrap of pagesAttacked) {
-    const namePage = Object.keys(pageScrap)[0]
-    const animesScrap = pageScrap[namePage]
-    const result = await validateData({ namePage, animesScrap })
+    const { episodes, namePage } = pageScrap
+    const result = await validateData({ namePage, episodes })
     if (result.totalAnimesUpdated > 0) {
       hasUpdated = true
       refreshCacheAnime.set(result.animesUpdated)
@@ -64,7 +63,7 @@ export default async function index (pagesAttacked: PagesAttacked) {
     if (result.totalAnilistUpdated > 0) hasUpdated = true
     await Log({
       content: result,
-      message: `[Anime Save] result of ${namePage}: ${result.totalAnilistUpdated}uA/  ${result.totalAnimesUpdated}uE/ ${result.totalErrors}E / ${animesScrap.length} `,
+      message: `[Anime Save] result of ${namePage}: ${result.totalAnilistUpdated}uA/  ${result.totalAnimesUpdated}uE/ ${result.totalErrors}E / ${episodes.length} `,
       type: result.totalErrors > 0 ? 'error' : 'info'
     })
   }
