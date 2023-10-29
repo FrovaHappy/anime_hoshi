@@ -30,6 +30,7 @@ export interface Log {
 }
 export type JsonResponse<T = any> = {
   code: number
+  ok: boolean
   message: string
   contents: T
 }

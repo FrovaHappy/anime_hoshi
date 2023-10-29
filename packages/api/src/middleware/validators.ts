@@ -15,9 +15,9 @@ export function validators(obj: AnyZodObject) {
       return next()
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({ code: 400, contents: error.issues, message: 'schema incorrect...' })
+        return res.status(400).json({ code: 400, ok: false, contents: error.issues, message: 'schema incorrect...' })
       }
-      return res.status(500).json({ code: 500, contents: null, message: ' server error' })
+      return res.status(500).json({ code: 500, ok: true, contents: null, message: ' server error' })
     }
   }
 }

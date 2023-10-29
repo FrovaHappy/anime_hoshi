@@ -31,8 +31,5 @@ module.exports = {
       }
     ]
   }
+
 }
-
-
-
-
