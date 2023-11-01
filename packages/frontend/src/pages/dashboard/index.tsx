@@ -1,19 +1,5 @@
 import DashboardComponent, { useTokenDashboard } from './DashboardContext'
-import StatusLine from './components/StatusLine'
-import useScrapPages from './hooks/useScrapPages'
-
-function ScrapPagesModule() {
-  const scrapPages = useScrapPages()
-
-  return (
-    <>
-      ass{' '}
-      {scrapPages.map((scrapPage, i) => {
-        return <StatusLine key={i} scrapPage={scrapPage} />
-      })}
-    </>
-  )
-}
+import { ScrapPagesModule } from './ScrapPagesModule'
 
 function Main() {
   const { passToken } = useTokenDashboard()

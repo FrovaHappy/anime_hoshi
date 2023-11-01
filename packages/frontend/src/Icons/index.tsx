@@ -12,8 +12,12 @@ import IconStar from './Star'
 import IconCaretUp from './caretUp'
 import IconGitHub from './GitHub'
 import IconDiscord from './Discord'
+import Error from './Error'
+import Check from './Check'
 
 const icons = {
+  Check,
+  Error,
   IconHome,
   IconCircleInfo,
   IconGear,
@@ -26,7 +30,7 @@ const icons = {
   IconStar,
   IconCaretUp,
   IconGitHub,
-  IconDiscord,
+  IconDiscord
 }
 
 interface IconProps {

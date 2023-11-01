@@ -1,0 +1,43 @@
+.scrapPages {
+  width: -webkit-fill-available;
+  max-width: 25rem;
+  display: flex;
+  flex-direction: column;
+}
+.scrapPage {
+  display: flex;
+  flex-direction: column;
+  &__html {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__save {
+    align-self: flex-end;
+  }
+  &__reemplace{
+    text-align: start;
+    & input {
+      width: -webkit-fill-available;
+    }
+  }
+  &__input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .3125rem;
+    & input {
+      flex-shrink: 1;
+      width: 12.5rem;
+    }
+    & p {
+      width: -webkit-fill-available;
+      text-align: start;
+      max-width: 12.5rem;
+    }
+    & svg {
+      height: var(--font-subtitle);
+      aspect-ratio: 1/1;
+      flex-shrink: 0;
+    }
+  }
+}

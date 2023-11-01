@@ -14,7 +14,7 @@ export const result = [
     remplaceTitle: [],
     validatesResults: [
       {
-        passEpisodePosition: true,
+        passEpisodePosition: false,
         passEpisodeSelector: true,
         passHTML: true,
         passTargetSelector: true,
