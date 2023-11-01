@@ -1,5 +1,5 @@
 @mixin Status($color) {
-  width: .3125rem;
+  width: 0.3125rem;
   flex-shrink: 0;
   height: 1.5625rem;
   background-color: $color;
@@ -19,7 +19,8 @@
 .statusLine {
   display: flex;
   flex-direction: column;
-  gap: .1875rem;
+  padding: 1.25rem 0;
+  gap: 0.1875rem;
   &__status {
     display: flex;
     gap: 0.125rem;

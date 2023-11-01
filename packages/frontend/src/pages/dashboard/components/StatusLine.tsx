@@ -13,7 +13,7 @@ export default function StatusLine({ scrapPage }: Props) {
       <div className='statusLine__status'>
         {validatesResults.map((validateResult, i) => {
           if (!validateResult) return <span key={i} className='status' />
-          if (!validateResult.passHTML && !validateResult.passTargetSelector) {
+          if (!validateResult.passHTML || !validateResult.passTargetSelector) {
             return <span key={i} className='status__critical' />
           }
           if (

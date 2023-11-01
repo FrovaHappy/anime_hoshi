@@ -28,7 +28,7 @@ export const result = [
       {
         passEpisodePosition: true,
         passEpisodeSelector: true,
-        passHTML: true,
+        passHTML: false,
         passTargetSelector: true,
         passTitleSelector: true,
         passUrlEpisodeSelector: true,

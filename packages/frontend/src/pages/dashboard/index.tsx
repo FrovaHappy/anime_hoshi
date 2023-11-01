@@ -6,9 +6,9 @@ function Main() {
   if (!passToken) return <>inicia sesión antes de continuar</>
 
   return (
-    <>
+    <main>
       <ScrapPagesModule />
-    </>
+    </main>
   )
 }
 
