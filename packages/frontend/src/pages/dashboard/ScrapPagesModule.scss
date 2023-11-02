@@ -12,7 +12,16 @@
   padding: 0.625rem;
   &__html {
     display: flex;
-    justify-content: space-between;
+    gap: 0.3125rem;
+    & p {
+      width: -webkit-fill-available;
+      text-align: start;
+    }
+    & svg {
+      height: var(--font-subtitle);
+      flex-shrink: 0;
+      aspect-ratio: 1/1;
+    }
   }
   &__save {
     align-self: flex-end;
@@ -47,7 +56,7 @@
 .accordion {
   display: flex;
   width: -webkit-fill-available;
-  justify-content: space-between;
+  gap: 0.3125rem;
   align-items: center;
   & h6 {
     text-align: start;
@@ -58,6 +67,10 @@
     height: 1rem;
     rotate: 180deg;
   }
+  & p {
+    width: -webkit-fill-available;
+    text-align: end;
+  }
   &__content {
     height: min-content;
     display: flex;
@@ -65,7 +78,7 @@
     border-top: 1px solid var(--textColorAlt);
     flex-direction: column;
     overflow: hidden;
-    animation: accordionMaximized ease-in 0.4s;
+    animation: accordionMaximized ease-in 0.2s;
     &--hidden {
       display: flex;
       flex-direction: column;
@@ -80,5 +93,16 @@
   }
   100% {
     height: 31.25rem;
+  }
+}
+.accordionStatus {
+  &--normal {
+    color: green;
+  }
+  &--warning {
+    color: orange;
+  }
+  &--danger {
+    color: red;
   }
 }

@@ -26,6 +26,16 @@ export function ScrapPagesModule() {
       {scrapPages.map((scrapPage, i) => {
         const [isMaximized, setIsMaximized] = useState(false)
         const validateResult = scrapPage.validatesResults[0]
+        let status = 'normal'
+        if (!validateResult.passHTML || !validateResult.passTargetSelector) status = 'danger'
+        if (
+          !validateResult.passEpisodePosition ||
+          !validateResult.passEpisodeSelector ||
+          !validateResult.passTitleSelector ||
+          !validateResult.passUrlEpisodeSelector
+        ) {
+          status = 'warning'
+        }
         const percentage =
           (scrapPage.validatesResults.filter(({ passHTML, passTargetSelector }) => passHTML && passTargetSelector)
             .length *
@@ -33,11 +43,11 @@ export function ScrapPagesModule() {
           scrapPage.validatesResults.length
         const handledAccordion = () => {
           setIsMaximized(!isMaximized)
-          console.log(isMaximized)
         }
         return (
           <section key={i} className='scrapPage'>
             <div className='accordion' onClick={handledAccordion}>
+              <Icons iconName='IconNew' className={`accordionStatus--${status}`} />
               <h6>{scrapPage.namePage}</h6>
               <p>{Math.round(percentage)}%</p>
               <Icons iconName='IconCaretUp' />
@@ -45,6 +55,7 @@ export function ScrapPagesModule() {
             <div className={isMaximized ? 'accordion__content' : 'accordion__content--hidden'}>
               <StatusLine scrapPage={scrapPage} />
               <div className='scrapPage__html'>
+                <Icons iconName={validateResult.passHTML ? 'Check' : 'Error'} />
                 <p>html</p>
                 <button className='button__danger'>reiniciar</button>
               </div>
