@@ -1,5 +1,6 @@
 .scrapPages {
   width: -webkit-fill-available;
+  overflow: auto;
   gap: 0.625rem;
   max-width: 25rem;
   display: flex;
@@ -60,7 +61,7 @@
   align-items: center;
   & h6 {
     text-align: start;
-    font-size: var(--font-title);
+    font-size: var(--font-subtitle);
     font-weight: var(--font-semiblod);
   }
   & svg {
@@ -69,6 +70,7 @@
   }
   & p {
     width: -webkit-fill-available;
+    color: var(--textColorAlt);
     text-align: end;
   }
   &__content {

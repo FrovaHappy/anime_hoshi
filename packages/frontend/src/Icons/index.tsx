@@ -14,9 +14,13 @@ import IconGitHub from './GitHub'
 import IconDiscord from './Discord'
 import Error from './Error'
 import Check from './Check'
+import Back from './Back'
+import Add from './Add'
 
 const icons = {
   Check,
+  Add,
+  Back,
   Error,
   IconHome,
   IconCircleInfo,

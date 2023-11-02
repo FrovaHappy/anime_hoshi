@@ -1,0 +1,43 @@
+.nav{
+  padding: 0 1.25rem;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  background-color: var(--bgContent);
+  width: 100dvw;
+  gap: 1.25rem;
+  &__icon{
+    height: var(--font-title);
+    aspect-ratio: 1/1;
+  }
+  &__link{
+    color: var(--textColor);
+    padding: .625rem 0;
+    font-size: var(--font-subtitle);
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    &:hover{
+      color: var(--colorPrimary);
+      border-bottom: 2px solid var(--colorPrimary);
+    }
+  }
+}
+.dashboardScraping{
+  display: flex;
+  padding: 1.25rem;
+  padding-top: 3.75rem;
+  width: -webkit-fill-available;
+  &__section{
+    display: flex;
+    justify-content: space-between;
+    &--title {
+      font-size: var(--font-subtitle);
+    }
+    & svg {
+      height: 1.5rem;
+      aspect-ratio: 1/1;
+    }
+  }
+}

@@ -23,6 +23,12 @@ export function ScrapPagesModule() {
 
   return (
     <div className='scrapPages'>
+      <div className='dashboardScraping__section'>
+        <h2 className='dashboardScraping__section--title'>ScrapPages</h2>
+        <button className='button__icon'>
+          <Icons iconName='Add' />
+        </button>
+      </div>
       {scrapPages.map((scrapPage, i) => {
         const [isMaximized, setIsMaximized] = useState(false)
         const validateResult = scrapPage.validatesResults[0]
