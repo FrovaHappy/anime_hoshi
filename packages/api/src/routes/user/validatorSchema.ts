@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { authorizationHeaders } from '../validateSchema'
 
 const user = z
   .object({
@@ -21,11 +22,9 @@ const passwordUpdate = z
 export const userValidate = z.object({
   body: user
 })
-export const passwordUpdateValidate = z.object({
-  headers: z.object({
-    authorization: z.string()
-  }),
+export const passwordUpdateValidate = authorizationHeaders.extend({
   body: passwordUpdate
 })
+
 export type UserValidate = z.infer<typeof user>
 export type PasswordValidate = z.infer<typeof passwordUpdate>

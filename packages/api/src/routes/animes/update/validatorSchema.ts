@@ -1,4 +1,5 @@
 import { optional, z } from 'zod'
+import { authorizationHeaders } from '../../validateSchema'
 
 const episodes = z
   .object({
@@ -20,7 +21,7 @@ const updateAnimeBody = z
   })
   .strict()
 
-export const updateAnime = z.object({
+export const updateAnime = authorizationHeaders.extend({
   body: updateAnimeBody
 })
 export type UpdateAnimeBodyType = z.infer<typeof updateAnimeBody>

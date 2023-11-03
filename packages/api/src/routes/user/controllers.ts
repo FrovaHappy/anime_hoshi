@@ -3,9 +3,9 @@ import type { Iuser } from '../../../type'
 import type { JsonResponse } from '../../../../types'
 import bcrypt from 'bcrypt'
 import { createUserToken, servicesCreateUser, servicesUpdateUser } from './services'
-import auth from '../../middleware/auth'
-import { findUser } from '../../database/users.db'
+import auth, { type ExtBodyUserVerified } from '../../middleware/auth'
 import passwordHash from '../../utils/passwordHash'
+import { type PasswordValidate } from './validatorSchema'
 
 export async function signup(req: Request, res: Response<JsonResponse>) {
   const { username, password } = req.body
@@ -29,32 +29,21 @@ export async function signin(req: Request, res: Response<JsonResponse>) {
   const newToken = createUserToken({ username: userValidate.username, id: userValidate.id, roles: userValidate.roles })
   return res.status(200).json({ code: 200, ok: true, message: 'user singIn successfully', contents: { newToken } })
 }
-export async function getUser(req: Request, res: Response<JsonResponse>) {
-  const { authorization } = req.headers
-  const decoded = auth.decodedToken(authorization ?? '')
-  if (decoded == null) {
-    return res.json({ code: 403, ok: false, message: 'error decoding token', contents: null }).status(403)
-  }
-  const response = await findUser(decoded.username)
-  if (response == null) {
-    return res.status(403).json({ code: 403, ok: false, message: 'resource not found', contents: null })
-  }
-  const user = { username: response.username, roles: response.roles }
-  const newToken = auth.createToken(user, '24h')
-  return res.status(200).json({ code: 200, ok: true, message: 'user authenticated', contents: { newToken, ...user } })
+export async function getUser(req: Request<any, any, ExtBodyUserVerified>, res: Response<JsonResponse>) {
+  const userVerified = req.body.userVerified
+  return res.status(200).json({ code: 200, ok: true, message: 'user authenticated', contents: { ...userVerified } })
 }
-export async function updateUser(req: Request, res: Response<JsonResponse>) {
-  const { authorization } = req.headers
+export async function updateUser(
+  req: Request<any, any, ExtBodyUserVerified & PasswordValidate>,
+  res: Response<JsonResponse>
+) {
+  const userVerified = req.body.userVerified
   const { oldPassword, newPassword } = req.body
-  const decoded = auth.decodedToken(authorization ?? '')
-  if (decoded == null) {
-    return res.status(403).json({ code: 403, ok: false, message: 'error decoding token', contents: null })
-  }
-  const user = await servicesUpdateUser({ oldPassword, newPassword, username: decoded.username })
+  const user = await servicesUpdateUser({ oldPassword, newPassword, username: userVerified.username })
   if (user == null) {
     return res.status(403).json({ code: 403, ok: false, message: 'error updating user', contents: null })
   }
   const userData = { username: user.username, roles: user.roles }
-  const newToken = auth.createToken(userData, '24h')
+  const newToken = auth.createToken({ username: user.username }, '24h')
   return res.status(200).json({ code: 200, ok: true, message: 'user updated', contents: { newToken, ...userData } })
 }
