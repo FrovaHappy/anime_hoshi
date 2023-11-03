@@ -1,0 +1,20 @@
+.modal {
+  position: absolute;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  z-index: 1000000;
+  height: 100dvh;
+  width: 100dvw;
+  padding: .625rem;
+  background-color: #00000080;
+  backdrop-filter: blur(30px);
+
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  &--hidden {
+    display: none;
+    background-color: #00000000;
+  }
+}

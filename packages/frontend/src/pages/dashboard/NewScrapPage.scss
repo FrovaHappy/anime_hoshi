@@ -1,0 +1,22 @@
+.newElement {
+  background-color: var(--bgContent);
+  width: 31.25rem;
+  padding: .625rem;
+  min-width: 17rem;
+  height: -webkit-fill-available;
+  &__icon {
+    height: 2rem;
+  }
+  &__form {
+    display: grid;
+    grid-template-columns: auto minmax(3.125rem,11.25rem);
+    gap: .625rem;
+    align-items: center;
+    text-align: start;
+    &--center {
+      grid-column: 1/3;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+}

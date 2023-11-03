@@ -15,13 +15,12 @@ select:focus-visible {
   outline: none;
 }
 
-@mixin schemaInput ($max-width: 28.125rem, $bg: transparent) {
+@mixin schemaInput ($bg: transparent) {
   background-color: transparent;
   color: var(--textColor);
   box-sizing: border-box;
   font-size: var(--font-body);
   height: fit-content;
-  max-width: $max-width;
   width: -webkit-fill-available;
   padding: .3125rem .75rem;
   border: none;
@@ -54,11 +53,11 @@ select:focus-visible {
   }
 
   &__number {
-    @include schemaInput($max-width: 4.375rem);
+    @include schemaInput();
   }
 
   &__select,
   &__select select {
-    @include schemaInput($max-width:6.25rem);
+    @include schemaInput();
   }
 }

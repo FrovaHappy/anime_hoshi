@@ -3,6 +3,7 @@ import Icons from '../../Icons'
 import StatusLine from './components/StatusLine'
 import useScrapPages from './hooks/useScrapPages'
 import './ScrapPagesModule.scss'
+import NewScrapPage from './NewScrapPage'
 interface InputTemplateProps {
   checked: boolean
   title: string
@@ -20,12 +21,16 @@ export function InputTemplate({ content, title, checked }: InputTemplateProps) {
 }
 export function ScrapPagesModule() {
   const scrapPages = useScrapPages()
-
+  const [hidden, setHidden] = useState(true)
+  const handleNewScrapPage = () => {
+    setHidden(false)
+  }
   return (
     <div className='scrapPages'>
+      <NewScrapPage hidden={hidden} setHidden={setHidden} />
       <div className='dashboardScraping__section'>
         <h2 className='dashboardScraping__section--title'>ScrapPages</h2>
-        <button className='button__icon'>
+        <button className='button__icon' onClick={handleNewScrapPage}>
           <Icons iconName='Add' />
         </button>
       </div>
