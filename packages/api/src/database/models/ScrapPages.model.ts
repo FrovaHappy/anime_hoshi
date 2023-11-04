@@ -1,6 +1,5 @@
-import mongoose from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { type ValidateResult, type ScrapPage } from '../../../../types/ScrapEpisode'
-const { Schema, model } = mongoose
 const validateResultSchema = new Schema<ValidateResult>(
   {
     passEpisodePosition: { type: Boolean, required: true },
@@ -11,7 +10,7 @@ const validateResultSchema = new Schema<ValidateResult>(
     passUrlEpisodeSelector: { type: Boolean, required: true },
     timestamp: { type: Number, required: true }
   },
-  { id: false }
+  { _id: false }
 )
 const scrapPagesSchema = new Schema<ScrapPage>({
   episodePosition: { type: Number, default: 0 },
