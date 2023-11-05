@@ -12,8 +12,8 @@ const episodes = z
 const updateAnimeBody = z
   .object({
     id: z.number().nonnegative().min(1).max(100_000),
-    namePage: z.string().nonempty().min(2).trim(),
-    title: z.string().nonempty().min(1).trim(),
+    namePage: z.string().min(2).trim(),
+    title: z.string().min(1).trim(),
     startCount: optional(z.number().nonnegative()),
     redirectId: optional(z.number().nonnegative().min(1).max(100_000)),
     lastUpdate: optional(z.boolean()),
