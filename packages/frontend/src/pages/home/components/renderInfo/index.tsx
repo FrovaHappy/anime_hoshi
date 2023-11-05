@@ -1,4 +1,3 @@
-import { getAnime } from './getAnime'
 import { useCallback, useRef, useState } from 'react'
 import { useContextAnime } from '../../../contexts/contextHome'
 import './index.scss'
@@ -6,6 +5,9 @@ import ShowData from './showData'
 import { Contribute } from './contribute'
 import Default from './default'
 import { useShowChildren } from '../../../contexts/Menu'
+import useFetch from '../../../../hooks/useFetchNew'
+import { urlApi } from '../../../../config'
+import type { Anime } from '../../../../../../types/Anime'
 
 const location = window.location
 const id = new window.URLSearchParams(location.search).get('id') ?? null
@@ -16,12 +18,18 @@ function Conditionals() {
   const idRef = useRef(id)
   const { animeMinfied } = useContextAnime()
   const animeId = animeMinfied?.id.toString() ?? idRef.current
-  const { load, error, anime } = getAnime(animeId)
-
-  if (error === 'badRequest') return <>badRequest</>
-  if (error === 'errorInResult') return <>errorInResult</>
-  if (load) return <Default status="loading" />
-  if (!anime) return <Default status="default" />
+  const {
+    load,
+    error,
+    contents: anime
+  } = useFetch<Anime>({
+    query: { url: `${urlApi ?? ''}/animes?id=${animeId ?? ''}`, method: 'GET' },
+    conditional: !!animeId,
+    deps: [animeId]
+  })
+  if (error) return <>badRequest {error}</>
+  if (load) return <Default status='loading' />
+  if (!animeMinfied || !anime) return <Default status='default' />
   const closeFuct = () => {
     setShowMenu(false)
     if (!animeMinfied) setClose(!close)

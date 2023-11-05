@@ -1,37 +1,27 @@
 import type React from 'react'
-import { type FormEvent, useEffect, useState, useRef } from 'react'
+import { type FormEvent, useState, useRef } from 'react'
 import { useShowComponent, ComponentType } from '../contexts/Sessions'
 import { urlApi } from '../../config'
-import useFetch from '../../hooks/useFetch'
+import useFetch from '../../hooks/useFetchNew'
 import { type ObjectDynamic } from '../../../types'
 import { isValidInput } from '../../utils/general'
 import { REGEX_PASSWORD } from '../../utils/const'
 function signUp() {
   const { setShowComponent } = useShowComponent()
   const [signUp, setSingUp] = useState<ObjectDynamic<FormDataEntryValue> | undefined>(undefined)
-  const [error, setError] = useState<string>('')
+  const { error } = useFetch({
+    query: { url: `${urlApi}/user/signup`, method: 'POST', body: signUp },
+    conditional: !!signUp,
+    deps: [signUp]
+  })
+  if (!error) {
+    setShowComponent(ComponentType.signIn)
+  }
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const { password, username } = Object.fromEntries(new window.FormData(event.target as any))
     setSingUp({ password, username })
   }
-  useEffect(() => {
-    const initFetch = async () => {
-      if (signUp) {
-        const response = await useFetch({ url: `${urlApi}/user/signup`, method: 'POST', body: signUp })
-        if (response?.code === 201) {
-          setShowComponent(ComponentType.signIn)
-          return
-        }
-        if (response?.code === 400) {
-          setError(response.message)
-          return
-        }
-        setError('Error en la petición.')
-      }
-    }
-    initFetch().catch(() => {})
-  }, [signUp])
   const newPassword = useRef('')
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     isValidInput(e, REGEX_PASSWORD)

@@ -9,7 +9,7 @@ interface Props {
 /**
  * @returns returns the json response already solved, in case of error returns null
  */
-export async function buildFetch<T = any>({ url, method, body, authorization = '' }: Props) {
+export async function buildFetch<T>({ url, method, body, authorization = '' }: Props) {
   const options = {
     method,
     headers: new Headers({
@@ -18,45 +18,45 @@ export async function buildFetch<T = any>({ url, method, body, authorization = '
     }),
     body: body ? JSON.stringify(body) : undefined
   }
-  try {
-    const data = (await (await fetch(url, options)).json()) as JsonResponse<T>
-    if ([200, 201].some(code => code === data.code)) return { error: false, data: data.contents }
-    console.error({ options, url, data })
-    return { error: true, data: data.contents }
-  } catch (error) {
-    console.error({ error, options, url })
-    throw new Error('Error building fetch')
-  }
+  return (await fetch(url, options).then(async res => await res.json())) as JsonResponse<T>
 }
-type Error = '' | 'error fetch' | 'bad response'
 interface MainProps {
   query: Props
   deps: any[]
+  conditional?: boolean
 }
-export default function useFetch<T = any>({ query, deps }: MainProps) {
-  const [error, setError] = useState<Error>('')
+export default function useFetch<T = any | null>({ query, deps, conditional }: MainProps) {
+  const [error, setError] = useState<string | null>(null)
+  const [errorCode, setErrorCode] = useState<number | null>(null)
   const [load, setLoad] = useState(true)
   const [contents, setContents] = useState<T | null>(null)
-  let result = { error, load, contents }
+  let result = { error, load, contents, errorCode }
   useEffect(() => {
+    setLoad(true)
     const fetch = async () => {
-      const data = await buildFetch(query)
-      setLoad(false)
-      if (data.error) {
-        setError('')
-        setContents(data.data)
-        result = { error, load, contents }
+      if (conditional !== undefined && !conditional) return result
+      const data = await buildFetch<T>(query)
+      if (data.ok) {
+        setError(null)
+        setErrorCode(null)
+        setContents(data.contents)
+        result = { error, load, contents, errorCode }
         return
       }
-      setError('bad response')
-      console.warn({ message: 'case of code no controlled', data })
-      result = { error, load, contents }
+      console.log(data)
+      setError(data.message)
+      setErrorCode(data.code)
+      result = { error, load, contents, errorCode }
     }
-    fetch().catch(() => {
-      setError('error fetch')
-      setLoad(false)
-      result = { error, load, contents }
-    })
+    fetch()
+      .catch(() => {
+        setError('error en la petición')
+        setErrorCode(null)
+        result = { error, load, contents, errorCode }
+      })
+      .finally(() => {
+        setLoad(false)
+      })
   }, deps)
 
   return result

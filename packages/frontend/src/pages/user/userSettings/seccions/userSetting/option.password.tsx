@@ -27,7 +27,7 @@ export default function OptionsPassword() {
     e.preventDefault()
     const { oldPassword, newPassword } = Object.fromEntries(new FormData(e.currentTarget))
     e.currentTarget.reset()
-    const { data } = await buildFetch({
+    const { contents } = await buildFetch<any>({
       method: 'PUT',
       url: `${urlApi}/user`,
       authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
@@ -36,7 +36,7 @@ export default function OptionsPassword() {
         newPassword
       }
     })
-    window.localStorage.setItem(KeysLocalStorage.token, data.newToken)
+    window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
     // TODO: feedback to user
   }
 

@@ -1,7 +1,7 @@
-import { type FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { useShowComponent, ComponentType } from '../contexts/Sessions'
 import { type ObjectDynamic } from '../../../types'
-import useFetch from '../../hooks/useFetch'
+import useFetch from '../../hooks/useFetchNew'
 import { urlApi } from '../../config'
 import { KeysLocalStorage } from '../../enum'
 import { isValidInput } from '../../utils/general'
@@ -11,30 +11,20 @@ import './sign.style.scss'
 function signIn() {
   const { setShowComponent } = useShowComponent()
   const [signIn, setSignIn] = useState<ObjectDynamic<FormDataEntryValue> | undefined>(undefined)
-  const [error, setError] = useState<string>('')
+  const { contents, error } = useFetch({
+    query: { url: `${urlApi}/user/signin`, method: 'POST', body: signIn },
+    conditional: !!signIn,
+    deps: [signIn]
+  })
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const field = Object.fromEntries(new window.FormData(event.target as any))
     setSignIn(field)
   }
-  useEffect(() => {
-    const initFetch = async () => {
-      if (signIn) {
-        const response = await useFetch({ url: `${urlApi}/user/signin`, method: 'POST', body: signIn })
-        if (response?.code === 200) {
-          window.localStorage.setItem(KeysLocalStorage.token, response.contents.newToken)
-          setShowComponent(ComponentType.children)
-          return
-        }
-        if (response?.code === 403) {
-          setError(response.message)
-          return
-        }
-        setError('Error en la petición.')
-      }
-    }
-    initFetch().catch(() => {})
-  }, [signIn])
+  if (contents) {
+    window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
+    setShowComponent(ComponentType.children)
+  }
   return (
     <div className='sign'>
       <form className='signForm' onSubmit={onSubmit}>

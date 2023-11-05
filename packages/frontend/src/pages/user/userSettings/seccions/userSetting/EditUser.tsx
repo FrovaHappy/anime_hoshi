@@ -1,4 +1,3 @@
-import { type User } from './useUser'
 import Option from '../../Option'
 import { ComponentType, useShowComponent } from '../../../../contexts/Sessions'
 import { KeysLocalStorage } from '../../../../../enum'
@@ -7,7 +6,11 @@ import OptionsPassword from './option.password'
 import './EditUser.styles.scss'
 
 interface Props {
-  user: User
+  user: {
+    newToken: string
+    username: string
+    roles: string[]
+  }
 }
 export default function EditUser({ user }: Props) {
   const { setShowComponent } = useShowComponent()

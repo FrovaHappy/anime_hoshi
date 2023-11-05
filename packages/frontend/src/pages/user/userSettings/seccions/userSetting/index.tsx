@@ -1,12 +1,18 @@
 import AwaitLoad from '../../../../../components/AwaitLoad'
+import { urlApi } from '../../../../../config'
+import { KeysLocalStorage } from '../../../../../enum'
+import useFetch from '../../../../../hooks/useFetchNew'
 import EditUser from './EditUser'
 import EmptyUser from './EmptyUser'
-import useUser from './useUser'
 
 const title = 'Perfil de Usuario'
 const tag = 'user-settings'
 function Options() {
-  const { contents, error, load } = useUser([])
+  const token = window.localStorage.getItem(KeysLocalStorage.token)
+  const { contents, error, load } = useFetch({
+    query: { url: `${urlApi}/user`, method: 'GET', authorization: token ?? '' },
+    deps: []
+  })
   if (load) return <AwaitLoad />
   if (error === 'token invalid') return <EmptyUser />
   if (error === 'error fetch') return <>error fetch user</>
