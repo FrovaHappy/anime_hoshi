@@ -23,6 +23,7 @@ export function InputTemplate({ content, title, checked }: InputTemplateProps) {
 export default function PageInfo({ scrapPage }: Props) {
   const [isMaximized, setIsMaximized] = useState(false)
   const validateResult = scrapPage.validatesResults[0]
+  if (!validateResult) return null
   let status = 'normal'
   if (!validateResult.passHTML || !validateResult.passTargetSelector) status = 'danger'
   if (
