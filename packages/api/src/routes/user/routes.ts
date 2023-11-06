@@ -6,8 +6,8 @@ import { authorizationHeaders } from '../validateSchema'
 import auth from '../../middleware/auth'
 const router = Router()
 
-router.get('/', validators(authorizationHeaders), auth.hasRoles(['admin', 'owner']), getUser)
-router.put('/', validators(passwordUpdateValidate), auth.hasRoles(['admin', 'owner']), updateUser)
+router.get('/', validators(authorizationHeaders), auth.hasRoles(['user']), getUser)
+router.put('/', validators(passwordUpdateValidate), auth.hasRoles(['user']), updateUser)
 router.post('/signup', validators(userValidate), signup)
 router.post('/signin', validators(userValidate), signin)
 

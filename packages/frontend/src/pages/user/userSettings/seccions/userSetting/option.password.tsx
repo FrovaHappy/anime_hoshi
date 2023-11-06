@@ -1,17 +1,28 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import type React from 'react'
 import { REGEX_PASSWORD } from '../../../../../utils/const'
-import { buildFetch } from '../../../../../hooks/useFetchNew'
+import useFetch from '../../../../../hooks/useFetchNew'
 import { urlApi } from '../../../../../config'
 import { KeysLocalStorage } from '../../../../../enum'
 import { isValidInput } from '../../../../../utils/general'
 export default function OptionsPassword() {
   const newPassword = useRef('')
+  const [data, setData] = useState<object | undefined>(undefined)
   const handleNewPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     const password = e.target.value
     isValidInput(e, REGEX_PASSWORD)
     newPassword.current = password
   }
+  const { error, load, contents } = useFetch({
+    query: {
+      method: 'PUT',
+      url: `${urlApi}/user`,
+      authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
+      body: data
+    },
+    deps: [data],
+    conditional: !!data
+  })
   const handleConfirm = (e: React.ChangeEvent<HTMLInputElement>) => {
     const confirmPassword = e.target.value
     if (confirmPassword === newPassword.current) {
@@ -27,17 +38,8 @@ export default function OptionsPassword() {
     e.preventDefault()
     const { oldPassword, newPassword } = Object.fromEntries(new FormData(e.currentTarget))
     e.currentTarget.reset()
-    const { contents } = await buildFetch<any>({
-      method: 'PUT',
-      url: `${urlApi}/user`,
-      authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
-      body: {
-        oldPassword,
-        newPassword
-      }
-    })
-    window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
-    // TODO: feedback to user
+    setData({ oldPassword, newPassword })
+    if (contents) window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
   }
 
   return (
@@ -75,6 +77,8 @@ export default function OptionsPassword() {
       <button className='button userForm__submit' type='submit'>
         Actualizar Contraseña
       </button>
+      {load ?? <>loading...</>}
+      {error ? <>error: {error} </> : <>update</>}
     </form>
   )
 }
