@@ -9,8 +9,8 @@ import create from './create'
 
 const router = Router()
 
-router.get('/', validators(authorizationHeaders), auth.checkRole.user, read)
-router.post('/', validators(createPages), auth.checkRole.user, create)
+router.get('/', validators(authorizationHeaders), auth.hasRoles(['owner', 'admin']), read)
+router.post('/', validators(createPages), auth.hasRoles(['admin', 'owner']), create)
 router.put('/')
 router.delete('/')
 

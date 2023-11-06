@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import { configs } from '../config'
 import { findUser } from '../database/users.db'
 import type { JsonResponse } from '../../../types'
+
 interface DecodedToken {
   username: string
   roles: string[]
@@ -36,29 +37,37 @@ function createToken(payloadToken: object, expiresIn: '2h' | '24h' | '3d' | '5d'
   return token
 }
 
-async function hasRole(req: Request, res: Response<JsonResponse>, next: NextFunction, role: RoleUser) {
-  const { authorization } = req.headers
-  if (!authorization) {
-    return res.status(403).send({ code: 403, ok: false, message: 'A token is required for this path', contents: null })
+export function hasRoles(roles: RoleUser[]) {
+  return async (req: Request, res: Response<JsonResponse>, next: NextFunction) => {
+    try {
+      const { authorization } = req.headers
+      if (!authorization) {
+        return res
+          .status(403)
+          .send({ code: 403, ok: false, message: 'A token is required for this path', contents: null })
+      }
+      const tokenDecoded = await decodedToken(authorization ?? '')
+      if (tokenDecoded == null) {
+        return res
+          .status(403)
+          .json({ code: 403, ok: false, message: 'token is required or is invalid', contents: null })
+      }
+      const isValidRole = tokenDecoded.roles.some(role => roles.some(r => r === role))
+      if (!isValidRole) {
+        return res.status(401).send({
+          code: 401,
+          ok: false,
+          message: `some ${roles.join(', ')} role is required for this route.`,
+          contents: null
+        })
+      }
+      req.body.userVerified = tokenDecoded
+      // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
+      return next()
+    } catch (error) {
+      return res.status(500).json({ code: 500, ok: true, contents: null, message: ' server error' })
+    }
   }
-  const tokenDecoded = await decodedToken(authorization ?? '')
-  if (tokenDecoded == null) {
-    return res.status(403).json({ code: 403, ok: false, message: 'token is required or is invalid', contents: null })
-  }
-  const isValidRole = tokenDecoded.roles.some(r => r === role)
-  if (!isValidRole) {
-    return res
-      .status(401)
-      .send({ code: 401, ok: false, message: `${role} role is required for this route.`, contents: null })
-  }
-  req.body.userVerified = tokenDecoded
-  // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-  return next()
-}
-const checkRole = {
-  user: async (req: Request, res: Response, next: NextFunction) => await hasRole(req, res, next, 'user'),
-  admin: async (req: Request, res: Response, next: NextFunction) => await hasRole(req, res, next, 'admin'),
-  owner: async (req: Request, res: Response, next: NextFunction) => await hasRole(req, res, next, 'owner')
 }
 
-export default { checkRole, decodedToken, createToken }
+export default { hasRoles, decodedToken, createToken }
