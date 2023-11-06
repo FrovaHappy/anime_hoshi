@@ -1,8 +1,9 @@
-import './styles/App.css'
+import './styles/App.scss'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Home from './pages/home'
 import User from './pages/user'
 import DashboardPages from './pages/dashboardPages'
+import DashboardLogs from './pages/dashboardLogs'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               }
             />
             <Route path='pages' element={<DashboardPages />} />
+            <Route path='logs' element={<DashboardLogs />} />
           </Route>
         </Routes>
       </div>

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import Icons from '../../../Icons'
 import './index.styles.scss'
 
 import notifications from './seccions/notifications'
@@ -9,6 +11,10 @@ export default function Index() {
     <div className='containerMain'>
       <div className='gridRow1-auto'>
         <div className='userNav'>
+          <Link to='/'>
+            <Icons iconName='Back' className='icon' />
+            Atrás
+          </Link>
           {settingCollection.map(setting => {
             return (
               <a href={`#${setting.tag}`} key={setting.tag}>

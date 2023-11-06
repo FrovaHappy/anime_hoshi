@@ -1,17 +1,16 @@
 import { useState } from 'react'
-import { type Log } from '../../../../../types'
-import AwaitLoad from '../../../components/AwaitLoad'
-import useFetch from '../../../hooks/useFetchNew'
-import { urlApi } from '../../../config'
-import { KeysLocalStorage } from '../../../enum'
+import { type Log } from '../../../../types'
+import AwaitLoad from '../../components/AwaitLoad'
+import useFetch from '../../hooks/useFetchNew'
+import { urlApi } from '../../config'
+import { KeysLocalStorage } from '../../enum'
+import ErrorComponent from '../../components/Error'
 export interface ResultLog<T = string> {
   error: string | null
   contents: T[] | null
   load: boolean
 }
-function RenderLogsOfData(logs: Log[] | null, error: string | null) {
-  if (error === 'error fetch') return <>ocurrió un problema con la petición</>
-  if (error === 'bad_token') return <>la sesión expiro o es requerida</>
+function RenderLogsOfData(logs: Log[] | null) {
   return logs?.map((log, key) => {
     return (
       <div key={key}>
@@ -29,9 +28,7 @@ function getDataNow() {
   const year = date.getUTCFullYear()
   return { string: `${year}-${month}-${day}`, year, month, day }
 }
-function RenderLogs(error: string | null, contents: string[] | null, setData: (v: string) => void) {
-  if (error === 'error fetch') return <>ocurrió un problema con la petición</>
-  if (error === 'bad_token') return <>la sesión expiro o es requerida</>
+function RenderLogs(contents: string[] | null, setData: (v: string) => void) {
   if (!contents) return <>este parece un lugar tranquilo</>
   return contents?.map((data, key) => {
     return (
@@ -57,10 +54,18 @@ export default function Main() {
     },
     deps: [data]
   })
+  if (logs.error ?? logsOnData.error) {
+    return (
+      <ErrorComponent
+        code={logs.errorCode || logsOnData.errorCode}
+        message={logs.error ?? logsOnData.error ?? 'no controlled'}
+      />
+    )
+  }
   return (
     <>
-      <div>{logs.load ? <AwaitLoad /> : RenderLogs(logs.error, logs.contents, setData)}</div>
-      <div>{logsOnData.load ? <AwaitLoad /> : RenderLogsOfData(logsOnData.contents, logsOnData.error)}</div>
+      <div>{logs.load ? <AwaitLoad /> : RenderLogs(logs.contents, setData)}</div>
+      <div>{logsOnData.load ? <AwaitLoad /> : RenderLogsOfData(logsOnData.contents)}</div>
     </>
   )
 }

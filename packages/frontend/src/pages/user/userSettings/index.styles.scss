@@ -12,13 +12,17 @@
 
 .userNav {
   background-color: var(--bgContent);
-  position: sticky;
-  top: 3.375rem;
+  position: fixed;
+  top: .625rem;
   display: flex;
+  width: 15.625rem;
   flex-direction: column;
 
   &>a {
     font-size: var(--font-subtitle);
+    display: flex;
+    gap: .3125rem;
+    align-items: center;
     color: var(--textColor);
     padding: .3125rem .75rem;
     text-align: left;

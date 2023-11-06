@@ -1,0 +1,20 @@
+@mixin iconTemplate($height: 1.5rem) {
+  aspect-ratio: 1/1;
+  height: $height;
+  width: auto;
+}
+.icon {
+  @include iconTemplate();
+  &--s {
+    @include iconTemplate($height: 0.875rem);
+  }
+  &--m {
+    @include iconTemplate($height: 1.125rem);
+  }
+  &--l {
+    @include iconTemplate($height: 2rem);
+  }
+  &--x {
+    @include iconTemplate($height: 3rem);
+  }
+}

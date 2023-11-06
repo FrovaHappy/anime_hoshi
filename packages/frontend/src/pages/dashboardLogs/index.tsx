@@ -1,11 +1,11 @@
+import Nav from '../shared/Nav'
 import LogPanel from './logPanel'
 
-function index() {
+export default function Index() {
   return (
     <div>
+      <Nav />
       <LogPanel />
     </div>
   )
 }
-
-export default index
