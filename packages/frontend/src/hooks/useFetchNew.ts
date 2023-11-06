@@ -27,7 +27,7 @@ interface MainProps {
 }
 export default function useFetch<T = any | null>({ query, deps, conditional }: MainProps) {
   const [error, setError] = useState<string | null>(null)
-  const [errorCode, setErrorCode] = useState<number | null>(null)
+  const [errorCode, setErrorCode] = useState<number>(0)
   const [load, setLoad] = useState(true)
   const [contents, setContents] = useState<T | null>(null)
   let result = { error, load, contents, errorCode }
@@ -38,12 +38,11 @@ export default function useFetch<T = any | null>({ query, deps, conditional }: M
       const data = await buildFetch<T>(query)
       if (data.ok) {
         setError(null)
-        setErrorCode(null)
+        setErrorCode(0)
         setContents(data.contents)
         result = { error, load, contents, errorCode }
         return
       }
-      console.log(data)
       setError(data.message)
       setErrorCode(data.code)
       result = { error, load, contents, errorCode }
@@ -51,7 +50,7 @@ export default function useFetch<T = any | null>({ query, deps, conditional }: M
     fetch()
       .catch(() => {
         setError('error en la petición')
-        setErrorCode(null)
+        setErrorCode(500)
         result = { error, load, contents, errorCode }
       })
       .finally(() => {
