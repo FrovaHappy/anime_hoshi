@@ -1,6 +1,6 @@
 import DashboardComponent, { useTokenDashboard } from './DashboardContext'
 import EpisodeLogs from './EpisodesLogs'
-import Nav from './Nav'
+import Nav from '../shared/Nav'
 import { ScrapPagesModule } from './ScrapPagesModule'
 
 import './index.scss'
