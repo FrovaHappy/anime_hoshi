@@ -15,8 +15,8 @@ export interface ScrapPage {
   episodePosition: number
   titleSelector: string
   urlEpisodeSelector: string
-  remplaceTitle: Array<[searchValue: string | RegExp, remplaceValue: string]>
-  remplaceEpisode: Array<[searchValue: string | RegExp, remplaceValue: string]>
+  remplaceTitle: Array<[searchValue: string, remplaceValue: string]>
+  remplaceEpisode: Array<[searchValue: string, remplaceValue: string]>
   validatesResults: ValidateResult[]
 }
 export interface ScrapEpisode {

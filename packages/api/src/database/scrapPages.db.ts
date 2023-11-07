@@ -13,8 +13,11 @@ async function getById(id: Types.ObjectId) {
 async function getOne(filter: ScrapPageResponse | object) {
   return await scrapPages.findOne(filter)
 }
-async function replaceOne(filter: ScrapPageResponse | object, data: ScrapPageResponse | object) {
+async function replaceOne(filter: ScrapPageResponse | object, data: Partial<ScrapPageResponse> | object) {
   return await scrapPages.replaceOne(filter, data, { strict: true })
+}
+async function updateOne(filter: ScrapPageResponse | object, data: Partial<ScrapPageResponse> | object) {
+  return await scrapPages.updateOne(filter, data, { strict: true })
 }
 async function create(data: ScrapPageResponse | object) {
   return await scrapPages.create(data)
@@ -23,6 +26,7 @@ export default {
   getAll,
   getById,
   replaceOne,
+  updateOne,
   getOne,
   create
 }

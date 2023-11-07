@@ -1,7 +1,7 @@
 import type { Response, Request } from 'express'
 import type { ExtBodyUserVerified } from '../../../middleware/auth'
 import type { JsonResponse } from '../../../../../types'
-import type { CreatePagesBody } from './validateSchema'
+import type { CreatePagesBody } from '../validateSchema'
 import scrapPagesDb from '../../../database/scrapPages.db'
 
 export default async function create(

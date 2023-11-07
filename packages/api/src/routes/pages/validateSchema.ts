@@ -1,5 +1,5 @@
 import { object, z } from 'zod'
-import { authorizationHeaders } from '../../validateSchema'
+import { authorizationHeaders } from '../validateSchema'
 const pages = object({
   namePage: z.string().min(3).max(100),
   url: z.string().min(14).max(100).url(),
@@ -16,3 +16,9 @@ export const createPages = authorizationHeaders.extend({
   body: pages
 })
 export type CreatePagesBody = z.infer<typeof pages>
+
+const updatePage = pages.partial().required({ namePage: true })
+export const updatePages = authorizationHeaders.extend({
+  body: updatePage
+})
+export type UpdatePagesBody = z.infer<typeof updatePage>
