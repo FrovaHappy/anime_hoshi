@@ -5,7 +5,7 @@ import type { ValidateResult, ScrapEpisode, ScrapPage } from '../../../../types/
 function remplaceString(str: string, rules: Array<[searchValue: string | RegExp, remplaceValue: string]>) {
   for (const rule of rules) {
     const [searchValue, remplaceValue] = rule
-    str = str.replace(searchValue, remplaceValue)
+    str = str.replace(new RegExp(searchValue, 'g'), remplaceValue)
   }
   return str
 }
