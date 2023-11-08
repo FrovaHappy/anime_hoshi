@@ -1,11 +1,12 @@
 .renderList {
   box-sizing: content-box;
   width: inherit;
+  margin: 1.5625rem;
   overflow-y: auto;
   &__targets {
     box-sizing: border-box;
     display: grid;
-    gap: 0.9375rem;
+    gap: 1.25rem;
     grid-template-columns: repeat(auto-fill, minmax(7.5rem, 0.55fr));
     align-items: center;
     padding-right: .3125rem;
