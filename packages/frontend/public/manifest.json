@@ -451,11 +451,11 @@
       "sizes": "1024x1024"
     }
   ],
-  "theme_color": "#fdfa85",
+  "theme_color": "#202020",
   "background_color": "#202020",
   "display_override": [
     "window-control-overlay",
     "minimal-ui"
   ],
-  "display": "standalone"
+  "display": "fullscreen"
 }
