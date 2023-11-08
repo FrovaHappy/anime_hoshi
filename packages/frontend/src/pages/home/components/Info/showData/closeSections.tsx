@@ -1,6 +1,5 @@
 import { type Anime } from '../../../../../../../types/Anime'
 import Icons from '../../../../../Icons'
-import { useContextAnime } from '../../../../contexts/contextHome'
 import './index.scss'
 
 interface Props {
@@ -18,16 +17,12 @@ function LinkToAnilist({ anime }: Props) {
 }
 interface PropsInfo {
   anime: Anime | null
+  handleClick: () => void
 }
-function closeSections({ anime }: PropsInfo) {
-  const { setAnimeMinfied } = useContextAnime()
+function closeSections({ anime, handleClick }: PropsInfo) {
   return (
     <div className='actions'>
-      <button
-        className='actions__close'
-        onClick={() => {
-          setAnimeMinfied(null)
-        }}>
+      <button className='actions__close' onClick={handleClick}>
         <Icons iconName='Back' className='actions__close--i' />
       </button>
       <span className='actions__space'></span>

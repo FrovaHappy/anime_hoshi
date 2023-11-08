@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Modal from '../../../../components/Modal'
 import { Description } from './showData'
 import ListEpisodes from './showData/EpisodesList'
@@ -13,7 +13,7 @@ import './index.scss'
 import { Contribute } from './contribute'
 import Loading from './Loading'
 const location = window.location
-const id = new window.URLSearchParams(location.search).get('id') ?? null
+let id = new window.URLSearchParams(location.search).get('id') ?? null
 export function ShowInfo({ anime }: { anime: Anime }) {
   return (
     <>
@@ -25,7 +25,8 @@ export function ShowInfo({ anime }: { anime: Anime }) {
   )
 }
 export default function Index() {
-  const { animeMinfied } = useContextAnime()
+  const { animeMinfied, setAnimeMinfied } = useContextAnime()
+  const [firstReload, setFirstReload] = useState(true)
   const idRef = useRef(id)
   const animeId = animeMinfied?.id.toString() ?? idRef.current
   const {
@@ -38,10 +39,19 @@ export default function Index() {
     conditional: !!animeId,
     deps: [animeId]
   })
+  useEffect(() => {
+    id ? setFirstReload(true) : setFirstReload(false)
+  }, [])
+  const handleClick = () => {
+    id = null
+    setFirstReload(false)
+    setAnimeMinfied(null)
+    console.log(id)
+  }
   return (
-    <Modal hidden={!animeMinfied}>
+    <Modal hidden={!animeMinfied && !firstReload}>
       <div className='renderInfo'>
-        <CloseSections anime={anime} />
+        <CloseSections anime={anime} handleClick={handleClick} />
         {error ? <ErrorComponent code={errorCode} message={error} /> : null}
         {load ? <Loading /> : null}
         {anime && !load && !error ? <ShowInfo anime={anime} /> : null}

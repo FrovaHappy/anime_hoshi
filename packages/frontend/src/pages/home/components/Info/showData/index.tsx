@@ -1,7 +1,4 @@
 import { type Anime } from '../../../../../../../types/Anime'
-import ListEpisodes from './EpisodesList'
-import Metadata from './Metadata'
-import CloseSections from './closeSections'
 import './index.scss'
 
 interface Props {
@@ -25,20 +22,3 @@ export function Description({ anime }: Props) {
     </div>
   )
 }
-interface PropsInfo {
-  anime: Anime
-  close: () => void
-}
-
-function Info({ anime }: PropsInfo) {
-  return (
-    <>
-      <CloseSections anime={anime} />
-      <h3 className='title'>{anime.dataAnilist.title.romaji}</h3>
-      <Metadata anime={anime} />
-      <Description anime={anime} />
-      <ListEpisodes anime={anime} />
-    </>
-  )
-}
-export default Info
