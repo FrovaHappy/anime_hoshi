@@ -3,7 +3,7 @@
   box-sizing: border-box;
   top: 0;
   left: 0;
-  z-index: 1000000;
+  z-index: var(--z-modal);
   height: 100dvh;
   width: 100dvw;
   padding: .625rem;
