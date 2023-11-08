@@ -18,9 +18,7 @@ export interface Subscription extends Vapidkey {
   lastUpdated: number
 }
 
-export type PagesScraped = Array<{
-  [key: string]: InfoEpisodeRecovered
-}>
+export type PagesScraped = Array<Record<string, InfoEpisodeRecovered>>
 
 export interface TokenBody {
   username: string
@@ -39,6 +37,6 @@ export interface DataAttck {
   remplaceTitle?: Array<[searchValue: string | RegExp, remplaceValue: string]>
   remplaceEpisode?: Array<[searchValue: string | RegExp, remplaceValue: string]>
 }
-export type RoleUser = 'owner' | 'admin' | 'user'
+export type RoleUser = 'owner' | 'admin' | 'user' | 'viewer'
 export type PagesNames = 'animeFlv' | 'monosChinos' | 'animeblix' | 'jkanime' | 'crunchyroll'
 export type CacheKeys = 'animes' | 'animesPublished' | 'animesUpdated' | 'tempVapidKeys'
