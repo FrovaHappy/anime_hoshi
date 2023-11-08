@@ -453,5 +453,9 @@
   ],
   "theme_color": "#fdfa85",
   "background_color": "#202020",
-  "display": "minimal-ui"
+  "display_override": [
+    "window-control-overlay",
+    "minimal-ui"
+  ],
+  "display": "standalone"
 }
