@@ -22,7 +22,7 @@ type Data = Omit<ScrapPage, 'validatesResults'>
 export default function NewScrapPage({ hidden, setHidden }: Props) {
   const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
   const [data, setData] = useState<Data | undefined>(undefined)
-  const { error, load } = useFetch({
+  const { error, load, errorCode, contents } = useFetch({
     query: { url: `${urlApi}/pages`, method: 'POST', body: data, authorization: token },
     deps: [data],
     conditional: !!data
@@ -42,8 +42,8 @@ export default function NewScrapPage({ hidden, setHidden }: Props) {
       urlEpisodeSelector: form.urlEpisodeSelector
     } satisfies Data
     setData(dataFormatted)
-    console.log(dataFormatted)
   }
+  if (errorCode === 0 && contents) window.location.reload()
   const handleClose = () => {
     setHidden(!hidden)
   }
