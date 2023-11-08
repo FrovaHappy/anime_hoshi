@@ -4,6 +4,7 @@ import Home from './pages/home'
 import User from './pages/user'
 import DashboardPages from './pages/dashboardPages'
 import DashboardLogs from './pages/dashboardLogs'
+import Nav from './pages/shared/Nav'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               path=''
               element={
                 <>
+                  <Nav />
                   <div>dashboard</div>
                 </>
               }
