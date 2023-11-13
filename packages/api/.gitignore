@@ -3,6 +3,6 @@ dist/
 
 node_modules/
 
-log/*.txt
+logs/*.json
 
 pages.txt
