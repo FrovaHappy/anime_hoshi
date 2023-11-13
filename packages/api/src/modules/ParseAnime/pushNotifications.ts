@@ -3,11 +3,11 @@ import { type PayloadAnimeNof } from '../../../../types/Payloads'
 import { type Subscription } from '../../../type'
 import { TimestampTimings } from '../../Enum'
 import subscriptionsDb from '../../database/subscriptions.db'
-import Log from '../../shared/log'
+import logger from '../../shared/log'
 import cache from '../../utils/cache'
 import pushNotifications from '../pushNotifications'
 
-async function buildStackSubscriptions () {
+async function buildStackSubscriptions() {
   const subscriptions = (await subscriptionsDb.findAll()) as Subscription[]
   const stackSubscriptions: Subscription[][] = []
   while (subscriptions.length > 0) {
@@ -16,12 +16,12 @@ async function buildStackSubscriptions () {
   }
   return stackSubscriptions
 }
-function getAnimes (animesId: number[]) {
+function getAnimes(animesId: number[]) {
   let animes: Anime[] = cache.get('animes') ?? []
   animes = animes.filter(anime => animesId.some(id => anime.dataAnilist.id === id))
   return animes
 }
-function buildPayload (anime: Anime) {
+function buildPayload(anime: Anime) {
   const namePages = Object.keys(anime.pages)
   const namePagesUpdated: string[] = []
   let refEpidode = 0
@@ -42,7 +42,7 @@ function buildPayload (anime: Anime) {
   return payload
 }
 
-async function sendingNotifications (animesId: number[]) {
+async function sendingNotifications(animesId: number[]) {
   const stackSubscriptions = await buildStackSubscriptions()
   const animes = getAnimes(animesId)
   const stackPayload = JSON.stringify(animes.map(anime => buildPayload(anime)))
@@ -60,10 +60,10 @@ async function sendingNotifications (animesId: number[]) {
     totalSusses += susses
     totalRejects += rejects
   }
-  await Log({
+  await logger.info({
     content: { susses: totalSusses, rejects: totalRejects, total: totalSusses + totalRejects },
-    message: `[anime sendNof] ${totalSusses} send of ${totalSusses + totalRejects} `,
-    type: 'info'
+    message: `${totalSusses} send of ${totalSusses + totalRejects} `,
+    section: 'push notification'
   })
 }
 

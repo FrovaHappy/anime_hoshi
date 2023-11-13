@@ -1,8 +1,8 @@
 import Agentkeepalive from 'agentkeepalive'
 import type { Headers, Agents, CacheOptions, Method, ResponseType } from './types'
-import Log from '../../shared/log'
+import logger from '../../shared/log'
 
-export default async function getHtml (url: string) {
+export default async function getHtml(url: string) {
   try {
     const got = (await import('got')).got
     const options: {
@@ -44,8 +44,8 @@ export default async function getHtml (url: string) {
     const got = (await import('got')).got
     const { code } = e
     const urlObjet = new URL(url)
-    await Log({
-      type: 'warning',
+    await logger.warn({
+      section: 'scrapings',
       message: `[getHtml] ${urlObjet.hostname}  started his second request`,
       content: { url: urlObjet, code }
     })
@@ -61,8 +61,8 @@ export default async function getHtml (url: string) {
       // eslint-disable-next-line no-ex-assign
       .catch(err => (e = { fail: true, ...err }))
     if (e?.fail) {
-      await Log({
-        type: 'error',
+      await logger.error({
+        section: 'scrapings',
         message: `[getHtml] ${urlObjet.hostname} `,
         content: { message: e.message, code: e.code, url: urlObjet }
       })

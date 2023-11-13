@@ -3,10 +3,10 @@ import { configs } from '../../config'
 import webpush, { type PushSubscription } from 'web-push'
 import vapidKey from './vapidKey'
 import cryptoJS from 'crypto-js'
-import Log from '../../shared/log'
+import logger from '../../shared/log'
 import subscriptionsDb from '../../database/subscriptions.db'
 
-function encrypt (subscription: Subscription): Subscription {
+function encrypt(subscription: Subscription): Subscription {
   return {
     lastUpdated: subscription.lastUpdated,
     privateKey:
@@ -17,7 +17,7 @@ function encrypt (subscription: Subscription): Subscription {
     subscription: cryptoJS.AES.encrypt(subscription.subscription, configs.CRYPTO_KEY).toString()
   }
 }
-function decrypt (subscription: Subscription): Subscription {
+function decrypt(subscription: Subscription): Subscription {
   return {
     lastUpdated: subscription.lastUpdated,
     privateKey: cryptoJS.AES.decrypt(subscription.privateKey, configs.CRYPTO_KEY).toString(cryptoJS.enc.Utf8),
@@ -25,7 +25,7 @@ function decrypt (subscription: Subscription): Subscription {
     subscription: cryptoJS.AES.decrypt(subscription.subscription, configs.CRYPTO_KEY).toString(cryptoJS.enc.Utf8)
   }
 }
-function buildWebPush (encryptedSubscription: Subscription) {
+function buildWebPush(encryptedSubscription: Subscription) {
   const decryptSubscription = decrypt(encryptedSubscription)
   const subscription = JSON.parse(decryptSubscription.subscription) as PushSubscription
   webpush.setVapidDetails(
@@ -38,13 +38,17 @@ function buildWebPush (encryptedSubscription: Subscription) {
     subscription
   }
 }
-export async function sendNotification (subscription: Subscription, payload: string) {
+export async function sendNotification(subscription: Subscription, payload: string) {
   const { webpush, subscription: PushSubscription } = buildWebPush(subscription)
   if (payload === '[]') return 200
   const result = await webpush.sendNotification(PushSubscription, payload, { timeout: 10000 }).catch(err => err)
   if (result.statusCode === 201) return result.statusCode
   if (result.statusCode === 410) await subscriptionsDb.deleteOne(subscription.publicKey)
-  await Log({ message: '[sendNotification] warning Notification', type: 'warning', content: result })
+  await logger.warn({
+    message: '[sendNotification] warning Notification',
+    section: 'push notification',
+    content: result
+  })
   return result.statusCode
 }
 

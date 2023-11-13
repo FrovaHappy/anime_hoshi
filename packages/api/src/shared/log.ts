@@ -15,7 +15,7 @@ async function cutCollection(limit: number) {
     await rm('logs/' + file)
   }
 }
-export default async function log({ type, message, content }: Log) {
+export async function log({ type, message, content, section }: Log) {
   const date = new Date()
   const day = date.getUTCDate()
   const month = date.getUTCMonth()
@@ -25,16 +25,17 @@ export default async function log({ type, message, content }: Log) {
 
   const logFile = await read(pathFile)
 
-  const newLog = { type, message, content, timestamp: Date.now() }
+  const newLog = { type, message, content, section, timestamp: Date.now() }
   await writeFile(pathFile, JSON.stringify([newLog, ...logFile]).replace(';', ''), { encoding: 'utf-8' })
 }
-async function buildLogger(type: LogType) {
-  return async ({ content, message }: Omit<Log, 'type'>) => {
-    await log({ type, content, message })
+function buildLogger(type: LogType) {
+  return async ({ content, message, section }: Omit<Log, 'type'>) => {
+    await log({ type, content, message, section })
   }
 }
-export const logger = {
+const logger = {
   warn: buildLogger('warning'),
   error: buildLogger('error'),
   info: buildLogger('info')
 }
+export default logger

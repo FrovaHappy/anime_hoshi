@@ -1,7 +1,7 @@
 import searchAnime from './searchAnime'
 import compareEpisodes from './compareEpisodes'
 import animeDB from '../../database/anime.db'
-import Log from '../../shared/log'
+import logger from '../../shared/log'
 import { BuildRefreshCacheAnimes } from './setChacheAnime'
 import sendNotifications from './pushNotifications'
 import { type Scrap } from '../../../../types/ScrapEpisode'
@@ -61,10 +61,10 @@ export default async function index(pagesAttacked: Scrap[]) {
       notifications.setAnimesUpdated(result.animesUpdated)
     }
     if (result.totalAnilistUpdated > 0) hasUpdated = true
-    await Log({
+    await logger.info({
       content: result,
-      message: `[Anime Save] result of ${namePage}: ${result.totalAnilistUpdated}uA/  ${result.totalAnimesUpdated}uE/ ${result.totalErrors}E / ${episodes.length} `,
-      type: result.totalErrors > 0 ? 'error' : 'info'
+      message: `result of ${namePage}: ${result.totalAnilistUpdated}uA/  ${result.totalAnimesUpdated}uE/ ${result.totalErrors}E / ${episodes.length} `,
+      section: 'push notification'
     })
   }
   await refreshCacheAnime.runUpdate(hasUpdated)
