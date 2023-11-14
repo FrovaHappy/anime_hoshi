@@ -14,9 +14,6 @@ function signUp() {
     conditional: !!signUp,
     deps: [signUp]
   })
-  if (!error) {
-    setShowComponent(ComponentType.signIn)
-  }
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const { password, username } = Object.fromEntries(new window.FormData(event.target as any))

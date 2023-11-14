@@ -1,20 +1,18 @@
-import * as fs from 'fs'
+import { readdirSync } from 'fs'
 import { readFile } from 'fs/promises'
-async function getLogs () {
-  const logsfiles = fs.readdirSync('./log').filter((file) => file.endsWith('.txt'))
-  const logs = logsfiles.map((file) => file.replace('.txt', ''))
+async function getLogs() {
+  const logsFiles = readdirSync('logs/').filter(file => file.endsWith('.json'))
+  const logs = logsFiles.map(file => file.replace('.json', ''))
   return logs
 }
 
-async function getLog (nameFile: string) {
-  const pathFile = `./log/${nameFile}.txt`
-  let logFile: any[]
-  if (fs.existsSync(pathFile)) {
-    logFile = JSON.parse(await readFile(pathFile, { encoding: 'utf8' }))
-  } else {
-    logFile = []
+async function getLog(nameFile: string): Promise<any[] | null> {
+  const pathFile = `logs/${nameFile}.json`
+  try {
+    return JSON.parse(await readFile(pathFile, { encoding: 'utf-8' }))
+  } catch {
+    return null
   }
-  return logFile
 }
 
 export default { getLog, getLogs }

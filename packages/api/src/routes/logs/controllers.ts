@@ -8,7 +8,7 @@ export async function getLogs(req: Request, res: Response<JsonResponse>) {
     return res.status(200).json({ code: 200, ok: true, message: 'logs Collections 🍵 here...', contents: logs })
   }
   const log = await logsServices.getLog(onDate)
-  if (log.length === 0) {
+  if (!log) {
     return res.status(409).json({
       code: 409,
       message: 'onDate not is a validated string or bad onDate',
