@@ -1,6 +1,6 @@
 import { optional, z } from 'zod'
-import { authorizationHeaders } from '../../validateSchema'
-
+import { authorizationHeaders } from '../validateSchema'
+const id = z.number().nonnegative().min(1).max(1_000_000)
 const episodes = z
   .object({
     link: z.string().url(),
@@ -11,11 +11,11 @@ const episodes = z
   .strict()
 const updateAnimeBody = z
   .object({
-    id: z.number().nonnegative().min(1).max(100_000),
+    id,
     namePage: z.string().min(2).trim(),
     title: z.string().min(1).trim(),
     startCount: optional(z.number().nonnegative()),
-    redirectId: optional(z.number().nonnegative().min(1).max(100_000)),
+    redirectId: optional(id),
     lastUpdate: optional(z.boolean()),
     episodes: optional(z.array(episodes))
   })
@@ -25,3 +25,13 @@ export const updateAnime = authorizationHeaders.extend({
   body: updateAnimeBody
 })
 export type UpdateAnimeBodyType = z.infer<typeof updateAnimeBody>
+
+const deleteAnimeBody = z.object({
+  id
+})
+
+export const deleteAnime = authorizationHeaders.extend({
+  body: deleteAnimeBody
+})
+
+export type DeleteAnime = z.infer<typeof deleteAnimeBody>

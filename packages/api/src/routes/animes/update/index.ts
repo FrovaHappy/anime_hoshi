@@ -1,7 +1,7 @@
 import type { JsonResponse } from '../../../../../types'
 import { namePages } from '../../../Enum'
 import { createRedirectId, updateGeneral } from './services'
-import type { UpdateAnimeBodyType } from './validatorSchema'
+import type { UpdateAnimeBodyType } from '../validatorSchema'
 import type { Request, Response } from 'express'
 
 type AnimesReq = Request<unknown, unknown, UpdateAnimeBodyType>

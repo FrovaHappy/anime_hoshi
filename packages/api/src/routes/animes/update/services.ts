@@ -1,5 +1,5 @@
 import type { Anime, Episodes } from '../../../../../types/Anime'
-import type { UpdateAnimeBodyType } from './validatorSchema'
+import type { UpdateAnimeBodyType } from '../validatorSchema'
 import animeDb from '../../../database/anime.db'
 import fetchAnilist, { SearchOptions } from '../../../shared/fetchAnilist'
 async function saveRedirectId (putAnime: UpdateAnimeBodyType) {

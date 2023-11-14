@@ -50,4 +50,4 @@ export async function findAll () {
 export async function deletedOne (anilistId: number) {
   return await animeModel.deleteOne({ 'dataAnilist.id': anilistId })
 }
-export default { findOne, updateOne }
+export default { findOne, updateOne, deletedOne }
