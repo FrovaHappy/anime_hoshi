@@ -3,27 +3,27 @@ import { type Anime } from '../../../../types/Anime'
 import { EpisodeNumber } from '../../Enum'
 interface Params {
   database: Anime
-  episodeSrap: InfoEpisodeRecovered
+  episodeScrap: InfoEpisodeRecovered
   namePage: string
 }
-export default async function compareEpisodes ({ database, episodeSrap, namePage }: Params) {
+export default async function compareEpisodes({ database, episodeScrap, namePage }: Params) {
   let hasUpdated = false
   const page = database.pages[namePage]
   const episodes = page.episodes
   let lastUpdate = database.lastUpdate
 
-  if (episodeSrap.episode === EpisodeNumber.lastEpisodeNotFound) {
-    episodeSrap.episode = database.dataAnilist.episodes ?? (episodes[0].episode ?? 0) + 1
+  if (episodeScrap.episode === EpisodeNumber.lastEpisodeNotFound) {
+    episodeScrap.episode = database.dataAnilist.episodes ?? (episodes[0].episode ?? 0) + 1
   }
-  episodeSrap.episode -= page.startCount
-  const epExists = episodes.some(ep => ep.episode === episodeSrap.episode)
+  episodeScrap.episode -= page.startCount
+  const epExists = episodes.some(ep => ep.episode === episodeScrap.episode)
 
   if (!epExists) {
     hasUpdated = true
     episodes.push({
-      episode: episodeSrap.episode,
+      episode: episodeScrap.episode,
       lastUpdate: Date.now(),
-      link: episodeSrap.url
+      link: episodeScrap.url
     })
     episodes.sort((a, b) => b.episode - a.episode)
     page.episodes = episodes
