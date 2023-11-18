@@ -43,5 +43,5 @@ export default async function putAnimes(req: AnimesReq, res: Response<JsonRespon
       ok: false
     })
   }
-  return res.status(201).json({ code: 201, ok: true, message: 'anime updated', contents: anime.toJSON })
+  return res.status(201).json({ code: 201, ok: true, message: 'anime updated', contents: anime.toJSON() })
 }
