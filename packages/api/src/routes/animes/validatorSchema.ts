@@ -26,9 +26,11 @@ export const updateAnime = authorizationHeaders.extend({
 })
 export type UpdateAnimeBodyType = z.infer<typeof updateAnimeBody>
 
-const deleteAnimeBody = z.object({
-  id
-})
+const deleteAnimeBody = z
+  .object({
+    id
+  })
+  .strict()
 
 export const deleteAnime = authorizationHeaders.extend({
   body: deleteAnimeBody

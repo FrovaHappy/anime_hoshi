@@ -28,3 +28,9 @@ export interface Scrap {
   namePage: string
   episodes: ScrapEpisode[]
 }
+export interface EpisodeError extends ScrapEpisode {
+  timestamp: number
+  namePage: string
+  isOpen: boolean
+  errorCapture: string
+}

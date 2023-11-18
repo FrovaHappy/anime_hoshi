@@ -5,13 +5,8 @@ import logger from '../../shared/log'
 import { BuildRefreshCacheAnimes } from './setChacheAnime'
 import sendNotifications from './pushNotifications'
 import { type Scrap } from '../../../../types/ScrapEpisode'
+import episodeErrorDb from '../../database/episodeError.db'
 
-function errors(err: any, type: 'search Database Error' | 'episode Null Error') {
-  return {
-    type,
-    content: err
-  }
-}
 async function validateData({ namePage, episodes }: Scrap) {
   let totalAnimesUpdated = 0
   let totalAnilistUpdated = 0
@@ -19,17 +14,29 @@ async function validateData({ namePage, episodes }: Scrap) {
   let totalErrors = 0
   for (const animeScrap of episodes) {
     if (isNaN(animeScrap.episode)) {
-      errors(animeScrap, 'episode Null Error')
+      await episodeErrorDb.createOrUpdate({
+        ...animeScrap,
+        errorCapture: 'NaN element',
+        isOpen: true,
+        namePage,
+        timestamp: Date.now()
+      })
       totalErrors += 1
       continue
     }
     const animeSearch = await searchAnime({ title: animeScrap.title, namePage })
     if (animeSearch == null) {
-      errors(animeScrap, 'search Database Error')
+      await episodeErrorDb.createOrUpdate({
+        ...animeScrap,
+        errorCapture: 'anime not found in the database or anilist',
+        isOpen: true,
+        namePage,
+        timestamp: Date.now()
+      })
       totalErrors += 1
       continue
     }
-    const anime = await compareEpisodes({ database: animeSearch.database, episodeSrap: animeScrap, namePage })
+    const anime = await compareEpisodes({ database: animeSearch.database, episodeScrap: animeScrap, namePage })
 
     if (animeSearch.hasUpdated || anime.hasUpdated) {
       if (animeSearch.hasUpdated) totalAnilistUpdated += 1
