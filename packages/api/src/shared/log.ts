@@ -1,7 +1,16 @@
-import { writeFile, readFile, readdir, rm } from 'fs/promises'
+import { writeFile, readFile, readdir, rm, mkdir } from 'fs/promises'
 import type { Log, LogType } from '../../../types'
+import { configs } from '../config'
 
-async function read(pathFile: string) {
+async function createDirectory() {
+  try {
+    await mkdir(configs.LOGS_PATH)
+  } catch (err: any) {
+    if (!(err.code === 'EEXIST')) throw err
+  }
+}
+
+async function getLog(pathFile: string) {
   try {
     return JSON.parse(await readFile(pathFile, { encoding: 'utf-8' }))
   } catch {
@@ -9,21 +18,23 @@ async function read(pathFile: string) {
   }
 }
 async function cutCollection(limit: number) {
-  const files = (await readdir('logs/')).filter(file => file.endsWith('.json'))
+  const files = (await readdir(configs.LOGS_PATH)).filter(file => file.endsWith('.json'))
   const deletesFiles = files.slice(limit)
   for (const file of deletesFiles) {
-    await rm('logs/' + file)
+    await rm(configs.LOGS_PATH + file)
   }
 }
-export async function log({ type, message, content, section }: Log) {
+async function log({ type, message, content, section }: Log) {
+  await createDirectory()
+
   const date = new Date()
   const day = date.getUTCDate()
   const month = date.getUTCMonth()
   const year = date.getUTCFullYear()
-  const pathFile = `logs/${year}-${month}-${day}.json`
+  const pathFile = `${configs.LOGS_PATH}${year}-${month}-${day}.json`
   await cutCollection(15)
 
-  const logFile = await read(pathFile)
+  const logFile = await getLog(pathFile)
 
   const newLog = { type, message, content, section, timestamp: Date.now() }
   await writeFile(pathFile, JSON.stringify([newLog, ...logFile]).replace(';', ''), { encoding: 'utf-8' })
@@ -33,9 +44,18 @@ function buildLogger(type: LogType) {
     await log({ type, content, message, section })
   }
 }
+async function getLogs() {
+  await createDirectory()
+  const files = (await readdir(configs.LOGS_PATH)).filter(file => file.endsWith('.json'))
+  return files
+}
+
 const logger = {
   warn: buildLogger('warning'),
   error: buildLogger('error'),
-  info: buildLogger('info')
+  info: buildLogger('info'),
+  getLog,
+  getLogs
 }
+
 export default logger
