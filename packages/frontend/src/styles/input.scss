@@ -17,7 +17,7 @@ select:focus-visible {
 
 @mixin schemaInput ($bg: transparent) {
   background-color: transparent;
-  color: var(--textColor);
+  color: var(--color-text);
   box-sizing: border-box;
   font-size: var(--font-body);
   height: fit-content;
@@ -25,12 +25,12 @@ select:focus-visible {
   padding: .3125rem .75rem;
   border: none;
   text-align: center;
-  border-bottom: 1px solid var(--textColorAlt);
+  border-bottom: 1px solid var(--color-text);
 
   &:hover,
   &:focus {
-    border-bottom: 1px solid var(--colorPrimary);
-    background-color: var(--bgContentAlt);
+    border-bottom: 1px solid var(--color-primary);
+    background-color: var(--color-bg-content);
   }
 }
 

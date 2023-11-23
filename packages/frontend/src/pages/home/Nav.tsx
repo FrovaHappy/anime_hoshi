@@ -1,27 +1,34 @@
 import { Link } from 'react-router-dom'
-import { KeysLocalStorage } from '../../enum'
+import type React from 'react'
 import Icons from '../../Icons'
 import './Nav.scss'
-export default function Nav() {
-  const token = window.localStorage.getItem(KeysLocalStorage.token)
+import { useContextAnimes } from '../contexts/contextHome'
+import Profile from './profile'
+export default function Nav({ setFilter }: { setFilter: (k: any) => void }) {
+  const { animesMinfied } = useContextAnimes()
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const search = e.target.value
+    if (search.length === 0) {
+      setFilter(null)
+      return
+    }
+    const data = animesMinfied.filter(ani => ani.title.toLowerCase().includes(search.toLowerCase()))
+    setFilter(data)
+  }
   return (
-    <div className='navHome'>
-      <div className='navHome__separe'>
+    <nav className='navHome'>
+      <div className='navHome__limit'>
         <Link to='' className='navHome__link'>
-          <img src='/windows11/LargeTile.scale-150.png' alt='logo' className='navHome__icon' />
-          AnimeHoshi
+          <img src='/windows11/LargeTile.scale-150.png' alt='logo' className='navHome__logo' />
         </Link>
+
+        <div className='navHome__search'>
+          <Icons iconName={'Search'} />
+          <input type='text' placeholder='Filtra por nombre...' onChange={handleChange} />
+        </div>
+        <Profile />
       </div>
-      <Link to='setting' className='navHome__link'>
-        <Icons iconName='IconGear' className='navHome__icon' />
-        Setting
-      </Link>
-      {token && (
-        <Link to='dashboard' className='navHome__link'>
-          <Icons iconName='IconBars' className='navHome__icon' />
-          Dashboard
-        </Link>
-      )}
-    </div>
+    </nav>
   )
 }

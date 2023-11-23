@@ -16,8 +16,18 @@ import Error from './Error'
 import Check from './Check'
 import Back from './Back'
 import Add from './Add'
+import Layers from './Layers'
+import Search from './Search'
+import Dashboard from './Dashboard'
+import Login from './Login'
+import AlignHorizontal from './AlignHorizontal'
 
 const icons = {
+  AlignHorizontal,
+  Login,
+  Dashboard,
+  Search,
+  Layers,
   Check,
   Add,
   Back,

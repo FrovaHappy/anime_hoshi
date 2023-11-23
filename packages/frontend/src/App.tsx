@@ -10,6 +10,10 @@ function App() {
   return (
     <BrowserRouter>
       <div className='App'>
+        <span className='app__bg'>
+          <span className='app__bg--back' />
+          <span className='app__bg--front' />
+        </span>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path={'setting'} element={<User />} />

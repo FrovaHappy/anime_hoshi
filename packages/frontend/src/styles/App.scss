@@ -1,16 +1,36 @@
-@import './variables.scss';
-@import './buttons.scss';
-@import './input.scss';
-@import './icons.scss';
+@import "./variables.scss";
+@import "./buttons.scss";
+@import "./input.scss";
+@import "./icons.scss";
 .App {
   text-align: center;
   display: flex;
-  overflow: hidden;
 }
-.itemNewEpisodes{
-  color: var(--colorPrimary);
-  padding: 2%;
-  transition: color 0.2s ease;
-  display: inline;
-}
+.app {
+  &__bg {
+    position: fixed;
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
 
+    &--back {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: var(--color-primary);
+      filter: brightness(0.04);
+    }
+    &--front {
+      display: block;
+      position: absolute;
+      bottom: -6.25rem;
+      right: -6.25rem;
+      width: 12.5rem;
+      border-radius: 50%;
+      aspect-ratio: 1/1;
+      background: var(--color-primary);
+      filter: blur(12.5rem);
+    }
+  }
+}

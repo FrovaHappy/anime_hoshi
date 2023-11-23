@@ -1,11 +1,11 @@
 .renderList {
   box-sizing: content-box;
   width: inherit;
-  margin: 1.5625rem;
+  max-width: 75rem;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 3.125rem;
-  margin-bottom: 5rem;
   &__search {
     max-width: 43.75rem;
     padding: .9375rem .0625rem;
@@ -16,7 +16,7 @@
     box-sizing: border-box;
     display: grid;
     gap: 1.25rem;
-    grid-template-columns: repeat(auto-fill, minmax(7.5rem, 0.55fr));
+    grid-template-columns: repeat(auto-fill, minmax(8.75rem, 1fr));
     align-items: center;
     padding-right: .3125rem;
     flex: auto;

@@ -1,0 +1,42 @@
+.profile {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &__logo {
+    height: 2.8125rem;
+    aspect-ratio: 1/1;
+    border: 0.125rem solid green;
+    border-radius: 3.125rem;
+    padding: 0.1875rem;
+    cursor: pointer;
+  }
+  &__options {
+    position: absolute;
+    right: 0;
+    top: 4.0625rem;
+    background-color: var(--color-content);
+    border-radius: var(--br-secondary);
+    overflow: hidden;
+    &--hidden {
+      position: absolute;
+      display: none;
+    }
+  }
+  &__option {
+    color: var(--color-text-alt);
+    font-size: var(--font-body);
+
+    display: flex;
+    padding: 0.4375rem;
+    align-items: center;
+    gap: 0.3125rem;
+    &--icon {
+      height: calc(var(--font-body) + 0.25rem);
+    }
+    &:hover {
+      color: var(--color-text);
+      background: var(--color-content-alt);
+    }
+  }
+}

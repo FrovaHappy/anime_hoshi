@@ -18,11 +18,11 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
   const hasOnClickPrevius = useRef(false)
   const compareId = thisAnime.id === animeMinfied?.id
   const color = thisAnime.color
-  const setOpaqueImg = compareId || !animeMinfied ? 'targetAnime__img' : 'targetAnime__img targetAnime__img--opaque'
-  const renderPoint = Date.now() - thisAnime.lastUpdate < 28_800_000
+  const newEpisode = Date.now() - thisAnime.lastUpdate < 28_800_000
+  const setOpaqueImg = compareId || !animeMinfied ? '' : 'targetAnime__img--opaque'
   return (
     <div
-      className='targetAnime'
+      className={'targetAnime ' + setOpaqueImg}
       onClick={() => {
         if (!compareId) hasOnClickPrevius.current = false
         if (compareId && hasOnClickPrevius.current) {
@@ -34,11 +34,12 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
         }
         setColorPrimary(color)
       }}>
-      <div className='targetAnime__episode'>
-        Ep. {thisAnime.episode}
-        <Icon iconName='IconNew' style={isVisibly(renderPoint)} className='itemNewEpisodes' />
+      <div className='targetAnime__episode' style={newEpisode ? { background: 'var(--color-primary)' } : undefined}>
+        <p className='targetAnime__episode--text'>
+          <Icon iconName='Layers' className='targetAnime__episode--icon' /> Ep. {thisAnime.episode}
+        </p>
       </div>
-      <img className={setOpaqueImg} src={thisAnime.image} alt={thisAnime.title} loading='lazy' />
+      <img className='targetAnime__img' src={thisAnime.image} alt={thisAnime.title} loading='lazy' />
       <p className='targetAnime__title'>{thisAnime.title}</p>
     </div>
   )

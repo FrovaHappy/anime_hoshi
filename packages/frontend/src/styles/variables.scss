@@ -1,23 +1,36 @@
 :root {
-  --shadowTarget: 0px 0px 0.625rem 0.125rem #00000050;
-  --borderRadius: 0.4375rem;
-  --colorPrimary: #3d7bff;
-  --textColor: #f5f5f5;
-  --textColorAlt: #a0a0a0;
-  --bg: #000000;
-  --bgContent: #161616ee;
-  --bgContentAlt: #1F1F1F;
-  --bgContentHover: #202020;
+  // --colorPrimary: #3d7bff;
+  // --textColor: #f5f5f5;
+  // --textColorAlt: #a0a0a0;
+  // --bg: #000000;
+  // --bgContent: #171717ee;
+  // --bgContentAlt: #1f1f1f;
+  // --bgContentHover: #202020;
 
-  
+  // STYLESHEETS --------------------------------------------------------
+  --br-primary: 0.625rem;
+  --br-secondary: 0.3125rem;
+
+  // COLORS ----------------------------------------------------------------
+  --color-primary: #3d7bff;
+  --color-danger: #f44336;
+  --color-warning: #ff9800;
+  --color-bg: #000000;
+  --color-content: #161616;
+  --color-content-80: #161616cc;
+  --color-content-alt: #1f1f1f;
+  --color-text: #f7f7f7;
+  --color-text-alt: #adadad;
+
+  // Z-INDEX ----------------------------------------------------------------
   --z-episode: 50;
   --z-menu: 100;
   --z-menu-icon: 150;
   --z-modal: 200;
 
+  // FONTS ----------------------------------------------------------------
   --font-weight-semiblod: 600;
   --font-title: 1.25rem;
-  --font-subtitle: .9375rem;
-  --font-color: #f7f7f7;
-  --font-subcolor: #adadad;
+  --font-subtitle: 0.9375rem;
+  --font-body: 0.75rem;
 }

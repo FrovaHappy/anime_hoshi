@@ -8,9 +8,9 @@
   user-select: none;
   &__img {
     box-shadow: var(--shadowTarget);
-    border-radius: var(--borderRadius);
+    border-radius: var(--br-secondary);
     background-color: var(--bgContent);
-    background-image: url('../../../../../public/resources/loadingImg.gif');
+    background-image: url("../../../../../public/resources/loadingImg.gif");
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
@@ -18,36 +18,51 @@
     aspect-ratio: 6/9;
     height: 100%;
     &--opaque {
-      transition: filter .5s;
+      transition: filter 0.5s;
       filter: grayscale(0.5) brightness(0.6);
     }
   }
 
   &__title {
     box-sizing: border-box;
-    padding: 0.3125rem 0;
-    font-weight: 500;
-    text-overflow: ellipsis;
+    width: -webkit-fill-available;
+    min-height: auto;
+    max-height: calc(var(--font-body) * 2 + 0.25rem);
+    bottom: 0;
+    display: flex;
+    position: absolute;
     overflow: hidden;
-    white-space: nowrap;
-    font-size: 0.8125rem;
-    color: var(--textColor);
+    font-size: var(--font-body);
+    box-sizing: content-box;
+    padding: 0.25rem;
+    box-shadow: 0px 0px 20px 20px #00000080;
+    color: var(--color-text);
+    background: #00000080;
+    flex-direction: column;
   }
   &__episode {
     z-index: var(--z-episode);
-    background-color: #000000af;
-    color: var(--textColor);
-    border-radius: var(--borderRadius);
-    display: flex;
-    justify-items: center;
-    white-space: nowrap;
-    font-weight: 500;
-    gap: 0.3125rem;
+    background-color: var(--color-content);
+    border-radius: var(--br-secondary);
     top: 0.3125rem;
     right: 0.3125rem;
     position: absolute;
     padding: 0.3125rem 0.625rem;
-    font-size: .8125rem;
-    height: 1.125rem;
+    &--icon {
+      height: var(--font-body);
+      aspect-ratio: 1/1;
+      width: auto;
+    }
+    &--text {
+      display: flex;
+      align-items: center;
+      gap: 0.3125rem;
+      justify-items: center;
+      white-space: nowrap;
+      font-size: var(--font-body);
+      color: var(--color-primary);
+      mix-blend-mode: difference;
+      filter: contrast(0.05);
+    }
   }
 }
