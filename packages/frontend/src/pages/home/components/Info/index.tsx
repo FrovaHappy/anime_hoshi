@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import Modal from '../../../../components/Modal'
 import { Description } from './showData'
 import ListEpisodes from './showData/EpisodesList'
 import Metadata from './showData/Metadata'
@@ -12,6 +11,7 @@ import { useContextAnime } from '../../../contexts/contextHome'
 import './index.scss'
 import { Contribute } from './contribute'
 import Loading from './Loading'
+import Position from './position'
 const location = window.location
 let id = new window.URLSearchParams(location.search).get('id') ?? null
 export function ShowInfo({ anime }: { anime: Anime }) {
@@ -49,7 +49,7 @@ export default function Index() {
     console.log(id)
   }
   return (
-    <Modal hidden={!animeMinfied && !firstReload}>
+    <Position hidden={!animeMinfied && !firstReload} left={false}>
       <div className='renderInfo'>
         <CloseSections anime={anime} handleClick={handleClick} />
         {error ? <ErrorComponent code={errorCode} message={error} /> : null}
@@ -57,6 +57,6 @@ export default function Index() {
         {anime && !load && !error ? <ShowInfo anime={anime} /> : null}
         <Contribute />
       </div>
-    </Modal>
+    </Position>
   )
 }
