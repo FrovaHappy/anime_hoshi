@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Description } from './showData'
 import ListEpisodes from './showData/EpisodesList'
 import Metadata from './showData/Metadata'
@@ -12,8 +12,7 @@ import './index.scss'
 import { Contribute } from './contribute'
 import Loading from './Loading'
 import Position from './position'
-const location = window.location
-let id = new window.URLSearchParams(location.search).get('id') ?? null
+
 export function ShowInfo({ anime }: { anime: Anime }) {
   return (
     <>
@@ -24,34 +23,45 @@ export function ShowInfo({ anime }: { anime: Anime }) {
     </>
   )
 }
+const location = () => new window.URLSearchParams(window.location.search).get('id') ?? null
 export default function Index() {
   const { animeMinfied, setAnimeMinfied } = useContextAnime()
-  const [firstReload, setFirstReload] = useState(true)
-  const idRef = useRef(id)
-  const animeId = animeMinfied?.id.toString() ?? idRef.current
+  const [positionLeft, setPositionLeft] = useState(false)
+  const [id, setId] = useState(location())
   const {
     load,
     error,
     errorCode,
     contents: anime
   } = useFetch<Anime>({
-    query: { url: `${urlApi}/animes?id=${animeId ?? ''}`, method: 'GET' },
-    conditional: !!animeId,
-    deps: [animeId]
+    query: { url: `${urlApi}/animes?id=${id ?? ''}`, method: 'GET' },
+    conditional: !!id,
+    deps: [id, animeMinfied]
   })
   useEffect(() => {
-    id ? setFirstReload(true) : setFirstReload(false)
+    window.addEventListener('popstate', () => {
+      if (location() === id) return
+      if (location() !== null) {
+        setId(location())
+        return
+      }
+      setId(null)
+      setAnimeMinfied(null)
+    })
   }, [])
+  useEffect(() => {
+    setId(animeMinfied?.id.toString() ?? id)
+  }, [id, animeMinfied])
   const handleClick = () => {
-    id = null
-    setFirstReload(false)
+    window.history.pushState(null, '', '/')
+    setId(null)
     setAnimeMinfied(null)
-    console.log(id)
   }
+
   return (
-    <Position hidden={!animeMinfied && !firstReload} left={false}>
+    <Position hidden={!id} left={positionLeft}>
       <div className='renderInfo'>
-        <CloseSections anime={anime} handleClick={handleClick} />
+        <CloseSections anime={anime} handleClick={handleClick} setPositionLeft={setPositionLeft} />
         {error ? <ErrorComponent code={errorCode} message={error} /> : null}
         {load ? <Loading /> : null}
         {anime && !load && !error ? <ShowInfo anime={anime} /> : null}

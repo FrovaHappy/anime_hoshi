@@ -60,9 +60,10 @@
       justify-items: center;
       white-space: nowrap;
       font-size: var(--font-body);
-      color: var(--color-primary);
+      font-weight: 600;
+      color: #ffff;
       mix-blend-mode: difference;
-      filter: contrast(0.05);
+      filter: saturate(0) contrast(0);
     }
   }
 }

@@ -1,8 +1,7 @@
 .properties {
   padding: 0.4375rem 0.625rem;
   font-size: 0.8125rem;
-  border-radius: var(--borderRadius);
-  background-color: var(--backgroundColorContent);
+  border-radius: var(--br-primary);
 }
 .renderInfo {
   box-sizing: border-box;
@@ -16,9 +15,9 @@
   display: flex;
   gap: 0.625rem;
   flex-direction: column;
-  background-color: var(--bgContent);
+  background-color: var(--color-bg-80);
 
-  backdrop-filter: blur(0.625rem);
+  backdrop-filter: blur(3.125rem);
   -webkit-backdrop-filter: blur(0.625rem);
   &__discord {
     height: -webkit-fill-available;
@@ -28,7 +27,7 @@
     justify-content: flex-end;
     align-items: center;
     font-size: 0.875rem;
-    color: var(--textColorAlt);
+    color: var(--color-text-alt);
     position: relative;
     gap: 0.3125rem;
     width: -webkit-fill-available;
@@ -52,89 +51,7 @@
     border: 0.0625rem #00000000;
   }
 }
-.conteiner {
-  width: 100%;
-  height: 25rem;
-  box-sizing: border-box;
-  overflow-y: auto;
-  overflow-x: hidden;
-  &__select {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  &__list {
-    background-color: var(--backgroundColorContent);
-    box-sizing: border-box;
-    overflow-x: hidden;
-    margin-top: 0.625rem;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: auto;
-    list-style: none;
-    border-radius: var(--borderRadius);
-    animation-duration: 0.2s;
-    animation-name: traslateconteiner;
-    &::-webkit-scrollbar-track {
-      background: var(--backgroundColorContent);
-      border-top-right-radius: var(--borderRadius);
-      border-bottom-right-radius: var(--borderRadius);
-    }
-    &::-webkit-scrollbar-thumb {
-      border: 0.3125rem solid var(--backgroundColorContent);
-    }
-  }
-  @keyframes traslateconteiner {
-    from {
-      transform: translateX(50%);
-    }
-    to {
-      transform: translateX(0%);
-    }
-  }
-}
-.episodes {
-  position: relative;
-  &__select {
-    width: 12.5rem;
-    box-sizing: border-box;
-    border-radius: var(--borderRadius);
-    padding: 0.4375rem 0.625rem;
-    background-color: var(--backgroundColorContent);
-    display: flex;
-    user-select: none;
-    &:hover {
-      background-color: var(--backgroundColorContentHover);
-    }
-  }
-  &__options {
-    position: absolute;
-    z-index: 10;
-    width: 15.625rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--backgroundColorContent);
-    box-shadow: var(--shadowTarget);
-    border-radius: var(--borderRadius);
-    overflow: hidden;
-    left: 0;
-    top: 2.375rem;
-    user-select: none;
-  }
-  &__option {
-    display: flex;
-    padding: 0.4375rem 0.625rem;
-    &--namePage {
-      width: -webkit-fill-available;
-      text-align: left;
-    }
-    &:hover {
-      background-color: var(--backgroundColorContentHover);
-    }
-  }
-}
+
 @media (max-width: 48rem) {
   .renderInfo {
     box-sizing: border-box;

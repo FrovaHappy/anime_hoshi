@@ -5,12 +5,9 @@
   z-index: var(--z-modal);
   height: 100vh;
   width: auto;
-  background-color: #00000080;
-  backdrop-filter: blur(30px);
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
-  
   &--left {
     left: 0;
     transition: left 0.2s ease-in-out;
@@ -25,6 +22,24 @@
   &--hiddenRight {
     right: -500px;
   }
-
-
+}
+@media (max-width: 25rem) {
+  .position {
+    &--left {
+      top: 0;
+      transition: top 0.2s ease-in-out;
+    }
+    &--right {
+      top: 0;
+      transition: top 0.2s ease-in-out;
+    }
+    &--hiddenLeft {
+      transition: top 0.2s ease-in-out;
+      top: 100vh;
+    }
+    &--hiddenRight {
+      transition: top 0.2s ease-in-out;
+      top: 100vh;
+    }
+  }
 }

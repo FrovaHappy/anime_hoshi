@@ -15,7 +15,7 @@ export const isVisibly = (conditional: boolean): React.CSSProperties | undefined
 }
 export default function TargetAnimeConponent({ thisAnime }: Props) {
   const { animeMinfied, setAnimeMinfied } = useContextAnime()
-  const hasOnClickPrevius = useRef(false)
+  const hasOnClickPrevious = useRef(false)
   const compareId = thisAnime.id === animeMinfied?.id
   const color = thisAnime.color
   const newEpisode = Date.now() - thisAnime.lastUpdate < 28_800_000
@@ -24,13 +24,14 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
     <div
       className={'targetAnime ' + setOpaqueImg}
       onClick={() => {
-        if (!compareId) hasOnClickPrevius.current = false
-        if (compareId && hasOnClickPrevius.current) {
+        if (!compareId) hasOnClickPrevious.current = false
+        if (compareId && hasOnClickPrevious.current) {
           setAnimeMinfied(null)
-          hasOnClickPrevius.current = false
+          hasOnClickPrevious.current = false
         } else {
           setAnimeMinfied(thisAnime)
-          hasOnClickPrevius.current = true
+          window.history.pushState(null, '', '/?id=' + thisAnime.id.toString())
+          hasOnClickPrevious.current = true
         }
         setColorPrimary(color)
       }}>

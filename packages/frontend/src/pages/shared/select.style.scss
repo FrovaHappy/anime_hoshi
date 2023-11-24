@@ -2,9 +2,9 @@
   width: min-content;
   user-select: none;
   &__header {
-    background-color: var(--bgContentAlt);
+    background-color: var(--color-content);
     padding-right: .625rem;
-    border-radius: 0.3125rem;
+    border-radius: var(--br-secondary);
     overflow: hidden;
     white-space: nowrap;
     display: flex;
@@ -26,8 +26,8 @@
     overflow: hidden;
     gap: 0.0625rem;
     margin-top: 0.3125rem;
-    background-color: var(--bgContent);
-    border-radius: 0.625rem;
+    background-color: var(--color-content);
+    border-radius: var(--br-secondary);
     flex-direction: column;
     width: fit-content;
     position: absolute;
