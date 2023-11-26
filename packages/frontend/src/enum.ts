@@ -4,8 +4,9 @@ export enum Timestamps {
   'fifteen_minutes' = 900_000,
 }
 export const enum KeysLocalStorage {
+  slidersHidden = 'slidersHidden',
   publicKey = 'publicKey',
   notifications = 'notifications',
   token = 'token',
-  notificationsInAwait = 'notificationsInAwait',
+  notificationsInAwait = 'notificationsInAwait'
 }
