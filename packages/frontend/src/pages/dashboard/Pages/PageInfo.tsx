@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import type { ScrapPage } from '../../../../types/ScrapEpisode'
-import Icons from '../../Icons'
+import type { ScrapPage } from '../../../../../types/ScrapEpisode'
+import Icons from '../../../Icons'
 import StatusLine from './components/StatusLine'
 import handleUpdateSubmit from './hooks/handleUpdateSubmit'
-import useFetch from '../../hooks/useFetchNew'
-import { urlApi } from '../../config'
-import { KeysLocalStorage } from '../../enum'
+import useFetch from '../../../hooks/useFetchNew'
+import { urlApi } from '../../../config'
+import { KeysLocalStorage } from '../../../enum'
 
 interface Props {
   scrapPage: ScrapPage

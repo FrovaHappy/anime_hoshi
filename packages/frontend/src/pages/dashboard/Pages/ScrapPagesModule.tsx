@@ -1,14 +1,14 @@
 import { useState } from 'react'
-import Icons from '../../Icons'
+import Icons from '../../../Icons'
 import './ScrapPagesModule.scss'
 import NewScrapPage from './NewScrapPage'
 import PageInfo from './PageInfo'
-import useFetch from '../../hooks/useFetchNew'
-import { urlApi } from '../../config'
-import { KeysLocalStorage } from '../../enum'
-import AwaitLoad from '../../components/AwaitLoad'
-import type { ScrapPage } from '../../../../types/ScrapEpisode'
-import ErrorComponent from '../../components/Error'
+import useFetch from '../../../hooks/useFetchNew'
+import { urlApi } from '../../../config'
+import { KeysLocalStorage } from '../../../enum'
+import AwaitLoad from '../../../components/AwaitLoad'
+import type { ScrapPage } from '../../../../../types/ScrapEpisode'
+import ErrorComponent from '../../../components/Error'
 interface Response {
   newToken: string
   pages: ScrapPage[]

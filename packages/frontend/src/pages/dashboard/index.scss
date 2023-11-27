@@ -1,0 +1,35 @@
+.nav {
+  padding: 0 1.25rem;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  background-color: var(--color-content);
+  width: -webkit-fill-available;
+  gap: 1.25rem;
+  &__icon {
+    height: var(--font-title);
+    aspect-ratio: 1/1;
+  }
+  &__link {
+    color: var(--color-text-alt);
+    padding: 0.625rem 0;
+    font-size: var(--font-subtitle);
+    border-top: 2px solid var(--color-content);
+    border-bottom: 2px solid var(--color-content);
+    transition: color border-bottom 0.2s ease-in-out;
+    &--active {
+      color: var(--color-text);
+      border-bottom: 2px solid var(--color-text);
+    }
+    &:hover {
+      color: var(--color-primary);
+      border-bottom: 2px solid var(--color-primary);
+    }
+  }
+}
+.mainContainer
+{
+  width: 100%;
+}

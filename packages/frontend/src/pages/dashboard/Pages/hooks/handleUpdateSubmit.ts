@@ -1,5 +1,5 @@
 import type React from 'react'
-import type { ScrapPage } from '../../../../../types/ScrapEpisode'
+import type { ScrapPage } from '../../../../../../types/ScrapEpisode'
 export function parseDupla(string: string): Array<[string, string]> | null {
   try {
     const array = JSON.parse(string)

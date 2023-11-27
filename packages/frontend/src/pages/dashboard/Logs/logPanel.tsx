@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { type Log } from '../../../../types'
-import AwaitLoad from '../../components/AwaitLoad'
-import useFetch from '../../hooks/useFetchNew'
-import { urlApi } from '../../config'
-import { KeysLocalStorage } from '../../enum'
-import ErrorComponent from '../../components/Error'
+import { type Log } from '../../../../../types'
+import AwaitLoad from '../../../components/AwaitLoad'
+import useFetch from '../../../hooks/useFetchNew'
+import { urlApi } from '../../../config'
+import { KeysLocalStorage } from '../../../enum'
+import ErrorComponent from '../../../components/Error'
 export interface ResultLog<T = string> {
   error: string | null
   contents: T[] | null

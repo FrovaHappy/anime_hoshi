@@ -1,4 +1,4 @@
-import { type ValidateResult, type ScrapPage } from '../../../../../types/ScrapEpisode'
+import { type ValidateResult, type ScrapPage } from '../../../../../../types/ScrapEpisode'
 import './StatusLine.scss'
 interface Props {
   scrapPage: ScrapPage

@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import type React from 'react'
-import Icons from '../../Icons'
-import Modal from '../../components/Modal'
-import { urlApi } from '../../config'
-import useFetch from '../../hooks/useFetchNew'
+import Icons from '../../../Icons'
+import Modal from '../../../components/Modal'
+import { urlApi } from '../../../config'
+import useFetch from '../../../hooks/useFetchNew'
 import './NewScrapPage.scss'
-import type { ScrapPage } from '../../../../types/ScrapEpisode'
-import { KeysLocalStorage } from '../../enum'
+import type { ScrapPage } from '../../../../../types/ScrapEpisode'
+import { KeysLocalStorage } from '../../../enum'
 interface Props {
   hidden: boolean
   setHidden: (k: boolean) => void

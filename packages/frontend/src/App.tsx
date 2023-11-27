@@ -2,10 +2,10 @@ import './styles/App.scss'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Home from './pages/home'
 import User from './pages/user'
-import DashboardPages from './pages/dashboardPages'
-import DashboardLogs from './pages/dashboardLogs'
-import Nav from './pages/shared/Nav'
-
+import DashboardPages from './pages/dashboard/Pages'
+import DashboardLogs from './pages/dashboard/Logs'
+import Dashboard from './pages/dashboard'
+import DashboardAnimes from './pages/dashboard/animesEditor'
 function App() {
   return (
     <BrowserRouter>
@@ -18,17 +18,10 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path={'setting'} element={<User />} />
           <Route path='dashboard'>
-            <Route
-              path=''
-              element={
-                <>
-                  <Nav />
-                  <div>dashboard</div>
-                </>
-              }
-            />
+            <Route path='' element={<Dashboard />} />
             <Route path='pages' element={<DashboardPages />} />
             <Route path='logs' element={<DashboardLogs />} />
+            <Route path='animes' element={<DashboardAnimes />} />
           </Route>
         </Routes>
       </div>
