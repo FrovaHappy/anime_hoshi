@@ -1,4 +1,4 @@
-@mixin theme($theme: transparent, $color: var(--colorPrimary), $hover: $theme) {
+@mixin theme($theme: transparent, $hover: $theme) {
   padding: .3125rem .75rem;
   border: 0;
   box-sizing: border-box;
@@ -8,20 +8,25 @@
   font-size: var(--font-body);
   white-space: nowrap;
   background-color: $theme;
-  color: $color;
+  color: var(--color-text);
   &:hover {
     background-color: $hover;
     filter: brightness(1.1);
   }
 }
 .button {
-  @include theme($theme: var(--colorPrimary), $color: var(--textColor));
+  @include theme($theme: var(--color-primary));
   &__secondary {
     @include theme($hover: #ffffff0e);
-    border: 1px solid var(--colorPrimary);
+    border: 1px solid var(--color-primary);
+  }
+  &__withoutBorder {
+    @include theme($hover: #ffffff0e);
+    
+    border: 1px solid transparent;
   }
   &__danger {
-    @include theme($theme: #fa5050, $color: var(--textColor));
+    @include theme($theme: #fa5050);
   }
   &__icon{
     @include theme($hover: #ffffff0e);

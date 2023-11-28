@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Timestamps } from '../../../../../enum'
-import select from '../../../../shared/select'
+import select from '../../../../../components/select'
 import { getTimeAgo } from '../../../../../utils/getTimeAgo'
 import { type Anime } from '../../../../../../../types/Anime'
 import { toPascalCase } from '../../../../../utils/general'

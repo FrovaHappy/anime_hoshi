@@ -1,12 +1,12 @@
-import { ComponentType, useShowComponent } from '../../../../contexts/Sessions'
+import { useNavigate } from 'react-router-dom'
 import Option from '../../Option'
 export default function EmptyUser() {
-  const { setShowComponent } = useShowComponent()
+  const navigate = useNavigate()
   const onHandleSignIn = () => {
-    setShowComponent(ComponentType.signIn)
+    navigate('/signin')
   }
   const onHandleSignUp = () => {
-    setShowComponent(ComponentType.signUp)
+    navigate('/signup')
   }
   return (
     <Option

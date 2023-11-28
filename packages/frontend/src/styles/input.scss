@@ -18,6 +18,7 @@ select:focus-visible {
 @mixin schemaInput ($bg: transparent) {
   background-color: transparent;
   color: var(--color-text);
+  border-radius: var(--br-secondary);
   box-sizing: border-box;
   font-size: var(--font-body);
   height: fit-content;
@@ -30,7 +31,7 @@ select:focus-visible {
   &:hover,
   &:focus {
     border-bottom: 1px solid var(--color-primary);
-    background-color: var(--color-bg-content);
+    background-color: var(--color-content-alt);
   }
 }
 
@@ -38,19 +39,12 @@ select:focus-visible {
   color: red !important;
   border-bottom: 1px solid red !important;
 }
-
+.inputBox {
+  height: fit-content;
+  width: -webkit-fill-available;
+}
 .input {
   @include schemaInput();
-
-  &__password {
-    @include schemaInput();
-
-    &::-ms-reveal {
-      border: 2px solid transparent;
-      border-radius: 50%;
-      background-color: currentColor;
-    }
-  }
 
   &__number {
     @include schemaInput();

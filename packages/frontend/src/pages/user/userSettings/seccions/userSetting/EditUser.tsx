@@ -1,5 +1,5 @@
 import Option from '../../Option'
-import { ComponentType, useShowComponent } from '../../../../contexts/Sessions'
+import { useNavigate } from 'react-router-dom'
 import { KeysLocalStorage } from '../../../../../enum'
 import OptionsPassword from './option.password'
 
@@ -13,13 +13,13 @@ interface Props {
   }
 }
 export default function EditUser({ user }: Props) {
-  const { setShowComponent } = useShowComponent()
+  const navigate = useNavigate()
   const onHandleChange = () => {
-    setShowComponent(ComponentType.signIn)
+    navigate('/signup')
   }
   const onHandleDelete = () => {
     window.localStorage.removeItem(KeysLocalStorage.token)
-    setShowComponent(ComponentType.signIn)
+    navigate('/signin')
   }
   return (
     <>

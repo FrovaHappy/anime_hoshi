@@ -6,6 +6,8 @@ import DashboardPages from './pages/dashboard/Pages'
 import DashboardLogs from './pages/dashboard/Logs'
 import Dashboard from './pages/dashboard'
 import DashboardAnimes from './pages/dashboard/animesEditor'
+import SignIn from './pages/session/signIn'
+import SignUp from './pages/session/signUp'
 function App() {
   return (
     <BrowserRouter>
@@ -23,6 +25,8 @@ function App() {
             <Route path='logs' element={<DashboardLogs />} />
             <Route path='animes' element={<DashboardAnimes />} />
           </Route>
+          <Route path='signin' element={<SignIn />} />
+          <Route path='signup' element={<SignUp />} />
         </Routes>
       </div>
     </BrowserRouter>

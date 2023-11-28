@@ -1,13 +1,13 @@
 import type React from 'react'
 import { type FormEvent, useState, useRef } from 'react'
-import { useShowComponent, ComponentType } from '../contexts/Sessions'
+import { useNavigate } from 'react-router-dom'
 import { urlApi } from '../../config'
 import useFetch from '../../hooks/useFetchNew'
 import { type ObjectDynamic } from '../../../types'
 import { isValidInput } from '../../utils/general'
 import { REGEX_PASSWORD } from '../../utils/const'
 function signUp() {
-  const { setShowComponent } = useShowComponent()
+  const navigate = useNavigate()
   const [signUp, setSingUp] = useState<ObjectDynamic<FormDataEntryValue> | undefined>(undefined)
   const { error } = useFetch({
     query: { url: `${urlApi}/user/signup`, method: 'POST', body: signUp },
@@ -38,51 +38,59 @@ function signUp() {
   return (
     <div className='sign'>
       <form onSubmit={onSubmit} className='signForm'>
-        <h1 className='signForm__title'>sign Up</h1>
-        <input
-          required
-          className='input__password'
-          type='text'
-          name='username'
-          placeholder='Usuario'
-          minLength={6}
-          onChange={isValidInput}
-        />
-        <input
-          required
-          className='input__password'
-          type='password'
-          name='password'
-          placeholder='Contraseña'
-          onChange={handlePassword}
-        />
-        <input
-          required
-          className='input__password'
-          type='password'
-          name='confirmPassword'
-          placeholder='Contraseña'
-          onChange={handleConfirm}
-        />
+        <h1>Sign Up</h1>
+        <h2>Hola!</h2>
+        <h3>Por favor completa los datos, para crear el usuario.</h3>
+        <div className='signForm__input inputBox'>
+          <input
+            required
+            className='input'
+            type='text'
+            name='username'
+            placeholder='Usuario'
+            minLength={6}
+            onChange={isValidInput}
+          />
+        </div>
+        <div className='signForm__input inputBox'>
+          <input
+            required
+            className='input'
+            type='password'
+            name='password'
+            placeholder='Contraseña'
+            onChange={handlePassword}
+          />
+        </div>
+        <div className='signForm__input inputBox'>
+          <input
+            required
+            className='input'
+            type='password'
+            name='confirmPassword'
+            placeholder='Contraseña'
+            onChange={handleConfirm}
+          />
+        </div>
         {error !== '' ? <p>{error}</p> : null}
-        <button className='button' type='submit'>
+        <button className='button signForm__button' type='submit'>
           Crear Sesión
         </button>
-        <p>ó</p>
+        <span className='signForm__line'></span>
         <div className='signForm__contents'>
           <button
-            className='button__secondary'
+            className='button__withoutBorder signForm__button'
             type='button'
             onClick={() => {
-              setShowComponent(ComponentType.children)
+              window.history.back()
             }}>
             volver
           </button>
           <button
-            className='button__secondary'
+            className='button__secondary signForm__button'
             type='button'
             onClick={() => {
-              setShowComponent(ComponentType.signIn)
+              navigate('/signin')
             }}>
             Iniciar Sesión
           </button>

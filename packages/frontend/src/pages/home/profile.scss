@@ -17,6 +17,11 @@
     top: 4.0625rem;
     background-color: var(--color-content);
     border-radius: var(--br-secondary);
+    padding: .9375rem;
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    gap: .625rem;
     overflow: hidden;
     &--hidden {
       position: absolute;
@@ -25,14 +30,12 @@
   }
   &__option {
     color: var(--color-text-alt);
-    font-size: var(--font-body);
-
+    font-size: var(--font-title);
     display: flex;
-    padding: 0.4375rem;
     align-items: center;
-    gap: 0.3125rem;
+    gap: .625rem;
     &--icon {
-      height: calc(var(--font-body) + 0.25rem);
+      height: calc(var(--font-title) + 0.25rem);
     }
     &:hover {
       color: var(--color-text);

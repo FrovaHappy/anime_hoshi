@@ -1,7 +1,7 @@
 import type React from 'react'
 import { useRef } from 'react'
 import './select.style.scss'
-import Icons from '../../Icons'
+import Icons from '../Icons'
 interface SelectOptions {
   values: Array<{
     value: string

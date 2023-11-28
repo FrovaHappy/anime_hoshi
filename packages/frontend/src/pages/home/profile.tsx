@@ -25,7 +25,7 @@ function Profile() {
           </Link>
         </li>
         <li>
-          <Link to='login' className='profile__option'>
+          <Link to='signin' className='profile__option'>
             <Icons iconName='Login' className='profile__option--icon' />
             Login
           </Link>

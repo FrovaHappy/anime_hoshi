@@ -1,0 +1,62 @@
+.sign {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 1.5625rem;
+}
+.signForm {
+  max-width: 25rem;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  max-height: 37.5rem;
+  padding: 1.5625rem 3.125rem;
+  border-radius: 0.625rem;
+  background-color: var(--color-content-80);
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  & h1 {
+    font-size: calc(var(--font-title) * 1.5);
+    font-weight: 700;
+  }
+  & h2 {
+    font-size: var(--font-title);
+  }
+  & h3 {
+    font-size: var(--font-subtitle);
+  }
+  &__line {
+    width: 75%;
+    height: 1px;
+    background: var(--color-text-alt);
+  }
+  &__contents {
+    display: flex;
+    gap: 0.625rem;
+  }
+  &__input {
+    position: relative;
+    & input {
+      padding: .625rem 1.25rem;
+      font-size: var(--font-subtitle);
+
+      width: -webkit-fill-available;
+    }
+    & svg {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 1.25rem;
+      color: var(--color-primary);
+      height: var(--font-subtitle);
+    }
+  }
+  &__button {
+    font-size: var(--font-subtitle);
+    padding: .9375rem 1.875rem;
+  }
+}
