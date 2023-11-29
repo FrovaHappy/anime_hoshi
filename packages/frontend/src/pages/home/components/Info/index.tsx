@@ -50,7 +50,7 @@ export default function Index() {
     })
   }, [])
   useEffect(() => {
-    setId(animeMinfied?.id.toString() ?? id)
+    setId(animeMinfied?.id.toString() ?? location())
   }, [id, animeMinfied])
   const handleClick = () => {
     window.history.pushState(null, '', '/')

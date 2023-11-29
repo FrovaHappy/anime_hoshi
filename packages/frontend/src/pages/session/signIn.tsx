@@ -1,13 +1,14 @@
-import { type FormEvent, useState } from 'react'
+import { type FormEvent, type MouseEvent, useState } from 'react'
 import { type ObjectDynamic } from '../../../types'
 import useFetch from '../../hooks/useFetchNew'
 import { urlApi } from '../../config'
 import { KeysLocalStorage } from '../../enum'
 import { isValidInput } from '../../utils/general'
-import { REGEX_PASSWORD } from '../../utils/const'
+import { MESSAGE_PASSWORD, REGEX_PASSWORD } from '../../utils/const'
 import './sign.style.scss'
 import { useNavigate } from 'react-router-dom'
 import Icons from '../../Icons'
+import { TargetError } from './components/TargetError'
 
 function signIn() {
   const navigate = useNavigate()
@@ -26,10 +27,20 @@ function signIn() {
     window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
     window.history.back()
   }
+  const onShowPassword = (event: MouseEvent<SVGSVGElement>) => {
+    const input = event.currentTarget.parentElement?.querySelector('input')
+    if (!input) return
+    if (input.type === 'password') {
+      input.type = 'text'
+    } else {
+      input.type = 'password'
+    }
+    event.currentTarget.classList.toggle('signForm__input--passwordShow')
+  }
   return (
     <div className='sign'>
       <form className='signForm' onSubmit={onSubmit}>
-        <h1>Anime Hoshi</h1>
+        <h1>LogIn</h1>
         <h2>Bienvenido</h2>
         <h3>Para ingresar a tu cuenta, inicie sesión.</h3>
         <div className='signForm__input inputBox'>
@@ -43,7 +54,7 @@ function signIn() {
             placeholder='Usuario'
             onChange={isValidInput}
           />
-          <Icons iconName='IconBug' />
+          <Icons className='signForm__input--icon' iconName='Person' />
         </div>
         <div className='signForm__input inputBox'>
           <input
@@ -53,13 +64,12 @@ function signIn() {
             name='password'
             placeholder='Contraseña'
             onChange={e => {
-              isValidInput(e, REGEX_PASSWORD)
+              isValidInput(e, REGEX_PASSWORD, MESSAGE_PASSWORD)
             }}
           />
-          <Icons iconName='IconBug' />
+          <Icons className='signForm__input--icon' iconName='Eye' onClick={onShowPassword} />
         </div>
-        {error !== '' ? <p>{error}</p> : null}
-
+        <TargetError error={error} />
         <button className='button signForm__button' type='submit'>
           Iniciar Sesión
         </button>
@@ -69,7 +79,7 @@ function signIn() {
             type='button'
             className='button__withoutBorder signForm__button'
             onClick={() => {
-              window.history.back()
+              navigate('/')
             }}>
             volver
           </button>

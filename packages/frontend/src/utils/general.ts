@@ -13,9 +13,13 @@ export function stringToObject<T>(s: string | undefined): T | null {
   }
 }
 
-export function isValidInput(e: React.ChangeEvent<HTMLInputElement>, regex: RegExp | null = null) {
+export function isValidInput(
+  e: React.ChangeEvent<HTMLInputElement>,
+  regex: RegExp | null = null,
+  message: string = 'No se cumplen todas las condiciones.'
+) {
   const validRegex = regex?.test(e.target.value) ?? true
-  if (!validRegex) e.target.setCustomValidity('No se cumplen todas las condiciones.')
+  if (!validRegex) e.target.setCustomValidity(message)
   else e.target.setCustomValidity('')
 
   if (!e.target.validity.valid || !validRegex) {

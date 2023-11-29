@@ -46,7 +46,7 @@
 
       width: -webkit-fill-available;
     }
-    & svg {
+    &--icon {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
@@ -54,9 +54,33 @@
       color: var(--color-primary);
       height: var(--font-subtitle);
     }
+    &--passwordShow {
+      background: var(--color-text);
+      color: var(--color-content);
+      right: 1rem;
+      border-radius: 50%;
+      padding: .25rem;
+    }
   }
   &__button {
     font-size: var(--font-subtitle);
     padding: .9375rem 1.875rem;
+  }
+  &__error {
+    display: flex;
+    border: .0625rem solid var(--color-danger);
+    align-items: center;
+    gap: .625rem;
+    border-radius: var(--br-secondary);
+    padding: .625rem 1.25rem;
+    width: -webkit-fill-available;
+    &--icon {
+      border: .0625rem solid var(--color-danger);
+      border-radius: 50%;
+      height: var(--font-subtitle);
+      aspect-ratio: 1/1;
+      padding: .3125rem;
+      color: var(--color-danger);
+    }
   }
 }

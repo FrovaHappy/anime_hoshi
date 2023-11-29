@@ -9,3 +9,5 @@ export const DEFAULT_NOTIFICATIONS: NotificationsInAired = {
   minPages: 0
 }
 export const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+export const MESSAGE_PASSWORD =
+  'La contraseña debe contener letras minúsculas, mayúsculas, números y signos especiales.'

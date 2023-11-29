@@ -21,8 +21,12 @@ import Search from './Search'
 import Dashboard from './Dashboard'
 import Login from './Login'
 import AlignHorizontal from './AlignHorizontal'
+import Person from './Person'
+import Eye from './Eye'
 
 const icons = {
+  Person,
+  Eye,
   AlignHorizontal,
   Login,
   Dashboard,
@@ -51,13 +55,20 @@ interface IconProps {
   className?: string
   style?: React.CSSProperties
   iconName: keyof typeof icons
+  onClick?: (event: React.MouseEvent<SVGSVGElement>) => void
 }
 
 const FilterIcon = (iconProps: IconProps) => {
-  const { className, iconName, style } = iconProps
+  const { className, iconName, style, onClick } = iconProps
   const { jsx, viewBox } = icons[iconName]
   return (
-    <svg className={className} style={style} viewBox={viewBox} xmlns='http://www.w3.org/2000/svg' fill='currentColor'>
+    <svg
+      className={className}
+      style={style}
+      viewBox={viewBox}
+      xmlns='http://www.w3.org/2000/svg'
+      fill='currentColor'
+      onClick={onClick}>
       {jsx}
     </svg>
   )

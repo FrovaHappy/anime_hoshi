@@ -28,6 +28,7 @@ export default function TargetAnimeConponent({ thisAnime }: Props) {
         if (compareId && hasOnClickPrevious.current) {
           setAnimeMinfied(null)
           hasOnClickPrevious.current = false
+          window.history.pushState(null, '', '/')
         } else {
           setAnimeMinfied(thisAnime)
           window.history.pushState(null, '', '/?id=' + thisAnime.id.toString())
