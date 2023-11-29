@@ -8,5 +8,6 @@ export const enum KeysLocalStorage {
   publicKey = 'publicKey',
   notifications = 'notifications',
   token = 'token',
-  notificationsInAwait = 'notificationsInAwait'
+  notificationsInAwait = 'notificationsInAwait',
+  theme = 'theme'
 }

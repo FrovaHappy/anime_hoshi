@@ -39,9 +39,11 @@
     color: var(--color-text-alt);
     font-size: var(--font-title);
     display: flex;
+    user-select: none;
     align-items: center;
     padding: .625rem;
     gap: .625rem;
+    text-wrap: nowrap;
     &--icon {
       height: calc(var(--font-title) + 0.25rem);
     }

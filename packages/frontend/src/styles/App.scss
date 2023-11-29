@@ -2,6 +2,7 @@
 @import "./buttons.scss";
 @import "./input.scss";
 @import "./icons.scss";
+@import "./switch.scss";
 .App {
   text-align: center;
   display: flex;
@@ -12,14 +13,14 @@
     z-index: -1;
     width: 100vw;
     height: 100vh;
-
+    filter: blur(9.375rem);
     &--back {
       display: block;
       position: absolute;
       width: 100%;
       height: 100%;
       background: var(--color-primary);
-      filter: brightness(0.04);
+      filter: var(--color-filter-brightness);
     }
     &--front {
       display: block;
@@ -30,7 +31,7 @@
       border-radius: 50%;
       aspect-ratio: 1/1;
       background: var(--color-primary);
-      filter: blur(12.5rem);
+      
     }
   }
 }

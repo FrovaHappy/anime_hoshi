@@ -1,13 +1,17 @@
 import { Link } from 'react-router-dom'
 import Icons from '../../Icons'
+import type React from 'react'
 import { useState } from 'react'
 import './profile.scss'
 import useFetch from '../../hooks/useFetchNew'
 import { KeysLocalStorage } from '../../enum'
 import { urlApi } from '../../config'
+import { toggleTheme } from '../../utils/toggleTheme'
+
 function SuperUser({ contents }: { contents: any }) {
+  let ButtonDashboard: React.ReactNode = null
   if (contents?.roles.some((r: string) => r === 'admin' || r === 'owner' || r === 'viewer')) {
-    return (
+    ButtonDashboard = (
       <li>
         <Link to='dashboard' className='profile__option'>
           <Icons iconName='Dashboard' className='profile__option--icon' />
@@ -18,14 +22,30 @@ function SuperUser({ contents }: { contents: any }) {
   }
   if (!contents) {
     return (
-      <li>
-        <Link to='signin' className='profile__option'>
-          <Icons iconName='Login' className='profile__option--icon' />
-          Login
-        </Link>
-      </li>
+      <>
+        {ButtonDashboard}
+        <li>
+          <Link to='signin' className='profile__option'>
+            <Icons iconName='Login' className='profile__option--icon' />
+            Login
+          </Link>
+        </li>
+      </>
     )
   }
+  const onClick = () => {
+    window.localStorage.removeItem(KeysLocalStorage.token)
+    window.location.reload()
+  }
+  return (
+    <>
+      {ButtonDashboard}
+      <li className='profile__option' onClick={onClick}>
+        <Icons iconName='IconClose' className='profile__option--icon' />
+        Cerrar Sesión
+      </li>
+    </>
+  )
 }
 function Profile() {
   const [isVisible, setIsVisible] = useState(false)
@@ -45,6 +65,7 @@ function Profile() {
     if (error) return 'profile__logo--error'
     return ''
   }
+  const isDarkTheme = window.document.documentElement.getAttribute('data-theme') === 'dark'
   return (
     <div className='profile'>
       <img className={'profile__logo ' + renderLogo()} src='/user.png' alt='user' onClick={onClick} />
@@ -55,8 +76,15 @@ function Profile() {
             Setting
           </Link>
         </li>
-
         <SuperUser contents={contents} />
+        <li className='profile__option'>
+          <Icons iconName='DarkMode' className='profile__option--icon' />
+          Modo Oscuro
+          <label className='switch'>
+            <input type='checkbox' onClick={toggleTheme} defaultChecked={isDarkTheme} />
+            <span className='slider' />
+          </label>
+        </li>
       </ul>
     </div>
   )

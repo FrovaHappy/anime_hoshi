@@ -1,6 +1,8 @@
 .targetAnime {
   display: flex;
   flex-direction: column;
+
+  border-radius: var(--br-secondary);
   height: max-content;
   overflow: hidden;
   position: relative;
@@ -8,7 +10,6 @@
   user-select: none;
   &__img {
     box-shadow: var(--shadowTarget);
-    border-radius: var(--br-secondary);
     background-color: var(--bgContent);
     background-image: url("../../../../../public/resources/loadingImg.gif");
     background-size: 50%;

@@ -1,0 +1,57 @@
+// Estructure the Switch --------------------------------
+
+// <label class="switch">
+//   <input type="checkbox">
+//   <span class="slider "/>
+// </label>
+
+.switch {
+  --height: 1.5625rem;
+  --padding: 0.25rem;
+  $width: (1.5625rem * 2) - (0.25rem * 2); // height * 2 - padding * 2
+  --circle: calc(var(--height) - var(--padding) * 2);
+
+  position: relative;
+  display: inline-block;
+  width: $width;
+  height: var(--height);
+  & input {
+    display: none;
+  }
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: var(--height);
+  background-color: var(--color-text-alt);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  &:before {
+    position: absolute;
+    content: "";
+    height: var(--circle);
+    width: var(--circle);
+    left: var(--padding);
+    bottom: var(--padding);
+    border-radius: 50%;
+    background-color: var(--color-text);
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+}
+input:checked + .slider {
+  background-color: var(--color-primary);
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--color-primary);
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(var(--circle));
+  -ms-transform: translateX(var(--circle));
+  transform: translateX(var(--circle));
+}

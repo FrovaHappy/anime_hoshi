@@ -23,8 +23,10 @@ import Login from './Login'
 import AlignHorizontal from './AlignHorizontal'
 import Person from './Person'
 import Eye from './Eye'
+import DarkMode from './DarkMode'
 
 const icons = {
+  DarkMode,
   Person,
   Eye,
   AlignHorizontal,
