@@ -19,11 +19,13 @@
   --color-bg-80: #000000cc;
   --color-content: #161616;
   --color-content-80: #161616cc;
+  --color-content-50: #16161680;
+  --color-content-30: #1616164d;
   --color-content-alt: #1f1f1f;
   --color-text: #f7f7f7;
   --color-text-alt: #adadad;
   --color-filter-brightness: brightness(0.04);
-    // Z-INDEX ----------------------------------------------------------------
+  // Z-INDEX ----------------------------------------------------------------
   --z-episode: 50;
   --z-menu: 100;
   --z-menu-icon: 150;
@@ -38,10 +40,12 @@
 [data-theme="light"] {
   --color-bg: #fafafa;
   --color-bg-80: #fafafacc;
-  --color-content: #f0f0f0;
-  --color-content-80: #f0f0f0cc;
+  --color-content: #dbdbdb;
+  --color-content-80: #dbdbdbcc;
+  --color-content-50: #dbdbdb80;
+  --color-content-30: #dbdbdb4d;
   --color-content-alt: #c7c7c7;
   --color-text: #000000;
   --color-text-alt: #666666;
-  --color-filter-brightness: contrast(0.2) brightness(2.90);
+  --color-filter-brightness: contrast(0.2) brightness(2.9);
 }

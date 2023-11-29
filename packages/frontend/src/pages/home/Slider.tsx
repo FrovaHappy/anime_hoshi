@@ -7,7 +7,7 @@ import { KeysLocalStorage } from '../../enum'
 
 const styleBgGradient = (color: string) => {
   return {
-    background: `linear-gradient(90deg, ${color} 0%, #ffffff00 145%)`
+    background: `linear-gradient(90deg, ${color} 0%, #ffffff00 100%)`
   } satisfies React.CSSProperties
 }
 
@@ -77,7 +77,12 @@ function Slider() {
                 <span style={styleBgGradient(colorPrimary)} className='sliderHome__bg' />
                 <p className='sliderHome__title'>{title}</p>
                 <p className='sliderHome__content'>{description}</p>
-                <a href={action.url} style={{ background: colorSecondary }} className='sliderHome__action'>
+                <a
+                  href={action.url}
+                  style={{ background: colorSecondary }}
+                  rel='noreferrer'
+                  target={action.isExternal ? '_blank' : '_self'}
+                  className='sliderHome__action'>
                   <span>{action.title}</span>
                 </a>
                 {(() => {

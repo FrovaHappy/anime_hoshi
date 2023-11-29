@@ -8,8 +8,8 @@
   top: 0;
   box-sizing: border-box;
   width: -webkit-fill-available;
-  background: var(--bgContent);
-  backdrop-filter: blur(200px);
+  background: var(--color-content-30);
+  backdrop-filter: blur(500px);
   &__logo {
     height: 3.125rem;
   }

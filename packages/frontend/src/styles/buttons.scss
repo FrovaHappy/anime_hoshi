@@ -26,7 +26,7 @@
     border: 1px solid transparent;
   }
   &__danger {
-    @include theme($theme: #fa5050);
+    @include theme($theme: var(--color-danger));
   }
   &__icon{
     @include theme($hover: #ffffff0e);

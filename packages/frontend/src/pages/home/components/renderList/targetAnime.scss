@@ -3,6 +3,7 @@
   flex-direction: column;
 
   border-radius: var(--br-secondary);
+  box-shadow: 0px 0px 8px -5px var(--color-text-alt);
   height: max-content;
   overflow: hidden;
   position: relative;
@@ -36,9 +37,9 @@
     font-size: var(--font-body);
     box-sizing: content-box;
     padding: 0.25rem;
-    box-shadow: 0px 0px 20px 20px #00000080;
+    box-shadow: 0px 0px 20px 20px var(--color-content-50);
     color: var(--color-text);
-    background: #00000080;
+    background: var(--color-content-50);
     flex-direction: column;
   }
   &__episode {

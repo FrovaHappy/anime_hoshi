@@ -16,10 +16,10 @@ interface SliderData {
 const data: SliderData[] = [
   {
     id: 1,
-    title: 'Configura los Permisos a notificaciones',
+    title: 'Configura los Permisos de las notificaciones',
     description: 'Dirígete a settings, dale a permitir y ajusta a tus gustos las notificaciones.',
-    colorPrimary: '#E57EA3',
-    colorSecondary: '#670315',
+    colorPrimary: '#F2C53D',
+    colorSecondary: '#F27329',
     image: 'https://images.alphacoders.com/134/thumbbig-1342171.webp',
     canHide: false,
     action: {
@@ -32,27 +32,28 @@ const data: SliderData[] = [
     id: 2,
     title: 'Únete a nuestra comunidad',
     description: 'Habla, comparte, ayúdanos en nuestra comunidad de Discord, te esperamos.',
-    colorPrimary: '#E57EA3',
-    colorSecondary: '#670315',
+    colorPrimary: '#F2AE72',
+    colorSecondary: '#F2786D',
     image: 'https://images6.alphacoders.com/133/thumbbig-1330235.webp',
     canHide: true,
     action: {
       url: 'https://discord.gg/JRpHsGC8YQ',
-      title: 'Ir A Discord',
+      title: 'Ir a Discord',
       isExternal: true
     }
   },
   {
     id: 3,
-    title: 'Ayúdanos a mejorarlo',
-    description: 'Si tienes ideas para mejorar a AnimeHoshi o avisar de un fallo pásate por el github.',
-    colorPrimary: '#E57EA3',
-    colorSecondary: '#670315',
-    image: 'https://images5.alphacoders.com/134/thumbbig-1342156.webp',
+    title: 'Ayúdame a mejorarlo',
+    description:
+      'Si tienes ideas para mejorar a AnimeHoshi ó encuentras algún fallo pásate por el Github o por Discord.',
+    colorPrimary: '#AEDFF2',
+    colorSecondary: '#337AA6',
+    image: 'https://images2.alphacoders.com/134/thumbbig-1342755.webp',
     canHide: true,
     action: {
-      url: 'setting',
-      title: 'Empezamos?',
+      url: 'https://github.com/FrovaHappy/monorepo-scrapping-anime.git',
+      title: 'Ir a Github',
       isExternal: true
     }
   }
