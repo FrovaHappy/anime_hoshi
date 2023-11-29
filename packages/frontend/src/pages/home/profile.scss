@@ -10,6 +10,15 @@
     border-radius: 3.125rem;
     padding: 0.1875rem;
     cursor: pointer;
+    &--loading {
+      border: 0.125rem solid transparent;
+      filter: grayscale(1);
+      animation: loading 1s infinite;
+    }
+    &--error {
+      border: 0.125rem solid transparent;
+      filter: grayscale(1);
+    }
   }
   &__options {
     position: absolute;
@@ -17,11 +26,9 @@
     top: 4.0625rem;
     background-color: var(--color-content);
     border-radius: var(--br-secondary);
-    padding: .9375rem;
     display: flex;
     list-style: none;
     flex-direction: column;
-    gap: .625rem;
     overflow: hidden;
     &--hidden {
       position: absolute;
@@ -33,6 +40,7 @@
     font-size: var(--font-title);
     display: flex;
     align-items: center;
+    padding: .625rem;
     gap: .625rem;
     &--icon {
       height: calc(var(--font-title) + 0.25rem);
@@ -41,5 +49,16 @@
       color: var(--color-text);
       background: var(--color-content-alt);
     }
+  }
+}
+@keyframes loading {
+  0% {
+    filter: grayscale(0);
+  }
+  50% {
+    filter: grayscale(1);
+  }
+  100% {
+    filter: grayscale(0);
   }
 }

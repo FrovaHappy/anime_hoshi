@@ -25,7 +25,7 @@ function signIn() {
   }
   if (contents) {
     window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
-    window.history.back()
+    navigate('/')
   }
   const onShowPassword = (event: MouseEvent<SVGSVGElement>) => {
     const input = event.currentTarget.parentElement?.querySelector('input')

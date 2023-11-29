@@ -11,7 +11,7 @@ import { TargetError } from './components/TargetError'
 function signUp() {
   const navigate = useNavigate()
   const [signUp, setSingUp] = useState<ObjectDynamic<FormDataEntryValue> | undefined>(undefined)
-  const { error } = useFetch({
+  const { error, errorCode } = useFetch({
     query: { url: `${urlApi}/user/signup`, method: 'POST', body: signUp },
     conditional: !!signUp,
     deps: [signUp]
@@ -20,6 +20,9 @@ function signUp() {
     event.preventDefault()
     const { password, username } = Object.fromEntries(new window.FormData(event.target as any))
     setSingUp({ password, username })
+  }
+  if (errorCode === 0 && !error && signUp) {
+    navigate('/signin')
   }
   const newPassword = useRef('')
   const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
