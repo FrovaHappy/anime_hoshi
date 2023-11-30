@@ -11,12 +11,12 @@ const styleBgGradient = (color: string) => {
   } satisfies React.CSSProperties
 }
 
+let idRef = 0
 function Slider() {
   const listRef = useRef<HTMLUListElement>(null)
-  const idRef = useRef<number>(0)
-  const width = useRef(0)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [forceRender, setForceRender] = useState(true)
   const [sliders, setSliders] = useState(slidersData)
+
   const filterSliders = (id: number | undefined = undefined) => {
     const cardsHiddenLocalStorage = window.localStorage.getItem(KeysLocalStorage.slidersHidden) ?? '[]'
     const cardsHidden: number[] = JSON.parse(cardsHiddenLocalStorage)
@@ -30,45 +30,51 @@ function Slider() {
     setSliders(newsSliders)
     window.localStorage.setItem(KeysLocalStorage.slidersHidden, JSON.stringify(cardsHidden))
   }
+  const dragSlider = () => {
+    const listNode = listRef.current
+    if (idRef >= sliders.length) {
+      idRef = 0
+    }
+    const cardNode = listNode?.querySelectorAll('.sliderHome')[idRef]
+    if (!cardNode) return
+    listNode.querySelector('#sliders')?.setAttribute('style', `margin-left: -${idRef * cardNode.clientWidth}px;`)
+    const pointers = listNode.querySelectorAll('.slidersPointer__point')
+    for (let i = 0; i < pointers.length; i++) {
+      const pointer = pointers[i]
+      pointer.classList.remove('slidersPointer__point--active')
+      if (i === idRef) pointer.classList.add('slidersPointer__point--active')
+    }
+    idRef += 1
+  }
   useEffect(() => {
     filterSliders()
   }, [])
+
   useEffect(() => {
     const interval = setInterval(() => {
-      const listNode = listRef.current
-      const cardNode = listNode?.querySelectorAll('.sliderHome')[idRef.current]
-
-      if (idRef.current > sliders.length - 1) {
-        idRef.current = 0
-      }
-      setCurrentIndex(idRef.current)
-      if (!cardNode) return
-      width.current = cardNode.clientWidth
-      idRef.current += 1
+      dragSlider()
     }, 5000)
+    dragSlider()
     return () => {
       clearInterval(interval)
     }
-  }, [sliders])
-
-  const pointerPosition = (id: number) => (id === currentIndex ? 'slidersPointer__point--active' : '')
+  }, [sliders, forceRender])
   return (
-    <section>
+    <section ref={listRef}>
       <div className='slidercontainer'>
         <ul
           className='slidersHome'
-          ref={listRef}
+          id='sliders'
           onClick={() => {
-            setCurrentIndex(currentIndex + 1)
-          }}
-          style={{ marginLeft: `-${currentIndex * width.current}px` }}>
+            setForceRender(!forceRender)
+          }}>
           {sliders.map((slider, i) => {
             const { action, canHide, colorPrimary, colorSecondary, description, image, title, id } = slider
             const onClick = canHide
               ? () => {
                   filterSliders(id)
-                  idRef.current = 0
-                  width.current = 0
+                  setForceRender(!forceRender)
+                  idRef = 0
                 }
               : undefined
             return (
@@ -102,11 +108,11 @@ function Slider() {
         {sliders.map((_, id) => {
           return (
             <li
-              className={'slidersPointer__point ' + pointerPosition(id)}
+              className={'slidersPointer__point'}
               key={id}
               onClick={() => {
-                setCurrentIndex(id)
-                idRef.current = id
+                setForceRender(!forceRender)
+                idRef = id
               }}
             />
           )
