@@ -2,7 +2,7 @@ import type React from 'react'
 import Icon from '../../../../Icons'
 import { type AnimeMinified } from '../../../../../../types/Anime'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
-import { useContextAnime } from '../../../contexts/contextHome'
+import { useIdContext } from '../../../contexts/contextHome'
 import './targetAnime.scss'
 import { useRef } from 'react'
 
@@ -14,23 +14,23 @@ export const isVisibly = (conditional: boolean): React.CSSProperties | undefined
   return conditional ? undefined : { visibility: 'hidden', height: 0, width: 0, margin: 0, overflow: 'hidden' }
 }
 export default function TargetAnimeConponent({ thisAnime }: Props) {
-  const { animeMinfied, setAnimeMinfied } = useContextAnime()
+  const { id, setId } = useIdContext()
   const hasOnClickPrevious = useRef(false)
-  const compareId = thisAnime.id === animeMinfied?.id
+  const compareId = thisAnime.id === id
   const color = thisAnime.color
   const newEpisode = Date.now() - thisAnime.lastUpdate < 28_800_000
-  const setOpaqueImg = compareId || !animeMinfied ? '' : 'targetAnime__img--opaque'
+  const setOpaqueImg = compareId || !id ? '' : 'targetAnime__img--opaque'
   return (
     <div
       className={'targetAnime ' + setOpaqueImg}
       onClick={() => {
         if (!compareId) hasOnClickPrevious.current = false
         if (compareId && hasOnClickPrevious.current) {
-          setAnimeMinfied(null)
+          setId(null)
           hasOnClickPrevious.current = false
           window.history.pushState(null, '', '/')
         } else {
-          setAnimeMinfied(thisAnime)
+          setId(thisAnime.id)
           window.history.pushState(null, '', '/?id=' + thisAnime.id.toString())
           hasOnClickPrevious.current = true
         }

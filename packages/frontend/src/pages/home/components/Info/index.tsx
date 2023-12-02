@@ -7,11 +7,12 @@ import useFetch from '../../../../hooks/useFetchNew'
 import { urlApi } from '../../../../config'
 import type { Anime } from '../../../../../../types/Anime'
 import ErrorComponent from '../../../../components/Error'
-import { useContextAnime } from '../../../contexts/contextHome'
+import { useIdContext } from '../../../contexts/contextHome'
 import './index.scss'
 import { Contribute } from './contribute'
 import Loading from './Loading'
 import Position from './position'
+import { getIdLocation } from '../../../../utils/getIdLocation'
 
 export function ShowInfo({ anime }: { anime: Anime }) {
   return (
@@ -23,11 +24,9 @@ export function ShowInfo({ anime }: { anime: Anime }) {
     </>
   )
 }
-const location = () => new window.URLSearchParams(window.location.search).get('id') ?? null
 export default function Index() {
-  const { animeMinfied, setAnimeMinfied } = useContextAnime()
+  const { id, setId } = useIdContext()
   const [positionLeft, setPositionLeft] = useState(false)
-  const [id, setId] = useState(location())
   const {
     load,
     error,
@@ -36,26 +35,24 @@ export default function Index() {
   } = useFetch<Anime>({
     query: { url: `${urlApi}/animes?id=${id ?? ''}`, method: 'GET' },
     conditional: !!id,
-    deps: [id, animeMinfied]
+    deps: [id]
   })
   useEffect(() => {
     window.addEventListener('popstate', () => {
-      if (location() === id) return
-      if (location() !== null) {
-        setId(location())
+      if (getIdLocation() === id) return
+      if (getIdLocation() !== null) {
+        setId(getIdLocation())
         return
       }
       setId(null)
-      setAnimeMinfied(null)
     })
   }, [])
   useEffect(() => {
-    setId(animeMinfied?.id.toString() ?? location())
-  }, [id, animeMinfied])
+    setId(getIdLocation())
+  }, [id])
   const handleClick = () => {
     window.history.pushState(null, '', '/')
     setId(null)
-    setAnimeMinfied(null)
   }
 
   return (
