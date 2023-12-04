@@ -37,19 +37,13 @@ export default function Index() {
     conditional: !!id,
     deps: [id]
   })
+  // this observes the back button navigation
   useEffect(() => {
     window.addEventListener('popstate', () => {
-      if (getIdLocation() === id) return
-      if (getIdLocation() !== null) {
-        setId(getIdLocation())
-        return
-      }
-      setId(null)
+      if (getIdLocation() !== id) setId(getIdLocation())
     })
-  }, [])
-  useEffect(() => {
-    setId(getIdLocation())
   }, [id])
+
   const handleClick = () => {
     window.history.pushState(null, '', '/')
     setId(null)

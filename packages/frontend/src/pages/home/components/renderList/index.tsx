@@ -6,17 +6,24 @@ import useFetch from '../../../../hooks/useFetchNew'
 import { urlApi } from '../../../../config'
 import ErrorComponent from '../../../../components/Error'
 import type { AnimeMinified } from '../../../../../../types/Anime'
-
+import { useEffect } from 'react'
+function useHandleChangesAnimes(contents: any, deps: any[]) {
+  const { setAnimesMinfied } = useContextAnimes()
+  useEffect(() => {
+    if (contents?.animes) setAnimesMinfied(contents.animes)
+  }, deps)
+}
 function renderList({ filter }: { filter: AnimeMinified[] | null }) {
-  const { animesMinfied, setAnimesMinfied } = useContextAnimes()
+  const { animesMinfied } = useContextAnimes()
   const { load, error, contents, errorCode } = useFetch({
     query: { url: `${urlApi ?? ''}/animes`, method: 'GET' },
     deps: [],
     conditional: animesMinfied.length === 0
   })
+  useHandleChangesAnimes(contents, [contents])
   if (load) return <FetchLoading />
   if (error) return <ErrorComponent code={errorCode} message={error} />
-  if (contents) setAnimesMinfied(contents.animes)
+
   if (!animesMinfied) return <ErrorComponent code={500} message='error no controlado' />
 
   const render = () => {
