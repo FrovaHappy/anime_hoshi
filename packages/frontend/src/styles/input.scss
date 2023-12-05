@@ -46,12 +46,16 @@ select:focus-visible {
 .input {
   @include schemaInput();
 
-  &__number {
+  &__max75 {
     @include schemaInput();
+    max-width: 4.6875rem;
   }
-
-  &__select,
-  &__select select {
+  &__max125 {
     @include schemaInput();
+    max-width: 7.8125rem;
+  }
+  &__max175 {
+    @include schemaInput();
+    max-width: 10.9375rem;
   }
 }

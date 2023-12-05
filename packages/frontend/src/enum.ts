@@ -7,6 +7,7 @@ export const enum KeysLocalStorage {
   slidersHidden = 'slidersHidden',
   publicKey = 'publicKey',
   notifications = 'notifications',
+  canSendNotification = 'canSendNotification',
   token = 'token',
   notificationsInAwait = 'notificationsInAwait',
   theme = 'theme'

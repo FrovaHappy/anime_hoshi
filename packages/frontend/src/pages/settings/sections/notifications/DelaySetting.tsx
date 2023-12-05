@@ -1,9 +1,13 @@
 import type React from 'react'
-import { KeysLocalStorage } from '../../../../../enum'
-import { stringToObject } from '../../../../../utils/general'
-import { type NotificationsInAired } from '../../../../../../types'
-import initDb from '../../../../../utils/serviceWorker/sw_modules/DBLocal'
+import { KeysLocalStorage } from '../../../../enum'
+import { stringToObject } from '../../../../utils/general'
+import { type NotificationsInAired } from '../../../../../types'
+import initDb from '../../../../utils/serviceWorker/sw_modules/DBLocal'
 import { useSettingsContext } from '.'
+import Option from '../../Option'
+
+const TITLE = 'database'
+const DESCRIPTION = 'Description'
 
 function mappedOptions(min: number, max: number) {
   const options: React.ReactElement[] = []
@@ -29,8 +33,18 @@ export default function DelaySetting() {
     setSetting(await initDb.set(KeysLocalStorage.notifications, JSON.stringify(notifications)))
   }
   return (
-    <select className='input__select' onChange={onHandleDelay} title='delay' defaultValue={notifications.delay / 60000}>
-      {mappedOptions(0, 120)}
-    </select>
+    <Option
+      title={TITLE}
+      description={DESCRIPTION}
+      Actions={
+        <select
+          className='input__max125'
+          onChange={onHandleDelay}
+          title='delay'
+          defaultValue={notifications.delay / 60000}>
+          {mappedOptions(0, 120)}
+        </select>
+      }
+    />
   )
 }

@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
 import type React from 'react'
-import { REGEX_PASSWORD } from '../../../../../utils/const'
-import useFetch from '../../../../../hooks/useFetchNew'
-import { urlApi } from '../../../../../config'
-import { KeysLocalStorage } from '../../../../../enum'
-import { isValidInput } from '../../../../../utils/general'
+import { REGEX_PASSWORD } from '../../../../utils/const'
+import useFetch from '../../../../hooks/useFetchNew'
+import { urlApi } from '../../../../config'
+import { KeysLocalStorage } from '../../../../enum'
+import { isValidInput } from '../../../../utils/general'
 export default function OptionsPassword() {
   const newPassword = useRef('')
   const [data, setData] = useState<object | undefined>(undefined)
@@ -47,7 +47,7 @@ export default function OptionsPassword() {
       <label className='userForm__label'>Contraseña:</label>
       <input
         required
-        className='input__password'
+        className='input'
         type='password'
         name='oldPassword'
         placeholder='Contraseña Actual'
@@ -57,7 +57,7 @@ export default function OptionsPassword() {
       />
       <label className='userForm__label'>Nueva Contraseña:</label>
       <input
-        className='input__password'
+        className='input'
         onChange={handleNewPassword}
         required
         type='password'
@@ -69,7 +69,7 @@ export default function OptionsPassword() {
       <input
         required
         onChange={handleConfirm}
-        className='input__password'
+        className='input'
         type='password'
         name='confirmPassword'
         placeholder='Confirma la Contraseña'

@@ -1,7 +1,7 @@
-import AwaitLoad from '../../../../../components/AwaitLoad'
-import { urlApi } from '../../../../../config'
-import { KeysLocalStorage } from '../../../../../enum'
-import useFetch from '../../../../../hooks/useFetchNew'
+import AwaitLoad from '../../../../components/AwaitLoad'
+import { urlApi } from '../../../../config'
+import { KeysLocalStorage } from '../../../../enum'
+import useFetch from '../../../../hooks/useFetchNew'
 import EditUser from './EditUser'
 import EmptyUser from './EmptyUser'
 
@@ -19,4 +19,4 @@ function Options() {
   if (!contents) return <EmptyUser />
   return <EditUser user={contents} />
 }
-export default { title, tag, Options }
+export default { title, tag, MainComponent: Options }

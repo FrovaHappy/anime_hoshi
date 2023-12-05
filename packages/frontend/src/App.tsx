@@ -1,7 +1,7 @@
 import './styles/App.scss'
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 import Home from './pages/home'
-import User from './pages/user'
+import Settings from './pages/settings'
 import DashboardPages from './pages/dashboard/Pages'
 import DashboardLogs from './pages/dashboard/Logs'
 import Dashboard from './pages/dashboard'
@@ -20,7 +20,7 @@ function App() {
         </span>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path={'setting'} element={<User />} />
+          <Route path={'setting'} element={<Settings />} />
           <Route path='dashboard'>
             <Route path='' element={<Dashboard />} />
             <Route path='pages' element={<DashboardPages />} />

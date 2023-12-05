@@ -1,15 +1,15 @@
 .userForm {
   display: flex;
   flex-direction: column;
+  width: -webkit-fill-available;
   max-width: 28.125rem;
   padding: .9375rem;
   border-radius: .625rem;
-  border: .0625rem solid var(--textColorAlt);
+  border: .0625rem solid var(--color-text-alt);
 
   &__label {
     background-color: transparent;
     cursor: default;
-    color: var(--textColor);
     font-size: var(--font-body);
     width: fit-content;
     height: fit-content;

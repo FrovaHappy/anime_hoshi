@@ -12,8 +12,7 @@ export default function EmptyUser() {
     <Option
       title='Iniciar Sesión en la Nube'
       description='Inicia sesión o créase una cuenta para  obtener un backup  y acceder a las herramientas de administrador'
-      descriptionAction
-      actions={
+      Actions={
         <>
           <button className='button__secondary' onClick={onHandleSignIn}>
             signIn
