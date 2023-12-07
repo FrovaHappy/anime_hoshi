@@ -4,8 +4,10 @@ import { KeysLocalStorage } from '../../../../enum'
 import { DEFAULT_NOTIFICATIONS } from '../../../../utils/const'
 import initDb from '../../../../utils/serviceWorker/sw_modules/DBLocal'
 import Option from '../../Option'
-const TITLE = 'title'
-const DESCRIPTION = 'description'
+
+const TITLE = 'Sincronizar Permisos'
+const DESCRIPTION = 'Renueva los permisos, en caso de experimentar problemas y no recibir notificaciones.'
+
 function ButtonUpdate() {
   const publicKey = localStorage.getItem(KeysLocalStorage.publicKey)
   const [load, setLoad] = useState(false)
@@ -23,7 +25,7 @@ function ButtonUpdate() {
           setLoad(false)
         })
       }}>
-      Actualizar
+      Sincronizar
     </button>
   )
 }

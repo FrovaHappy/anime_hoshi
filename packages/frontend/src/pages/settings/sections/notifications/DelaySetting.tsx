@@ -6,8 +6,8 @@ import initDb from '../../../../utils/serviceWorker/sw_modules/DBLocal'
 import { useSettingsContext } from '.'
 import Option from '../../Option'
 
-const TITLE = 'database'
-const DESCRIPTION = 'Description'
+const TITLE = 'Tiempo de Espera'
+const DESCRIPTION = 'Bloquea el envió de notificaciones hasta que cumpla las las demás condiciones.'
 
 function mappedOptions(min: number, max: number) {
   const options: React.ReactElement[] = []
