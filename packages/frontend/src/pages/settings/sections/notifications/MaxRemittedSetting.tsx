@@ -4,7 +4,7 @@ import { KeysLocalStorage } from '../../../../enum'
 import { type NotificationsInAired } from '../../../../../types'
 import { stringToObject } from '../../../../utils/general'
 import initDb from '../../../../utils/serviceWorker/sw_modules/DBLocal'
-import { useSettingsContext } from '.'
+import { useCanNotificationsContext, useSettingsContext } from '.'
 import Option from '../../Option'
 
 const TITLE = 'Cantidad de notificaciones por Anime'
@@ -24,6 +24,9 @@ function mappedOptions(min: number, max: number) {
 }
 export default function MaxRemittedSetting() {
   const { setting, setSetting } = useSettingsContext()
+  const { canSendNotification } = useCanNotificationsContext()
+  if (!canSendNotification) return null
+
   const notifications = stringToObject<NotificationsInAired>(setting?.value)
   if (!notifications) return null
 

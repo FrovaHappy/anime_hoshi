@@ -3,7 +3,7 @@ import { KeysLocalStorage } from '../../../../enum'
 import { stringToObject } from '../../../../utils/general'
 import { type NotificationsInAired } from '../../../../../types'
 import initDb from '../../../../utils/serviceWorker/sw_modules/DBLocal'
-import { useSettingsContext } from '.'
+import { useCanNotificationsContext, useSettingsContext } from '.'
 import Option from '../../Option'
 
 const TITLE = 'Tiempo de Espera'
@@ -22,6 +22,9 @@ function mappedOptions(min: number, max: number) {
 }
 export default function DelaySetting() {
   const { setting, setSetting } = useSettingsContext()
+  const { canSendNotification } = useCanNotificationsContext()
+  if (!canSendNotification) return null
+
   const notifications = stringToObject<NotificationsInAired>(setting?.value)
   if (!notifications) return null
 

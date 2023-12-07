@@ -79,17 +79,18 @@
   position: sticky;
   top: 0;
   height: 6.25rem;
-  background: var(--color-bg);
+  background: var(--color-bg-80);
+  backdrop-filter: blur(15px);
   padding: 0.9375rem;
   box-sizing: border-box;
-  gap: 0.9375rem;
+  gap: 1.5625rem;
   &__select {
     display: flex;
     position: relative;
     cursor: pointer;
     flex-wrap: nowrap;
     text-wrap: nowrap;
-    font-size: var(--font-subtitle);
+    font-size: var(--font-title);
     border-radius: var(--br-secondary);
     width: fit-content;
     height: fit-content;

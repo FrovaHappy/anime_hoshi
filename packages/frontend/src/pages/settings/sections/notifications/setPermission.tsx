@@ -4,7 +4,6 @@ import Icons from '../../../../Icons'
 import { useState } from 'react'
 import Option from '../../Option'
 const TITLE = 'Recibir Notificaciones'
-const DESCRIPTION = 'Lorem ipsum dolor, ea error laudantium voluptas tempore nemo beatae illum.'
 interface Props {
   canNotification: boolean
   setCanNotification: (k: boolean) => void
@@ -47,7 +46,6 @@ export default function SetNotifications({ canNotification, setCanNotification }
   return (
     <Option
       title={TITLE}
-      description={DESCRIPTION}
       Status={<Status isError={message.isError} message={message.message} />}
       Actions={
         <SwitchPermissions

@@ -16,6 +16,13 @@ export function useSettingsContext() {
   const [setting, setSetting] = context
   return { setting, setSetting }
 }
+const ContextCanNotifications = createContext<UseState<boolean> | undefined>(undefined)
+export function useCanNotificationsContext() {
+  const context = useContext(ContextCanNotifications)
+  if (!context) throw new Error('Out of Context Settings')
+  const [canSendNotification, setCanSendNotification] = context
+  return { canSendNotification, setCanSendNotification }
+}
 function getData(setSetting: (k: any) => void) {
   const [load, setLoad] = useState(true)
   useEffect(() => {
@@ -34,7 +41,7 @@ function getData(setSetting: (k: any) => void) {
 function Notifications() {
   // Create variables for notification
   const canSendNotifications = window.localStorage.getItem(KeysLocalStorage.canSendNotification) ?? 'false'
-  const [canNotifications, setCanNotification] = useState(JSON.parse(canSendNotifications))
+  const [canNotifications, setCanNotification] = useState(JSON.parse(canSendNotifications) as boolean)
   window.localStorage.setItem(KeysLocalStorage.canSendNotification, JSON.stringify(canNotifications))
 
   // Create variables for settings and sync datasets
@@ -42,16 +49,18 @@ function Notifications() {
   getData(setSetting)
 
   return (
-    <ContextSettings.Provider value={[setting, setSetting]}>
-      <section>
-        <SetNotifications canNotification={canNotifications} setCanNotification={setCanNotification} />
-        <UpdateNotifications />
-        <DefaultSettings />
-        <DelaySetting />
-        <MaxRemittedSetting />
-        <MinPagesSetting />
-      </section>
-    </ContextSettings.Provider>
+    <ContextCanNotifications.Provider value={[canNotifications, setCanNotification]}>
+      <ContextSettings.Provider value={[setting, setSetting]}>
+        <section>
+          <SetNotifications canNotification={canNotifications} setCanNotification={setCanNotification} />
+          <UpdateNotifications />
+          <DefaultSettings />
+          <DelaySetting />
+          <MaxRemittedSetting />
+          <MinPagesSetting />
+        </section>
+      </ContextSettings.Provider>
+    </ContextCanNotifications.Provider>
   )
 }
 

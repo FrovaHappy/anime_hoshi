@@ -3,7 +3,7 @@ import { stringToObject } from '../../../../utils/general'
 import { type NotificationsInAired } from '../../../../../types'
 import { KeysLocalStorage } from '../../../../enum'
 import { DEFAULT_NOTIFICATIONS, DEFAULT_TOTAL_PAGES } from '../../../../utils/const'
-import { useSettingsContext } from '.'
+import { useCanNotificationsContext, useSettingsContext } from '.'
 import initDb from '../../../../utils/serviceWorker/sw_modules/DBLocal'
 import Option from '../../Option'
 
@@ -23,6 +23,9 @@ function mappedOptions(min: number, max: number) {
 }
 export default function MimPagesSetting() {
   const { setting, setSetting } = useSettingsContext()
+  const { canSendNotification } = useCanNotificationsContext()
+  if (!canSendNotification) return null
+
   const notifications = stringToObject<NotificationsInAired>(setting?.value)
   if (!notifications) return null
   const onHandleMaxPages = async (e: React.ChangeEvent<HTMLSelectElement>) => {

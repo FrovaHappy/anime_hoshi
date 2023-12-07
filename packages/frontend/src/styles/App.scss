@@ -13,7 +13,6 @@
     z-index: -1;
     width: 100vw;
     height: 100vh;
-    filter: blur(80px);
     &--back {
       display: block;
       position: absolute;
@@ -28,10 +27,10 @@
       bottom: -6.25rem;
       right: -6.25rem;
       width: 12.5rem;
+      filter: blur(100px);
       border-radius: 50%;
       aspect-ratio: 1/1;
       background: var(--color-primary);
-      
     }
   }
 }
