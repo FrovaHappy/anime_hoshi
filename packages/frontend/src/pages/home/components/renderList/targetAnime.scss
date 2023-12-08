@@ -1,7 +1,7 @@
 .targetAnime {
   display: flex;
   flex-direction: column;
-
+  cursor: pointer;
   border-radius: var(--br-secondary);
   box-shadow: 0px 0px 8px -5px var(--color-text-alt);
   height: max-content;

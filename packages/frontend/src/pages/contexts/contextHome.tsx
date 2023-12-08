@@ -1,5 +1,5 @@
 import type React from 'react'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useMemo } from 'react'
 import { type AnimeMinified } from '../../../../types/Anime'
 import { type UseState } from '../../../types'
 import { getIdLocation } from '../../utils/getIdLocation'
@@ -7,6 +7,7 @@ import { getIdLocation } from '../../utils/getIdLocation'
 interface Props {
   children: React.ReactNode
 }
+
 const CreateAnimesContext = createContext<UseState<AnimeMinified[]> | undefined>(undefined)
 const CreateIdContext = createContext<UseState<number | null> | undefined>(undefined)
 
@@ -26,9 +27,18 @@ export function useContextAnimes() {
 export function ContextHome({ children }: Props) {
   const [animesMinfied, setAnimesMinfied] = useState<AnimeMinified[]>([])
   const [id, setId] = useState<number | null>(getIdLocation())
+
+  // se memoriza los valores de los context para evitar reenderizaciones
+  const animeValue: [AnimeMinified[], (key: AnimeMinified[]) => void] = useMemo(
+    () => [animesMinfied, setAnimesMinfied],
+    [animesMinfied, setAnimesMinfied]
+  )
+
+  const idContext: [number | null, (key: number | null) => void] = useMemo(() => [id, setId], [id, setId])
+
   return (
-    <CreateAnimesContext.Provider value={[animesMinfied, setAnimesMinfied]}>
-      <CreateIdContext.Provider value={[id, setId]}>{children}</CreateIdContext.Provider>
+    <CreateAnimesContext.Provider value={animeValue}>
+      <CreateIdContext.Provider value={idContext}>{children}</CreateIdContext.Provider>
     </CreateAnimesContext.Provider>
   )
 }

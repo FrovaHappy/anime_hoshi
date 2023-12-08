@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icons from '../../Icons'
 import type React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './profile.scss'
 import useFetch from '../../hooks/useFetchNew'
 import { KeysLocalStorage } from '../../enum'
@@ -9,17 +9,26 @@ import { urlApi } from '../../config'
 import { toggleTheme } from '../../utils/toggleTheme'
 
 function SuperUser({ contents }: { contents: any }) {
-  let ButtonDashboard: React.ReactNode = null
-  if (contents?.roles.some((r: string) => r === 'admin' || r === 'owner' || r === 'viewer')) {
-    ButtonDashboard = (
-      <li>
-        <Link to='dashboard' className='profile__option'>
-          <Icons iconName='Dashboard' className='profile__option--icon' />
-          Dashboard
-        </Link>
-      </li>
-    )
+  const [ButtonDashboard, setButtonDashboard] = useState<React.ReactNode>(null)
+  const onClick = () => {
+    window.localStorage.removeItem(KeysLocalStorage.token)
+    window.location.reload()
   }
+
+  useEffect(() => {
+    const isAllowedPermission = contents?.roles?.some((r: string) => r === 'admin' || r === 'owner' || r === 'viewer')
+    if (isAllowedPermission) {
+      setButtonDashboard(
+        <li>
+          <Link to='dashboard' className='profile__option'>
+            <Icons iconName='Dashboard' className='profile__option--icon' />
+            Dashboard
+          </Link>
+        </li>
+      )
+    }
+  }, [contents?.roles])
+
   if (!contents) {
     return (
       <>
@@ -33,10 +42,7 @@ function SuperUser({ contents }: { contents: any }) {
       </>
     )
   }
-  const onClick = () => {
-    window.localStorage.removeItem(KeysLocalStorage.token)
-    window.location.reload()
-  }
+
   return (
     <>
       {ButtonDashboard}
