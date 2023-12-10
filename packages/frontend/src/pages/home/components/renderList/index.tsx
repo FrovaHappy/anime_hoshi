@@ -18,8 +18,6 @@ function renderList({ filter }: { filter: AnimeMinified[] | null }) {
     enabled: animesMinfied.length === 0
   })
 
-  console.log('renderList')
-
   useEffect(() => {
     if (contents?.animes) setAnimesMinfied(contents?.animes)
   }, [contents?.animes])

@@ -14,7 +14,6 @@ export default function OptionsPassword() {
     isValidInput(e, REGEX_PASSWORD)
     newPassword.current = password
   }
-  console.log({ token })
   const { error, load, contents } = useFetch({
     query: {
       method: 'PUT',
