@@ -6,6 +6,7 @@ import { urlApi } from '../../../../../config'
 import { KeysLocalStorage } from '../../../../../enum'
 import { isValidInput } from '../../../../../utils/general'
 export default function OptionsPassword() {
+  const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
   const newPassword = useRef('')
   const [data, setData] = useState<object | undefined>(undefined)
   const handleNewPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -13,13 +14,15 @@ export default function OptionsPassword() {
     isValidInput(e, REGEX_PASSWORD)
     newPassword.current = password
   }
+  console.log({ token })
   const { error, load, contents } = useFetch({
     query: {
       method: 'PUT',
       url: `${urlApi}/user`,
-      authorization: window.localStorage.getItem(KeysLocalStorage.token) ?? '',
+      authorization: token,
       body: data
     },
+    enabled: !!token,
     deps: [data],
     conditional: !!data
   })

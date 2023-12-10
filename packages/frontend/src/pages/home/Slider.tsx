@@ -2,7 +2,7 @@ import type React from 'react'
 import Icons from '../../Icons'
 import slidersData from './sliderData'
 import './slider.scss'
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { KeysLocalStorage } from '../../enum'
 
 const styleBgGradient = (color: string) => {
@@ -122,4 +122,4 @@ function Slider() {
   )
 }
 
-export default Slider
+export default memo(Slider)

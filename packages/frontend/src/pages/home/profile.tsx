@@ -57,6 +57,7 @@ function Profile() {
   const [isVisible, setIsVisible] = useState(false)
   const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
   const { contents, error, load } = useFetch({
+    enabled: !!token,
     query: { url: `${urlApi}/user`, method: 'GET', authorization: token },
     deps: []
   })

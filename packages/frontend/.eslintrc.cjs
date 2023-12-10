@@ -22,6 +22,8 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'no-extra-semi': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'warn',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/space-before-function-paren': 'off',

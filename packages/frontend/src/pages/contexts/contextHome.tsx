@@ -31,10 +31,10 @@ export function ContextHome({ children }: Props) {
   // se memoriza los valores de los context para evitar reenderizaciones
   const animeValue: [AnimeMinified[], (key: AnimeMinified[]) => void] = useMemo(
     () => [animesMinfied, setAnimesMinfied],
-    [animesMinfied, setAnimesMinfied]
+    [animesMinfied]
   )
 
-  const idContext: [number | null, (key: number | null) => void] = useMemo(() => [id, setId], [id, setId])
+  const idContext: [number | null, (key: number | null) => void] = useMemo(() => [id, setId], [id])
 
   return (
     <CreateAnimesContext.Provider value={animeValue}>

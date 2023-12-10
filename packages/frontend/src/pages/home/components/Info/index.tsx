@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Description } from './showData'
 import ListEpisodes from './showData/EpisodesList'
 import Metadata from './showData/Metadata'
@@ -24,7 +24,7 @@ export function ShowInfo({ anime }: { anime: Anime }) {
     </>
   )
 }
-export default function Index() {
+function Index() {
   const { id, setId } = useIdContext()
   const [positionLeft, setPositionLeft] = useState(false)
   const {
@@ -67,3 +67,4 @@ export default function Index() {
     </Position>
   )
 }
+export default memo(Index)

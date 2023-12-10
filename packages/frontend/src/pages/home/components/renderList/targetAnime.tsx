@@ -3,7 +3,8 @@ import { type AnimeMinified } from '../../../../../../types/Anime'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
 import { useIdContext } from '../../../contexts/contextHome'
 import './targetAnime.scss'
-import { memo, useRef } from 'react'
+import { memo, useRef, useState } from 'react'
+import useLazyloadImage from '../../../../hooks/useLazyload'
 
 interface Props {
   thisAnime: AnimeMinified
@@ -15,6 +16,8 @@ function TargetAnimeConponent({ thisAnime }: Props) {
   const color = thisAnime.color
   const newEpisode = Date.now() - thisAnime.lastUpdate < 28_800_000
   const setOpaqueImg = compareId || !id ? '' : 'targetAnime__img--opaque'
+  const [isLoadedPreviewImg, setLoadedPreviewImg] = useState(false)
+  const { ref } = useLazyloadImage(thisAnime.image, isLoadedPreviewImg)
 
   const onClickAnime = () => {
     if (!compareId) hasOnClickPrevious.current = false
@@ -29,6 +32,7 @@ function TargetAnimeConponent({ thisAnime }: Props) {
     }
     setColorPrimary(color)
   }
+
   return (
     <div className={'targetAnime ' + setOpaqueImg} onClick={onClickAnime}>
       <div className='targetAnime__episode' style={newEpisode ? { background: 'var(--color-primary)' } : undefined}>
@@ -36,7 +40,17 @@ function TargetAnimeConponent({ thisAnime }: Props) {
           <Icon iconName='Layers' className='targetAnime__episode--icon' /> Ep. {thisAnime.episode}
         </p>
       </div>
-      <img className='targetAnime__img' src={thisAnime.image} alt={thisAnime.title} loading='lazy' />
+
+      <img
+        className='targetAnime__img'
+        // src={thisAnime.image}
+        src='/Placeholder_view_vector.svg.png'
+        onLoad={() => {
+          setLoadedPreviewImg(true)
+        }}
+        ref={ref}
+        alt={thisAnime.title}
+      />
       <p className='targetAnime__title'>{thisAnime.title}</p>
     </div>
   )
