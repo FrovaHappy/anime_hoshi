@@ -37,7 +37,11 @@ export default function useFetch<T = any | null>({ query, deps = [], conditional
   let result = { error, load, contents, errorCode }
 
   useEffect(() => {
-    if (!enabled) return
+    setLoad(true)
+    if (!enabled) {
+      setLoad(false)
+      return
+    }
     const fetch = async () => {
       if (conditional !== undefined && !conditional) return result
       const data = await buildFetch<T>(query)
