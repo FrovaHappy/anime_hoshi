@@ -4,7 +4,9 @@ import Icons from '../../Icons'
 import './Nav.scss'
 import { useContextAnimes } from '../contexts/contextHome'
 import Profile from './profile'
-export default function Nav({ setFilter }: { setFilter: (k: any) => void }) {
+import { memo } from 'react'
+
+function Nav({ setFilter }: { setFilter: (k: any) => void }) {
   const { animesMinfied } = useContextAnimes()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
@@ -32,3 +34,5 @@ export default function Nav({ setFilter }: { setFilter: (k: any) => void }) {
     </nav>
   )
 }
+
+export default memo(Nav)

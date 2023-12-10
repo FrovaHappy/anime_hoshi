@@ -9,8 +9,10 @@ import DashboardAnimes from './pages/dashboard/animesEditor'
 import SignIn from './pages/session/signIn'
 import SignUp from './pages/session/signUp'
 import { getTheme } from './utils/toggleTheme'
+
 function App() {
   getTheme()
+
   return (
     <BrowserRouter>
       <div className='App'>

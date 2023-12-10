@@ -8,14 +8,15 @@ import type { AnimeMinified } from '../../../../types/Anime'
 import Slider from './Slider'
 export default function Home() {
   const [filter, setFilter] = useState<AnimeMinified[] | null>(null)
+
   return (
-    <ContextHome>
-      <div className='home'>
+    <div className='home'>
+      <ContextHome>
         <Nav setFilter={setFilter} />
         <Slider />
         <RenderList filter={filter} />
         <Info />
-      </div>
-    </ContextHome>
+      </ContextHome>
+    </div>
   )
 }
