@@ -55,8 +55,8 @@ function SuperUser({ contents }: { contents: any }) {
 }
 function Profile() {
   const [isVisible, setIsVisible] = useState(false)
-  const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
-  const { contents, error, load } = useFetch({
+  const token = window.localStorage.getItem(KeysLocalStorage.token) ?? undefined
+  const { contents, load, error } = useFetch({
     enabled: !!token,
     query: { url: `${urlApi}/user`, method: 'GET', authorization: token },
     deps: []
@@ -67,9 +67,10 @@ function Profile() {
   if (contents) {
     window.localStorage.setItem(KeysLocalStorage.token, contents.newToken)
   }
+  if (error) window.localStorage.removeItem(KeysLocalStorage.token)
   const renderLogo = () => {
     if (load) return 'profile__logo--loading'
-    if (error) return 'profile__logo--error'
+    if (!token) return 'profile__logo--error'
     return ''
   }
   const isDarkTheme = window.document.documentElement.getAttribute('data-theme') === 'dark'
