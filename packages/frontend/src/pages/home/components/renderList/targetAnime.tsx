@@ -53,6 +53,8 @@ function TargetAnimeConponent({ thisAnime }: Props) {
         src={IMAGE_TRANSPARENT}
         // eslint-disable-next-line react/no-unknown-property
         fetchpriority='low'
+        loading='lazy'
+        decoding='async'
         onLoad={() => {
           setLoadedPreviewImg(true)
         }}

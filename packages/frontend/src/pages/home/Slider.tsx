@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 import type React from 'react'
 import Icons from '../../Icons'
 import slidersData from './sliderData'
@@ -79,7 +80,14 @@ function Slider() {
               : undefined
             return (
               <li key={i} className='sliderHome'>
-                <img src={image} alt={title} className='sliderHome__bg' />
+                <img
+                  src={image}
+                  alt={title}
+                  className='sliderHome__bg'
+                  loading='lazy'
+                  fetchpriority='low'
+                  decoding='async'
+                />
                 <span style={styleBgGradient(colorPrimary)} className='sliderHome__bg' />
                 <p className='sliderHome__title'>{title}</p>
                 <p className='sliderHome__content'>{description}</p>

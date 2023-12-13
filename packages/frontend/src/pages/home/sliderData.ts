@@ -20,7 +20,7 @@ const data: SliderData[] = [
     description: 'Dirígete a settings, dale a permitir y ajusta a tus gustos las notificaciones.',
     colorPrimary: '#F2C53D',
     colorSecondary: '#F27329',
-    image: 'https://images.alphacoders.com/134/thumbbig-1342171.webp',
+    image: '/resources/SliderHome/0.webp',
     canHide: false,
     action: {
       url: 'setting',
@@ -34,7 +34,7 @@ const data: SliderData[] = [
     description: 'Habla, comparte, ayúdanos en nuestra comunidad de Discord, te esperamos.',
     colorPrimary: '#F2AE72',
     colorSecondary: '#F2786D',
-    image: 'https://images6.alphacoders.com/133/thumbbig-1330235.webp',
+    image: '/resources/SliderHome/1.webp',
     canHide: true,
     action: {
       url: 'https://discord.gg/JRpHsGC8YQ',
@@ -49,7 +49,7 @@ const data: SliderData[] = [
       'Si tienes ideas para mejorar a AnimeHoshi ó encuentras algún fallo pásate por el Github o por Discord.',
     colorPrimary: '#AEDFF2',
     colorSecondary: '#337AA6',
-    image: 'https://images2.alphacoders.com/134/thumbbig-1342755.webp',
+    image: '/resources/SliderHome/2.webp',
     canHide: true,
     action: {
       url: 'https://github.com/FrovaHappy/monorepo-scrapping-anime.git',
