@@ -5,6 +5,7 @@ import { useIdContext } from '../../../contexts/contextHome'
 import './targetAnime.scss'
 import { memo, useRef, useState } from 'react'
 import useLazyloadImage from '../../../../hooks/useLazyload'
+import { IMAGE_TRANSPARENT } from '../../../../utils/const'
 
 interface Props {
   thisAnime: AnimeMinified
@@ -43,8 +44,7 @@ function TargetAnimeConponent({ thisAnime }: Props) {
 
       <img
         className='targetAnime__img'
-        // src={thisAnime.image}
-        src='/Placeholder_view_vector.svg.png'
+        src={IMAGE_TRANSPARENT}
         onLoad={() => {
           setLoadedPreviewImg(true)
         }}

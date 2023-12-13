@@ -3,18 +3,18 @@
   flex-direction: column;
   cursor: pointer;
   border-radius: var(--br-secondary);
-  box-shadow: 0px 0px 8px -5px var(--color-text-alt);
+  box-shadow: 0px 0px 8px 0px var(--color-content);
   height: max-content;
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
   user-select: none;
   &__img {
-    box-shadow: var(--shadowTarget);
-    background-color: var(--bgContent);
-    background-image: url("../../../../../public/resources/loadingImg.gif");
+    background-color: var(--color-content);
+    background-image: url("../../../../../public/lazyLoad.gif");
     background-size: 50%;
     background-repeat: no-repeat;
+    background-blend-mode: difference;
     background-position: center;
     object-fit: cover;
     aspect-ratio: 6/9;
@@ -23,6 +23,7 @@
       transition: filter 0.5s;
       filter: grayscale(0.5) brightness(0.6);
     }
+
   }
 
   &__title {
@@ -68,4 +69,7 @@
       filter: saturate(0) contrast(0);
     }
   }
+}
+[data-theme="light"] > .targetAnime__img{
+    background-blend-mode: normal;
 }

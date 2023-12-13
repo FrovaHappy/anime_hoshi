@@ -11,3 +11,5 @@ export const DEFAULT_NOTIFICATIONS: NotificationsInAired = {
 export const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 export const MESSAGE_PASSWORD =
   'La contraseña debe contener letras minúsculas, mayúsculas, números y signos especiales.'
+export const IMAGE_TRANSPARENT =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAANSURBVBhXY2BgYGAAAAAFAAGKM+MAAAAAAElFTkSuQmCC'
