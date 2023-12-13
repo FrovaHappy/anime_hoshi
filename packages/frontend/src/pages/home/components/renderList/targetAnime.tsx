@@ -7,6 +7,12 @@ import { memo, useRef, useState } from 'react'
 import useLazyloadImage from '../../../../hooks/useLazyload'
 import { IMAGE_TRANSPARENT } from '../../../../utils/const'
 
+declare module 'react' {
+  // eslint-disable-next-line no-undef
+  interface HTMLAttributes<T> extends React.AriaAttributes, React.DOMAttributes<T> {
+    fetchpriority?: 'high' | 'low' | 'auto'
+  }
+}
 interface Props {
   thisAnime: AnimeMinified
 }
@@ -45,6 +51,8 @@ function TargetAnimeConponent({ thisAnime }: Props) {
       <img
         className='targetAnime__img'
         src={IMAGE_TRANSPARENT}
+        // eslint-disable-next-line react/no-unknown-property
+        fetchpriority='low'
         onLoad={() => {
           setLoadedPreviewImg(true)
         }}
