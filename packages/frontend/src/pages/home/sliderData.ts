@@ -1,4 +1,4 @@
-interface SliderData {
+export interface SliderData {
   id: number
   title: string
   description: string

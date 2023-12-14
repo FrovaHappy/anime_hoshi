@@ -22,7 +22,7 @@ function Nav({ setFilter }: { setFilter: (k: any) => void }) {
     <nav className='navHome'>
       <div className='navHome__limit'>
         <Link to='' className='navHome__link'>
-          <img src='/windows11/LargeTile.scale-150.png' alt='logo' className='navHome__logo' />
+          <img src='/logo/192.webp' alt='logo' className='navHome__logo' />
         </Link>
 
         <div className='navHome__search'>

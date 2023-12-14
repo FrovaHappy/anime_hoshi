@@ -1,15 +1,71 @@
 /* eslint-disable react/no-unknown-property */
 import type React from 'react'
 import Icons from '../../Icons'
-import slidersData from './sliderData'
+import slidersData, { type SliderData } from './sliderData'
 import './slider.scss'
 import { memo, useEffect, useRef, useState } from 'react'
 import { KeysLocalStorage } from '../../enum'
+import useLazyloadImage from '../../hooks/useLazyload'
+import { IMAGE_TRANSPARENT } from '../../utils/const'
 
 const styleBgGradient = (color: string) => {
   return {
     background: `linear-gradient(90deg, ${color} 0%, #ffffff00 100%)`
   } satisfies React.CSSProperties
+}
+interface SliderTargetProps {
+  slider: SliderData
+  filterSliders: (k: number) => void
+  setForceRender: (k: boolean) => void
+  forceRender: boolean
+}
+
+function SliderTarget({ slider, filterSliders, forceRender, setForceRender }: SliderTargetProps) {
+  const { action, canHide, colorPrimary, colorSecondary, description, image, title, id } = slider
+  const [isLoadedPreviewImg, setLoadedPreviewImg] = useState(false)
+  const { ref } = useLazyloadImage(image, isLoadedPreviewImg)
+  const onClick = canHide
+    ? () => {
+        filterSliders(id)
+        setForceRender(!forceRender)
+        idRef = 0
+      }
+    : undefined
+  return (
+    <li className='sliderHome'>
+      <img
+        src={IMAGE_TRANSPARENT}
+        alt={title}
+        className='sliderHome__bg'
+        loading='lazy'
+        ref={ref}
+        fetchpriority='low'
+        decoding='async'
+        onLoad={() => {
+          setLoadedPreviewImg(true)
+        }}
+      />
+      <span style={styleBgGradient(colorPrimary)} className='sliderHome__bg' />
+      <p className='sliderHome__title'>{title}</p>
+      <p className='sliderHome__content'>{description}</p>
+      <a
+        href={action.url}
+        style={{ background: colorSecondary }}
+        rel='noreferrer'
+        target={action.isExternal ? '_blank' : '_self'}
+        className='sliderHome__action'>
+        <span>{action.title}</span>
+      </a>
+      {(() => {
+        if (!canHide) return
+        return (
+          <button style={{ color: colorSecondary }} className='sliderHome__icon' onClick={onClick}>
+            <Icons iconName='IconClose' />
+          </button>
+        )
+      })()}
+    </li>
+  )
 }
 
 let idRef = 0
@@ -69,47 +125,15 @@ function Slider() {
           onClick={() => {
             setForceRender(!forceRender)
           }}>
-          {sliders.map((slider, i) => {
-            const { action, canHide, colorPrimary, colorSecondary, description, image, title, id } = slider
-            const onClick = canHide
-              ? () => {
-                  filterSliders(id)
-                  setForceRender(!forceRender)
-                  idRef = 0
-                }
-              : undefined
-            return (
-              <li key={i} className='sliderHome'>
-                <img
-                  src={image}
-                  alt={title}
-                  className='sliderHome__bg'
-                  loading='lazy'
-                  fetchpriority='low'
-                  decoding='async'
-                />
-                <span style={styleBgGradient(colorPrimary)} className='sliderHome__bg' />
-                <p className='sliderHome__title'>{title}</p>
-                <p className='sliderHome__content'>{description}</p>
-                <a
-                  href={action.url}
-                  style={{ background: colorSecondary }}
-                  rel='noreferrer'
-                  target={action.isExternal ? '_blank' : '_self'}
-                  className='sliderHome__action'>
-                  <span>{action.title}</span>
-                </a>
-                {(() => {
-                  if (!canHide) return
-                  return (
-                    <button style={{ color: colorSecondary }} className='sliderHome__icon' onClick={onClick}>
-                      <Icons iconName='IconClose' />
-                    </button>
-                  )
-                })()}
-              </li>
-            )
-          })}
+          {sliders.map((slider, i) => (
+            <SliderTarget
+              filterSliders={filterSliders}
+              forceRender={forceRender}
+              setForceRender={setForceRender}
+              slider={slider}
+              key={i}
+            />
+          ))}
         </ul>
       </div>
       <ul className='slidersPointer'>
