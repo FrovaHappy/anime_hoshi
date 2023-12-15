@@ -2,7 +2,7 @@ import { type JsonResponse } from '../../../../../types'
 import scrapPagesDb, { type ScrapPageResponse } from '../../../database/scrapPages.db'
 import { type ExtBodyUserVerified } from '../../../middleware/auth'
 import { BuildData } from '../../../modules/scrapingPages'
-import remove from '../../../utils/removeRecursive'
+import removeValuesEmpty from '../../../utils/removeRecursive'
 import { type UpdatePagesBody } from '../validateSchema'
 import type { Response, Request } from 'express'
 import parseAnimes from '../../../modules/ParseAnime'
@@ -12,7 +12,7 @@ export default async function update(
   res: Response<JsonResponse>
 ) {
   const { userVerified, ...body } = req.body
-  const bodyParsed = remove<Partial<ScrapPageResponse>>(body)
+  const bodyParsed = removeValuesEmpty<Partial<ScrapPageResponse>>(body)
   console.log(bodyParsed)
   const result = await scrapPagesDb.updateOne({ namePage: body.namePage }, body)
 
