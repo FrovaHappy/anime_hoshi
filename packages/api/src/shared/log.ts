@@ -25,19 +25,23 @@ async function cutCollection(limit: number) {
   }
 }
 async function log({ type, message, content, section }: Log) {
-  await createDirectory()
+  try {
+    await createDirectory()
 
-  const date = new Date()
-  const day = date.getUTCDate()
-  const month = date.getUTCMonth()
-  const year = date.getUTCFullYear()
-  const pathFile = `${configs.LOGS_PATH}${year}-${month}-${day}.json`
-  await cutCollection(15)
+    const date = new Date()
+    const day = date.getUTCDate()
+    const month = date.getUTCMonth()
+    const year = date.getUTCFullYear()
+    const pathFile = `${configs.LOGS_PATH}${year}-${month}-${day}.json`
+    await cutCollection(15)
 
-  const logFile = await getLog(pathFile)
+    const logFile = await getLog(pathFile)
 
-  const newLog = { type, message, content, section, timestamp: Date.now() }
-  await writeFile(pathFile, JSON.stringify([newLog, ...logFile]).replace(';', ''), { encoding: 'utf-8' })
+    const newLog = { type, message, content, section, timestamp: Date.now() }
+    await writeFile(pathFile, JSON.stringify([newLog, ...logFile]).replace(';', ''), { encoding: 'utf-8' })
+  } catch (err) {
+    console.error(err)
+  }
 }
 function buildLogger(type: LogType) {
   return async ({ content, message, section }: Omit<Log, 'type'>) => {
