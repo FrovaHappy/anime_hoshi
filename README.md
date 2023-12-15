@@ -2,25 +2,24 @@
 
 Este proyecto busca solucionar el tema las notificaciones de las paginas de anime a la hora de publicar nuevo capítulos.
 
-## Importante!
-
-Lo único que se almacena en las Base de datos son los links directos a los capítulos de dichas paginas, este proyecto esta pensado de fan para fan y no busca competir con los servicios de streaming, solo servir de atajo a los mismos.
+> [!CAUTION]
+> Lo único que se almacena en las Base de datos son los links directos a los capítulos de dichas paginas, este proyecto esta pensado de fan para fan y no busca competir con los servicios de streaming, solo servir de atajo a los mismos.
 
 ## Links
 
-- [sitio web](https://animehoshi.vercel.app/) (no definitivo)
+- [sitio web](https://animehoshi.xyz/)
 - [url de la api](https://scraping-api-production.up.railway.app/) (no definitivo)
-- [documentación de la API](https://frovahappy.gitbook.io/anime-hoshi-docs/)
+- [documentación de la API](https://docs.animehoshi.xyz/)
 
 <br>
 
-## Tecnologías Principales en el Proyecto
+## Depencencias Principales en el Proyecto
 
 - React y ReactRouter
 - express
-- got (para el scraping)
+- got
 - web-push (para el envió de notificaciones)
-- zod (pendiente eliminar express-validator)
+- zod
 - mongoose
 - bcrypt y jsonwebtoken para el encriptados
 - otros mas de soporte...
