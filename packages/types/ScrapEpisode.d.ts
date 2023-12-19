@@ -5,7 +5,13 @@ export interface ValidateResult {
   passEpisodeSelector: boolean
   passEpisodePosition: boolean
   passUrlEpisodeSelector: boolean
+  passLangSelector: boolean
   timestamp: number
+}
+export type LangSupport = 'ES' | 'EN' | 'JP'
+export interface LangCases {
+  find: string
+  lang: LangSupport
 }
 export interface ScrapPage {
   namePage: string
@@ -15,6 +21,9 @@ export interface ScrapPage {
   episodePosition: number
   titleSelector: string
   urlEpisodeSelector: string
+  langSelector: string
+  langsCases: LangCases[]
+  defaultLang: LangSupport
   remplaceTitle: Array<[searchValue: string, remplaceValue: string]>
   remplaceEpisode: Array<[searchValue: string, remplaceValue: string]>
   validatesResults: ValidateResult[]
@@ -23,6 +32,7 @@ export interface ScrapEpisode {
   url: string
   title: string
   episode: number
+  lang: LangSupport
 }
 export interface Scrap {
   namePage: string

@@ -1,5 +1,3 @@
-import type { PagesNames } from '../type'
-
 export const enum IdStatus {
   emty = -1
 }
@@ -12,4 +10,4 @@ export const enum TimestampTimings {
   eightHours = 28_800_000,
   fifteenMinutes = 900_000
 }
-export const namePages: PagesNames[] = ['animeFlv', 'animeblix', 'crunchyroll', 'jkanime', 'monosChinos']
+export const namePages: string[] = ['animeFlv', 'animeblix', 'crunchyroll', 'jkanime', 'monosChinos']

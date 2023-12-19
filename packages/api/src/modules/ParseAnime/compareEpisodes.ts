@@ -11,9 +11,8 @@ export default async function compareEpisodes({ database, episodeScrap, namePage
   const page = database.pages[namePage]
   const episodes = page.episodes
   let lastUpdate = database.lastUpdate
-
   if (episodeScrap.episode === EpisodeNumber.lastEpisodeNotFound) {
-    episodeScrap.episode = database.dataAnilist.episodes ?? (episodes[0].episode ?? 0) + 1
+    episodeScrap.episode = database.dataAnilist.episodes ?? (episodes[0]?.episode ?? page.startCount - 1) + 1
   }
   episodeScrap.episode -= page.startCount
   const epExists = episodes.some(ep => ep.episode === episodeScrap.episode)

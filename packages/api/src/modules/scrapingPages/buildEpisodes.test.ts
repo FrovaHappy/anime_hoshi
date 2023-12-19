@@ -1,6 +1,9 @@
-import { type ScrapPage } from '../../../../types/ScrapEpisode'
+import { type ValidateResult, type ScrapPage } from '../../../../types/ScrapEpisode'
 import buildEpisodes from './buildEpisodes'
-import { PageContentHTML } from './buildEpisodes.mock'
+import fs from 'fs'
+import path from 'path'
+
+const PageContentHTML = fs.readFileSync(path.join(__dirname, '/mockPage.txt'), { encoding: 'utf8' })
 
 const properties: ScrapPage = {
   url: 'https://www3.animeflv.net/',
@@ -9,18 +12,41 @@ const properties: ScrapPage = {
   episodeSelector: 'unknown',
   urlEpisodeSelector: 'unknown',
   episodePosition: 0,
+  defaultLang: 'JP',
+  langSelector: '',
+  langsCases: [],
   namePage: 'animeFlv',
   remplaceEpisode: [],
   remplaceTitle: [],
   validatesResults: []
 }
-const defaultResult = {
+export const propertiesSuccess: ScrapPage = {
+  url: 'https://www3.animeflv.net/',
+  targetSelectorAll: '.episodes',
+  titleSelector: 'h3',
+  episodeSelector: 'h4',
+  urlEpisodeSelector: 'a',
+  episodePosition: -1,
+  defaultLang: 'JP',
+  langSelector: '.quality',
+  langsCases: [
+    { lang: 'ES', find: 'Audio Latino' },
+    { lang: 'ES', find: 'Castellano' },
+    { lang: 'ES', find: 'Multi Audio' }
+  ],
+  namePage: 'animeFlv',
+  remplaceEpisode: [],
+  remplaceTitle: [],
+  validatesResults: []
+}
+const defaultResult: ValidateResult = {
   passHTML: false,
   passTitleSelector: false,
   passTargetSelector: false,
   passEpisodeSelector: false,
   passEpisodePosition: false,
   passUrlEpisodeSelector: false,
+  passLangSelector: false,
   timestamp: 0
 }
 
@@ -42,7 +68,7 @@ describe('scraping: build Episodes', () => {
 
   test('pass Target Selector All', async () => {
     const newProperties = {
-      targetSelectorAll: '.ListEpisodios > li'
+      targetSelectorAll: propertiesSuccess.targetSelectorAll
     }
     const { validateResult } = await buildEpisodes(PageContentHTML, { ...properties, ...newProperties })
 
@@ -50,63 +76,22 @@ describe('scraping: build Episodes', () => {
     expect(validateResult.passTargetSelector).toBe(true)
   })
 
-  test('pass Title Selector', async () => {
-    const newProperties = {
-      targetSelectorAll: '.ListEpisodios > li',
-      titleSelector: '.Title'
-    }
-    const { validateResult } = await buildEpisodes(PageContentHTML, { ...properties, ...newProperties })
+  test('pass All Selector', async () => {
+    const { validateResult } = await buildEpisodes(PageContentHTML, propertiesSuccess)
 
     expect(validateResult.passHTML).toBe(true)
     expect(validateResult.passTargetSelector).toBe(true)
     expect(validateResult.passTitleSelector).toBe(true)
-    expect(validateResult.passEpisodeSelector).toBe(false)
-    expect(validateResult.passUrlEpisodeSelector).toBe(false)
-  })
-
-  test('pass Episode Selector', async () => {
-    const newProperties = {
-      targetSelectorAll: '.ListEpisodios > li',
-      episodeSelector: '.Capi'
-    }
-    const { validateResult } = await buildEpisodes(PageContentHTML, { ...properties, ...newProperties })
-
-    expect(validateResult.passHTML).toBe(true)
-    expect(validateResult.passTargetSelector).toBe(true)
     expect(validateResult.passEpisodeSelector).toBe(true)
-    expect(validateResult.passTitleSelector).toBe(false)
-    expect(validateResult.passUrlEpisodeSelector).toBe(false)
-  })
-
-  test('pass Episode Position and episodes length valid', async () => {
-    const newProperties = {
-      targetSelectorAll: '.ListEpisodios > li',
-      episodePosition: -1,
-      titleSelector: '.Title',
-      episodeSelector: '.Capi',
-      urlEpisodeSelector: 'a'
-    }
-    const { validateResult, episodes } = await buildEpisodes(PageContentHTML, { ...properties, ...newProperties })
-
-    expect(validateResult.passHTML).toBe(true)
-    expect(validateResult.passTargetSelector).toBe(true)
-    expect(validateResult.passEpisodePosition).toBe(true)
-    expect(validateResult.passTitleSelector).toBe(true)
     expect(validateResult.passUrlEpisodeSelector).toBe(true)
-
-    expect(episodes.length > 0).toBe(true)
+    expect(validateResult.timestamp !== 0).toBeTruthy()
+    expect(validateResult.passLangSelector).toBeTruthy()
+    expect(validateResult.passEpisodePosition).toBeTruthy()
   })
-  test('pass Url Episode Selector', async () => {
-    const newProperties = {
-      targetSelectorAll: '.ListEpisodios > li',
-      urlEpisodeSelector: 'a'
-    }
-    const { validateResult } = await buildEpisodes(PageContentHTML, { ...properties, ...newProperties })
+  test('pass Find Langs Cases', async () => {
+    const { episodes } = await buildEpisodes(PageContentHTML, propertiesSuccess)
 
-    expect(validateResult.passHTML).toBe(true)
-    expect(validateResult.passTargetSelector).toBe(true)
-    expect(validateResult.passUrlEpisodeSelector).toBe(true)
-    expect(validateResult.passTitleSelector).toBe(false)
-    expect(validateResult.passEpisodeSelector).toBe(false)
+    expect(episodes.length).toBe(30)
+    expect(episodes.filter(ep => ep.lang === 'ES').length).toBe(9)
   })
 })
