@@ -5,9 +5,9 @@ import bcrypt from 'bcrypt'
 import { createUserToken, servicesCreateUser, servicesUpdateUser } from './services'
 import auth, { type ExtBodyUserVerified } from '../../middleware/auth'
 import passwordHash from '../../utils/passwordHash'
-import { type PasswordValidate } from './validatorSchema'
+import { type UserValidate, type PasswordValidate } from './validatorSchema'
 
-export async function signup(req: Request, res: Response<JsonResponse>) {
+export async function signup(req: Request<any, any, UserValidate>, res: Response<JsonResponse>) {
   const { username, password } = req.body
   const passwordHash = await bcrypt.hash(password, 10)
   const user: Iuser = {
@@ -20,7 +20,7 @@ export async function signup(req: Request, res: Response<JsonResponse>) {
     ? res.status(400).send({ code: 400, ok: false, message: 'User already created', contents: null })
     : res.status(201).send({ code: 201, ok: true, message: 'user successfully created', contents: null })
 }
-export async function signin(req: Request, res: Response<JsonResponse>) {
+export async function signin(req: Request<any, any, UserValidate>, res: Response<JsonResponse>) {
   const { password, username } = req.body
   const userValidate = await passwordHash.compare(username, password)
   if (userValidate == null) {

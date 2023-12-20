@@ -6,7 +6,7 @@ export function toPascalCase(s: string) {
 }
 export function stringToObject<T>(s: string | undefined): T | null {
   try {
-    const object = JSON.parse(s as string)
+    const object = JSON.parse(s!)
     return object
   } catch {
     return null

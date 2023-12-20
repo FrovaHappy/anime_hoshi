@@ -5,6 +5,7 @@ import useFetch from '../../../../hooks/useFetchNew'
 import { urlApi } from '../../../../config'
 import { KeysLocalStorage } from '../../../../enum'
 import { isValidInput } from '../../../../utils/general'
+import { type ApiPutUser } from '../../../../../../types/ApiResponse'
 export default function OptionsPassword() {
   const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
   const newPassword = useRef('')
@@ -14,7 +15,7 @@ export default function OptionsPassword() {
     isValidInput(e, REGEX_PASSWORD)
     newPassword.current = password
   }
-  const { error, load, contents } = useFetch({
+  const { error, load, contents } = useFetch<ApiPutUser>({
     query: {
       method: 'PUT',
       url: `${urlApi}/user`,

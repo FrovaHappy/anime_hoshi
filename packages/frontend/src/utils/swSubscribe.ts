@@ -97,6 +97,7 @@ export async function canSandNotification(): Promise<boolean> {
   if (permission === 'default') {
     permission = await Notification.requestPermission()
   }
+  // eslint-disable-next-line @typescript-eslint/return-await
   return permission === 'granted'
 }
 

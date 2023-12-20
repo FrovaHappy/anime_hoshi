@@ -16,9 +16,9 @@ export function parseDupla(string: string): Array<[string, string]> | null {
 export default function handleUpdateSubmit(page: ScrapPage & Record<string, any>, setData: (k: any) => void) {
   return (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const form = Object.fromEntries(new FormData(e.target as HTMLFormElement)) as Record<string, any>
+    const form = Object.fromEntries(new FormData(e.target as HTMLFormElement)) as Record<string, string>
 
-    form.episodePosition = parseInt(form.episodePosition)
+    form.episodePosition = parseInt(form.episodePosition) as unknown as string
     const remplaceTitle = parseDupla(form.remplaceTitle)
     const remplaceEpisode = parseDupla(form.remplaceEpisode)
     if (!remplaceTitle || !remplaceEpisode) return
