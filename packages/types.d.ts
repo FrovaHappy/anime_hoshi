@@ -1,3 +1,6 @@
+/**
+ * @deprecated Use `ScrapEpisode`
+ */
 export interface InfoEpisodeRecovered {
   url: string
   title: string
