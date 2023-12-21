@@ -1,0 +1,46 @@
+{
+  "dataAnilist": {
+    "title": {
+      "romaji": "Kamierabi",
+      "native": "カミエラビ",
+      "english": "KamiErabi GOD.app",
+      "userPreferred": "Kamierabi"
+    },
+    "coverImage": {
+      "large": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx162984-UzH4iQYyqSwf.jpg",
+      "medium": "https://s4.anilist.co/file/anilistcdn/media/anime/cover/small/bx162984-UzH4iQYyqSwf.jpg",
+      "color": "#e4281a"
+    },
+    "id": 162984,
+    "lastUpdate": 1703099314295,
+    "episodes": 12,
+    "format": "TV",
+    "status": "FINISHED",
+    "description": "The ultimate battle royale for divinity has begun. High schoolers must use their unique powers to compete against each other for the coveted title “God.” But as each brawl becomes more vicious than the last, alliances are formed and betrayals take place. Who will emerge victorious and claim their godly throne?<br><br>\n(Source: Crunchyroll)",
+    "averageScore": 47,
+    "duration": 23
+  },
+  "pages": {
+    "monoChinos": {
+      "episodes": [],
+      "lastUpdate": 1703099314295,
+      "redirectId": null,
+      "startCount": 0,
+      "title": "Kamierabi"
+    },
+    "animeFlv": {
+      "episodes": [
+        {
+          "episode": 1,
+          "lastUpdate": 0,
+          "link": "https://www3.animeflv.net/ver/kamierabi-1"
+        }
+      ],
+      "lastUpdate": 0,
+      "redirectId": null,
+      "startCount": 0,
+      "title": "Kamierabi"
+    }
+  },
+  "lastUpdate": 1703129924537
+}
