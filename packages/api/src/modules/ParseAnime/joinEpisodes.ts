@@ -7,7 +7,8 @@ interface Params {
   namePage: string
 }
 export default function joinEpisodes({ anime, episodeScraper, namePage }: Params) {
-  const pages = anime.pages
+  const animeCopy: Anime = JSON.parse(JSON.stringify(anime))
+  const pages = animeCopy.pages
   const page = pages[namePage]
   const episodes = page.episodes
   const notFound = -1
@@ -21,6 +22,6 @@ export default function joinEpisodes({ anime, episodeScraper, namePage }: Params
     page.episodes = [episode, ...episodes]
   }
   pages[namePage] = page
-  anime.pages = pages
-  return anime
+  animeCopy.pages = pages
+  return animeCopy
 }
