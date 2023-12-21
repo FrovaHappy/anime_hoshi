@@ -1,3 +1,5 @@
+import { Episode } from './Anime'
+
 export interface ValidateResult {
   passHTML: boolean
   passTitleSelector: boolean
@@ -28,10 +30,9 @@ export interface ScrapPage {
   remplaceEpisode: Array<[searchValue: string, remplaceValue: string]>
   validatesResults: ValidateResult[]
 }
-export interface ScrapEpisode {
-  url: string
+type EpisodeWithoutUpdate = Omit<Episode, 'lastUpdate'>
+export interface ScrapEpisode extends EpisodeWithoutUpdate {
   title: string
-  episode: number
   lang: LangSupport
 }
 export interface Scrap {

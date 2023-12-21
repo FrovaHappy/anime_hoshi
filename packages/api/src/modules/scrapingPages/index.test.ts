@@ -16,7 +16,7 @@ describe('testing BuildPage Result Function', async () => {
       expect(episodes.episode).toBeTypeOf('number')
       expect(episodes.lang).toBeTypeOf('string')
       expect(episodes.title).toBeTypeOf('string')
-      expect(episodes.url).toBeTypeOf('string')
+      expect(episodes.link).toBeTypeOf('string')
     })
   })
 })
