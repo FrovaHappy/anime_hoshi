@@ -15,7 +15,7 @@ const pageScchema = new Schema<Page>(
     episodes: episodeSchema,
     lastUpdate: { type: 'number', required: true },
     redirectId: { type: 'number', default: null },
-    startCount: { type: 'number', required: true },
+    startCount: { type: 'number', required: true, default: 0 },
     title: { type: 'string', required: true }
   },
   { _id: false, id: false }
