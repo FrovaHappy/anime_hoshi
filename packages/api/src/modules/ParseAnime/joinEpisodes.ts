@@ -1,5 +1,6 @@
 import { type Episode, type Anime } from '../../../../types/Anime'
 import { type ScrapEpisode } from '../../../../types/ScrapEpisode'
+import { copyDeepObject } from '../../utils/general'
 
 interface Params {
   anime: Anime
@@ -7,18 +8,19 @@ interface Params {
   namePage: string
 }
 export default function joinEpisodes({ anime, episodeScraper, namePage }: Params) {
-  const animeCopy: Anime = JSON.parse(JSON.stringify(anime))
+  const animeCopy = copyDeepObject(anime)
   const pages = animeCopy.pages
   const page = pages[namePage]
   const episodes = page.episodes
   let hasUpdated = false
 
+  const episodeNumber = episodeScraper.episode - page.startCount
   const notFound = -1
-  const episodeIndex = page.episodes.findIndex(e => e.episode === episodeScraper.episode)
+  const episodeIndex = page.episodes.findIndex(e => e.episode === episodeNumber)
 
   if (episodeIndex === notFound) {
     const episode: Episode = {
-      episode: episodeScraper.episode,
+      episode: episodeNumber,
       lastUpdate: Date.now(),
       link: episodeScraper.link
     }
