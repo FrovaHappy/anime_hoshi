@@ -1,11 +1,12 @@
 import type { Anime } from '../../../types/Anime'
 import { animeModel } from './models/anime.model'
 interface Params {
-  search: string
+  search: string | number
   searchType: 'id' | 'title'
   namePage: string
 }
-export async function findOne ({ search, searchType, namePage }: Params) {
+export async function findOne({ search, searchType, namePage }: Params) {
+  search = `${search}`
   let query = ''
   let titleInDataAnilist: any[] = []
   if (searchType === 'title') {
