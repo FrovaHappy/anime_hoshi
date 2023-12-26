@@ -6,7 +6,7 @@ export interface InfoEpisodeRecovered {
   title: string
   episode: number
 }
-
+export type OperationType = 'ORIGINAL' | 'EDIT' | 'NEW'
 export type PagesAttacked = {
   [x: string]: InfoEpisodeRecovered[]
 }[]
