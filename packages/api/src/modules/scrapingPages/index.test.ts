@@ -11,6 +11,7 @@ describe('testing BuildPage Result Function', async () => {
   const result = await BuildData(query[0])
   test('test result', () => {
     expect(typeof result.namePage === 'string').toBeTruthy()
+    expect(result.defaultLang).toBe('JP')
     expect(result.episodes.length >= 0).toBeTruthy()
     result.episodes.forEach(episodes => {
       expect(episodes.episode).toBeTypeOf('number')

@@ -37,6 +37,7 @@ export interface ScrapEpisode extends EpisodeWithoutUpdate {
 }
 export interface Scrap {
   namePage: string
+  defaultLang: LangSupport
   episodes: ScrapEpisode[]
 }
 export interface EpisodeError extends ScrapEpisode {
