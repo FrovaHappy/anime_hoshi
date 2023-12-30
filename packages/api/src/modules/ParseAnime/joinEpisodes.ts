@@ -10,20 +10,22 @@ interface Params {
 }
 export default function joinEpisodes({ anime, episodeScraper, namePage, defaultLang }: Params) {
   const animeCopy = copyDeepObject(anime)
+  const timeNow = Date.now()
   const namePageStr = episodeScraper.lang === defaultLang ? namePage : namePage + episodeScraper.lang
   const pages = animeCopy.pages
   const page = pages[namePageStr]
   const episodes = page.episodes
   let hasUpdated = false
-
-  const episodeNumber = episodeScraper.episode - page.startCount
+  const lastEpisodeParsed = episodeScraper.episode === -1 ? anime.episodes : episodeScraper.episode
+  if (!lastEpisodeParsed) return null
+  const episodeNumber = lastEpisodeParsed - page.startCount
   const notFound = -1
   const episodeIndex = page.episodes.findIndex(e => e.episode === episodeNumber)
 
   if (episodeIndex === notFound) {
     const episode: Episode = {
       episode: episodeNumber,
-      lastUpdate: Date.now(),
+      lastUpdate: timeNow,
       link: episodeScraper.link
     }
     page.episodes = [episode, ...episodes]
@@ -34,6 +36,7 @@ export default function joinEpisodes({ anime, episodeScraper, namePage, defaultL
     episode.link = episodeScraper.link
   }
   if (!hasUpdated) return null
+  page.lastUpdate = timeNow
   pages[namePageStr] = page
   animeCopy.pages = pages
   return animeCopy
