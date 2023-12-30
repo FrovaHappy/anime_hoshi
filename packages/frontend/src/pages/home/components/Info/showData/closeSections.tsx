@@ -7,7 +7,7 @@ interface Props {
 }
 function LinkToAnilist({ anime }: Props) {
   return (
-    <a href={`https://anilist.co/anime/${anime.dataAnilist.id}`} target='_blank' rel='noreferrer'>
+    <a href={`https://anilist.co/anime/${anime.id}`} target='_blank' rel='noreferrer'>
       <div className='anilist'>
         <Icons iconName='IconExternalLink' className='anilist__iconExtern' />
         <div className='anilist__i'></div>

@@ -16,9 +16,9 @@ export function parseDescription(description: string | null) {
 export function Description({ anime }: Props) {
   return (
     <div className='description'>
-      <img className='description__img' src={anime.dataAnilist.coverImage.large} alt={anime.dataAnilist.title.romaji} />
+      <img className='description__img' src={anime.coverImage.large} alt={anime.title.romaji} />
       <p className='description__title'>Descripción:</p>
-      <div className='description__body'>{parseDescription(anime.dataAnilist.description)}</div>
+      <div className='description__body'>{parseDescription(anime.description)}</div>
     </div>
   )
 }

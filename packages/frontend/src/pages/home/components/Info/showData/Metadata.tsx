@@ -15,7 +15,7 @@ function formatTime(duration: number | null): string {
   return `${inMinutes} Minutos`
 }
 function Metadata({ anime }: Props) {
-  const { episodes, id, format, status, averageScore, duration } = anime.dataAnilist
+  const { episodes, id, format, status, averageScore, duration } = anime
   const renderMetadata = (hasContent: boolean, content: React.ReactNode) => {
     return hasContent ? <div className='metadata__item'>{content}</div> : null
   }
