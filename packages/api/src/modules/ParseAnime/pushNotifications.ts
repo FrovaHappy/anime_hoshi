@@ -2,11 +2,12 @@ import { type Anime } from '../../../../types/Anime'
 import { type PayloadAnimeNof } from '../../../../types/Payloads'
 import { type Subscription } from '../../../type'
 import { TimestampTimings } from '../../Enum'
+import animeDb from '../../database/anime.db'
 import subscriptionsDb from '../../database/subscriptions.db'
 import logger from '../../shared/log'
-import cache from '../../utils/cache'
 import pushNotifications from '../pushNotifications'
 
+let missingUpdate: number[] = []
 async function buildStackSubscriptions() {
   const subscriptions = (await subscriptionsDb.findAll()) as Subscription[]
   const stackSubscriptions: Subscription[][] = []
@@ -16,27 +17,30 @@ async function buildStackSubscriptions() {
   }
   return stackSubscriptions
 }
-function getAnimes(animesId: number[]) {
-  let animes: Anime[] = cache.get('animes') ?? []
-  animes = animes.filter(anime => animesId.some(id => anime.dataAnilist.id === id))
+async function getAnimes(animesId: number[]) {
+  const animes: Anime[] = []
+  for (const id of animesId) {
+    const anime = await animeDb.findOne({ search: id, searchType: 'id' })
+    if (anime) animes.push(anime)
+  }
   return animes
 }
 function buildPayload(anime: Anime) {
   const namePages = Object.keys(anime.pages)
   const namePagesUpdated: string[] = []
-  let refEpidode = 0
+  let refEpisode = 0
   for (const name of namePages) {
     const { lastUpdate, episode } = anime.pages[name].episodes[0]
     if (Date.now() < lastUpdate + TimestampTimings.eightHours) {
       namePagesUpdated.push(name)
-      refEpidode = episode
+      refEpisode = episode
     }
   }
   const payload: PayloadAnimeNof = {
-    title: anime.dataAnilist.title.romaji,
-    episode: refEpidode,
-    image: anime.dataAnilist.coverImage.large,
-    id: anime.dataAnilist.id,
+    title: anime.title.romaji,
+    episode: refEpisode,
+    image: anime.coverImage.large,
+    id: anime.id,
     namePages: namePagesUpdated
   }
   return payload
@@ -44,7 +48,7 @@ function buildPayload(anime: Anime) {
 
 async function sendingNotifications(animesId: number[]) {
   const stackSubscriptions = await buildStackSubscriptions()
-  const animes = getAnimes(animesId)
+  const animes = await getAnimes(animesId)
   const stackPayload = JSON.stringify(animes.map(anime => buildPayload(anime)))
   let totalSusses = 0
   let totalRejects = 0
@@ -60,6 +64,7 @@ async function sendingNotifications(animesId: number[]) {
     totalSusses += susses
     totalRejects += rejects
   }
+  missingUpdate = []
   await logger.info({
     content: { susses: totalSusses, rejects: totalRejects, total: totalSusses + totalRejects },
     message: `${totalSusses} send of ${totalSusses + totalRejects} `,
@@ -67,16 +72,11 @@ async function sendingNotifications(animesId: number[]) {
   })
 }
 
-export default function sendNotifications () {
-  let animesUpdated: number[] = []
-  return {
-    setAnimesUpdated (animesId: number[]) {
-      animesUpdated.push(...animesId)
-      const deletedRep = new Set(animesUpdated)
-      animesUpdated = [...deletedRep]
-    },
-    async run () {
-      await sendingNotifications(animesUpdated)
-    }
+export default {
+  setMissingUpdated(animeId: number) {
+    missingUpdate = [...new Set([...missingUpdate, animeId])]
+  },
+  async run() {
+    await sendingNotifications(missingUpdate)
   }
 }
