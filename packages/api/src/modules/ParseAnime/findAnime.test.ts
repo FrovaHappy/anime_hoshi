@@ -1,47 +1,36 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { type Anime } from '../../../../types/Anime'
 import animeDb from '../../database/anime.db'
 import { mongoose } from '../../mongoose'
-import findAnime, { OperationTypeEnum } from './findAnime'
-import fs from 'fs'
-import path from 'path'
-const anime: Anime = JSON.parse(fs.readFileSync(path.join(__dirname, '/anime.mock.json'), { encoding: 'utf8' }))
-
-const titles = [
-  '', // for anime empty
-  'Ahiru Riku Sentai' // for new anime
-]
-const namePage = 'animeFlv'
-const defaultLang = 'JP'
-const lang = 'JP'
+import findAnime from './findAnime'
+import mocks from '../../mocks'
+const { anime } = mocks
 
 describe('Find Anime', async () => {
   await mongoose()
+  await animeDb.deletedOne(anime.id)
+
   test('anime no found', async () => {
-    const result = await findAnime({ lang, namePage, title: titles[0], defaultLang })
+    const result = await findAnime({ title: 'n0F0und' })
+    console.log(result)
     expect(result).toBeNull()
   })
-  test('anime found NEW', async () => {
-    const result = await findAnime({ lang, namePage, defaultLang, title: titles[1] })
-    const page = result!.anime.pages.animeFlv
-    expect(result).not.toBeNull()
-    expect(Object.keys(result!.anime.pages)).length(1)
-    expect(result!.operationType).toBe(OperationTypeEnum.NEW)
-    expect(page.episodes).length(0)
-    expect(page.lastUpdate).toBe(0)
-    expect(page.startCount).toBe(0)
-    expect(page.redirectId).toBeNull()
-    expect(page.title).toBe(titles[1])
-
-    await animeDb.deletedOne(result!.anime.dataAnilist.id)
-  })
-  test('anime found ORIGINAL', async () => {
+  test('anime found in Db', async () => {
     await animeDb.updateOne({ anime, filter: {} })
-    const result = await findAnime({ lang, namePage, defaultLang, title: anime.pages.animeFlv.title })
+    const result = await findAnime({ title: anime.titles[0] })
     expect(result).not.toBeNull()
-    expect(Object.keys(result!.anime.pages)).length(1)
-    expect(result!.operationType).toBe(OperationTypeEnum.ORIGINAL)
+    expect(result!.titles).length(1)
+    expect(result!.lastUpdate).toBe(0)
 
-    await animeDb.deletedOne(result!.anime.dataAnilist.id)
+    await animeDb.deletedOne(result!.id)
+  })
+
+  test('anime found in fetchAnilist', async () => {
+    await animeDb.updateOne({ anime, filter: {} })
+    const result = await findAnime({ title: 'GIRLS Bravo: season second' })
+    expect(result).not.toBeNull()
+    expect(result!.titles).length(2)
+    expect(result!.lastUpdate !== 0).toBeTruthy()
+
+    await animeDb.deletedOne(result!.id)
   })
 })
