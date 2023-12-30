@@ -1,10 +1,7 @@
 import { type ValidateResult, type ScrapPage } from '../../../../types/ScrapEpisode'
 import buildEpisodes from './buildEpisodes'
-import fs from 'fs'
-import path from 'path'
-
-const PageContentHTML = fs.readFileSync(path.join(__dirname, '/mockPage.txt'), { encoding: 'utf8' })
-
+import mocks from '../../mocks'
+const { pageHTML } = mocks
 const properties: ScrapPage = {
   url: 'https://www3.animeflv.net/',
   targetSelectorAll: 'unknown',
@@ -58,7 +55,7 @@ describe('scraping: build Episodes', () => {
   })
 
   test('pass Page Content HTML', async () => {
-    const { validateResult } = await buildEpisodes(PageContentHTML, properties)
+    const { validateResult } = await buildEpisodes(pageHTML, properties)
     expect(validateResult.passHTML).toBe(true)
     expect(validateResult.passTargetSelector).toBe(false)
     expect(validateResult.passTitleSelector).toBe(false)
@@ -70,14 +67,14 @@ describe('scraping: build Episodes', () => {
     const newProperties = {
       targetSelectorAll: propertiesSuccess.targetSelectorAll
     }
-    const { validateResult } = await buildEpisodes(PageContentHTML, { ...properties, ...newProperties })
+    const { validateResult } = await buildEpisodes(pageHTML, { ...properties, ...newProperties })
 
     expect(validateResult.passHTML).toBe(true)
     expect(validateResult.passTargetSelector).toBe(true)
   })
 
   test('pass All Selector', async () => {
-    const { validateResult } = await buildEpisodes(PageContentHTML, propertiesSuccess)
+    const { validateResult } = await buildEpisodes(pageHTML, propertiesSuccess)
 
     expect(validateResult.passHTML).toBe(true)
     expect(validateResult.passTargetSelector).toBe(true)
@@ -89,7 +86,7 @@ describe('scraping: build Episodes', () => {
     expect(validateResult.passEpisodePosition).toBeTruthy()
   })
   test('pass Find Langs Cases', async () => {
-    const { episodes } = await buildEpisodes(PageContentHTML, propertiesSuccess)
+    const { episodes } = await buildEpisodes(pageHTML, propertiesSuccess)
 
     expect(episodes.length).toBe(30)
     expect(episodes.filter(ep => ep.lang === 'ES').length).toBe(9)
