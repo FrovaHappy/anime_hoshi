@@ -9,7 +9,7 @@ const errorEpisodeSchema = new Schema<EpisodeError>({
   timestamp: { type: 'Number', required: true },
   namePage: { type: 'String', required: true },
   title: { type: 'String', required: true },
-  url: { type: 'String', required: true, unique: true }
+  link: { type: 'String', required: true, unique: true }
 })
 
 export const errorEpisodeModel = model('error_episode', errorEpisodeSchema)

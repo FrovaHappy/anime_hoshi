@@ -1,7 +1,7 @@
 import { errorEpisodeModel } from './models/episodesError.model'
 import type { EpisodeError } from '../../../types/ScrapEpisode'
-async function getOne(url: string) {
-  return await errorEpisodeModel.findOne({ url })
+async function getOne(link: string) {
+  return await errorEpisodeModel.findOne({ link })
 }
 async function getAll() {
   return await errorEpisodeModel.find({})
@@ -14,12 +14,12 @@ async function createOrUpdate(episodeError: Partial<EpisodeError>) {
   }
 }
 async function updateOne(episodeError: Partial<EpisodeError>) {
-  const update = await errorEpisodeModel.updateOne({ url: episodeError.url }, episodeError)
+  const update = await errorEpisodeModel.updateOne({ link: episodeError.link }, episodeError)
   if (update.matchedCount === 0) return null
   return update
 }
-async function deleteOne(url: string) {
-  const deleted = await errorEpisodeModel.deleteOne({ url })
+async function deleteOne(link: string) {
+  const deleted = await errorEpisodeModel.deleteOne({ link })
   if (deleted.deletedCount === 0) return null
   return deleted
 }

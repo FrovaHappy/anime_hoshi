@@ -17,7 +17,7 @@ import { getIdLocation } from '../../../../utils/getIdLocation'
 export function ShowInfo({ anime }: { anime: Anime }) {
   return (
     <>
-      <h3 className='title'>{anime.dataAnilist.title.romaji}</h3>
+      <h3 className='title'>{anime.title.romaji}</h3>
       <Metadata anime={anime} />
       <Description anime={anime} />
       <ListEpisodes anime={anime} />

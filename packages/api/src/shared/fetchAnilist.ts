@@ -2,7 +2,7 @@ import logger from './log'
 import { type DataAnilist } from '../../../types/dataAnilist'
 interface Params {
   search: string | number
-  searchType: SearchOptions
+  searchType: 'forTitle' | 'forId'
 }
 export enum SearchOptions {
   forTitle = 'forTitle',

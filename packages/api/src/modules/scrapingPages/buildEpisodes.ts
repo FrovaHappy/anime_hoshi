@@ -82,7 +82,7 @@ export default async function buildEpisodes(content: string | null, properties: 
     const url = getUrl()
     const title = getTitle()
     if (!title || !url) return
-    episodes.push({ url, episode: getEpisode(), title, lang: getLang() })
+    episodes.push({ link: url, episode: getEpisode(), title, lang: getLang() })
   })
   return { validateResult, episodes }
 }

@@ -1,9 +1,12 @@
+/**
+ * @deprecated Use `ScrapEpisode`
+ */
 export interface InfoEpisodeRecovered {
   url: string
   title: string
   episode: number
 }
-
+export type OperationType = 'ORIGINAL' | 'EDIT' | 'NEW'
 export type PagesAttacked = {
   [x: string]: InfoEpisodeRecovered[]
 }[]
