@@ -3,7 +3,7 @@ import { Timestamps } from '../../../../../enum'
 import select from '../../../../../components/select'
 import { getTimeAgo } from '../../../../../utils/getTimeAgo'
 import { type Anime } from '../../../../../../../types/Anime'
-import { toPascalCase } from '../../../../../utils/general'
+import { mayorLastUpdate, toPascalCase } from '../../../../../utils/general'
 import Icons from '../../../../../Icons'
 
 function BuilderOptions(anime: Anime) {
@@ -26,7 +26,7 @@ export default function ListEpisodes({ anime }: { anime: Anime }) {
         {select({ values: options, onSelect: setNamePage })}
         <span className="episodesList__lastUpdate">
           <Icons iconName="IconRotate" className="episodesList__lastUpdate--i" />
-          {getTimeAgo(anime.lastUpdate)}
+          {getTimeAgo(mayorLastUpdate(anime))}
         </span>
       </div>
       <ul className="list">
