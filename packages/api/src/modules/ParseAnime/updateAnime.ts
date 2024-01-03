@@ -6,6 +6,7 @@ import { updateAnilist } from './buildsProperties'
 import findAnime from './findAnime'
 import joinEpisodes from './joinEpisodes'
 import sendNotifications from './pushNotifications'
+import validatePages from './validatePages'
 
 interface Params {
   namePage: string
@@ -36,11 +37,12 @@ export default async function updateAnime(params: Params) {
   const animeAndEpisodes = joinEpisodes({ anime, namePage, episodeScraper, defaultLang })
 
   if (!animeAndEpisodes && anime.lastUpdate !== timestampBefore) return false
-  if (animeAndEpisodes) {
-    anime = animeAndEpisodes
-    animesCache.set(anime.id)
-    sendNotifications.setMissingUpdated(anime.id)
-  }
+  anime = animeAndEpisodes ?? anime
+
+  if (!validatePages(anime)) return false
+  animesCache.set(anime.id)
+  sendNotifications.setMissingUpdated(anime.id)
+
   await animeDb.updateOne({ anime, filter: { id: anime.id } })
   return true
 }
