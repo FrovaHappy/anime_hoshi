@@ -1,7 +1,7 @@
 import Icon from '../../../../Icons'
 import { type AnimeMinified } from '../../../../../../types/Anime'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
-import { useIdContext } from '../../../contexts/contextHome'
+import { useIdContext } from '../../contextHome'
 import './targetAnime.scss'
 import { memo, useRef, useState } from 'react'
 import useLazyloadImage from '../../../../hooks/useLazyload'
