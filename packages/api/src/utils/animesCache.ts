@@ -40,6 +40,7 @@ function getCache() {
 async function init() {
   animes = await animeDb.findAll()
   animes = animes.sort((a, b) => mayorLastUpdate(b) - mayorLastUpdate(a))
+  animesIdsLocal = animes.map(a => a.id).slice(0, 100)
   updated = false
 }
 
