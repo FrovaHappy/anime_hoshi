@@ -14,7 +14,6 @@ export default async function animeDbHeals() {
     anime = copyDeepObject(anime)
     result.passed += 1
     const dataAnilist: DataAnilist = anime.dataAnilist
-    if (result.passed === 1) console.log(anime.dataAnilist)
     if (!dataAnilist) continue
     result.updated += 1
     const namePages = Object.keys(anime.pages as object)
