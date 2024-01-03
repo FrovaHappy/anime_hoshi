@@ -2,7 +2,7 @@ import { type LangSupport, type ScrapEpisode } from '../../../../types/ScrapEpis
 import animeDb from '../../database/anime.db'
 import episodeErrorDb from '../../database/episodeError.db'
 import animesCache from '../../utils/animesCache'
-import { buildPages, updateAnilist } from './buildsProperties'
+import { updateAnilist } from './buildsProperties'
 import findAnime from './findAnime'
 import joinEpisodes from './joinEpisodes'
 import sendNotifications from './pushNotifications'
@@ -33,7 +33,6 @@ export default async function updateAnime(params: Params) {
   }
   const timestampBefore = anime.lastUpdate
   anime = await updateAnilist(anime)
-  anime = buildPages({ anime, namePage, lang: episodeScraper.lang, defaultLang })
   const animeAndEpisodes = joinEpisodes({ anime, namePage, episodeScraper, defaultLang })
 
   if (!animeAndEpisodes && anime.lastUpdate !== timestampBefore) return false

@@ -8,7 +8,6 @@ export function getAnimesMinified() {
   const animes: Anime[] = animesCache.getCache()
   lastUpdate = animesCache.get().updated ? Date.now() : lastUpdate
   animesMinifiedCache = animes.map(anime => animeMinified(anime))
-  console.log(animesMinifiedCache)
   return {
     lastUpdate,
     animesMinified: animesMinifiedCache
