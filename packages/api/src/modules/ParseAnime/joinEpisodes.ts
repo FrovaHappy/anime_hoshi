@@ -1,6 +1,7 @@
 import { type Episode, type Anime } from '../../../../types/Anime'
 import { type LangSupport, type ScrapEpisode } from '../../../../types/ScrapEpisode'
 import { copyDeepObject } from '../../utils/general'
+import { buildPages } from './buildsProperties'
 
 interface Params {
   anime: Anime
@@ -9,7 +10,13 @@ interface Params {
   defaultLang: LangSupport
 }
 export default function joinEpisodes({ anime, episodeScraper, namePage, defaultLang }: Params) {
-  const animeCopy = copyDeepObject(anime)
+  const animeCopy = buildPages({
+    anime: copyDeepObject(anime),
+    defaultLang,
+    lang: episodeScraper.lang,
+    namePage
+  })
+
   const timeNow = Date.now()
   const namePageStr = episodeScraper.lang === defaultLang ? namePage : namePage + episodeScraper.lang
   const pages = animeCopy.pages
