@@ -34,14 +34,18 @@ export default async function updateAnime(params: Params) {
   }
   const timestampBefore = anime.lastUpdate
   anime = await updateAnilist(anime)
+  const hasUpdatedAnilist = anime.lastUpdate !== timestampBefore
   const animeAndEpisodes = joinEpisodes({ anime, namePage, episodeScraper, defaultLang })
 
-  if (!animeAndEpisodes && anime.lastUpdate !== timestampBefore) return false
+  if (!animeAndEpisodes && hasUpdatedAnilist) return false
   anime = animeAndEpisodes ?? anime
-
   if (!validatePages(anime)) return false
-  animesCache.set(anime.id)
-  sendNotifications.setMissingUpdated(anime.id)
+  if (animeAndEpisodes) {
+    animesCache.set(anime.id)
+    sendNotifications.setMissingUpdated(anime.id)
+  } else {
+    animesCache.setUpdated(true)
+  }
 
   await animeDb.updateOne({ anime, filter: { id: anime.id } })
   return true
