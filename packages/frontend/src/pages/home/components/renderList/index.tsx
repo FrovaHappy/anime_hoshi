@@ -1,5 +1,5 @@
 import './index.scss'
-import { useContextAnimes } from '../../../contexts/contextHome'
+import { useContextAnimes } from '../../contextHome'
 import { FetchLoading } from './fetchLoading'
 import TargetAnime from './targetAnime'
 import useFetch from '../../../../hooks/useFetchNew'

@@ -30,8 +30,9 @@ async function refresh() {
   for await (const id of ids) {
     const anime = await animeDb.findOne({ search: id, searchType: 'id' })
     if (!anime) continue
-    animes = [anime, ...animes]
+    animes.push(anime)
   }
+  animes = animes.reverse()
   return copyDeepObject(animes)
 }
 function getCache() {

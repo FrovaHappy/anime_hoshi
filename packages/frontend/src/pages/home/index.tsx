@@ -1,4 +1,4 @@
-import { ContextHome } from '../contexts/contextHome'
+import { ContextHome } from './contextHome'
 import RenderList from './components/renderList'
 import './index.scss'
 import Info from './components/Info'

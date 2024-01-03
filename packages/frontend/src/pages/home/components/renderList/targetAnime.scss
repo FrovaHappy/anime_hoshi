@@ -23,7 +23,6 @@
       transition: filter 0.5s;
       filter: grayscale(0.5) brightness(0.6);
     }
-
   }
 
   &__title {
@@ -45,31 +44,39 @@
   }
   &__episode {
     z-index: var(--z-episode);
-    background-color: var(--color-content);
     border-radius: var(--br-secondary);
+    border: .125rem solid var(--color-content);
     top: 0.3125rem;
     right: 0.3125rem;
     position: absolute;
-    padding: 0.3125rem 0.625rem;
+    &--active {
+      border: .125rem solid var(--color-primary);
+    }
     &--icon {
       height: var(--font-body);
       aspect-ratio: 1/1;
-      width: auto;
+    }
+    &--iconActive {
+      height: var(--font-body);
+      aspect-ratio: 1/1;
+      color: var(--color-primary);
     }
     &--text {
       display: flex;
       align-items: center;
+      background-color: var(--color-content);
+      border-radius: var(--br-secondary);
+      margin: .125rem;
+      padding: .1875rem;
       gap: 0.3125rem;
       justify-items: center;
       white-space: nowrap;
       font-size: var(--font-body);
       font-weight: 600;
-      color: #ffff;
-      mix-blend-mode: difference;
-      filter: saturate(0) contrast(0);
+      color: var(--color-text);
     }
   }
 }
-[data-theme="light"] > .targetAnime__img{
-    background-blend-mode: normal;
+[data-theme="light"] > .targetAnime__img {
+  background-blend-mode: normal;
 }

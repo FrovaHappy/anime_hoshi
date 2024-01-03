@@ -1,7 +1,7 @@
 import Icon from '../../../../Icons'
 import { type AnimeMinified } from '../../../../../../types/Anime'
 import { setColorPrimary } from '../../../../utils/toogleColorPrimary'
-import { useIdContext } from '../../../contexts/contextHome'
+import { useIdContext } from '../../contextHome'
 import './targetAnime.scss'
 import { memo, useRef, useState } from 'react'
 import useLazyloadImage from '../../../../hooks/useLazyload'
@@ -39,12 +39,13 @@ function TargetAnimeConponent({ thisAnime }: Props) {
     }
     setColorPrimary(color)
   }
-
+  const iconActive = newEpisode ? 'targetAnime__episode--iconActive' : 'targetAnime__episode--icon'
+  const episodeActive = newEpisode ? 'targetAnime__episode targetAnime__episode--active' : 'targetAnime__episode'
   return (
     <div className={'targetAnime ' + setOpaqueImg} onClick={onClickAnime}>
-      <div className='targetAnime__episode' style={newEpisode ? { background: 'var(--color-primary)' } : undefined}>
+      <div className={episodeActive}>
         <p className='targetAnime__episode--text'>
-          <Icon iconName='Layers' className='targetAnime__episode--icon' /> Ep. {thisAnime.episode}
+          <Icon iconName='Layers' className={iconActive} /> Ep. {thisAnime.episode}
         </p>
       </div>
 
