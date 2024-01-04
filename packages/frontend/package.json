@@ -16,6 +16,7 @@
     "dev:local": "env-cmd -e LOCAL react-scripts start",
     "dev:cloud": "env-cmd -e CLOUD react-scripts start",
     "build": "env-cmd -e CLOUD react-scripts build",
+    "build:web_socket": "npx tsc --project ./src/utils/serviceWorker/tsconfig.json --watch",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
