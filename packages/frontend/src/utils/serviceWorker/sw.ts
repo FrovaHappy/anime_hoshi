@@ -8,7 +8,7 @@ declare const self: ServiceWorkerGlobalScope
 
 function stringToObject<T = any>(s: string | undefined): T | null {
   try {
-    const object = JSON.parse(s as string)
+    const object = JSON.parse(s!)
     return object
   } catch {
     return null
