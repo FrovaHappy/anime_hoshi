@@ -17,7 +17,7 @@
     "dev:cloud": "env-cmd -e CLOUD react-scripts start",
     "build": "env-cmd -e CLOUD react-scripts build",
     "build:web_socket": "npx tsc --project ./src/utils/serviceWorker/tsconfig.json --watch",
-    "test": "react-scripts test",
+    "test": "vitest --ui",
     "eject": "react-scripts eject"
   },
   "browserslist": {
@@ -37,14 +37,18 @@
     "@types/react": "18.2.45",
     "@types/react-dom": "18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "^1.1.3",
     "eslint": "^8.56.0",
     "eslint-config-standard-with-typescript": "^43.0.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.4.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.33.2",
+    "jsdom": "^23.1.0",
     "sass": "1.69.5",
     "ts-standard": "12.0.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.3"
   }
 }
