@@ -25,3 +25,10 @@ export interface User {
   username: string
   roles: string[]
 }
+
+export interface EnabledSettings {
+  expiredDelay: boolean
+  expiredNotification: boolean
+  remittedRange: boolean
+  satisfiesMinPages: boolean
+}
