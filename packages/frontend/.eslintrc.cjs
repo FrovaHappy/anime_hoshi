@@ -14,10 +14,6 @@ module.exports = {
         sourceType: 'script',
         project: false
       }
-    },
-    {
-      files: ['./**/*.test.ts'],
-      rules: { 'no-undef': 'off' }
     }
   ],
   parserOptions: {

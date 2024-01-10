@@ -1,7 +1,6 @@
 import { type PayloadAnimeNof } from '../types/Payloads'
-/** @deprecated remplace for Record */
 export type ObjectDynamic<T> = Record<string, T>
-/** @deprecated  */
+
 export interface notificationProperty {
   hasAccept: boolean
   updated?: number
@@ -21,7 +20,6 @@ export interface NotificationsInAired {
   expireIn: number
   minPages: number
 }
-/** @deprecated */
 export interface User {
   newToken: string
   username: string
