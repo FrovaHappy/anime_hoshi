@@ -45,8 +45,8 @@ function RenderLogs(contents: string[] | null, setData: (v: string) => void) {
 export default function Main() {
   const [data, setData] = useState(getDataNow().string)
   const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
-  const logs = useFetch({ query: { url: `${urlApi}/logs`, method: 'GET', authorization: token }, deps: [] })
-  const logsOnData = useFetch({
+  const logs = useFetch<string[]>({ query: { url: `${urlApi}/logs`, method: 'GET', authorization: token }, deps: [] })
+  const logsOnData = useFetch<Log[]>({
     query: {
       url: `${urlApi}/logs?onDate=${data}`,
       method: 'GET',

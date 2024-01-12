@@ -10,6 +10,7 @@ export async function BuildData(page: ScrapPageResponse): Promise<Scrap> {
   await ScrapPagesDb.replaceOne({ _id: page._id }, page)
   return {
     namePage: page.namePage,
+    defaultLang: page.defaultLang,
     episodes: episodes.reverse()
   }
 }

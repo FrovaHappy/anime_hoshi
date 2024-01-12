@@ -1,4 +1,5 @@
 import type React from 'react'
+import { type Anime } from '../../../types/Anime'
 export function toPascalCase(s: string) {
   return s.replace(/\w+/g, function (w) {
     return w[0].toUpperCase() + w.slice(1).toLowerCase()
@@ -6,7 +7,7 @@ export function toPascalCase(s: string) {
 }
 export function stringToObject<T>(s: string | undefined): T | null {
   try {
-    const object = JSON.parse(s as string)
+    const object = JSON.parse(s!)
     return object
   } catch {
     return null
@@ -28,4 +29,13 @@ export function isValidInput(
   } else {
     e.target.classList.remove('invalid')
   }
+}
+export function mayorLastUpdate(a: Anime) {
+  let lastUpdate = 0
+  const namePages = Object.keys(a.pages)
+  namePages.forEach(namePage => {
+    const page = a.pages[namePage]
+    if (lastUpdate < page.lastUpdate) lastUpdate = page.lastUpdate
+  })
+  return lastUpdate
 }

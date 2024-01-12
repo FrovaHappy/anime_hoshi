@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose'
-import { type ValidateResult, type ScrapPage } from '../../../../types/ScrapEpisode'
+import { type ValidateResult, type ScrapPage, type LangCases } from '../../../../types/ScrapEpisode'
 const validateResultSchema = new Schema<ValidateResult>(
   {
     passEpisodePosition: { type: Boolean, required: true },
@@ -12,6 +12,11 @@ const validateResultSchema = new Schema<ValidateResult>(
   },
   { _id: false }
 )
+const LangCasesSchema = new Schema<LangCases>({
+  find: String,
+  lang: String
+})
+
 const scrapPagesSchema = new Schema<ScrapPage>({
   episodePosition: { type: Number, default: 0 },
   episodeSelector: { type: String, required: true },
@@ -21,6 +26,9 @@ const scrapPagesSchema = new Schema<ScrapPage>({
   urlEpisodeSelector: { type: String, required: true },
   titleSelector: { type: String, required: true },
   remplaceEpisode: { type: [[String, String]], required: true, default: [] },
+  langSelector: { type: String, default: 'unknown' },
+  defaultLang: { type: String, required: true, default: 'JP' },
+  langsCases: { type: [LangCasesSchema], required: true, default: [] },
   remplaceTitle: { type: [[String, String]], required: true, default: [] },
   validatesResults: [validateResultSchema]
 })

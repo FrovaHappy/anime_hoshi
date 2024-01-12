@@ -1,40 +1,42 @@
 import type { Anime } from '../../../types/Anime'
 import { animeModel } from './models/anime.model'
 interface Params {
-  search: string
+  search: string | number
   searchType: 'id' | 'title'
-  namePage: string
 }
-export async function findOne ({ search, searchType, namePage }: Params) {
-  let query = ''
-  let titleInDataAnilist: any[] = []
+export async function findOne({ search, searchType }: Params) {
+  search = `${search}`
+  let query: Record<string, string> = { 'pages.titles': search }
+  let titleInDataAnilist: Array<Record<string, string>> = []
   if (searchType === 'title') {
-    query = `{ "pages.${namePage}.title":"${search}"}`
     titleInDataAnilist = [
       {
-        'dataAnilist.title.userPreferred': search
+        'title.userPreferred': search
       },
       {
-        'dataAnilist.title.romaji': search
+        'title.romaji': search
       },
       {
-        'dataAnilist.title.english': search
+        'title.english': search
       }
     ]
   }
-  if (searchType === 'id') query = `{"dataAnilist.id": "${search}" }`
+  if (searchType === 'id') query = { id: search }
 
-  const querysParse = [JSON.parse(query), ...titleInDataAnilist]
+  const queryParses = [query, ...titleInDataAnilist]
 
   let anime
-  for (const queryParse of querysParse) {
+  for (const queryParse of queryParses) {
     anime = await animeModel.findOne(queryParse)
     if (anime != null) break
   }
   return anime
 }
-
-export async function updateOne ({ anime, filter }: { anime: Anime, filter: object }) {
+interface UpdateOne {
+  anime: Anime
+  filter: Partial<Anime>
+}
+export async function updateOne({ anime, filter }: UpdateOne) {
   const result = await animeModel.findOneAndReplace(filter, anime, {
     upsert: true,
     returnDocument: 'after',
@@ -44,10 +46,10 @@ export async function updateOne ({ anime, filter }: { anime: Anime, filter: obje
 
   return result
 }
-export async function findAll () {
+export async function findAll() {
   return await animeModel.find({})
 }
-export async function deletedOne (anilistId: number) {
+export async function deletedOne(anilistId: number) {
   return await animeModel.deleteOne({ 'dataAnilist.id': anilistId })
 }
-export default { findOne, updateOne, deletedOne }
+export default { findOne, updateOne, deletedOne, findAll }

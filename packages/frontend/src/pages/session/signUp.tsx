@@ -18,7 +18,7 @@ function signUp() {
   })
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const { password, username } = Object.fromEntries(new window.FormData(event.target as any))
+    const { password, username } = Object.fromEntries(new window.FormData(event.target as HTMLFormElement | undefined))
     setSingUp({ password, username })
   }
   if (errorCode === 0 && !error && signUp) {

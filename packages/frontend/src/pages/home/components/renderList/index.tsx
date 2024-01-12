@@ -1,5 +1,5 @@
 import './index.scss'
-import { useContextAnimes } from '../../../contexts/contextHome'
+import { useContextAnimes } from '../../contextHome'
 import { FetchLoading } from './fetchLoading'
 import TargetAnime from './targetAnime'
 import useFetch from '../../../../hooks/useFetchNew'
@@ -11,7 +11,7 @@ import { urlApi } from '../../../../config'
 function renderList({ filter }: { filter: AnimeMinified[] | null }) {
   const { animesMinfied, setAnimesMinfied } = useContextAnimes()
   const animes = filter ?? animesMinfied
-  const { load, error, contents, errorCode } = useFetch({
+  const { load, error, contents, errorCode } = useFetch<{ animes: AnimeMinified[] }>({
     query: { url: `${urlApi ?? ''}/animes`, method: 'GET' },
     deps: [],
     conditional: animesMinfied.length === 0,

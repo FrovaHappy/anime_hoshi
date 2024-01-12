@@ -8,7 +8,7 @@ export default async function deleted(
   res: Response<JsonResponse>
 ) {
   const { userVerified, ...deletedEpisodeError } = req.body
-  const episodesError = await episodeErrorDb.deleteOne(deletedEpisodeError.url)
+  const episodesError = await episodeErrorDb.deleteOne(deletedEpisodeError.link)
   if (!episodesError) {
     return res.status(400).json({ code: 400, ok: false, message: 'Error deleted episode', contents: null })
   }

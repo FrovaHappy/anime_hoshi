@@ -4,7 +4,7 @@ import App from './App'
 import { StrictMode } from 'react'
 import { Analytics } from '@vercel/analytics/react'
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   <StrictMode>
     <App />

@@ -10,7 +10,7 @@ const w = (() => {
 })()
 export interface ResultDB {
   key: string
-  value: any
+  value: string
 }
 const initTransaction = async () =>
   await new Promise<IDBObjectStore>((resolve, reject) => {
@@ -38,7 +38,7 @@ export default {
     const object = transaction.get(key)
     return await new Promise<ResultDB | undefined>(resolve => {
       object.onsuccess = () => {
-        resolve(object.result)
+        resolve(object.result as unknown as ResultDB | undefined)
       }
     })
   },

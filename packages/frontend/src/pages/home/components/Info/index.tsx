@@ -7,7 +7,7 @@ import useFetch from '../../../../hooks/useFetchNew'
 import { urlApi } from '../../../../config'
 import type { Anime } from '../../../../../../types/Anime'
 import ErrorComponent from '../../../../components/Error'
-import { useIdContext } from '../../../contexts/contextHome'
+import { useIdContext } from '../../contextHome'
 import './index.scss'
 import { Contribute } from './contribute'
 import Loading from './Loading'
@@ -17,7 +17,7 @@ import { getIdLocation } from '../../../../utils/getIdLocation'
 export function ShowInfo({ anime }: { anime: Anime }) {
   return (
     <>
-      <h3 className='title'>{anime.dataAnilist.title.romaji}</h3>
+      <h3 className='title'>{anime.title.romaji}</h3>
       <Metadata anime={anime} />
       <Description anime={anime} />
       <ListEpisodes anime={anime} />

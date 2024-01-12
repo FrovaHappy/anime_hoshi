@@ -1,42 +1,15 @@
 import type { Anime, AnimeMinified } from '../../../../../types/Anime'
-import cache from '../../../utils/cache'
+import animesCache from '../../../utils/animesCache'
+import animeMinified from './animeMinified'
 
-let animesUpdatedCache: number = 0
-let animesMinified: AnimeMinified[] = []
-
-function minifyAnimes (animes: Anime[]): AnimeMinified[] {
-  return animes.map(anime => {
-    const namePages = Object.keys(anime.pages)
-    let refEpidode = 0
-    let lastUpdateOld = 0
-    for (const name of namePages) {
-      const { lastUpdate, episode } = anime.pages[name].episodes[0]
-      const time = lastUpdateOld < lastUpdate
-      if (time) {
-        refEpidode = episode
-        lastUpdateOld = lastUpdate
-      }
-      if (refEpidode === 0) {
-        console.log('')
-      }
-    }
-    return {
-      lastUpdate: anime.lastUpdate,
-      title: anime.dataAnilist.title.romaji,
-      image: anime.dataAnilist.coverImage.large,
-      id: anime.dataAnilist.id,
-      episode: refEpidode,
-      color: anime.dataAnilist.coverImage.color
-    }
-  })
-}
-export function getData () {
-  const animes: Anime[] | null = cache.get('animes') ?? null
-  const animesUpdated = cache.get('animesUpdated') ?? 0
-  if (animes == null) return { animes, animesUpdated, animesMinified }
-  if (animesUpdated > animesUpdatedCache) {
-    animesMinified = minifyAnimes(animes)
-    animesUpdatedCache = animesUpdated
+let lastUpdate = 0
+let animesMinifiedCache: AnimeMinified[] = []
+export function getAnimesMinified() {
+  const animes: Anime[] = animesCache.getCache()
+  lastUpdate = animesCache.get().updated ? Date.now() : lastUpdate
+  animesMinifiedCache = animes.map(anime => animeMinified(anime)).sort((a, b) => b.lastUpdate - a.lastUpdate)
+  return {
+    lastUpdate,
+    animesMinified: animesMinifiedCache
   }
-  return { animes, animesUpdated: animesUpdatedCache, animesMinified }
 }

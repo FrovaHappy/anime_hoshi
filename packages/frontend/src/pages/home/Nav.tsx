@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import type React from 'react'
 import Icons from '../../Icons'
 import './Nav.scss'
-import { useContextAnimes } from '../contexts/contextHome'
+import { useContextAnimes } from './contextHome'
 import Profile from './profile'
 import { memo } from 'react'
 

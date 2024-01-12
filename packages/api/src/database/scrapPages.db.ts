@@ -4,14 +4,28 @@ import { scrapPages } from './models/ScrapPages.model'
 export interface ScrapPageResponse extends ScrapPage {
   _id: Types.ObjectId
 }
+export function vitalityQuery(query: ScrapPageResponse) {
+  return {
+    ...query,
+    langSelector: query.langSelector ?? 'unknown',
+    langsCases: query.langsCases ?? [],
+    defaultLang: query.defaultLang ?? 'JP'
+  } satisfies ScrapPageResponse
+}
 async function getAll() {
-  return await scrapPages.find({})
+  const query = await scrapPages.find({})
+  return query.map(q => vitalityQuery(q.toJSON()))
 }
 async function getById(id: Types.ObjectId) {
-  return await scrapPages.findById(id)
+  const query = await scrapPages.findById(id)
+  if (!query) return null
+
+  return vitalityQuery(query.toJSON())
 }
 async function getOne(filter: ScrapPageResponse | object) {
-  return await scrapPages.findOne(filter)
+  const query = await scrapPages.findOne(filter)
+  if (!query) return null
+  return vitalityQuery(query.toJSON())
 }
 async function replaceOne(filter: ScrapPageResponse | object, data: Partial<ScrapPageResponse> | object) {
   return await scrapPages.replaceOne(filter, data, { strict: true })

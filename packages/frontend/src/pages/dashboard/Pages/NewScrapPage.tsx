@@ -21,7 +21,7 @@ const parseJson = (json: string) => {
 type Data = Omit<ScrapPage, 'validatesResults'>
 export default function NewScrapPage({ hidden, setHidden }: Props) {
   const token = window.localStorage.getItem(KeysLocalStorage.token) ?? ''
-  const [data, setData] = useState<Data | undefined>(undefined)
+  const [data, setData] = useState<Partial<Data> | undefined>(undefined)
   const { error, load, errorCode, contents } = useFetch({
     query: { url: `${urlApi}/pages`, method: 'POST', body: data, authorization: token },
     deps: [data],
@@ -40,7 +40,7 @@ export default function NewScrapPage({ hidden, setHidden }: Props) {
       titleSelector: form.titleSelector,
       url: form.url,
       urlEpisodeSelector: form.urlEpisodeSelector
-    } satisfies Data
+    } satisfies Partial<Data>
     setData(dataFormatted)
   }
   if (errorCode === 0 && contents) window.location.reload()

@@ -9,18 +9,19 @@ import './sign.style.scss'
 import { useNavigate } from 'react-router-dom'
 import Icons from '../../Icons'
 import { TargetError } from './components/TargetError'
+import { type ApiPostUserSingIn } from '../../../../types/ApiResponse'
 
 function signIn() {
   const navigate = useNavigate()
   const [signIn, setSignIn] = useState<ObjectDynamic<FormDataEntryValue> | undefined>(undefined)
-  const { contents, error } = useFetch({
+  const { contents, error } = useFetch<ApiPostUserSingIn>({
     query: { url: `${urlApi}/user/signin`, method: 'POST', body: signIn },
     conditional: !!signIn,
     deps: [signIn]
   })
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const field = Object.fromEntries(new window.FormData(event.target as any))
+    const field = Object.fromEntries(new window.FormData(event.target as HTMLFormElement | undefined))
     setSignIn(field)
   }
   if (contents) {

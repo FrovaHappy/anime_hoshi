@@ -4,6 +4,7 @@ import type React from 'react'
 import { useState, useEffect } from 'react'
 import './profile.scss'
 import useFetch from '../../hooks/useFetchNew'
+import type { ApiGetUser } from '../../../../types/ApiResponse'
 import { KeysLocalStorage } from '../../enum'
 import { urlApi } from '../../config'
 import { toggleTheme } from '../../utils/toggleTheme'
@@ -56,7 +57,7 @@ function SuperUser({ contents }: { contents: any }) {
 function Profile() {
   const [isVisible, setIsVisible] = useState(false)
   const token = window.localStorage.getItem(KeysLocalStorage.token) ?? undefined
-  const { contents, load, error } = useFetch({
+  const { contents, load, error } = useFetch<ApiGetUser>({
     enabled: !!token,
     query: { url: `${urlApi}/user`, method: 'GET', authorization: token },
     deps: []
