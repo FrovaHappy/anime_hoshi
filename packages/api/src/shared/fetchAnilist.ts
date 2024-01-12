@@ -90,7 +90,15 @@ export default async function Main({ search, searchType }: Params) {
     })
     return null
   }
-  const data: DataAnilist = response.data.Media
+  const data: DataAnilist = response?.data?.Media
+  if (!data) {
+    await logger.warn({
+      message: 'Error in Query',
+      content: { errors: data, searchType, search },
+      section: 'query Anilist'
+    })
+    return null
+  }
   data.lastUpdate = Date.now()
   return data
 }
