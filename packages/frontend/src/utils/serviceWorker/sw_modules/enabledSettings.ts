@@ -9,6 +9,7 @@ export default function enabledSettings(props: EnabledSettingsProps): EnabledSet
   const { inAwait, settings, timeNow } = props
   return {
     expiredDelay: settings.delay + inAwait.created < timeNow,
+    remittedEnabled: settings.maxRemitted !== 0,
     expiredNotification: settings.expireIn + inAwait.created < timeNow,
     remittedRange: settings.maxRemitted >= inAwait.cantRemitted,
     satisfiesMinPages: settings.minPages <= inAwait.anime.namePages.length

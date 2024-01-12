@@ -28,7 +28,8 @@ describe('Enabled Settings', () => {
       expiredDelay: false,
       expiredNotification: false,
       remittedRange: false,
-      satisfiesMinPages: false
+      satisfiesMinPages: false,
+      remittedEnabled: true
     } satisfies EnabledSettings)
   })
   test('All settings Passes', () => {
@@ -39,7 +40,8 @@ describe('Enabled Settings', () => {
       expiredDelay: true,
       expiredNotification: true,
       remittedRange: true,
-      satisfiesMinPages: true
+      satisfiesMinPages: true,
+      remittedEnabled: true
     } satisfies EnabledSettings)
   })
   test('case Satisfies Min Pages: settings.minPages and inAwait is equals', () => {
@@ -51,5 +53,10 @@ describe('Enabled Settings', () => {
     inAwait.cantRemitted = 3
     const result = enabledSettings({ timeNow: 0, inAwait, settings })
     expect(result.remittedRange).toBeTruthy()
+  })
+  test('case Remitted Disabled', () => {
+    settings.maxRemitted = 0
+    const result = enabledSettings({ timeNow: 0, inAwait, settings })
+    expect(result.remittedEnabled).toBeFalsy()
   })
 })

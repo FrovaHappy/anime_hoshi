@@ -32,5 +32,6 @@ export interface EnabledSettings {
   expiredDelay: boolean
   expiredNotification: boolean
   remittedRange: boolean
+  remittedEnabled: boolean
   satisfiesMinPages: boolean
 }
