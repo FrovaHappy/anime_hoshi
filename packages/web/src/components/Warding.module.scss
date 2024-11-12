@@ -8,9 +8,10 @@ $color: #ff6961;
   flex-direction: row;
   gap: 2rem;
   svg {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 2rem;
+    width: 50px;
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    color: $color;
   }
   @media (max-width: 600px) {
     flex-direction: column;
