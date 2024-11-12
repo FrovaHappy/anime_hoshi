@@ -16,13 +16,13 @@ function MoreInfo() {
 				<path d="M11 12h1v4h1" />
 			</svg>
 			<p>
-				para ver mas información sobre el proyecto, puedes ver el{" "}
+				Para más información sobre el proyecto, te invito a consultar el
 				<a href="https://gist.github.com/FrovaHappy/c8b3332d9db55036afc60a480d72d5c7">
 					roadmap
-				</a>{" "}
-				para el futuro o sígueme en{" "}
-				<a href="https://twitter.com/frova_happy">twitter</a> donde estaré
-				actualizando el avance de este y mas proyectos.
+				</a>
+				, donde podrás ver nuestros planes futuros. También puedes seguirme en
+				<a href="https://twitter.com/frova_happy">Twitter</a> , donde compartiré
+				actualizaciones sobre este y otros proyectos en desarrollo.
 			</p>
 		</section>
 	);
