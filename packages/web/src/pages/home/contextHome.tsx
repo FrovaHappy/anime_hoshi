@@ -1,7 +1,7 @@
 import type React from 'react'
 import { createContext, useContext, useState, useMemo } from 'react'
-import { type AnimeMinified } from '../../../../types/Anime'
-import { type UseState } from '../../../types'
+import type { AnimeMinified } from "../../../../types/Anime";
+import type { UseState } from "../../../types";
 import { getIdLocation } from '../../utils/getIdLocation'
 
 interface Props {
