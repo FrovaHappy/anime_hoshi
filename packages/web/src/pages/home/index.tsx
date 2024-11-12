@@ -6,6 +6,7 @@ import Nav from './Nav'
 import { useState } from 'react'
 import type { AnimeMinified } from '../../../../types/Anime'
 import Warding from "../../components/Warding";
+import MoreInfo from "../../components/MoreInfo";
 export default function Home() {
   const [filter, setFilter] = useState<AnimeMinified[] | null>(null)
 
@@ -14,6 +15,7 @@ export default function Home() {
 				<ContextHome>
 					<Nav setFilter={setFilter} />
 					<Warding />
+					<MoreInfo />
 					<RenderList filter={filter} />
 					<Info />
 				</ContextHome>
