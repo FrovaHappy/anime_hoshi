@@ -1,27 +1,24 @@
 {
-  "name": "proyecto_scrapping_anime",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "workspaces": [
-    "packages/api",
-    "packages/frontend"
-  ],
-  "engines": {
-    "node": "18",
-    "npm": "9"
-  },
-  "scripts": {
-    "api:lint": "npm run lint --workspace=packages/api ",
-    "api:dev": "npm run dev --workspace=packages/api",
-    "api:build": "npm run build --workspace=packages/api",
-    "api:start": "node ./packages/api/dist/index.js --max-memory-restart 350M",
-    "frontend:devlocal": "npm run dev:local --workspace=packages/frontend",
-    "frontend:devcloud": "npm run dev:cloud --workspace=packages/frontend",
-    "frontend:lint": "npm run lint --workspace=packages/frontend",
-    "frontend:build": "npm run build --workspace=packages/frontend"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+	"name": "proyecto_scrapping_anime",
+	"version": "1.0.0",
+	"description": "",
+	"workspaces": ["packages/*"],
+	"scripts": {
+		"api:lint": "npm run lint --workspace=packages/api ",
+		"api:dev": "npm run dev --workspace=packages/api",
+		"api:build": "npm run build --workspace=packages/api",
+		"api:start": "node ./packages/api/dist/index.js --max-memory-restart 350M",
+		"frontend:dev": "npm run dev --workspace=packages/web",
+		"frontend:lint": "npm run lint --workspace=packages/web",
+		"frontend:build": "npm run build --workspace=packages/web"
+	},
+	"keywords": [],
+	"author": "frova_happy",
+	"license": "MIT",
+	"dependencies": {
+		"typescript": "^5.6.3"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4"
+	}
 }
